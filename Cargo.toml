@@ -1,0 +1,9 @@
+[workspace]
+resolver = "3"
+# Un pacchetto per lezione: aggiungere qui "Lessons/Lx" quando la lezione ha un Cargo.toml.
+# Niente glob: fallisce sulle lezioni senza codice Rust.
+members = ["Lessons/L2"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
