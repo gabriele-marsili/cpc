@@ -27,3 +27,16 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .venv/
+
+# Registrazioni delle lezioni (troppo grandi per git)
+*.mp4
+*.MP4
+
+# LaTeX
+*.aux
+*.log
+*.out
+*.toc
+
+# Scratch della routine CPC
+_routine/tmp/

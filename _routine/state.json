@@ -1,0 +1,92 @@
+{
+ "generated": {
+  "Lessons/L3/L3.pdf": "c695b0f9b4aeb301a79c0648bd65d23efd2e276e",
+  "Lessons/L3/L3.tex": "404a6c12f209f9577b7b8827fa52f14a46b82a93",
+  "Lessons/L3/claude_notes.md": "1d2ab4cef12bceeca41bb50548da433c83c73181",
+  "Lessons/L3/figs/make_figs.py": "95cb5a68e642ede01244806a665f5a4bb695f2e8",
+  "Lessons/L3/src/lib.rs": "905536e6a821328aa44b2430f3bee110e046d51d",
+  "Lessons/L4/L4.pdf": "42fc3511477467a39b287f6cde8b153fe53f970b",
+  "Lessons/L4/L4.tex": "5f4f4a1ec58175f25b69e18abc656ce0cc3031ef",
+  "Lessons/L4/claude_notes.md": "02f2fcd03bdb66ebb23d606c7f1d5c944eeab1d9",
+  "Lessons/L4/src/claude.rs": "e7aa438a99eee5d0e1f20c9be6f3566691a5bc9d"
+ },
+ "last_run": "2026-10-04 12:41",
+ "seen": {
+  "Lessons/L2/Cargo.toml": {
+   "mtime": 1789983210,
+   "size": 72
+  },
+  "Lessons/L2/naive_sol.py": {
+   "mtime": 1789983985,
+   "size": 368
+  },
+  "Lessons/L2/notes.md": {
+   "mtime": 1790346057,
+   "size": 4327
+  },
+  "Lessons/L2/src/lib.rs": {
+   "mtime": 1789983210,
+   "size": 79
+  },
+  "Lessons/L2/test_naive_sol.py": {
+   "mtime": 1789983046,
+   "size": 748
+  },
+  "Lessons/L3/Cargo.toml": {
+   "mtime": 1790347157,
+   "size": 88
+  },
+  "Lessons/L3/L_03.MP4": {
+   "mtime": 1790584575,
+   "size": 1286632320
+  },
+  "Lessons/L3/SlidingWindowMaxima.pdf": {
+   "mtime": 1790847092,
+   "size": 2263116
+  },
+  "Lessons/L3/notes.md": {
+   "mtime": 1790346537,
+   "size": 0
+  },
+  "Lessons/L3/src/bin/prisoners.rs": {
+   "mtime": 1790347161,
+   "size": 720
+  },
+  "Lessons/L3/src/bin/swm.rs": {
+   "mtime": 1790347161,
+   "size": 1128
+  },
+  "Lessons/L3/src/lib.rs": {
+   "mtime": 1790847971,
+   "size": 17166
+  },
+  "Lessons/L4/Cargo.toml": {
+   "mtime": 1790603154,
+   "size": 88
+  },
+  "Lessons/L4/L_04-en-US.docx": {
+   "mtime": 1790847126,
+   "size": 25414
+  },
+  "Lessons/L4/Pearls_2025.pdf": {
+   "mtime": 1790847089,
+   "size": 4996505
+  },
+  "Lessons/L4/notes.md": {
+   "mtime": 1790594514,
+   "size": 4261
+  },
+  "Lessons/L4/src/claude.rs": {
+   "mtime": 1791117661,
+   "size": 12789
+  },
+  "Lessons/L4/src/lib.rs": {
+   "mtime": 1790847952,
+   "size": 1283
+  },
+  "Lessons/L5/notes.md": {
+   "mtime": 1790847253,
+   "size": 0
+  }
+ }
+}

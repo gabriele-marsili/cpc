@@ -1,0 +1,1190 @@
+# Trascrizione automatica di L_03.mp4 (23/09/2026) - parakeet-tdt-0.6b, non rivista: nomi e termini tecnici possono essere storpiati (es. 'DAC'/'deck' = deque, 'hip' = heap)
+[000:00] done so far.
+[000:02] In the last lecture we
+[000:04] killing a lot of mosquitoes.
+[000:07] Uh last lecture we were at the
+[000:11] trying to solve this this problem sliding window maximum.
+[000:15] We have a sliding window sliding over an array. Our goal is to find the maximum in each subarray.
+[000:22] Uh trivial solution takes uh n times k time because uh we need uh
+[000:30] To move the window and scan the wall window.
+[000:33] uh to compute the maximum.
+[000:35] This is of course quite inefficient because every time we move
+[000:39] The window by one position we are recomputing the marks from scratch.
+[000:45] Even if just one element enter just one new element enter the window.
+[000:50] A one old uh element left the window.
+[000:55] So uh we uh discuss it together and we reach
+[001:02] point in which we observed
+[001:05] That actually what we need
+[001:10] Every time we move the window by one position to the right, is to do these three steps.
+[001:17] remove an element from the window.
+[001:20] Insert the new element.
+[001:22] From the window, ask her
+[001:25] The maximum.
+[001:27] In the window.
+[001:29] And the window is nothing less than a multi-sign.
+[001:33] So if we have a data structure that allows us to perform these three operations,
+[001:38] Then
+[001:39] Uh we can uh
+[001:41] Solve the problem.
+[001:44] And uh actually the trivial solution can be seen as a trivial data structure for for supporting these three operations.
+[001:55] Okay, so the big question is what's the instruction we would like to use?
+[002:00] Uh we need uh a data structure that supports the three operations.
+[002:04] The first uh
+[002:06] uh solution triggered by the word maximum.
+[002:12] He is uh a hip.
+[002:16] Uh unfortunately the hip uh supports uh
+[002:20] uh these three operations and does not include the st
+[002:24] remove of every element.
+[002:27] which is said
+[002:28] Uh but instead provides the operation extract the maximum. So you can remove an element, but it must be the maximum.
+[002:37] Okay, so we reached the
+[002:39] So now that we understand this, we uh worked on a different
+[002:45] algorithm which uses a lazy approach.
+[002:50] Using a lazy approach is something that we are going to do often because it simplifies
+[002:57] Things
+[002:58] Uh in many, many different uh uh
+[003:03] problems.
+[003:04] Okay, what's the idea? The idea is no longer
+[003:08] remove an element as soon as it leaves the window.
+[003:12] But instead we remove the element only when we are going to extract it from the heap
+[003:19] We are going to
+[003:21] Yeah.
+[003:23] Take an element, the maximum element from the heap and the maximum element is outside the window.
+[003:29] Okay?
+[003:30] In that case we extract the element and ask for the max again.
+[003:37] So we are lazy in that sense.
+[003:39] We're not doing the removal immediately, but essentially.
+[003:44] uh defer it to
+[003:46] uh time to the time at which
+[003:50] Having removed the element makes any difference.
+[003:53] Okay.
+[003:54] So we store instead of just value, we store pairs value position because we want to remember the position of an element in order to understand if it is inside or outside the current window.
+[004:07] So the algorithm becomes the following.
+[004:10] At every iteration we insert the new element
+[004:13] together with its position.
+[004:16] And uh we check the current maximum. If it is outside the window, we extract it and check the maximum again.
+[004:24] If the new maximum is outside the the the window. Again, we keep doing the instruction and go on.
+[004:31] Otherwise we just found the m current maximum in the EIP which is inside the window.
+[004:38] And that element is the element to report.
+[004:43] Okay, that was uh the first solution we discussed last time.
+[004:48] And we also observe uh that in the the the time complexity of this solution is much better than the trivial one.
+[004:54] Why? Well, because uh
+[004:57] Performing operations on the ape takes a longer time each.
+[005:03] Uh how many operations are we performing? Well, the number of insertions is clearly n because we insert each element.
+[005:12] Akimos to answer.
+[005:13] And we also observe that the number of instructions is at most n.
+[005:18] Why? Because every element is removed at most once.
+[005:26] Every element is inserted exactly once and removed at most once.
+[005:33] This means that we have n
+[005:36] is insertions and at most N instructions.
+[005:40] Since each of the two operations takes log n time, the overall running time is n log n.
+[005:47] Yeah, so fun.
+[005:49] That's uh
+[005:50] The first solution from last time.
+[005:53] Then we observed that actually there is a problem called the predecessor problem which supports a supered set of the operations we want.
+[006:04] We can store a set and support insertions, deletions, search, max, min, predecessor and successor.
+[006:13] There exists a different solution for this problem. One of them is is the balanced
+[006:20] buying a search tree that you are familiar with.
+[006:24] Right?
+[006:26] Okay.
+[006:29] Bin SH3, any of the variant that exists, all the three all the three operations we need: insertion, deletions, and
+[006:41] uh max are supported in log
+[006:46] size of the set we are storing.
+[006:50] And our goal is to use it to store only the element in the current window.
+[006:57] Okay.
+[006:58] This means that each operation takes log k time.
+[007:04] So there is nothing else to do than
+[007:06] Use the approach we said, iterate over the element of the array, insert the new element, remove the last the last element in the window, ask for the maximum.
+[007:18] Each operation takes log k time, so the running time is n log k.
+[007:28] Well, that's the end of the last lecture.
+[007:33] The good point to observe is that.
+[007:36] We started with the trivial solution. We isolated the basic operations needed by the solution.
+[007:45] we found a better
+[007:49] solution for supporting those operations and we get immediately a
+[007:55] Much faster solution.
+[007:57] from n times k to n log k, which is much
+[008:02] Okay, this is more enough more than enough for most of the cases in pract.
+[008:08] and may be enough even for the interviews.
+[008:13] Okay?
+[008:16] Find a private solution, isolate the operations that are needed, find
+[008:23] data structure supporting those operations.
+[008:27] and get a better solution.
+[008:30] Okay?
+[008:32] How many of you are thinking about uh applying to some uh
+[008:36] Position for internships?
+[008:40] Let us know what uh
+[008:43] How is going on?
+[008:46] For the other, think about uh the application itself.
+[008:49] really useful for uh for your future. I guess.
+[008:53] I think.
+[008:54] Okay, so this is a super nice solution, but it's it's not optimal.
+[009:00] Uh the optimal solution uh
+[009:04] is going to take uh linear time.
+[009:06] And this is optimal because you can do better than uh
+[009:10] n, because you need to scan the whole array at least once.
+[009:15] Okay, so let's describe uh
+[009:18] Ultimate solution.
+[009:39] Okay, the solution.
+[009:41] Use this
+[009:43] Three.
+[009:45] E DAC.
+[009:47] Do you know what a deck is?
+[009:49] double it and the Q.
+[009:52] Which means uh it's secure.
+[009:54] For which you can
+[009:56] access and insert element from head
+[010:01] Insect.
+[010:02] uh uh insert access and delete element from head, insert delete and access element from tail.
+[010:10] In both cases, constant time amortized.
+[010:14] Okay.
+[010:17] Uh then I'm
+[010:19] For sure one implementation in uh
+[010:23] programming language you are using in Rust as well.
+[010:27] Okay, it can im be implemented with uh a circular array.
+[010:33] If you know
+[010:35] How many elements are going to be stored?
+[010:39] In that case you keep a pointer
+[010:42] On the edge.
+[010:43] Point for the tail.
+[010:45] And uh you
+[010:47] If you want to insert a new element in the head, you move it backward.
+[010:54] Forward if it is from tail, and the similarly if you want to remove elements from head on.
+[011:02] But it needs to know uh what are the what what the size
+[011:09] of the cube.
+[011:11] If this is unknown
+[011:13] Uh you can use a list.
+[011:17] It allows you to append the element.
+[011:20] I'm head denty.
+[011:23] Right.
+[011:24] The problem of least is that
+[011:31] What's the problem of using lists?
+[011:38] Yeah, but actually here is not a big issue, right?'Cause uh
+[011:43] because uh you can uh
+[011:47] Or head. So, what are the operations we need? We need to access the element on
+[011:54] Current head.
+[011:59] Then uh
+[012:01] Uh you have a pointer to the tail.
+[012:05] you don't need to scan uh the whole list.
+[012:08] you want to append a new element
+[012:11] In the array.
+[012:13] Which is a
+[012:14] 'Kay.
+[012:15] You want to remove an element from from tail or head, both are okay.
+[012:20] you want to access those elements head and tail and that's a constant
+[012:24] So at least uh would be okay.
+[012:27] So
+[012:39] Yeah. In uh in real life uh
+[012:43] Uh nobody is using a list.
+[012:46] Never.
+[012:48] Only Python users are using lists.
+[012:51] But you know, listings in Python are not lists, actually are arrays.
+[012:57] So nobody is using a list. For uh
+[013:01] Two main inefficiencies of list in real problems. First inefficience is that
+[013:10] is that you need many allocation and deallocations. Because are you are allocating a new entry, new node, every time you want to insert uh an element and you are deallocating uh every time you want to delete uh memory. And allocating and deallocating is expensive.
+[013:29] Second reason is that uh because usually you want to traverse a list from the beginning to the end.
+[013:36] And uh this operation going from left to right is something which is very, very efficient on arrays, but super inefficient on a list because you are jumping here and there every time.
+[013:51] Very cash, unfriendly.
+[013:54] And that's uh that's uh terribly slow. So nobody are u is using uh lists uh in uh real life. Okay?
+[014:05] So a reasonable alternative to Rix.
+[014:10] is a list made of blocks.
+[014:12] Okay.
+[014:14] So you allocate
+[014:17] Space for a certain block of elements.
+[014:20] Fixed uh sides.
+[014:23] Uh you are using it uh only if uh
+[014:29] Your uh deck is small.
+[014:33] This is head and this is tail.
+[014:38] If you need more space uh you just allocate a new block and uh
+[014:44] Uh you have a list of blocks.
+[014:46] Okay. List of blocks uh
+[014:50] solves the problem uh of the l traditional lists.
+[014:54] Because you need uh it's true that you need more allocations and allocations, but you need uh a new allocation and the allocation only when you finish uh
+[015:04] The block.
+[015:06] And uh uh it's also true that uh
+[015:10] Scanning from left to right is not efficient as in uh array.
+[015:14] But actually the number of jumps is very small. Okay, it's the total number of elements divided by the block size.
+[015:22] Okay?
+[015:23] So that's the implementation.
+[015:25] uh of deck uh in uh most of our programming
+[015:29] at least star blocks.
+[015:31] Okay?
+[015:32] Another inefficiency of list that I forget. So there are three inefficiencies. Uh allocations and allocations. Uh cash uh inefficiency.
+[015:43] The third one uh is
+[015:49] Oh so four inefficiencies. Random access is not possible, but it is this is not possible also with DEC actually.
+[015:58] Yeah, it's a
+[016:00] One inefficiency.
+[016:02] The th the fourth one is the extra space.
+[016:06] Needed for pointer.
+[016:08] If your key is very small, you're using a da you're doubling essentially the space because of the pointer to the next element.
+[016:17] Pointer to the next element which is still needed by DEC, but its cost is amortized over the element of the block.
+[016:28] Cheaper.
+[016:30] Per element overall.
+[016:36] Okay, apart from these, so pay a lot of attention every every time you are using the list.
+[016:42] Probably that's not
+[016:44] Okay, let's uh now that we know that we are using a DAC, let's uh describe the algorithm.
+[016:58] Uh let's describe the algorithm.
+[017:02] And uh in uh
+[017:05] It's more than pseudocode, okay? It's uh almost English.
+[017:11] This wa was actually a problem, huh?
+[017:16] Three or more years ago.
+[017:18] Now actually having this kind of pseudocode it's a prompt ready to use on cloud, okay?
+[017:27] much more precise than the now currently
+[017:31] Current use of uh
+[017:33] of current prompting uh in uh cloud, okay? Yeah, okay.
+[017:37] something that i claude can easily transform uh into a working programme.
+[017:43] So we keep a deck
+[017:51] Toring
+[017:54] Perso.
+[017:57] Mm.
+[017:59] B.
+[018:00] E is the value.
+[018:03] is the position as before for the hip.
+[018:06] Okay? They're keeping the position as well.
+[018:09] Why? Because we want to know if the current element comes from a position outside the window.
+[018:16] Okay, now.
+[018:18] We have uh
+[018:22] Uh what uh what do we want to do?
+[018:26] Well, we have uh the loop which iterates over the element.
+[018:31] Okay, so let's say we repeat uh n times
+[018:35] the following steps.
+[018:38] We move the window one position to the right.
+[018:43] We get the current element.
+[018:48] Which is the the element we would like to consider.
+[018:52] And we have the current Q.
+[018:56] Okay.
+[018:57] Yeah?
+[018:59] Now, we start from head of q
+[019:03] Remove
+[019:05] all the elements which are outside the window.
+[019:11] Can
+[019:12] But we are not removing all the elements in the queue which are outside the window.
+[019:18] Because it's too expensive.
+[019:20] We start from head.
+[019:22] and we remove all the elements we find which are outside the window.
+[019:28] But and we stop as soon as we find the first element from head which is within the window.
+[019:36] Okay.
+[019:38] So we are lazy in this in this sense. We are not removing all the elements outside the window.
+[019:44] But actually we start from head and remove all the elements that we find on top which are outside.
+[019:54] Add thin?
+[019:56] Okay.
+[019:59] Then we have the current element current new element that we would like to insert.
+[020:04] We insert it in the queue, starting from tail.
+[020:11] But we do not insert as the tail of the cue.
+[020:16] But actually we move it uh up
+[020:20] Killing other elements from Q.
+[020:22] As soon as we find in the queue
+[020:25] an element which is smaller than the current element.
+[020:32] Okay?
+[020:34] That just to make the intuition more clear.
+[020:38] Let's say we have Q.
+[020:40] We have the current position which is ten uh from ten to fifteen.
+[020:46] If the first element is uh I don't know.
+[020:50] forty two and its position is eight
+[020:56] We remove it.
+[021:00] from head.
+[021:02] If the next element uh is
+[021:05] forty and this position is nine. We remove it.
+[021:10] Okay?
+[021:12] If the next element is thirty-eight
+[021:16] And this position is heaven we stop.
+[021:21] Okay?
+[021:24] Now there may be other elements here.
+[021:28] Then we have
+[021:30] Uh twelve
+[021:33] Some position eleven. Some position nine some position we don't care about the position
+[021:42] If the current element that we are we just inserted is eleven
+[021:50] We are going to start inserting from tail and remove all the elements which are smaller than or equal to eleven.
+[021:59] Okay, and we insert eleven
+[022:04] Fifty.
+[022:06] Okay?
+[022:09] In the middle, here there could be anything, we don't care. We stop from head as soon as we find one element within the window.
+[022:19] And from tail we stop as soon as the current element in the queue is greater than the the new element we just inserted in the window.
+[022:30] Is this clear?
+[022:32] Yeah.
+[022:34] So let's
+[022:35] That's the algorithm. Let's write uh
+[022:39] Mm.
+[022:40] The description, more detailed description.
+[023:08] Move one position to the right.
+[023:11] Remove
+[023:14] From
+[023:17] Head.
+[023:19] of q
+[023:24] Any
+[023:26] Elemental.
+[023:30] Outside the window.
+[023:48] We stop, sorry.
+[023:51] Uh we
+[023:53] Stop as soon as we
+[024:00] Find
+[024:09] say as soon as
+[024:13] The current
+[024:16] Head of Q
+[024:19] is inside
+[024:23] The window.
+[024:26] Okay.
+[024:29] Is it clear?
+[024:33] Which means we are not scanning the word Q, which is
+[024:36] It's expensive, okay?
+[024:38] We stop as soon as we find the first element within the window.
+[024:44] Then the other part we insert
+[024:49] The current uh
+[024:53] Element why
+[024:57] From tail.
+[025:01] of Q
+[025:05] removing uh
+[025:15] Any element
+[025:19] Uh which
+[025:21] is uh
+[025:22] Smaller than or equal to y.
+[025:26] Stop
+[025:28] As
+[025:30] So na
+[025:31] As
+[025:33] Carventf.
+[025:36] Tail of Q is greater.
+[025:43] Uh then uh
+[025:46] Then why?
+[025:48] Okay. Which means we are not scanning the whole uh
+[025:52] Q.
+[025:53] Even in this case, but we stop as soon as the condition is met.
+[025:59] Finally, uh what's the
+[026:04] element we are reporting as the current maximum.
+[026:09] We report
+[026:12] They had
+[026:16] Of
+[026:17] Q.
+[026:19] As
+[026:21] There
+[026:23] max of the window.
+[026:33] Are you with me?
+[026:36] Okay, so that's the idea.
+[026:40] Let's uh uh
+[026:43] Reason about the algorithm, okay?
+[026:46] We need the
+[026:48] things. First, time complexity.
+[026:52] Is it true that the algorithm runs in linear time?
+[026:59] Second, com uh correctness of the algorithm.
+[027:03] Is it?
+[027:04] Is this algorithm correct? Is it true that the algorithm is reporting the maximum correctly reporting in the maximum of every window?
+[027:16] And these are the questions that we would like to
+[027:19] plants at
+[027:21] Let's start uh with uh
+[027:24] Time complexity.
+[027:33] Do you want a running example?
+[027:37] of the algorithm.
+[027:39] Okay.
+[027:42] Do we want to use uh the examples uh that we showed before?
+[027:49] Let's try this.
+[027:52] Okay, the array was uh
+[027:55] One.
+[027:57] Three.
+[027:59] Five
+[028:01] I guess it's not uh
+[028:03] Uh
+[028:12] One, two, three.
+[028:15] One.
+[028:17] Let's see.
+[028:19] One.
+[028:21] Two?
+[028:23] For um
+[028:24] Three, two.
+[028:26] Okay? Don't know what's going on.
+[028:30] Okay?
+[028:33] We have uh the queue.
+[028:38] Here initially the hue
+[028:41] is empty.
+[028:43] And the algorithm works also for elements uh for for windows which are of one, two, three elements. Okay? K is equal to three in our case.
+[028:59] So at the beginning is empty. Okay? So we move the window one position to the right, and that's the current window.
+[029:10] Okay? We start before the beginning of the array.
+[029:13] Okay. If you don't uh consider this window
+[029:18] Valid, just skip the first two.
+[029:23] Two values reported by the algorithm.
+[029:26] Okay? We use the we use these because we want to
+[029:32] feel the the Q using the algorithm.
+[029:36] Okay. So the Q is empty. So the first step which consists in removing a head from Q
+[029:45] Uh as soon as uh it is uh outside of the current head is outside of the window, uh there is nothing to do here.
+[029:54] because the queue is empty, insert the q current element y together with its position
+[030:01] From tail.
+[030:03] The queue is empty, there is nothing to remove. So just add
+[030:08] one one. The first one is because the value, the second one is because the position.
+[030:16] Okay.
+[030:19] Let me change the two value, otherwise the second one will be two, two and the third one will be three three. Okay, so here we have uh two different uh uh things. Okay, next uh step three, the window is this one.
+[030:41] Okay. So now we have uh three.
+[030:46] Remove from head all the elements which are outside the window.
+[030:53] One, one is within the window, there is nothing to do.
+[030:57] Next step.
+[031:01] Uh start from tail with three and remove remove all the elements which are smaller than or equal to three.
+[031:09] One is smaller than three, so we remove it.
+[031:14] There is nothing else, so we just add three two. Three because the value, two because of the position.
+[031:22] Okay? Move the window one position to the right.
+[031:29] remove all the elements in the window which are outside the outside the
+[031:37] Window, remove, sorry, remove all the elements in the queue which are outside the window, from tail from head.
+[031:48] Uh three is not outside the window, so there is nothing more to do.
+[031:55] Then we insert two from tail.
+[031:58] remove all the elements which are smaller than or equal to two.
+[032:03] Okay.
+[032:05] But we have uh uh we have three, three is greater, so
+[032:12] Three, two, two, three.
+[032:17] Two because of the value, three because of the position.
+[032:22] Okay.
+[032:24] Are you with me?
+[032:28] Okay, uh reported elements are always the head of the of the queue. So reported element uh here
+[032:37] Here is one, three, three again.
+[032:41] Okay.
+[032:43] And indeed the the results are okay so far.
+[032:48] Now we let the cube move one position to the right.
+[032:58] Okay.
+[033:01] One is entering.
+[033:04] Three is still in the window, so we do not remove the current head.
+[033:11] We insert one, one is smaller than two, so we do not remove two.
+[033:17] And we actually have three, two,
+[033:20] Two, three, one, four.
+[033:24] One because of the value, four because of the position.
+[033:29] Result three, which is okay.
+[033:32] Now we move the window one position to the right.
+[033:37] Yeah?
+[033:38] Fir first question is: is the current head in the window or not? It is not. So let's remove it.
+[033:47] Now the current window, the current uh head is two, three. Is it uh in the wind in the window? Yes, it is. So we stop.
+[033:57] Okay? So current uh Q is two three one four.
+[034:03] Now insert the new one.
+[034:06] Okay?
+[034:08] one versus one, the new one is
+[034:14] greater than or equal to the old one, so we remove it.
+[034:18] Okay? So the Q becomes two, three
+[034:23] One, five,
+[034:27] Okay. Notice that we
+[034:34] Notice that we changed the the one in the cube.
+[034:38] Okay?
+[034:42] This one stayed in the queue like uh a
+[034:47] Character in Games of Trouble.
+[034:50] Uh second, okay? Immediately let.
+[034:54] Um
+[034:55] What's the current uh so Game of Thrones is something uh old, but there is a new
+[035:04] you're not uh you don't know what Game of Thrones is?
+[035:14] Uh anyway, a lot of kilo pert. Uh okay, so re the result of the queue is this one and we report the maximum two, which indeed uh is the maximum within the window.
+[035:30] Last step and then we stop. Two
+[035:34] enters these two enters.
+[035:39] Two, three is outside.
+[035:43] So we kill it we kill uh two three.
+[035:46] We are left with one five, two enters, two is greater than five sorry, two is e greater than one, one five is removed, and we are left with two six.
+[036:01] which is which says that two is the maximum in the current window.
+[036:06] Notice that
+[036:08] These two and these two are two different tools, okay? Because one is because of this
+[036:15] in that window, which does not include the last two.
+[036:20] And the last two is the maximum in the new window when you move one position.
+[036:25] To the law.
+[036:27] Okay?
+[036:29] Apparently it works.
+[036:33] Later on we will see
+[036:35] A proof of it.
+[036:37] Why it's work.
+[036:38] Question, what's the Ranita?
+[036:46] Linear. Why?
+[036:59] What do you mean? Okay. Do we all agree that the running time of this algorithm is proportional to one plus for each iteration?
+[037:10] Uh so it's uh equal to the number of iterations plus
+[037:17] The number of elements we remove from head and the number of elements we remove from tail.
+[037:28] Right? Do you agree with this?
+[037:31] So the question is how many elements we remove in total?
+[037:39] N
+[037:41] We insert n elements in the queue and we remove at most n.
+[037:45] The same argument as before, which is uh your argument.
+[037:49] Okay.
+[037:51] Do all do we all agree on this?
+[037:55] Okay.
+[037:59] So the time complexity is linear because as before we are performing a number of operations which is proportional to the number of insertions and the rem the number of removal, but now we are removing an inserting element in a deck, which guarantees us constant time.
+[038:27] Good. So
+[038:29] Time complexity equals to number of
+[038:34] removes
+[038:36] Plast number of
+[038:40] Pushes, so insertions in the cube.
+[038:44] Which uh
+[038:45] W we know it's smaller than n.
+[038:49] Uh
+[038:51] Equal to n
+[038:54] overall is uh
+[038:57] Less than, so this plus this is less than or equal to 2n. 2n operations, each of them.
+[039:08] Cost uh cost and time.
+[039:10] So the overall running time is linear.
+[039:14] Okay?
+[039:15] Do we all agree on this?
+[039:17] Super.
+[039:19] Okay. So the algorithm is uh okay from uh time complexity point of view.
+[039:27] Now let's see if it is also correct.
+[039:38] Do you have any idea why the algorithm may be correct?
+[039:54] Okay. Till till they had the
+[039:57] Why, you know, till the end?
+[040:09] Okay, so you insert an element, i you s i you stop as soon as you find an element uh greater than it.
+[040:17] Also, for the previous one, because we are not inserting in the middle, right? So for the previous one, the previous one is smaller than the previous one as well. And you can keep using the same argument till the head. Okay, so the Q is sorted. Good.
+[040:40] Then
+[040:50] Uh
+[040:59] How can you be sure that an element which is uh greater than what you are reporting, which is inside the window,
+[041:08] Uh so sorry. Well, how can you be sure that an element greater than what you are reporting in the window is not present uh in the queue?
+[041:36] Okay. Okay. Yeah.
+[041:39] You grasp the intuition.
+[041:43] Okay, so now let's uh let's uh show a proof uh
+[041:49] Show my proof. Okay, there may be others. For example, here's intuition is slightly different than the proof. I am presenting the starting point is the same. Property number one says that.
+[042:08] As we have
+[042:09] Already discussed together, Q is sorted.
+[042:17] In decreasing order.
+[042:24] Uh
+[042:28] The proof uh is by common tradition, differently from what we discussed uh now that was uh somehow by induction.
+[042:38] Here I use the contradiction. Assume
+[042:46] Uh Q is not sorted.
+[042:55] What does it mean sir? Q is not sorted.
+[042:59] It means uh that there are in Q
+[043:03] Two consecutive elements
+[043:06] X and Y.
+[043:14] having position P one and P two.
+[043:18] So P one is the position of x and p y two is the position of y.
+[043:26] Okay.
+[043:28] These are not uh
+[043:30] Uh Q is not uh sorted.
+[043:34] because of these two elements.
+[043:37] What does it mean sir? It means that uh x is smaller than y.
+[043:45] Okay? Are you with me? So if
+[043:49] If Q is not sorted, then there exist two elements, at least two elements,
+[043:54] which are breaking the sortedness.
+[043:56] which means that those are consecutive
+[043:59] one, the previous one, is smaller than the second one. Why would we expect the relationship be the inverse?
+[044:10] Do you agree?
+[044:12] Uh actually it could be equal.
+[044:18] Okay, but we know the position of both. So we have P one and P two.
+[044:23] There are two possible options for the positions.
+[044:27] If P one
+[044:30] is greater than P two.
+[044:36] So in the array essentially we have y
+[044:42] X.
+[044:49] P2?
+[044:51] And P one maybe it's better to call them
+[044:55] Uh oh.
+[044:59] Maybe it's best it's clearer more clear to to write uh
+[045:04] Px and Py.
+[045:06] Okay. If P
+[045:10] Uh
+[045:11] x is greater than py means that
+[045:16] It's we are in this situation. This is our array A.
+[045:22] First we find the y and then we find x.
+[045:27] This is the situation in the array. With this array,
+[045:30] Is it possible to have that Q?
+[045:33] It's impossible.
+[045:35] Because we are inserting from tail.
+[045:38] And if we are inserting from tail y is greater than or equal to x, and we would have removed x.
+[045:48] Okay?
+[045:51] This is not possible.
+[045:57] So the only
+[046:00] possibility is pxor smaller than py
+[046:10] Okay? So in the array we have x, y, p x, p y and that's our array.
+[046:20] With this array, is that Q possible?
+[046:26] Yes or no?
+[046:28] No. Because why?
+[046:31] is going to be inserted from tail, would find X immediately above and would have kill it.
+[046:41] So this situation is not possible, this one, meaning that Q must be sorted.
+[046:49] in decreasing order.
+[046:52] Okay? Is this clear for you?
+[046:56] So
+[046:59] Okay.
+[047:00] Uh
+[047:04] Let me
+[047:14] Let me add the definition now to move on.
+[047:18] We call it right leader, an element right leader.
+[047:26] Uh if
+[047:36] The element
+[047:38] Is
+[047:40] Greeter
+[047:43] Then
+[047:46] Any element.
+[047:50] on its
+[047:55] Light.
+[047:56] Okay? So for example, if we had the array four two
+[048:02] Three, one, one.
+[048:07] The right leaders in this array are four.
+[048:12] because it's greater than any element to its right.
+[048:17] Two is not the right leader because three is greater than two.
+[048:20] Three is the right leader.
+[048:24] because it's greater than one on its l right. One is not the right leader because it's uh because there is another one after that. The last one is a gr right leader because uh there is nothing to its right.
+[048:41] Okay, these are the right leaders.
+[048:45] Okay.
+[048:48] So
+[048:49] The next property we want to prove
+[048:56] Number two.
+[048:59] At every
+[049:04] Iteration
+[049:06] Q.
+[049:08] contains
+[049:12] Hole.
+[049:16] Uh
+[049:18] The right
+[049:22] Uh leaders
+[049:24] in the window.
+[049:29] Okay.
+[049:30] All the right leaders in the window means that
+[049:34] Uh all the
+[049:37] See since the the
+[049:39] Since the
+[049:42] Features the maximum value.
+[049:44] in the window is the right leader.
+[049:48] 'Kay.
+[049:52] And since Q contains all the right leaders,
+[049:57] in the window.
+[049:58] and the the Q is sorted, it means then
+[050:03] That today
+[050:05] The largest right leader is uh
+[050:10] which is the maximum in our array, is on top of Q among the uh the other right leaders.
+[050:18] Okay.
+[050:19] You see?
+[050:22] Okay. Nothing is missing. The maximum is the right leader. The queue is sorted. The max the maximum right leader, which is the maximum of the window, must be the greatest of them, on top of the queue.
+[050:35] Okay.
+[050:36] But the other things that we need
+[050:41] is that and only the right leaders.
+[050:46] Okay? Which means that in the queue there is nothing else than the right readers of the window. No elements outside of the window are in the queue.
+[050:56] after uh pushing uh the element and uh popping the element we don't want.
+[051:01] Okay?
+[051:04] So the right leader is not only
+[051:07] Uh the maximum is the right leader, the greatest l right leader will be on top of the queue.
+[051:15] Okay?
+[051:20] Let's prove that uh
+[051:32] Uh
+[051:35] Can you see why all the right leaders in the window are in the queue?
+[051:45] By definition of being right leader in the window, no other element greater than it is in the window means that, by the algorithm we are running, no other element is able to kill it. So it must be there.
+[052:01] Okay?
+[052:03] You see this?
+[052:08] Um
+[052:10] Okay. So
+[052:14] So the the answer
+[052:16] This part is
+[052:19] A right leader.
+[052:22] Cannot be killed by any
+[052:29] of the
+[052:33] Uh next
+[052:36] element.
+[052:38] Because all of them are smaller.
+[052:41] Okay?
+[052:44] This would be enough to conclude that the maximum is on top of the cube.
+[052:50] Okay? Because there may be other elements which are outside the window in the middle of the queue.
+[052:57] But for sure not a dead, because the head is cleaned with the first uh removal from head.
+[053:07] Okay.
+[053:09] But uh actually we can also prove that no other element apart from the right leader is in the view.
+[053:19] So the only part
+[053:21] proves that in the queue there are no other elements outside the window.
+[053:40] Uh
+[053:41] Okay. Can you see why it is the case?
+[054:08] Trigger now.
+[054:10] So it is possible
+[054:12] So we know that uh the first element
+[054:17] Here, let's call it A. This element is in the window.
+[054:24] Okay? It cannot be outside the window.
+[054:28] Because otherwise
+[054:32] Because otherwise we would have killed it.
+[054:36] with the pruning algorithm that pops element uh from head. Okay, so the first one is on the the the the window.
+[054:44] Is it possible that somewhere here there is an element B?
+[054:50] which is not in the window.
+[054:58] Okay. Yeah.
+[055:01] So in the array we have
+[055:04] And
+[055:06] B
+[055:08] Here is the window.
+[055:11] B cannot be in the Q anymore because the insertion of A, which happens after
+[055:19] B would have killed B from Taylor.
+[055:24] Okay.
+[055:31] So only all and only the light leader of the window are in the queue.
+[055:39] And since the maximum is the right leader, it must be there, but since the Q is sorted, it's on top.
+[055:46] The element we are reporting is the maximum.
+[055:50] Okay?
+[055:51] And that's their proof.
+[055:55] Okay, this concludes the discussion of this problem. Do you have any
+[056:04] Any questions?
+[056:06] About this?
+[056:10] Okay, if you are uh learning Rust, implementing this in Rust is actually a very nice exercise.
+[056:18] Implementing all the three solutions in Rust is a nice exercise because it l allows you to familiarize with uh standard library, including
+[056:29] uh B3, HIP and uh DAC.
+[056:33] And uh it's also a nice exercise to
+[056:37] benchmark these algorithms.
+[056:40] Using different and advert also adversarial arrays in order to understand.
+[056:47] What's the fastest solution in practice, depending on the size of k, the size of the array, and
+[056:56] if there are cases in which an adversarial array could change.
+[057:00] the thing.
+[057:03] Okay? So if you want to do this, it's uh very nice.
+[057:07] Bigger size.
+[057:11] Restiance?
+[057:16] Okay, let me uh conclude with uh another problem whose solution is
+[057:26] easy to describe. It's the second problem that was uh
+[057:31] Uh in the first lecture.
+[057:34] together with the sliding window maximum.
+[057:37] Uh it's called the dropping rainwater.
+[057:43] Uh rain water.
+[057:48] And I ta uh I told you last lecture to think about a possible solution.
+[057:53] Anybody has uh
+[057:55] possible solution for this?
+[058:00] You had the loss of
+[058:02] a lot of other courses to attend and uh you were not able to find uh to think about problems.
+[058:09] But let me
+[058:11] Introduce the problem.
+[058:14] Uh we are given an array which may be interpreted like uh a
+[058:20] level in a higher uh map. Let me better describe.
+[058:26] So we have uh six in first position, meaning that we have uh a wall of uh height uh six.
+[058:36] in this position.
+[058:38] Okay.
+[058:39] Then we have uh
+[058:54] Okay.
+[058:56] Then we have two.
+[058:58] meaning that the height of the wall is two.
+[059:03] Then we have zero, meaning that there is no wall at all, uh.
+[059:07] Then we have four.
+[059:09] Guess what the height of the wall is for?
+[059:14] Then we have zero.
+[059:16] No wall, one, just one.
+[059:20] Of it.
+[059:23] Uh then uh zero
+[059:26] Then five
+[059:34] then zero, then three.
+[059:40] Okay. Now the question is, it's starting to rain.
+[059:45] Okay? How much water in uh squares?
+[059:52] we can trap in this elevation map.
+[059:57] Okay, so we have this elevation map how much water in square we can
+[060:05] Trap in this
+[060:08] In this uh uh
+[060:11] Any show math?
+[060:12] So what's going on? Well, uh it's starting raining. A lot of rain is going down, okay? But when uh when uh it reaches the highest wall,
+[060:27] Here is flowing down.
+[060:32] Not the highest, one at the wall, okay? So when it reaches this this height here, it's flowing down.
+[060:38] Okay? Then it stopped raining. At the end uh we have uh
+[060:44] This elevation map filled with water.
+[060:49] How much water do we have?
+[060:52] So for example, the solution here wa i is water.
+[060:56] Uh this one
+[061:00] No, maybe this one.
+[061:03] It's everything here is filled with water and uh here it's filled with water.
+[061:09] Let's see.
+[061:11] If you
+[061:28] So the solution we expect is uh three squares.
+[061:32] plus uh the number of squares covered by the blue
+[061:37] water in the uh
+[061:40] in this part of the elevation map.
+[061:42] Okay? That's the solution.
+[061:46] The question is, how can we design an algorithm?
+[061:51] efficiently compute.
+[061:53] the amount of water.
+[061:56] Any idea?
+[062:04] Do we want to stop ten minutes so you can think about it?
+[062:09] Okay. So
+[062:13] It's uh
+[062:15] Let's stop for ten minutes. If you have any question about the
+[062:20] The problem raise your hand and uh we'll uh
+[062:23] Uh answer your question.
+[064:05] Any idea?
+[064:15] Yeah.
+[064:19] Can we feel?
+[064:22] And then you can move this more than one of the two.
+[064:26] And you can repeat that process and each time you know that the minimum of the two is filled.
+[064:35] Okay.
+[064:37] So for example, you start from here here.
+[064:41] And then the minimum is three. Yeah. So
+[064:45] So you know.
+[064:48] At least
+[064:50] for each element in the middle that is not filled.
+[064:54] with other blocks you can fill with water. And so you take that okay, so you say okay here, apart from the white ones, you can put water here. Yes. And then you can move the smaller ones. Okay, but uh how can you compute this?
+[065:15] Efficiently.
+[065:17] Because it's clear that uh you can do it in uh your mind, but how to do efficient.
+[065:25] So it's it's not just the distance between these and these times three.
+[065:33] because there are um fill already filled uh with white, right?
+[065:38] So to know
+[065:40] The sum of these plus this three plus one plus three.
+[065:45] You need to scan everything.
+[065:52] Okay, see
+[065:57] So you you have this and then
+[066:09] Take the maximum is six and then what?
+[066:13] But six uh is no cannot be reached, right?
+[066:34] No, I don't understand.
+[066:39] Do do you want to answer?
+[066:47] estimation and calculate just the area. And then when you move, each time you move, if that the next element has some values that is higher than zero, you remove the point from the previous sum. Okay, so you estimate this like the distance times three. Yes. Okay, now you move the minimum. The minimum
+[067:12] Until you find a higher one, so okay. This one uh is moved here. Uh you subtract the white one. You don you don't subtract there because it's zero. It's zero, but in general you subtract uh zero in this case. Yes. And uh it's the minimum. So what? It's the minimum, what do you do? Nothing. Because three is already higher.
+[067:37] Okay. Now you reach five. You remove the three from the four. You remove the three before, okay. But you can also add the area from you add the three minus two times the distance. Yes. And then you keep going. Then you move here. It's uh it's minus uh zero again.
+[068:04] Mayus one and so on.
+[068:07] Hmm.
+[068:12] Minus zero.
+[068:14] Okay, minus four, okay, seems working.
+[068:18] So essentially you remove the white one in a lazy way and you defer the removal to the time at which you touch this. And you don't need to remember all the things
+[068:33] All the me the minimum you found so far because you remove the number of elements equal to the current.
+[068:44] Uh mean.
+[068:47] So the current value, yeah, five.
+[068:50] Yeah, seems to be okay. Do do you agree with this?
+[068:59] Not sure if it is a
+[069:01] True, but correct, but uh seems to be.
+[069:08] Uh any other approach?
+[069:17] Recognition. Aye.
+[069:23] Pointer where?
+[069:26] Okay.
+[069:27] Wait, we are zero weight all this.
+[069:36] The bigger one? We calculate there are some. Okay, so sorry, sorry. We move here. We do nothing because zero is smaller than three. Yes. Move here. We do something because left is greater than right. What do we do?
+[069:59] Okay, so essentially is similar to each solution, but you are not moving
+[070:06] Uh
+[070:08] Close the gap, but actually you move to enlarge the gap, right? So there is no need to start from right, you can start from left. Yes, but
+[070:25] Six is the biggest and we will never meet
+[070:29] Okay. So if it's not working, maybe there is some problem.
+[070:34] Because you can just so it's not your agree does not depend on what you touch.
+[070:42] Right? And what where where do you start?
+[070:46] So
+[070:48] If you start from this, it's equivalent to start from left on this reversed. Okay. So what happens if you start from right with this reversed? It's something like this. Is this working in this case?
+[071:09] Yes to right.
+[071:14] I flip the image and I work from right to left. Or, which is equivalent to start from this on the original image.
+[071:23] In this case it's not working, so your solution is not working.
+[071:29] Slightly more.
+[071:33] But how can you
+[071:35] So why it's not working here?
+[071:39] Because you keep moving these and you never find something.
+[071:43] Greater than the left, right?
+[071:47] Yeah.
+[071:51] can food.
+[071:54] It's high volts and tight volume.
+[071:59] Okay.
+[072:00] Maybe.
+[072:16] And maybe from the difference
+[072:22] get how much uh each uh element contributes to the amount of water.
+[072:29] Yeah, that's uh that's uh that's my solution. The solution I have.
+[072:34] Uh
+[072:36] Instead of thinking about this problem globally, you consider for each of these how many units of waters you can put on top of this particular position.
+[072:54] How much water can you put here? Well it's uh the it's what? It's uh the maximum on the right
+[073:07] The maximum on the left.
+[073:09] You take the minimum of the two.
+[073:12] minus the value here.
+[073:15] So it's the minimum between the max on the left and max on the right minus h i.
+[073:21] for every positional e.
+[073:23] Do you agree?
+[073:24] With this?
+[073:27] Yeah?
+[073:28] So let me
+[073:44] So we are in this situation.
+[073:46] And I want to I'm not considering the problem globally.
+[073:52] By multiplying some difference uh between the distance with the distance. But actually, I'm focusing on each entry independently.
+[074:04] So how many units of water I can put on top of this? For sure one. Why? Because on the left sorry, on on yes, on the left we have six, on the right we have five, so maximum on the left, maximum the right
+[074:21] I take the minimum of the two.
+[074:23] Which is five?
+[074:25] So here I can put a
+[074:29] Tower of water up to position five to match the maximum.
+[074:36] on the right because it's the minimum between maximum on the left and maximum on the right.
+[074:41] Okay. So how much uh water do I uh add in this tower?
+[074:47] the the difference, sorry, sorry, the the mean between max on the left, max on the right, minus one.
+[074:56] Okay? So the formula is
+[075:00] Mean now.
+[075:02] Between.
+[075:03] Marx
+[075:05] In
+[075:07] Mm.
+[075:08] one i minus one
+[075:14] If this is position i
+[075:19] Max
+[075:21] A i plus one n mean max on the left, max on the right, take the minimum of the two minus h
+[075:32] Aye.
+[075:34] Yeah.
+[075:37] So the question now is, how can I compute max on the left and max on the right?
+[075:43] The idea is to precompute one of the two.
+[075:48] Like maximum on the right, I store maximum on the right in array.
+[075:55] I call it max right and I consider the maximum on the right, so it's three.
+[076:03] Three?
+[076:04] Five, five, five.
+[076:06] Five
+[076:08] Five, five, five, five, six, pretty boring.
+[076:15] So I pre-compute this with a scan, then I scan from left to right, keeping track of the maximum since of R.
+[076:23] When I reach an element, I take the minimum between the marks I've seen so far
+[076:28] and the max paper computed in the array for the current position.
+[076:34] Take the mean of the two minus the element in that position i.
+[076:39] Yeah?
+[076:41] Okay, which one uh is the best? Uh I don't know. That's uh spending extra space. So probably one solution that uh uses pointer is better than this one because of that.
+[076:56] So you can work
+[076:58] If you want offline to
+[077:02] prove the correctness of your
+[077:05] Three solutions.
+[077:06] alternative solutions to mine now.
+[077:11] Um yeah, so if uh
+[077:15] If a solution with no extra space exists, for sure it's better than this.
+[077:23] Okay, questions?
+[077:37] Say again now.
+[077:44] So you start with two pointers instead of comp pre-compute?
+[077:52] Yes, but you don't know for the current position.
+[077:57] Look what's what's the current position? The one pointer to the left or right?
+[078:05] The minimum position of the two, the minimum uh
+[078:15] So if I start
+[078:21] Then uh uh we since three is less than six uh we we we compute uh how much water has got in the end and it's uh on top of this. Yes, which is zero because it's three, which is the minimum between six and three. Okay, now I move which one? Well the the smallest equal to zero, and in this case it is uh the minimum is not updated, so it's uh three minus minus zero.
+[078:48] Then we go left. Okay, three minus zero, which is three on top of this. Then we have five and seems to work. What do you think? The mouse on the right gets updated when we get to the
+[079:02] Okay, now we move this one. Yes. Okay, this one here. Six and five. It's five the minimum. Minus five is zero. So we move uh the left. zero because uh here there is nothing uh greater than uh five. If this one was like say let's say six you would add uh one.
+[079:26] Yeah, okay. Because it's uh if it if the bottle six, we can uh move whatever and we add zero to the yeah yeah. To d so let's say this is not three, it's six. In this case uh the maximum we have seen so far uh is six. Yes. You would have add uh uh one. Okay, seems to work. Yeah. Seems to be
+[079:51] uh closer to yours, but you compute uh
+[079:56] Some something for everybody. Here instead we are computing a contribution of once one element at a time.
+[080:05] Yeah, let's um
+[080:08] So we have uh at least three
+[080:15] Right leaders. Woo.
+[080:18] Um
+[080:20] What do you mean?
+[080:33] Six, five and three. Six
+[080:37] Five and three, okay. And you know the
+[080:43] Uh by the way, right leaders are the position at which this uh max right is changing.
+[080:52] Okay, so you keep the position of the right leaders?
+[081:04] This one and this one, for example.
+[081:09] Take the uh to find the area.
+[081:14] Between the two is three times the distance. Yeah. Okay. And so
+[081:26] Okay, so
+[081:36] Okay it's a variant uh it's a mix uh between uh is solution and uh is solution. Yeah. Yeah. Seems to work, yeah.
+[081:48] Okay, so we have uh four candidates solutions. Nice.
+[081:54] Uh okay, think about these solutions and uh let's uh try to find uh any bug in these solutions.
+[082:04] Okay.
+[082:06] Um
+[082:08] It would be nice uh if uh we could use uh claude for uh proving a okay, disproving a solution.
+[082:18] Uh so if you can write a brief description of your solution in English, we can uh try this experiment of asking Claude to prove or disprove the solution.
+[082:29] Okay?
+[082:31] What do you think?
+[082:32] Okay, if you can write a brief description, please send me the description and uh we can uh use it uh for the next lecture to disprove or prove uh your uh
+[082:44] your solutions.
+[082:47] In the meanwhile you can uh you are humans, so you can
+[082:51] Use your brain to
+[082:53] This probe will prove you're the correct.
+[082:56] Okay.
+[082:58] Feel free to send me the description.
+[083:00] Uh
+[083:03] By Mailawilla.
+[083:06] I will uh
+[083:08] Use it the next day.
+[083:11] Okay, nice. Five different four five different solutions. So far mine was was the worst.
+[083:22] Yeah, you can see that I'm buying
+[083:26] Books.
+[083:28] Uh on some
+[083:31] in legal website. What?
+[083:36] Are you doing the same?
+[083:38] I'm recording, sorry.
+[083:48] Okay.
+[083:52] Uh okay.
+[084:11] Okay, we are moving on and just uh
+[084:14] Uh going on last year lectures note.
+[084:24] zooming anymore. Well
+[084:34] We will do it huh?
+[084:37] Copying from last year lecture.
+[084:41] The description of the next problem
+[084:44] I will like to discuss with you, but
+[084:47] The zoom is not working.
+[084:50] And uh
+[085:05] Okay, here we are.
+[085:09] Puzzle is actually sparked.
+[085:19] Okay, the next uh
+[085:22] Couple of lectures will be about what I call pearls.
+[085:29] Super nice uh
+[085:31] Super nice solutions.
+[085:34] Four and out.
+[085:36] Some problems.
+[085:37] And the characteristic of these solutions are that those are super clever.
+[085:44] Something that uh seems to be unbelievable at the beginning uh turns out actually to be
+[085:52] doable and not only
+[085:54] doable, but also
+[085:57] very elegant and simple to do.
+[086:00] Okay? So in particular we will see
+[086:04] Uh
+[086:05] solution to some problems that admit uh
+[086:09] uh constant uh extra space uh
+[086:14] uh solution that works uh
+[086:18] pretty well in solving the problem, and that's an abstract definition of what's going on in the next lectures.
+[086:25] Uh more about this uh in the next lecture.
+[086:30] Summarizing.
+[086:33] problems which seems which seems to not admit
+[086:38] A solution which actually exists, it's super clever, super elegant and simple.
+[086:45] These are the ingredients for
+[086:48] for the next uh for the next lectures.
+[086:51] We will start uh this series of solutions with a puzzle.
+[086:59] A puzzle which seems to be
+[087:03] Impossible.
+[087:05] To solve.
+[087:08] Can Easter.
+[087:10] before knowing uh the solution.
+[087:15] puzzle uh is one of the ones I prefer.
+[087:21] And uh
+[087:24] has been designed by a couple of researchers from Denmark.
+[087:30] because they were trying to prove something.
+[087:33] And to prove their things they were thinking about the pu the puzzle.
+[087:37] believing that no better solution than the trivial one exists for the puzzle.
+[087:45] Later on actually turns out that
+[087:49] These uh
+[087:50] better solution actually exists and it's much, much, much, much better than what was believed to be the best one.
+[088:01] 'Kay.
+[088:03] Is this clear?
+[088:05] Okay.
+[088:06] So
+[088:08] Oh
+[088:11] Here is the puzzle, okay?
+[088:13] We have one hundred prisoners.
+[088:17] 'Kay.
+[088:19] Let's pretend the prisoners are scientists.
+[088:23] And they have men
+[088:26] uh against this uh scientist uh is uh imaginary people, imaginary person called Trump. I don't know if you know anybody with this name. I don't. Okay?
+[088:40] Uh this heavy heavy man.
+[088:44] True. May maybe Trump is better if
+[088:47] Even if you
+[088:50] You don't know anybody with that.
+[088:52] Okay.
+[088:53] Uh
+[088:55] Trump is the director of this prison and offer the last chance of freedom to these hundred prisoners.
+[089:06] Okay?
+[089:09] The idea is the following.
+[089:12] The director assigns these numbers in this range.
+[089:19] Two scientists.
+[089:22] Essentially, each scientist has a number from one from zero to
+[089:28] One to one hundred.
+[089:31] And uh each of them has a distinct number. So we are numbering
+[089:36] uh scientists from one to one hundred.
+[089:40] Okay?
+[089:43] Then no.
+[089:46] There is a room with one hundred uh
+[089:51] Throw it.
+[089:53] Gas it.
+[089:56] Each of them contains a distinct number from one to one hundred.
+[090:01] Okay?
+[090:03] A scientist win so so a scientist enters the room.
+[090:08] Can choose
+[090:09] Alpha the drawers.
+[090:12] Open them.
+[090:14] And E, she wins.
+[090:17] If he or she is able to find
+[090:21] Uh is oil number.
+[090:24] 'Kay.
+[090:25] So essentially, imagine you are a prisoner. Each of you has a number, then there is a there is a a set of drawers, you open
+[090:35] Half of them if there is your number.
+[090:38] You win, otherwise you don't.
+[090:45] Probability of winning.
+[090:47] For a scientist, is one alpha.
+[090:50] Because the
+[090:52] The numbers are uh
+[090:55] spread randomly in the drawers.
+[090:58] And the scientist opens just half of them.
+[091:04] If those uh drawers are selected at random, the probability of winning is one half.
+[091:10] Do we agree?
+[091:13] Okay.
+[091:14] So probability.
+[091:19] Of uh
+[091:22] Call it uh
+[091:24] Scientist.
+[091:27] is uh
+[091:28] One house.
+[091:30] Okay?
+[091:33] Die win?
+[091:35] So one wins if he's able to find his own number
+[091:40] All of them winds, so they they are free.
+[091:44] Free to leave the free to leave the prisons.
+[091:49] If all of them.
+[091:51] Wait.
+[091:54] If all of them
+[091:56] are able to find their own number.
+[092:03] Usual rules of this kind of puzzles: there is no way to communicate after entering the room.
+[092:11] Uh all the drawers are closed.
+[092:15] There is no possibility to move numbers.
+[092:18] Nothing there. Nothing of that.
+[092:21] Okay?
+[092:23] You enter, open the drawers you selected
+[092:26] close all of them, leave the room.
+[092:30] That's all the rules.
+[092:31] No you cannot communicate with the previous one.
+[092:37] Otherwise you could increase, of course, the probability.
+[092:41] So
+[092:43] The probability of win
+[092:46] If every scientist enters the room, selects half of them half half of the drawbacks at random.
+[092:54] I leave the room.
+[092:56] For the next one, the probability of each of them
+[093:00] Wing.
+[093:02] All of them win is
+[093:05] What's the probability?
+[093:07] The probability of all of them win
+[093:10] Each of them wins p with probability one half. It's a product of them.
+[093:15] So it's one alpha
+[093:19] One hundred.
+[093:21] Okay.
+[093:23] And this is uh
+[093:29] give you the correct uh exact number.
+[093:34] It's zero point zero zero
+[093:40] zero four
+[093:45] For thirty times.
+[093:49] Eight.
+[093:51] 'Kay.
+[093:53] Very, very, very, very small number.
+[093:56] So essentially it's impossible.
+[094:00] The strategy is one enter, select half of the draw words at random.
+[094:07] No number, everybody lose.
+[094:10] is is on number.
+[094:13] is okay, enter the next one, and so on. All of them apply the same strategy, probability of winning is zero point zero zero zero zero zero many zeros eight.
+[094:27] Okay, essentially impossible.
+[094:32] Okay, what is very surprising is that actually there exists a solution
+[094:42] such that the probability winning is roughly zero point three.
+[094:49] Okay? From impossible to something which is reasonably
+[094:56] Hi.
+[094:58] Okay.
+[095:02] Do you have any idea for
+[095:05] Finding a different strategy.
+[095:22] Mm. They will uh first speak a dog at random.
+[095:27] Let's say the number they see is 37.
+[095:34] Okay.
+[095:39] Okay, limit uh the randomness essentially.
+[095:44] Food point.
+[095:53] Say again?
+[096:02] Okay, you remove essentially randomness by using as a seed
+[096:08] your own number.
+[096:12] Okay. How do we number the drawers?
+[096:17] Because you said, okay, I look at the number inside.
+[096:22] Uh I
+[096:25] I use the number inside the drawers to w to decide what what's the next to open and go on.
+[096:35] I win if
+[096:43] Okay.
+[096:45] My number. So I start from uh the drawer with my number, but inside there could be any other number.
+[096:53] I keep doing these steps.
+[096:58] Until either I open too many drawers and I lose, or I stop before if I'm able to find my own number, which is the
+[097:13] No, it's not a drawer where I started.
+[097:17] W which points to the drawer where I started.
+[097:22] Okay? Yeah?
+[097:26] What is this?
+[097:37] What's the what's the what what is this?
+[097:44] Uh yes. The permutation is inside the the drawers.
+[097:50] And uh what's uh the
+[097:54] The okay, I win if I'm coming back to my number.
+[098:01] Which is uh a cycle in the permutation. And I win so since it's a permutation, I always come back sooner or later.
+[098:11] Right?
+[098:16] Exactly.
+[098:17] Exactly. If the if this the the cycle is shorter
+[098:25] then or equal to fifty
+[098:29] I win.
+[098:30] Otherwise I lose.
+[098:33] Okay.
+[098:37] So this is for me. But we are interested in the in the wi in winning everybody.
+[098:46] Do you agree that all the other
+[098:50] scientists which are within my cycle, if I win, they win.
+[098:59] Yes or no?
+[099:01] Yeah, because we are in the same cycle. Uh if is in my cycle, it's starting from here, reaching my number.
+[099:11] and going forward until it reaches his own number because we are in the same cycle.
+[099:18] Okay? That's the crucial part, okay? Because the previous solution, the one with very low probability, everybody was winning independently on the other.
+[099:31] Now instead we have scientists we which are buying together in winning. If I win, all everybody in my cycle are winning.
+[099:46] When do we lose? Everybody,
+[099:49] lose. Not because each of them is losing, but but because the group, at least one scientist, is not winning.
+[100:02] Okay.
+[100:05] Okay. Yep.
+[100:07] So now now we need uh okay, this this is uh somehow a deterministic strategy, right? Because there is no randomness at all.
+[100:18] We are assigning the numbers. We are deterministically assigning numbers to drawers.
+[100:26] We
+[100:29] The the the the number within the drawers has been assigned by by the director.
+[100:36] Everything is deterministic. We need to add some randomness in order to reduce the probability of the permutation
+[100:45] being having a cycle longer than fifty.
+[100:50] Okay.
+[100:52] So it's enough to choose the numbers of the drawers. So each drawers now has a number inside and the index.
+[101:03] If we assign the indexes at random, we are introducing a random permutation.
+[101:10] Do you agree with this?
+[101:12] We are introducing a random permutation.
+[101:15] So we are introducing the randomness and the probability of winning is the probability of a random permutation to have all the cycles smaller than or equal to fifty.
+[101:29] You agree?
+[101:30] Notice that we have one hundred numbers, only we are interested in uh
+[101:37] Permutation having no cycle longer than 50. If there is a cycle longer than 50, there is just one.
+[101:47] So our goal is to estimate the probability of having uh
+[101:52] Or the cycle
+[101:54] smaller than uh fifty.
+[101:57] Okay, and that's exactly zero point three.
+[102:02] Uh in the next section we will see uh the proof. It's actually uh just a few lines uh of uh combinatorics uh
+[102:13] Easy cometh.
+[102:16] Nice. We were uh
+[102:18] We you were able to save us.
+[102:21] from the director part.
+[102:24] Good strategy.
+[102:25] Okay, see you on Monday.
+[102:30] Uh have a nice day. Let me know. Have a nice day and and have a nice weekend.
+[102:37] Uh let me know if you have any trouble with the course. If you need something, feel free to contact me on by email or
+[102:46] or telegram if you have uh a description

@@ -1,7 +1,7 @@
 A = [1,2,3,1,4,5,2,3,1]
 k = 3
 
-def sliding_w_max(A,k):
+def sliding_w_max(A,k): #Θ(n*k)
     sol = []
     for i in range(0,len(A)-k+1):
         m = A[i]
