@@ -76,7 +76,7 @@ stesse box. È lo standard da mantenere.
 ## Aggiunte (01/10/2026)
 - Trascrizione Teams: se nella cartella della lezione c'è un `.docx` tipo `L_04-en-US.docx` (trascrizione automatica di Teams),
   usalo come trascrizione (estrai il testo da word/document.xml) e salta la trascrizione con sherpa-onnx; servono comunque i frame.
-- Note del prof in PDF (esportate dal suo iPad): `Lessons/L3/SlidingWindowMaxima.pdf` (TRW + SWM, 2026) e `Lessons/L4/Pearls_2025.pdf`
+- Note del prof in PDF (esportate dal suo iPad): `Lessons/L3/SlidingWindowMaxima.pdf` (TRW + SWM, 2026) e `Lessons/L5/Pearls_2025.pdf`
   (note dell'ANNO SCORSO sulle "pearls": 100 prigionieri, duplicato, Floyd, majority/Boyer-Moore, Misra-Gries, scacchiera/domino).
   Se arrivano nuovi PDF del prof, spostali (mv, nomi senza spazi) nella lezione a cui si riferiscono e includine le pagine nel tex
   con `\includegraphics[page=N,trim=...,clip]` (vedi i comandi `\profpage`/`\oldnotes` in L3.tex/L4.tex), al posto dei frame del video
@@ -90,3 +90,25 @@ stesse box. È lo standard da mantenere.
 - L5 (30/09) PROVVISORIA è la "Part II" di `Lessons/L4/L4.pdf` (Octech vuole L4 e L5 insieme nella cartella L4, con chiaro
   dove si è fermato il prof). Quando arrivano registrazione/trascrizione di L5: scrivi L5 per bene in `Lessons/L5/`
   (PDF, codice, test) e in L4.tex sostituisci la Part II con un rimando breve a `Lessons/L5/L5.pdf`, aggiornando la box "Where we are".
+- Esercizi: `CPC/Esercizi/` è un crate di esercizi per Octech (tracce con `todo!()` in src/lN.rs, test, soluzioni in
+  `Esercizi/soluzioni/` fuori dal crate, README con elenco e suggerimenti). Per ogni lezione nuova sistemata (non provvisoria)
+  aggiungi `src/l<n>.rs` con 2-5 esercizi sugli algoritmi della lezione (traccia, obiettivo di complessità, cosa si allena in Rust,
+  test con esempi della lezione + confronto con forza bruta), la soluzione in `soluzioni/l<n>.rs`, la riga `pub mod l<n>;` in lib.rs
+  e le righe in README. Verifica nel cloud che i test passino con le soluzioni copiate al posto delle tracce e che le tracce compilino.
+  Non toccare mai i file src/lN.rs già esistenti: potrebbero contenere le soluzioni di Octech. Quando L5 sarà rifatta sulla
+  registrazione, se gli esercizi E19-E22 non corrispondono alla lezione vera, aggiungine di nuovi invece di modificarli.
+- (04/10) Octech ha rinominato `Lessons/L4` in `Lessons/L4_and_L5` e il PDF in `L4_and:L5.pdf` (nel Finder appare come "L4_and/L5.pdf"),
+  e ha aggiunto i suoi appunti `notes_L5.md` (fonte, non toccarli). Se ricompili L4.tex, rinomina l'output come il suo PDF;
+  in generale rispetta nomi e cartelle che sceglie lui e aggiorna di conseguenza i `members` del Cargo.toml radice.
+
+## Struttura aggiornata (04/10/2026) — vale più delle note precedenti dove sono in conflitto
+- Una cartella per lezione `Lessons/L<n>/` con: `L<n>.tex/.pdf`, `claude_notes.md`, `board/`, `figs/`, il crate della lezione
+  (`Cargo.toml` + `src/`, nome `l<n>`), le note e il codice di Octech, e la sottocartella **`practice/`** con gli esercizi.
+- L4 e L5 sono di nuovo separate: `Lessons/L4` (L4 vera) e `Lessons/L5` (L5 PROVVISORIA dalle note 2025; `Pearls_2025.pdf` è in L5;
+  `Lessons/L5/notes.md` sono gli appunti di Octech su L5, ex notes_L5.md). Quando arriva la registrazione di L5, rifai `Lessons/L5`
+  sulla registrazione (togli "provisional"), e aggiorna il rimando in fondo a L4.tex se serve.
+- Esercizi: NON c'è più `CPC/Esercizi`. Per ogni lezione `Lessons/L<n>/practice/` è un crate `practice_l<n>`:
+  `src/lib.rs` (tracce con `todo!()` + test), `src/util.rs` (Rng), `soluzioni/lib.rs` (fuori dal crate), `README.md` (tabella + suggerimenti).
+  Per una lezione nuova crea `practice/` così (2-5 esercizi), aggiungi `"Lessons/L<n>/practice"` e `"Lessons/L<n>"` ai members del
+  Cargo.toml radice, verifica nel cloud che le soluzioni passino i test e che le tracce compilino senza warning.
+  Non sovrascrivere mai un `practice/src/lib.rs` esistente: può contenere le soluzioni di Octech.

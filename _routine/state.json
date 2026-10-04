@@ -5,12 +5,16 @@
   "Lessons/L3/claude_notes.md": "1d2ab4cef12bceeca41bb50548da433c83c73181",
   "Lessons/L3/figs/make_figs.py": "95cb5a68e642ede01244806a665f5a4bb695f2e8",
   "Lessons/L3/src/lib.rs": "905536e6a821328aa44b2430f3bee110e046d51d",
-  "Lessons/L4/L4.pdf": "42fc3511477467a39b287f6cde8b153fe53f970b",
-  "Lessons/L4/L4.tex": "5f4f4a1ec58175f25b69e18abc656ce0cc3031ef",
-  "Lessons/L4/claude_notes.md": "02f2fcd03bdb66ebb23d606c7f1d5c944eeab1d9",
-  "Lessons/L4/src/claude.rs": "e7aa438a99eee5d0e1f20c9be6f3566691a5bc9d"
+  "Lessons/L4/L4.pdf": "75d1de252d5a1604ab83d2ae9961ce9edebb7d49",
+  "Lessons/L4/L4.tex": "e1f7d1580ac5ee9140c75ca344306b96c581e36b",
+  "Lessons/L4/claude_notes.md": "947d8e03e066de6af5298821b44534546b4e8b6b",
+  "Lessons/L4/src/claude.rs": "d793a25618c1bb05a7fb05bbc99044328ce890d5",
+  "Lessons/L5/L5.pdf": "1eaf1cf1ea41a573442cdfe9e2ae9f08b701edc9",
+  "Lessons/L5/L5.tex": "e39c6de107ff6b225a63a5a91fe87d951440ca06",
+  "Lessons/L5/claude_notes.md": "adf0eadede702dd1e57122c226398140eb700ecc",
+  "Lessons/L5/src/lib.rs": "2c6ec750bc42cdbe6b2883839d3f32516b14883b"
  },
- "last_run": "2026-10-04 12:41",
+ "last_run": "2026-10-04 20:22",
  "seen": {
   "Lessons/L2/Cargo.toml": {
    "mtime": 1789983210,
@@ -68,25 +72,33 @@
    "mtime": 1790847126,
    "size": 25414
   },
-  "Lessons/L4/Pearls_2025.pdf": {
-   "mtime": 1790847089,
-   "size": 4996505
-  },
   "Lessons/L4/notes.md": {
    "mtime": 1790594514,
    "size": 4261
   },
   "Lessons/L4/src/claude.rs": {
-   "mtime": 1791117661,
-   "size": 12789
+   "mtime": 1791145299,
+   "size": 5024
   },
   "Lessons/L4/src/lib.rs": {
    "mtime": 1790847952,
    "size": 1283
   },
+  "Lessons/L5/Cargo.toml": {
+   "mtime": 1791145300,
+   "size": 88
+  },
+  "Lessons/L5/Pearls_2025.pdf": {
+   "mtime": 1790847089,
+   "size": 4996505
+  },
   "Lessons/L5/notes.md": {
-   "mtime": 1790847253,
-   "size": 0
+   "mtime": 1791129466,
+   "size": 4319
+  },
+  "Lessons/L5/src/lib.rs": {
+   "mtime": 1791145304,
+   "size": 7902
   }
  }
 }

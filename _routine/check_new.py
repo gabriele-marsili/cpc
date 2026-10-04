@@ -16,7 +16,7 @@ ROOT = os.environ.get("CPC_ROOT", os.path.join(HOME, "mnt", "CPC"))
 DL = os.environ.get("DL_ROOT", os.path.join(HOME, "mnt", "Downloads"))
 STATE = os.path.join(ROOT, "_routine", "state.json")
 
-SKIP_DIRS = {".git", "target", "__pycache__", "_routine", "board", "figs", ".pytest_cache"}
+SKIP_DIRS = {".git", "target", "__pycache__", "_routine", "board", "figs", ".pytest_cache", "practice"}  # practice: esercizi, non materiale di lezione
 SKIP_FILES = {".DS_Store", "Cargo.lock", "claude_notes.md"}
 GEN_RE = re.compile(r"^L\d+\.(tex|pdf|aux|log|out|toc)$|_transcript\.txt$")
 # registrazioni / materiale del corso in Download

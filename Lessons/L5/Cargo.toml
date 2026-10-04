@@ -1,0 +1,6 @@
+[package]
+name = "l5"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

@@ -1,0 +1,6 @@
+[package]
+name = "practice_l1"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
