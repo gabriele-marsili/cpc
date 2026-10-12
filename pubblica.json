@@ -1,0 +1,4 @@
+{"dest": "anno-2/cpc",
+ "map": [
+  {"from": "_pubblica/README.md", "to": "README.md"}
+ ]}

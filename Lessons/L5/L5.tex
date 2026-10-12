@@ -31,97 +31,131 @@
 \newcommand{\oldnotes}[3]{\begin{center}\fcolorbox{gray!50}{white}{\includegraphics[page=#2,width=#1,trim=0 #3 0 0,clip]{Pearls_2025.pdf}}\\[-2pt]{\footnotesize\textcolor{gray}{Prof.'s notes of \textbf{last year}, \texttt{Pearls\_2025.pdf} p.\,#2}}\end{center}}
 \newcommand{\extra}{\textsuperscript{\textcolor{warn}{[extra]}}}
 
-\title{\textbf{CPC --- Lecture 5 (provisional)}\\[2pt]\large Duplicate element with random access (Floyd), Majority element, Misra--Gries}
+\title{\textbf{CPC --- Lecture 5}\\[2pt]\large Duplicate element with random access, Floyd's cycle finding, Majority element (Boyer--Moore)}
 \author{Competitive Programming and Contests --- Wednesday 30/09/2026}
 \date{}
 
 \begin{document}
 \maketitle
 \vspace{-1.5em}
+\begin{keybox}
+\textbf{Sources.} Recording \texttt{L\_05.MP4} (1h20m): automatic transcript (\texttt{L5\_transcript.txt}) + frames of the professor's iPad notes
+(the handwritten images are \emph{his} board). Last year's notes \texttt{Pearls\_2025.pdf} only for the parts marked \extra{}.
+
+\end{keybox}
 \begin{warnbox}
-\textbf{PROVISIONAL.} The recording of 30/09 is not available yet. This lecture is reconstructed from the professor's notes of
-\textbf{last year} (\texttt{Pearls\_2025.pdf} p.\,8--17, in this folder): in 2025 these topics took the two ``Tiny but Mighty'' lectures right after
-the 100 prisoners puzzle, and so far 2026 has followed the 2025 schedule closely. What was really said on 30/09 may differ (in particular how the prof
-fixed the bug of the ``destroy $A$'' solution left as homework in L4): it will be redone on the recording.\\
-\textbf{Previous}: L4 ended at ``Does random access help? Destroying $A$'' (\texttt{Lessons/L4/L4.pdf} \S3.6).\\
-\textbf{Next (L6, 05/10)}: in 2025 the next lecture was \emph{binary search and the two pointers trick}
-(\url{https://pages.di.unipi.it/rossano/blog/2023/binarysearch/}).
+\textbf{Where we are.} L5 starts from the homework of L4 and \textbf{ends with Boyer--Moore}: insertions are supported, deletions are left
+for the next lecture: \texttt{Lessons/L6/L6.pdf} (majority with deletions, Misra--Gries, the chessboard puzzle).
 \end{warnbox}
 
-\noindent Code: \texttt{Lessons/L5/src/lib.rs} --- \texttt{cargo test -p l5}. Exercises: \texttt{Lessons/L5/practice} (\texttt{cargo test -p practice\_l5}).
+\noindent Code: \texttt{Lessons/L5/src/lib.rs} (\texttt{cargo test -p l5}). Exercises: \texttt{Lessons/L5/practice} (\texttt{cargo test -p practice\_l5}).
 
 \tableofcontents
 
+%======================================================================
+\section{Duplicate element, continued: random access, destroying $A$}
+Reminder: $A[0..n]$ contains $n+1$ values in $\{0,\dots,n-1\}$; find any duplicate (example $A=[1,3,5,6,5,2,0,4,7]$, $e=5$).
 
-\section{Duplicate element: random access helps}
-\subsection{Destroying $A$, the 2025 way}
-\oldnotes{0.55\linewidth}{8}{265bp}
-View $A$ as a \textbf{linked list}: cell $i$ points to cell $A[i]$. Start from position $n$: no cell points to $n$ (all values are $<n$),
-so following the pointers we never come back to $n$; since there are finitely many cells we end up in a \textbf{cycle} ($\rho$ shape).
-The node where the tail enters the cycle has \emph{two} incoming arrows (one from the tail, one from the cycle): two cells contain its index,
-i.e.\ \textbf{it is a duplicated value} (the ``not possible'' picture of the 100 prisoners, now possible because of the duplicate).
-Example: $8\to7\to4\to5\to2\to5$: we reach cell $5$ twice, $e=5$.
-\begin{keybox}
-Mark every visited cell (destroying $A$); the first cell reached twice is a duplicate. $\Theta(n)$ time, $O(1)$ extra space, but $A$ is destroyed.
-\end{keybox}
-\noindent\extra{} \texttt{claude::follow\_pointers\_destroy} marks a cell by writing $n$ into it ($n$ is not a valid value).
-Note: the 2026 lecture attacked ``destroy $A$'' differently (reusing the MSBs, with a bug): how the prof fixed it on 30/09 is not in the 2025 notes.
+\subsection{The L4 homework}
+The lecture starts by saying that the buggy solution of L4 (reuse the most significant bits as a bit vector) \emph{can be fixed with the partitioning
+algorithm of Quicksort}; the details are not in the recording (they were probably given right before it started).
+\extra{} A plausible reading: after pass 1, partition $A$ in place (like Quicksort's partition, $\Theta(n)$, $O(1)$ space) so that the elements whose
+MSB equals the MSB of $e$ come first; then the single pass of the bit-vector trick scans only that prefix, so the elements to skip no longer have to be
+recognized from their (overwritten) bits.
 
-\subsection{Floyd's cycle finding: $A$ read-only, $O(1)$ space}
-\oldnotes{0.5\linewidth}{9}{104bp}
-Find the beginning of the cycle in $O(1)$ extra space without modifying the list:
+\subsection{The professor's solution: move every element to its cell}
+\board{0.6\linewidth}{place_from_n}
+Presented ``not because it is better, but because it can be improved'' into linear time, constant space, \emph{without} destroying $A$.
+Start from the \textbf{last position} $n$: read the element there and put it into the cell with its index, taking out what was there; continue with the
+element just taken out. On the example: $A[8]=7$ goes to cell $7$ (out comes $4$), $4$ goes to cell $4$ (out $5$), $5$ to cell $5$ (out $2$),
+$2$ to cell $2$ (out $5$), $5$ to cell $5$: \textbf{cell 5 already contains 5} $\Rightarrow$ $5$ is the duplicate.
+$\Theta(n)$ time, $O(1)$ extra space, but $A$ is destroyed.
+
+\paragraph{The implicit graph.} Interpret positions as nodes and values as pointers (like drawers and numbers in the 100 prisoners puzzle):
+from position $n$ we walk $8\to7\to4\to5\to2\to5\to\dots$: a \textbf{path} followed by a \textbf{loop}, and \textbf{the duplicate is the beginning of the loop}
+(two different cells point to it). The graph is never materialized: it is implicitly stored in $A$, we just follow the numbers.
+
+\paragraph{Why there is always such a loop (question in class).} The crucial point is starting from the last position: \emph{nobody points to $n$}
+(values are $<n$), so the walk can never come back to it. There are more positions than possible values, so the walk must eventually reach a node with
+two incoming arrows, i.e.\ a duplicate. With several duplicates (e.g.\ $2$ and $5$) we reach one of them, which is enough.
+
+\paragraph{Without destroying $A$?} Following the numbers is easy ($7,4,5,2,5,2,5,\dots$), but two problems arise: (1) understand \emph{when we are inside
+the loop}; (2) find \emph{the beginning} of the loop. ``Remembering the last two positions'' works on the example but not in general (e.g.\ a loop covering
+almost all the elements). Marking visited nodes with a bit solves both, but it is the trivial bit-vector solution again: finding the beginning of a cycle and
+finding a duplicate are essentially the same problem.
+
+%======================================================================
+\section{Floyd's cycle finding}
+\board{0.55\linewidth}{floyd_problem}
+\textbf{Problem}: find the beginning of a cycle in a list; the list is \textbf{read-only} (no marks).
+
+\paragraph{Intuition (Monza).} Two cars start together, one twice as fast as the other. If they are on a highway (A1 from north to south), the fast one never
+meets the slow one again; if they are on a circuit, sooner or later the fast one laps the slow one. When they meet, you know you are in the circuit.
+
+\board{0.55\linewidth}{floyd_phases}
 \begin{itemize}[nosep]
-\item two pointers from the start: \textbf{S}low moves 1 step, \textbf{F}ast moves 2 steps;
-\item \textbf{phase 1}: they meet inside the cycle (this certifies that a cycle exists);
-\item \textbf{phase 2}: move F back to the beginning and set its speed to 1; ``magic'': they meet again \textbf{at the beginning of the cycle}.
+\item two pointers from the start: \textbf{S}low moves by 1 step, \textbf{F}ast moves by 2 steps;
+\item \textbf{Phase 1}: they meet inside the cycle, certifying that a cycle exists. (The same algorithm tells whether a list has a cycle at all:
+      without a cycle F reaches the end of the list.)
+\item \textbf{Phase 2}: move F back to the beginning and set its speed to 1; ``the magic part'': they meet again \textbf{at the beginning of the cycle}.
 \end{itemize}
-\oldnotes{0.5\linewidth}{10}{56bp}
-\textbf{Why.} When they meet, S has moved $m$ steps and F $2m$. With $a$ = length of the tail and $b$ = steps done by S inside the cycle,
-$m=a+b$, and F has done the same plus $k$ full loops of length $\ell$: $2m=a+b+k\ell$. Hence $2a+2b = a+b+k\ell$, i.e.
+The prof warned that he often gets the hand-run example wrong (off-by-one details are tricky); what matters is the idea and the proof.
+
+\paragraph{Proof.}
+\board{0.55\linewidth}{floyd_proof}
+Say they meet after $m$ iterations: S moved $m$ steps, F $2m$. They meet inside the cycle (F is already in the loop, and S cannot complete a lap before
+F catches it). Decompose $m=a+b$: $a$ = steps before the beginning of the cycle, $b$ = steps done by S inside the cycle (not the length of the cycle).
+F did $a$ steps, then $k$ full laps of length $\ell$, then $b$ more steps: $2m=a+b+k\ell$. Hence $2a+2b=a+b+k\ell$, i.e.
 \[ a = k\ell - b. \]
-In phase 2 F walks $a$ steps from the start and reaches the beginning of the cycle; in the same $a$ steps S, which was $b$ steps past the beginning,
-goes around to $b+k\ell-b \equiv 0$: the beginning of the cycle as well.
+In phase 2 both move at speed 1. After $a$ steps F, restarted from the beginning, is at the beginning of the cycle. S started from the meeting point,
+$b$ steps after the beginning of the cycle; $a=k\ell-b$ steps bring it around $k$ times minus $b$ steps, i.e.\ exactly back to the beginning. They meet there.
 \begin{keybox}
-Duplicate element with $A$ read-only: $\Theta(n)$ time, $O(1)$ extra space (random access needed). \extra{} \texttt{claude::floyd}.
+Duplicate element with $A$ read-only: follow the links from position $n$ with Floyd. $\Theta(n)$ time, $O(1)$ extra space, $A$ untouched.
+More generally: detect a cycle in a list and find its beginning without extra space.
 \end{keybox}
 
+%======================================================================
 \section{Majority element}
-\oldnotes{0.5\linewidth}{12}{345bp}
-Given $A[1,n]$, find, if any, the element that occurs at least $\frac n2+1$ times. Sorting: $\Theta(n\log n)$ time; hash map: $\Theta(n)$ expected time,
-$\Theta(n)$ space. Is $\Theta(n)$ time and $O(1)$ space possible?
-
-\subsection{Boyer--Moore algorithm}
-\oldnotes{0.5\linewidth}{13}{120bp}
-Keep a \textbf{candidate} $c$ and a \textbf{counter}; scan left to right: if $A[i]=c$ increase the counter, otherwise decrease it;
-if the counter becomes $0$, set $c=A[i]$ and the counter to $1$.
-\oldnotes{0.5\linewidth}{15}{56bp}
+\board{0.5\linewidth}{majority}
+Given $A[1,n]$, find, if any, the element $e$ that occurs at least $\lfloor n/2\rfloor+1$ times (``the one who wins the election at the first round'').
+The prof noted it is becoming popular in interviews, like the missing number of L1.
 \begin{itemize}[nosep]
-\item Example $A=[5,3,1,1,2,3,1,1,1]$: at the end $c=1$, counter $3$. The counter is \emph{not} the frequency of $1$ (which is $5$).
-\item \textbf{Claim}: if there is a majority element $e$, at the end $c=e$. \textbf{Why}: every decrement pairs one element with a different one and
-      ``kills'' both; an occurrence of the majority element can kill another element, but there are more occurrences of $e$ than all the others together,
-      so some occurrence of $e$ survives.
-\item \extra{} If the majority is not guaranteed, $c$ can be anything (e.g.\ $[1,2,3]$): a second pass counting $c$ is needed. $\Theta(n)$ time, $O(1)$ space.
+\item \textbf{Sort}, then scan the runs of equal elements looking for one of length $\ge n/2+1$: $\Theta(n\log n)$ time, $\Theta(n)$ extra space
+      (copy, or destroy $A$). ``If you don't know what to do, sort --- like k-means in data mining.''
+\item \textbf{Hash map} element $\to$ frequency (the Python dictionary solution): $\Theta(n)$ time w.h.p., $\Theta(n)$ extra space.
+\item $\Theta(n)$ time and $O(1)$ space, for general elements (even very long strings)? It looks impossible: both solutions compute the frequencies of
+      all the elements, and in constant space we cannot remember more than a few of them.
 \end{itemize}
 
-\subsection{Supporting insertions and deletions}
-\oldnotes{0.5\linewidth}{14}{209bp}
-With a dynamic set, Boyer--Moore does not work (it cannot undo). Idea: for each \textbf{bit position} keep how many elements have a $0$ and how many a $1$;
-the majority element is in the majority in \emph{every} bit, so its $i$-th bit is the most frequent value in position $i$.
-In the example: bits give $001=1$; after deleting five $1$'s and inserting a $3$ the counts give $011=3$.
-$O(\log u)$ time per operation and $O(\log u)$ space, with $u$ the largest element. \extra{} \texttt{claude::BitMajority}.
+\subsection{Boyer--Moore majority vote}
+(Boyer and Moore are also famous for a pattern matching algorithm, typical of bioinformatics courses.)
+\textbf{Checking} whether a given element is the majority is easy: one scan counting it. \textbf{Finding} it is the hard part. The algorithm finds a
+\emph{candidate}: if a majority element exists it is the candidate, otherwise the candidate is any element. Then a second scan checks it.
+\board{0.45\linewidth}{boyer_moore}
+Keep a candidate $c$ and a counter $z$ (not the frequency of $c$: it measures how much we \emph{trust} $c$). Initially $c=A[1]$, $z=1$. For each next element:
+if $A[i]=c$, $z\mathrel{+}=1$; otherwise $z\mathrel{-}=1$, and if $z=0$ we stop trusting $c$: $c=A[i]$, $z=1$.
+\board{0.55\linewidth}{bm_trace}
+Example $A=[5,3,1,1,2,3,1,1,1]$: candidates $5,3,1,1,1,3,1,1,1$, counters $1,1,1,2,1,1,1,2,3$ (at the $3$ in position 5 we ``wrongly change our mind'').
+The final candidate is $1$, correct; the final counter $3$ is \emph{not} the number of occurrences of $1$ ($5$): it is always $\le$ it.
 
-\section{Misra--Gries heavy hitters}
-\oldnotes{0.5\linewidth}{16}{32bp}
-Generalization: find the elements that occur at least $\frac nT+1$ times (at most $T$ of them). Keep a set $K$ of at most $T$ candidates with counters:
-for each $e$, if $e\in K$ increase its counter, otherwise insert it with counter $1$; if now $|K|>T$, decrease \emph{all} counters and delete the zeros.
-\oldnotes{0.5\linewidth}{17}{249bp}
-\textbf{Running time}: the naive analysis gives $O(T\cdot n)$, but it is $\Theta(n)$: the total cost of the ``decrease all'' loops cannot exceed the number of
-elements of the array (each decrement cancels a previous increment, and there are $n$ increments). With $T=2$ it is exactly the majority element problem. \extra{} Candidates may include false positives: a second pass to count them gives the exact answer
-(\texttt{claude::misra\_gries}, \texttt{claude::heavy\_hitters}).
+\paragraph{Why it is correct.} Every element different from the majority element can ``kill'' at most one increment of a candidate (an increment is either
+$z\mathrel{+}=1$ or setting a new candidate with $z=1$). Associate each other element with one occurrence of the majority element: since the majority
+element occurs more than $n/2$ times, at least one occurrence remains unmatched, so it cannot be killed and it is the final candidate. Sometimes the array helps
+(other elements kill each other), but even in the worst ordering, e.g.\ $5,1,3,1,2,1,3,1,1$ (each other element kills the current candidate), $1$ survives.
 
-\section{Puzzle: dominoes on a chessboard}
-Page 17 ends with a puzzle: an $8\times8$ chessboard with two \textbf{opposite corners removed}: can it be covered with dominoes ($2\times1$)?
-Think about it before reading the footnote.\footnote{\extra{} No: each domino covers one black and one white square, but the two removed corners have
-the same colour, so 30 squares of one colour and 32 of the other remain.}
+\paragraph{In practice.} Two or three lines of Python, two sequential scans, one counter: scan-based code with no jumps in memory is much faster than a linear-time
+algorithm that jumps around the array.
+
+\subsection{Supporting insertions and deletions?}
+\begin{itemize}[nosep]
+\item \textbf{Insertions}: yes. The order does not matter, so inserting is appending: keep $c$ and $z$ and process the new element as the algorithm would.
+      (Keep inserting $3$'s and at some point $3$ becomes the candidate, and the majority.)
+\item \textbf{Deletions}: with operations insert$(x)$, delete$(x)$ (only of an element currently present) and ``report the candidate'', Boyer--Moore does not work:
+      it would have to be rerun. \textbf{Next lecture} (Monday): a strategy supporting both, \emph{without storing the array}. The lecture ended here.
+\end{itemize}
+
+%======================================================================
+\section*{Next: L6}
+Majority with insertions \emph{and} deletions, Misra--Gries heavy hitters and the chessboard puzzle are in \texttt{Lessons/L6/L6.pdf}.
 
 \end{document}

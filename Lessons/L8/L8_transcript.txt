@@ -1,0 +1,757 @@
+[000:01] Okay.
+[000:05] Uh
+[000:09] Any question about this problem?
+[000:13] Okay.
+[000:15] Let me
+[000:16] briefly reveal uh the solution for this.
+[000:22] Uh anybody?
+[000:25] I was able to solve it.
+[000:27] Did you think about this?
+[000:31] No?
+[000:32] Yes, any solution?
+[000:35] Okay, the approach that I was uh also used uh and I failed as well when I
+[000:43] See this for the first time is to try to solve the problem by.
+[000:51] uh by cases. Okay? So what if uh this, what if that uh this this is possible approach, but it's uh worthless. Uh the idea actually is very elegant.
+[001:07] is to realize uh a chain over this. So regardless uh what are the missing pieces, just uh use this chain over the board.
+[001:22] Mm.
+[001:27] Something is wrong.
+[001:38] Okay, so go up.
+[001:40] Uh why is not the case? Uh
+[001:47] Well maybe I have too many uh s things. Don't want to count, let me copy from the past.
+[001:55] Uh past year is here.
+[002:06] Let's uh use this.
+[002:16] The previous word was uh wrong, or I skipped something because of the misalignment. So this is the chain.
+[002:25] And uh what's the great uh uh property of this chain?
+[002:32] Well, we have uh a complete uh loop and when we remove two pieces of different color, that's important um we are breaking this chain uh into sub two sub chains. Right? The one that starts from uh here
+[002:52] And now this starts from here.
+[002:56] Ah almost after the beginning of the
+[002:59] Who's up chains?
+[003:01] Okay? Good thing is that both such chains start and ends with different colours. This starts with white.
+[003:13] And the end sweet black.
+[003:16] This uh this is with black.
+[003:22] And it's fine with one.
+[003:24] Okay, what does it mean? It means that you can use uh a domino here, domino here, the domino here.
+[003:34] Yeah, yeah, yeah.
+[003:38] Small. And since you start with a different colour and with sorry, and then start with different colours, uh you can tie this with the dominus. Maybe the same for the other one of course.
+[003:51] Okay? So no case, no sub cases, uh nothing, okay? Uh the only thing you need uh is to put that uh if sub chain starts with uh and ends with the different colours. You can fill uh you can tile it with uh dominos.
+[004:09] And that's all. No matter what uh pieces you are uh removing, there is always these long chains.
+[004:20] It forms a loop which is breaking into two sub-chains with this property, and that's O.
+[004:28] Yeah.
+[004:30] Is it uh nice?
+[004:33] Present?
+[004:34] Okay, so let me start uh
+[004:38] Uh so let me copy this from last year, including the next puzzle I would like to give you.
+[005:02] Okay, here we are.
+[005:05] Next puzzle.
+[005:09] The solution was nice, right? Isn't it?
+[005:14] Okay.
+[005:15] You don't like.
+[005:18] We like it.
+[005:19] Okay.
+[005:21] So next puzzle is the following. Okay, we have Alice and Bob.
+[005:30] We have Alice and Bob uh and uh a sequence of two numbers.
+[005:36] So the sequence is of even length, because 2. And so we have this sequence and others, which are actually the value of coins.
+[005:52] So then we start uh a game played by Alice and Bob.
+[005:58] In which
+[006:01] Alice starts first.
+[006:05] And Bob starts second.
+[006:08] They are doing the following. Okay? Alice can choose two one of the two coins at the end of the sequence.
+[006:19] Okay.
+[006:21] She can select the first one or the last one
+[006:29] is being full.
+[006:31] Okay?
+[006:33] So we start this this day.
+[006:36] Let's say Alice selects this one.
+[006:40] Then
+[006:44] Then. Then, so this is taken by Alice. Bob.
+[006:50] He is free to choose another one.
+[006:53] Two or four.
+[006:56] He sees that uh after two there is uh one hundred and uh he say he he says, Okay, I'm going to choose this one.
+[007:07] four. Then Alice forgets about a hundred and she selects two.
+[007:16] Then Bob s Bob selects uh one hundred uh
+[007:22] Then uh Alice uh
+[007:24] With three, Bob with one, nobody knows why.
+[007:30] Alice thanks Bob and say takes uh uh
+[007:37] six, then finally Bob takes five, and that's the result of the game.
+[007:46] Okay? Uh the player that win the the player that makes uh more money wins. So Alice uh is getting twelve uh fifteen uh twenty one
+[008:01] While Bob uh is much more rich, he's taking uh one hundred ten
+[008:12] Okay? Notice that since we have ev an even number, uh
+[008:18] Alice starts and Bob ends the game.
+[008:23] Okay.
+[008:26] Okay.
+[008:27] Our goal is uh to find to answer this question
+[008:33] Is there any strategy for Er for Alice to get always
+[008:45] Uh as much as at least as much as Bob.
+[008:51] So no matter what the sequence uh is.
+[008:55] Any sequence.
+[008:58] with two n numbers. n can be maybe small or large.
+[009:04] Anything good.
+[009:05] The secrets may be
+[009:08] Uh whatever you want.
+[009:12] We are playing this game in which Alice starts first. So the only advantage of Alice is to start first.
+[009:24] No matter what the sequence is, no matter uh how long uh it is,
+[009:30] Alice starts first and we want a strategy that no matter how clever Bob is, Alice is able to gain always at least as much money as Bob.
+[009:49] Okay? The question is, if it exists, what's the strategy for Alice?
+[010:01] 'Kay.
+[010:03] Questions or these?
+[010:05] Okay, if you think about this, next uh lecture we will uh
+[010:12] If you have an idea, you go on. Go on.
+[010:16] Okay.
+[010:23] No, no, no, both can uh fu full uh full uh knowledge about uh the sequence.
+[010:31] If they watch only the extreme, I think the only possibility is uh to select the largest one of the two and go on like this.
+[010:40] And the outcome would be: no, it's impossible. Okay, because you have, for example, ten.
+[010:50] Uh one, one million, zero. Alice can only see ten and uh she selects the largest one.
+[011:00] So they've they they have full knowledge about uh their sequence.
+[011:07] Okay? And our goal is to find, if any, this best strategy for it.
+[011:14] Th no not not this best strategy, this strategy which guarantees always to at least gain as much mo as much as as both.
+[011:27] Okay.
+[011:30] Gate.
+[011:34] Um
+[011:36] Okay.
+[011:38] Do you want to say something?
+[011:40] So that you just you can take any areas in the
+[011:46] They can take any what do you mean?
+[011:53] No, no, no, no, no. Otherwise uh it would be trivial.
+[011:58] Sort the numbers, Ellie's taking the first, Bob is taking the second, and so on.
+[012:04] They they can only select the two elements at the extreme.
+[012:11] But they have the full knowledge about the sequence. What does it mean? It means that there is one million uh in the middle. Alice both Alice and Bob knows about uh one million. Okay? And the goal for Alice is to guarantee herself that uh is she is going to take the the one million uh uh coin for her.
+[012:35] Okay.
+[012:38] Only the extent.
+[012:40] If they can see only the extremes, the solution is trivial. Only take always take their largest one. If they can take any element in the sequence, the strategy is is always as well. Sort the element by value,
+[012:56] and then always take the largest one.
+[012:59] And uh Alice is going uh to
+[013:02] Telista.
+[013:04] get as much as Bob in this case. If they can see only the extreme, the solution is trivial, but Alice is not guaranteed to take to always take the the largest or at least as as Bob.
+[013:19] Are you convinced by this? Okay, without full knowledge they only take the the largest one and the one medium could appear in any moment.
+[013:58] No, okay, okay. E like this. Okay, Ellie's strategy so so let let's let's say a strategy exists.
+[014:08] So the strategy is guaranteed to reach the goal, no matter what Bob is doing. So Bob could be super clever or super dumb. No problem.
+[014:29] Alice is guaranteed to reach the goal. And the goal is this one, okay? It's not to make as much as possible.
+[014:40] Okay? Is to gain uh is to reach this point. Okay, so gain at least as uh as both.
+[014:56] Okay, if you want, we can stop uh ten minutes, think about the problem and then uh
+[015:01] I present a solution.
+[015:03] Do you agree? Okay, go on.
+[015:06] Here and here we have in this case.
+[015:13] Then ice has to
+[015:17] creating that element.
+[015:19] Okay.
+[015:20] Okay. So if there is let's say ten
+[015:27] Uh one.
+[015:30] One million and uh five
+[015:36] We want Alice to be sure to get that super coin.
+[015:44] How is this easy or not?
+[015:55] Yes. Well what's the strategy?
+[016:03] She water?
+[016:08] Okay, okay, in this case uh is uh easy because
+[016:14] The sequence is very short.
+[016:17] Alice taking this one, then Bob for sure has to free the super coin and Alice is taking it.
+[016:26] So what's the strategy for Aldis in this case is to uh reach a point in which we are uh we are like this.
+[016:37] Okay, and this is always possible because Alice is never freeing the the the one million uh coin and since this situation contains three elements which is odd is for sure reached by Bob because Bob is uh
+[017:02] dealing with cases in which there are an um an odd a remaining odd number of uh coins. So it's always possible. Helice always uh should be should guarantee never remove an a coin which is uh on the left or the right directly on the left, directly on the right of the super coin. Yeah, so this case uh it's uh easy.
+[017:31] Uh but uh this is not a general case.
+[017:40] What if we switch
+[017:43] Uh so ten one million one five L is stuck with five.
+[017:52] Uh okay. No matter so so no matter what's uh
+[017:59] Eye.
+[018:00] No matter what's here.
+[018:04] Uh there is a core, let's say kernel, okay? This let's call this kernel, a kernel of three elements. The supercon is in the middle.
+[018:15] Or and two coins are on the if the super con is at the stream immediately that's done. So exclude in this case, there is this carrier with uh the super con in the needle and two
+[018:28] Points one on the left and one on the right.
+[018:31] And no matter what's here, Alice can always reach the point in which it's bob bobstar and there is only the cabin left.
+[018:50] Yeah, always an even number of coins in this case.
+[018:55] So if we are a if there is a super coin which dominates uh the sum of all the others, Ellie's strategy is pretty easy. Uh
+[019:06] Please fit something here or here.
+[019:11] until uh it's we reach the kernel and it's uh bobstuff. It's always bob bob buttons because uh uh the kernel has a length which is uh odd. And odd lengths are uh bob scales.
+[019:32] Extending this strategy, instead of finding one number that is greater than all the others, we find a a group of numbers that are uh two parts uh two uh numbers apart whose sum is greater than all the others. So she chooses uh this is a bit more uh complicated, no? To prove let's say these are
+[020:00] together the uh super coins. Now the definition of super coin is that all together I have a sum which is greater than or equal to the other.
+[020:12] Okay, we don't know what's in the middle here.
+[020:16] How can you guarantee that uh
+[020:31] Mm. What do you mean?
+[020:42] Then the way that one way
+[020:51] Okay, so
+[020:52] So what's this strategy?
+[020:55] Concretely.
+[020:58] But the surprise is getting the
+[021:02] Getting these repods associated with the which which one?
+[021:07] So you are uh you are at the beginning, okay?
+[021:13] You are at the beginning, you have a sequence. This is the sequence.
+[021:27] Okay, this is your sequence. What's the group of element?
+[021:31] That you are referring to.
+[021:46] Yeah.
+[021:50] Seven?
+[021:53] So odd and
+[021:58] So elements with odd position. Yes. And the other sound.
+[022:05] She decides which one is the the
+[022:08] Notice.
+[022:10] And so she always speaks the number that is uh okay, so sum uh of uh odd is uh
+[022:20] Ten plus one hundred plus five plus three, which is uh one hundred eighteen.
+[022:31] What about uh E?
+[022:34] E is two plus one plus six plus four thirteen.
+[022:42] So Alice is going to select uh odd.
+[022:47] Alice is choosing uh odd.
+[022:51] And then is she guaranteed that you always uh take uh not all the old all the odd uh
+[022:59] Coins?
+[023:00] Yes, quote, because uh uh w only one of the two extremes is odd.
+[023:06] She's taking the odd one and uh Bob sees only even. So he's taking even, revealing an odd. Alice is taking the odd. Only even, odd, only even, odd, only even odd.
+[023:22] What if she selects even? It's the same. Even, only odd. Even only odd, and so on.
+[023:30] You agree?
+[023:33] You agree?
+[023:35] Yeah.
+[023:41] Okay.
+[023:47] Uh okay, le f first let's conclude with this and then we go on with yours.
+[023:53] Yeah.
+[023:55] So this is saying okay, let me label odd non o odd coins as the ones that are in an odd position, even coins the ones that are on an even position, take the sum compute the sum of the two, uh select the largest uh sum, if any. In the worst case uh both are the same sum and uh Al is is not going to win, but
+[024:20] It's going to make it at least as Bob is doing. Yeah, it works.
+[024:29] What about your solution?
+[024:32] You take the maximum of the extreme, usually this can be uh be uh ruined by a counterexample, or disproved by a counterexample. If you only focus on t one of the two extremes, or two extremes, then it's pretty easy to make uh a counterexample. So let's say uh you have uh
+[024:58] You have uh one million five.
+[025:03] Okay? And you say, okay. So re re you you're doing this choice regardless the and the the the the inner part of the sequence.
+[025:18] Okay?
+[025:46] Okay, okay. This is a good point. Uh n I'm not sure if it's exactly what you meant, but uh okay. So this strategy guarantees odd and even one guarantees that uh Ellis i is never losing against uh against Bottom. And the only advantage Alice
+[026:12] Only thing Alice is exploiting is uh the fact that uh she starts first.
+[026:21] Then you can but it's not guaranteed to find the best game.
+[026:28] Okay? The best gain is not guaranteed to be achieved.
+[026:34] So what's uh a way not a problem what's uh a strategy to compute to the best thing?
+[026:57] Uh
+[026:59] Today or the magnets here.
+[027:02] Okay. And the way uh okay, it makes uh a lot of sense. So Alice is uh the far the first to start. This is uh very close to what you were saying. Um
+[027:16] This is Alice Tar. She can select right, left or right. If she she selects left.
+[027:28] And uh then the the uh the remaining sequence uh is two, one hundred, one, six, three and four. And the problem is, what's uh the best gain for uh Bob?
+[027:46] with this sequence.
+[027:48] 'Kay.
+[027:49] On the other hand, if Alice chooses right, we have another sequence with one element less. And uh uh yeah, what's the best
+[028:02] Uh for Bob here. Now we have a node another sequence shorter by one with Bob choosing the extreme.
+[028:13] Here, the problem is the same. What's the best game for Bob?
+[028:18] on this sequence when it starts first.
+[028:23] Then left.
+[028:25] Right, left right and so on.
+[028:31] Okay.
+[028:34] How large is this uh three?
+[028:40] Yeah.
+[028:42] Yeah. Very big.
+[028:46] Not very efficient, uh that's a
+[028:52] No, no, it's two to at least a two to the end.
+[028:56] Because uh you're drawing exponential uh in the possibilities, right? So so first node
+[029:04] You have two possibilities. Second note, you have two possibilities. Third note, two possibilities, and so on. Okay, so it's growing as connection.
+[029:15] Yeah, yeah, yeah, yeah, yeah.
+[029:20] What's the crew so is is it clear to everybody?
+[029:24] Okay. Uh so essentially we we we are playing all the possibilities with Bob and Alice and Bob Alice and Bob Alice and Bob. Okay? And we are trying all the possible sub sequences every time shorter them shorted by one depending on the choice made above.
+[029:51] We have an exponential number of possibilities, and that's there.
+[029:56] Sad part, sad part of this story. Okay?
+[030:02] But
+[030:03] But
+[030:05] Every time we are talking about the shaft problem,
+[030:09] Shorter sequence is a sub-problem. And these shorter sequences appear many different times.
+[030:21] The same sub-sequence occurs often.
+[030:26] Because we have fewer few possible sub-sequences.
+[030:32] and a huge tree. So the the size of the tree grows exponentially, the number of possibilities, poss possible subsequences is only quadratic.
+[030:46] Do you agree with this? So in many of these notes we have the same subsequence.
+[030:54] So what's the solution?
+[030:58] Right.
+[030:59] Yeah? So remember the solution for the subsequences you have already seen. Because no matter if Bob else is playing,
+[031:10] Actually
+[031:12] Bob is playing only on sequences of length odd, Alice is playing only on sequences of length even. Which so it's not a ev even a problem. But uh if it was, we have a player that want to maximise the game.
+[031:32] Okay?
+[031:34] Yeah.
+[031:37] Okay. So I tell you what Alice is is choosing. For example, what Alice is choosing.
+[031:46] Well, what he's gaining minus what uh Bob is gaining.
+[031:54] Okay.
+[031:55] And pop barber is playing optimally.
+[031:57] because it's not the thing of okay memorizing the solutions means
+[032:06] Topic you will love a lot. It's dynamic programming that we are going to see soon. Okay, actually this is quite a hard problem in dynamic.
+[032:20] There are other problems as you
+[032:24] Uh
+[032:25] Sad one of the first lecture, but this is one which is quite complicated.
+[032:31] Okay.
+[032:33] Good.
+[032:37] 'Kay.
+[032:39] After this
+[032:43] Um yeah.
+[032:46] So why we we reach this point? Well, because uh you asked me to to think about uh the solution and uh why these kind of puzzles? Because uh as you can uh easily understand, thinking about these puzzles uh let you make uh questions that actually has a strong relationship with uh
+[033:11] arguments, topics that we are going to see next or even not seeing what are very important like advanced dynamic programming problems. Okay. After these
+[033:27] long digression. Let's come back
+[033:31] on our problem uh for today's lecture which is closest
+[033:43] Pair of points.
+[033:48] This is a super classic problem.
+[033:54] uh which is uh as follow we are given
+[034:01] Um
+[034:10] We are given uh a set of uh n two D points.
+[034:19] Which are points in the 2D space. Here is an example.
+[034:25] Our goal is to process this set of points and returns the two.
+[034:34] Which are the closest one
+[034:38] in uh the space uh accordingly to the of course Euclidean Euclidean distance.
+[034:46] Okay? So we are looking for the two closest point.
+[034:50] So find
+[034:53] The two
+[034:55] Closest.
+[035:00] Point. This is the goal.
+[035:02] Okay? Of course uh we are using uh a clid.
+[035:10] The stanza
+[035:15] which is uh distance between x one
+[035:21] Why one?
+[035:22] and x two y two
+[035:26] is equal to the square root of
+[035:31] The difference between x one and x two
+[035:36] Squared.
+[035:37] Uh plus the difference between y one minus y two.
+[035:44] Okay.
+[035:46] They're coming at least.
+[035:51] Okay, so that's the problem.
+[035:54] Uh the topic
+[035:57] is a sweep line.
+[036:01] That we have described last time. So we imagine to have a vertical
+[036:09] or horizontal
+[036:11] line that sweeps over the plate.
+[036:16] This is uh I mean conceptually.
+[036:19] Uh practically you want to sort by
+[036:24] something and process the points one after the other accordingly to the sorting.
+[036:31] In the case of segments, we were sorting by end point, so beginning or end of the point, and we were processing the points in that way, keeping track of a counter which says how many point how many segments are still active.
+[036:50] Okay?
+[036:52] Here
+[036:54] We will do the same.
+[036:57] having a sweep line
+[037:00] Babta.
+[037:01] Uh speaking over the media, we transpect the X coordinate.
+[037:07] Okay.
+[037:09] Here the things are much, much more complicated.
+[037:13] Then we can.
+[037:15] Okay, what's uh the trivial uh solution for the for the problem?
+[037:24] Try all the possible paths for each of them computed with an instance, which can be computed in constant time, so we get a quadratic running time.
+[037:36] Trivial solution.
+[037:40] Uh
+[037:43] runs in quadratic time.
+[037:48] Okay, let me say that uh uh on my page there is uh uh
+[037:56] Report
+[037:58] with the tailored records, with the tailored notes, with all the details of this problem
+[038:08] uh in the previous ones uh
+[038:12] on bio and search.
+[038:14] and many of the next ones including uh feng wee tree and so on that we are going to see.
+[038:19] Okay, so use this uh as a reference, okay?
+[038:24] There is also code that's where you can play with.
+[038:28] I'm uh okay since uh
+[038:31] the advancement in AI I'm going to
+[038:36] provide notes also for dynamic programming that is a topic that we are going to see soon.
+[038:43] Okay. Uh this is very important for foreign students, which uh are not usually trained well enough for oral exam in the Italian system. It's not uh be about you specifically, but uh I am considering history of the past uh years. Uh if you are uh
+[039:08] doing your first exams.
+[039:12] Please contact me if we agree.
+[039:14] We discuss a bit about what oral exam in the Italian system means. Okay? Usually means go.
+[039:22] In depth.
+[039:24] Okay. For every argument you must not know just the
+[039:28] The introduction.
+[039:30] But you must know everything which is uh behind the a mere introduction of the topic.
+[039:40] Okay.
+[039:43] Okay. So what's uh our target running time?
+[039:49] Target
+[039:51] Solution
+[039:54] Ranzin
+[039:58] In Logan.
+[040:02] Bye.
+[040:04] Okay, there is uh an algae time solution that works uh by using divided and conquer approach. Worth reading. So if you have some time, go there and check what does it mean. It essentially splits the point into subsets and then uh solve the problem on the two subsets independently apart from a range of points which
+[040:30] Maybe uh
+[040:32] Uh
+[040:34] Danger points which are on both sides, which may be part of the solution which are dealt with explicitly. Okay?
+[040:46] We are not going to see the Waden-Conquer based approach because we are going to discuss the one which is based on
+[041:01] Never heard this before.
+[041:05] They are coming for us.
+[041:09] Um
+[041:14] Okay.
+[041:17] Uh what's uh what's the the idea?
+[041:23] Okay, the idea is to process the points uh from for uh uh in order of x. So first first we sort all the points uh by x coordinate. Thi this takes uh uh this takes uh n log and time.
+[041:43] Okay? Now we process the points one after the other.
+[041:49] in X coordinate order, and we keep track of
+[041:56] uh delta, which is the smallest
+[042:02] These stance.
+[042:05] See now.
+[042:07] So far.
+[042:09] So we process the point by x.
+[042:14] Okay.
+[042:16] We are currently on a certain point x, y and we have already processed the point on the left.
+[042:29] Okay? We will then process those points.
+[042:33] Okay? And the and delta is the smallest distance in between points that we have already crossed.
+[042:45] Okay? So it's not the smallest distance between one point that we have already processed and one point that we have really processed yet, but it's the smallest distance between points that belong on the left of this.
+[043:03] Okay? Only among them.
+[043:07] Okay.
+[043:09] Now we reach this point and we want to change our mind potentially uh by computing the distance between this and any of them.
+[043:24] Okay.
+[043:27] Are you a state?
+[043:29] Okay, if we do this, so compute this and the this are between these and any of them
+[043:40] This would give us a hydrolyte which is quadratic as well.
+[043:46] Bruce Fault.
+[043:47] Uh
+[043:49] Okay, so what's the goal? Instead of computing the distance between these and all of them
+[043:58] We want to configure the the distance between this and a point o the points for which the distance between that point and this is smaller than that.
+[044:17] Okay.
+[044:18] Potential is more than depth.
+[044:22] We can compute the distance between the point and some other point, which is a a distance greater than delta, but this point may have a shorter distance, so we don't know and we check. Okay? This is more or less the idea. So forget about computing the distance between this and any of them, but I actually compute the the distance between this
+[044:49] and some of the previous points, only the one the ones that are the most promising ones.
+[045:00] Okay.
+[045:01] Mood.
+[045:05] Okay, so
+[045:08] So let's focus uh on the point current point XY
+[045:16] Okay.
+[045:18] And let's draw
+[045:20] Around this
+[045:25] E square
+[045:31] Which contains the points which are
+[045:37] So the region actually, the region of the plane which is
+[045:42] Uh
+[045:47] such that
+[045:51] The points in this region belong to so I have a y, which is the y of the current point plus delta.
+[046:01] or minus delta.
+[046:07] And
+[046:13] x minu x minus delta y plus
+[046:20] There's come.
+[046:29] X minus delta, y plus delta.
+[046:36] Okay, this is the rectangle.
+[046:39] Uh let's be careful.
+[046:43] 'Kay.
+[046:44] Here we have x minus delta y.
+[046:50] Okay. Why we are not considering also x plus delta?
+[046:58] Yeah.
+[047:05] Go first.
+[047:08] Say again?
+[047:13] Because we are considering point on the left only. Yeah. So we don't care about the points which are on this part.
+[047:22] Yet.
+[047:24] Okay.
+[047:25] We are considering this against uh some potential point here only when we are considering that point.
+[047:33] Okay.
+[047:35] Good.
+[047:38] Okay. Uh so
+[047:47] Let's say we have a magic oracle which is going to give us all the points which are in the set and intersect with this rectangle.
+[048:04] Okay.
+[048:06] Then we would we would like to compute the distance between xy
+[048:14] and any of these points reported by the Oracle.
+[048:19] Okay? Because those are the points which may have a distance smaller than delta.
+[048:28] Do you agree?
+[048:30] So a part here for sure or sure or here for sure is going to have a distance which is larger than that.
+[048:42] Maybe?
+[048:44] Because the difference is already there.
+[048:48] Have in the winners.
+[048:51] Okay.
+[048:52] Good.
+[048:54] So assuming we have this magic oracle.
+[048:59] Which for free is giving us the point in direct timing.
+[049:06] What's the running time?
+[049:17] Well, for each of these points we need to consider how many points are in the rectangle. So x and y
+[049:27] Point xy. How many points are in this rectangle?
+[049:33] The time will be proportional to all the points in all the rectangles.
+[049:39] Huh?
+[049:41] So
+[049:43] For each point, there are many points uh in the rectangle.
+[049:48] Few points.
+[049:50] What do you think?
+[049:57] few points. Do you have an argument for this?
+[050:01] Not yet.
+[050:04] Your intuition is staying safe.
+[050:08] Okay.
+[050:09] So what we l we have an oracle which tells us these are the points. And we are going to implement the oracle later. These are the points. We compute the distance between these candidate points with the the point xy. We are sure that no other point
+[050:30] outside the rectangle may have a distance which is mo smaller than delta.
+[050:36] We compute the distance between these points, we update delta, move on.
+[050:43] Okay, that's the algorithm.
+[050:45] If there are many points in the rectangle,
+[050:50] then the running time will be large.
+[050:55] If there are few points
+[050:58] Uh the algorithm uh is efficient, provided that we implement uh the oracle.
+[051:06] Okay?
+[051:10] So his intuition is saying a few points.
+[051:15] If there are many points uh we will not discuss this algorithm. So your tr intuition is based uh on uh also on common sense. Okay? I'm going to present this solution because there are few points.
+[051:30] Why? There are few points.
+[051:47] You punch the letter button.
+[051:53] Okay.
+[051:57] Awesome.
+[051:59] If you have plans to the right, the number of points to our left increases.
+[052:05] Okay, okay.
+[052:07] Let's say th there are too many points uh inside of this vector.
+[052:15] Let's say there are two which are a distance uh smaller than that.
+[052:21] Is this possible?
+[052:27] Yes or no?
+[052:29] What
+[052:34] Okay, s okay, speeds uh let's say these are the two points and distance smaller than that.
+[052:41] Uh
+[052:43] Th both these points are on the left of this. This means that both of these points have been already processed. In particular, the rightmost one of the two has been processed when this one was on its left. This means that if the argument is correct,
+[053:04] These two large delta
+[053:09] Uh and would have been changed by this smaller lab, the distance between these two, which is smaller than that.
+[053:20] Okay? So that large delta is inconsistent with the presence of two points which are closer than delta.
+[053:32] Okay? So any point inside of this must have a distance which is greater than or equal to delta.
+[053:43] Okay? So they are very spicy.
+[053:47] And they cannot be too close.
+[053:50] This is a good uh good point in favour of being uh few.
+[053:57] Because if the distance between them must be a three-star, there cannot be too much, too many of them.
+[054:07] Yeah, this is the information.
+[054:09] Let's uh prove it.
+[054:12] Okay, there is a proof which says that uh there are
+[054:17] Uh no more than six point.
+[054:21] Okay? No more than six. Six is okay because if there is an oracle which tells us the six point, we can run everything in linear time.
+[054:34] Okay. Linear time after having sorted the point.
+[054:39] and provided that we have an efficient oracle.
+[054:43] So overall the algorithm will be n log n.
+[054:49] Okay, there is a proof uh which says uh
+[054:53] Sinks.
+[054:55] It's a little bit involved and let's have a proof.
+[055:01] which says eight. No more than eight.
+[055:05] Okay? No ordinate is al almost trivial.
+[055:09] what we have to do? Well, let's uh split uh
+[055:18] The
+[055:19] Rectangle
+[055:21] into four
+[055:24] Square per side. So eight squares in total.
+[055:31] Okay.
+[055:33] Um
+[055:36] So this this means uh that this one
+[055:40] Each side is what?
+[055:48] The size of the side is delta divided by two.
+[055:55] Okay? And delta divided by two as well.
+[055:59] Okay? Because the moon
+[056:02] piece here is delta and delta. So half of it of course delta divided by two.
+[056:12] What does it mean that divided by two? It means that c there cannot be two points within the same square.
+[056:23] Why? Because if there are two points within the same square and you want to place them as far as possible from each other, you have to place them outside, essentially on the corner.
+[056:41] Yeah.
+[056:43] Because otherwise they are too, let's say, cornered here and here. Otherwise, they are too close. Okay?
+[056:51] So this means there cannot be more than eight in total. Okay?
+[056:59] Because there cannot be two in the same square.
+[057:07] Okay, do you want me to write this?
+[057:11] No? Okay.
+[057:13] Uh
+[057:15] In the last year I was writing everything, but uh I'm sharing with you the notes uh from last year with everything. Plus you have the notes uh the tailored notes uh in English on my web page, so I think uh
+[057:29] More than enough.
+[057:35] Okay.
+[057:36] What is left?
+[057:45] Okay, we can process every point by comparing it with the candidates point within the rectangle that we know are not more than six.
+[057:58] even if we prove eight, but we were assuming that these points are coming from an oracle.
+[058:06] Which means somebody is so kind.
+[058:12] to tell us the points. Indeed, we discussed this when the bell were ringing. We were asking
+[058:24] directly to Lord, okay? But now we need uh to implement the oracle by ourselves.
+[058:31] Okay.
+[058:34] Uh any idea for the oracle?
+[058:43] Okay, we are in this situation.
+[058:46] We have uh many points uh here.
+[058:51] No, no, let me use uh black.
+[058:56] Uh
+[059:01] Okay, we are here.
+[059:05] We have uh many points.
+[059:08] Here
+[059:10] Here.
+[059:12] Yeah.
+[059:15] Yeah.
+[059:16] and potentially a lot of points here.
+[059:20] very, very big instance of the problem.
+[059:24] Okay, you will
+[059:31] Okay.
+[059:42] the X we care about had you can already explore the portion of the
+[059:48] We know that x can be
+[059:50] Between X max the third X. Okay. So
+[059:56] So if we have the
+[060:05] By search until the first the point that is greater than x minus the okay. Let's say we have the point sorted by x. Uh you can uh restrict your attention to the points for which uh x is greater than
+[060:30] or equal to x minus delta.
+[060:34] Okay, I agree on this.
+[060:36] But this is excluding only the points which are in this part of the space.
+[060:45] Okay.
+[060:47] Do you agree?
+[060:50] What about the points which are here and here?
+[061:00] Well, for those points uh you cannot use any trick because they are sorted by x.
+[061:10] and potentially most of the points
+[061:14] Ah
+[061:16] In the worst case, most of the points are in this region of the space.
+[061:25] Let's let's assume my
+[061:28] We have uh a worst case uh
+[061:32] uh so a very adversarial uh set of points in which all of them are in a small uh region uh with respect to Y.
+[061:47] So no no no sorry, wa mm very wide with respect to y and very small with respect to x.
+[061:58] What about you?
+[062:00] So this has this problem, so no.
+[062:08] The idea of restricting to a range is okay, but not with respect to X.
+[062:20] Take in.
+[062:33] How can you do this?
+[062:37] So you can you you can uh okay, you can uh reorder the points with respect to some s to some of the the two coordinates, to any of the two coordinates.
+[062:48] You can so it doesn't matter if originally you are sorting the point by X. You can make a copy of the data set or or the points you just processed, and you can sort them by X or by Y.
+[063:05] Okay? If you sort them by x, you can restrict to the points which are in these
+[063:16] subspace which is a vertical drop over the points.
+[063:24] The problem is is that you are uh you are screwing these points.
+[063:30] But you cannot exclude these parts and the points above.
+[063:36] Do you agree on this?
+[063:39] Yes.
+[063:40] Good. At least there may be a lot of points in the ear and ear bones.
+[063:47] Okay, even if we know that there are only six points in this one.
+[063:53] Okay.
+[063:55] Let's try the alternative.
+[063:58] What about so sorting by X means we put everything
+[064:04] We have already processed all the points we have already processed in a VST sorted by X.
+[064:12] Okay? And you can do a range of search. Just say just find the predecessor and scan until you reach. Look at the predecessor of x minus successor of x minus delta, which is the first point here. And then you process all of them one after the other in X quarter. This can be easily done.
+[064:39] What instead of sorting by x we sort by y
+[064:48] If we have all the points we have processed so far in a BST sorted by Y, we can restrict ourselves to the range that goes from o the range that goes from
+[065:04] this position to this position.
+[065:08] How can you do this? You can just uh restrict uh
+[065:15] Um just show the
+[065:18] uh predecessor of x minus delta and uh iterate uh over all the points uh till you get uh the first point which is at least uh x plus uh delta.
+[065:35] And you process all these points.
+[065:39] How many points are we processing in this way?
+[065:45] Okay. Do you agree that we are removing uh all uh not removing not touching
+[065:54] All these points.
+[065:58] Do you agree? Okay, so this part of the space
+[066:08] And this part of the space is not considered.
+[066:13] Just because we are restricting ourselves on the
+[066:19] region in which all the points are have a y greater than or equal to y y minus delta and smaller than or equal to y plus delta.
+[066:33] Okay?
+[066:35] Good.
+[066:37] Do we all agree that all the points in the rectangle are for sure reported?
+[066:44] Book.
+[066:46] What are the problematic points that we are touching and we don't need?
+[066:51] which are not in the rectangle.
+[066:57] Just to clarify, we are placing o all the points we have just processed in a BST sorted by y. Then I can ask the BST, okay, give me the first point which the y-coordinate is at least y minus delta.
+[067:19] Okay? And this giving you the first point. Then in the BST you can move uh to the next one.
+[067:28] then next one and so on and you are moving
+[067:32] From let's say this point to this point, then to this point, then this point, this point, this point.
+[067:39] Do you know this? This is an operation that you can do with BST. Okay? And uh it's taking time proportional to the logarithm of the number of points you have to find the first one and then you can move in constant time to the next one.
+[067:59] can just go down or up to a do we do we all agree on this?
+[068:05] What's the problem? The problem is that I'm finding this point
+[068:10] partly this one, but also this one, this one, this one, this one and this one. Okay? All the points which are in this region of the space.
+[068:24] Okay?
+[068:26] All any of them.
+[068:30] potentially all the provinces are here.
+[068:33] So is this a real problem?
+[068:40] Yes or no? What's the difference between the points that were here and here and the points that are here?
+[068:50] Okay, there must be a difference right there.
+[068:53] Otherwise uh the other solution would be good and square.
+[068:57] What's the point the problem like these points? The one I have here and
+[069:03] There.
+[069:05] Because uh if we had sorted by X, then we had two ranges of uh of the matter points. Two ranges up.
+[069:20] Apart from the number of ranges, there is another crucial difference.
+[069:27] Number of points may be the same.
+[069:36] Uh is clear to everybody what what regions are we are talking about? We are talking about these regions. Let me use blue one. Okay, blue region.
+[069:48] here, which includes also this one.
+[069:51] which is the case in which we are reporting uh sorting the point by x and reporting the range uh like this or versus the green region here, which is which are the points that
+[070:08] We are reporting while uh we are sorting by uh why and
+[070:13] use this range.
+[070:16] There is a crucial difference between points in blue and points in green.
+[070:22] Which makes uh the second
+[070:25] better, so it's better to to deal with green points rather than blue points.
+[071:00] Uh
+[071:02] So you mean that may be spread in a different way in the region?
+[071:12] So so the the in both cases
+[071:18] order of orientation but it's the same increasingly. If you are sorted by x you are putting the point which is the closest one to
+[071:35] Yeah.
+[071:37] So maybe the first one is one and the second one these one and then this one and these one.
+[071:45] Jump here and there as much as you will.
+[071:50] What?
+[071:52] Yeah. So where this is not a big issue.
+[071:56] But it could be this one, this one, this one, this one.
+[072:00] In in the same way as here, you are processing by Y, it could be here, here, here, here, here so you are jumping in and out.
+[072:13] Yeah.
+[072:17] We have
+[072:19] increases whereas the world increases.
+[072:25] What does it mean? If we have a
+[072:37] Ah, okay. Yeah. Uh this is true, but it's not uh the reason why. In the blue water.
+[072:51] It can be very large. Yeah, but this is not uh the crucial for the answer motivation. Uh
+[073:03] Yeah, one
+[073:08] Yeah.
+[073:11] Uh
+[073:13] No.
+[073:15] That's not uh
+[073:18] That's not the case?
+[073:20] In this equal the split may be a
+[073:29] Any other idea?
+[073:31] Okay, uh I I know it's hard, okay. It's not uh that if you don't have the answer, it's that you are not good enough, okay. Uh in these cases uh it's uh really hard to find uh the intuition, okay. Uh
+[073:50] So we are not failing, okay, we are learning. That's a crucial difference. Okay.
+[074:12] Okay, we are trying to convince ourselves that uh sorting putting the points we have processed so far in a BST sorted by Y is better than putting the pro points we have already processed in a BST sorted by X.
+[074:35] Next things are we put.
+[074:38] Yeah. Uh the X sorted uh
+[074:45] Yeah, B S T would report if we restrict ourselves to x minus the x or two x we are given this uh re blue region that includes also the rectangle and the two uh regions that are
+[075:02] Malo and after
+[075:04] Uh
+[075:06] Yeah, we are.
+[075:09] The right side is not in because we are inserting the points that we have already processed in the BST.
+[075:23] And we process these points yet.
+[075:31] Consider that we have the BST, already processed point, we can also remove points if we want.
+[075:43] Say the green part can grow.
+[075:51] Yeah, but yeah, this is true, but uh let's consider
+[075:56] Runa. Let's consider uh two points.
+[076:01] One which is here.
+[076:04] in the green zone and one which is here in the red zone.
+[076:12] Okay.
+[076:13] What's the difference between you know, let me write it uh uh
+[076:20] Green and blue. So what's the difference between this green point and this blue point?
+[076:34] What's the the defect?
+[076:36] For our problem.
+[076:41] We want to
+[076:43] Consider going on in the algorithm, we want to restrict delta by including another point later on.
+[076:54] And this point uh new point for this new point we must uh
+[076:59] compute the distance between it and some other point that we have already processed before. Do we agree on this? So next point would be a point here, for example.
+[077:15] And we want to draw a rectangle around this with the current delta and process the other po the point, uh touch some point that we have already processed and blah, blah, blah. Do we agree that the next step of our argument will be this? Okay. Given this, what's the difference between green and blue?
+[077:41] Green and blue.
+[077:48] Exact exactly. The the blue point may be needed later on.
+[077:57] Because we are not
+[077:59] restricting it with respect to x.
+[078:05] Right?
+[078:06] It could be very close to the border here and there could be a corruption.
+[078:15] It's on the right of this. And this may be an answer, this case it is. It may be an answer for this.
+[078:23] And the distance between these and this made this model bigger.
+[078:28] It is possible that the distance between these and these
+[078:32] No matter what where you place it, is more than delta? No, because it's already more than delta only with respect to x.
+[078:44] That's the huge the huge difference we have. Any point here
+[078:50] will be no longer usable in the future.
+[078:54] No long games.
+[078:56] Nobody cares about this point in the future.
+[078:59] Rather, it said this font may be very useful in the next future.
+[079:06] So
+[079:08] It is true that while I'm asking for these ring unreported points which are here, you can compute the distance between them and the target point because there are s at six of them and there are also reporting points here. Many points here potentially. Okay? But after having touched
+[079:34] any of them, I can delete it.
+[079:41] Let's remove it immediately.
+[079:45] Yeah.
+[079:46] Okay. So what's the overall running time of this algorithm?
+[079:54] How many points we are touching in these green regions for every point we process?
+[080:07] At most n of that month.
+[080:12] So it is true that for some point there may be a lot of points inside of Vinod.
+[080:20] For some other point there may be no point in the green atom.
+[080:25] But if any time we find a point in the green arrow we remove it
+[080:31] Okay.
+[080:33] The number of points we are touching in the green area overall cannot be more than n.
+[080:41] Because every point is incepted and removed at most once.
+[080:47] Okay, but it's inserting exactly once it's removed the atmos once.
+[080:53] Do you agree? So, since every time we touch a point in the green area, we are removing it, and since uh the number of points we can remove is at most n, the cost of touching these points overall is no more than n. Do you agree?
+[081:12] Yes?
+[081:14] Good.
+[081:15] And that's the crucial part of the algorithm.
+[081:17] What we are doing is
+[081:19] Process the current point. Ask for the rate in the DSP, ask for the range of points which are the
+[081:29] respect to y uh greater than or equal to x minus delta, touch all the points up to the first point which is uh greater than y plus delta.
+[081:44] Hm? And this is an easy operation on the DST because it's sorted by a wire.
+[081:53] While doing this we may find the point here, in this case we compute the distance, and we may get the distance there.
+[082:03] Okay? Or we may find a point here which is deleted immediately or collected and deleted later on. Doesn't matter. Okay? To find the range it costs just a second. Find a range, it costs logen. Scan each point costs constant time just to touch it. If you want to remove it, cost logenia.
+[082:28] Okay? But every point is removed no more than once.
+[082:33] Okay, so and again for the move, and again for the range, because it's done for every target point the
+[082:45] long on that.
+[082:47] And we have. Once we finish processing the point, we may have the user data.
+[082:55] And we want to set this in the BST sorted by its one.
+[083:04] Short of the
+[083:07] Before he means the talking is a sweet uh
+[083:12] We try to prove that we're not
+[083:16] Uh six points or A in our case we can say but is it uh necessary the argument uh
+[083:24] Yes. Even though we know that the set we are because like we are
+[083:31] like this property about the set that we remove uh like the fact that uh once we process an element in the set we can remove it it falls uh if I'm talking about because the green zone
+[083:47] that we know f from which we are potentially
+[083:52] getting elements but we are removing them immediately. Hence the border with the rectangle.
+[083:59] So we are only removing elements if they are in the green zone.
+[084:05] Okay.
+[084:07] Yeah, okay so so the argument n log n
+[084:12] also only for default.
+[084:15] And what about the points which are here? Well, they're costing the number of points times uh
+[084:25] So uh we we stand for the points in the rectangle time proportion of the number of points in the rectangle plus overall angle for this. So if there are too many points in the rectangle, we are paying a lot because we are not removing them.
+[084:46] Mm-hmm.
+[085:01] removing the exact so we have
+[085:04] Exactly. Exactly. Exactly. Yeah.
+[085:09] So if there is a super constant number of points here, the the dominant cost uh will be uh this one potentially and not the the removing one. For example, if there are any points here, the algorithm will be qualified.
+[085:25] Okay.
+[085:28] And gravitational level.
+[085:30] sort of basic by X and the and this tree should the sorting is done at the beginning the BST is built step by step inserting the new element coming from the so the the processing so the next element because if you insert all the elements in the BST
+[085:55] at the beginning. It's no longer true that the problematic area is only the green one here, but you would have also points coming from this part.
+[086:09] Okay? This part. Because it's not restricted by x.
+[086:14] We are restricting by X because we force ooh we are we are forcing the points which are uh in this part to be not inserted yet.
+[086:33] This way we are we are accessing only this bossal artifact.
+[086:40] Huh?
+[086:42] Do your all again?
+[086:45] Nice. Okay.
+[086:48] Uh
+[086:50] So
+[086:52] Other questions?
+[086:54] You made a lot of them, so pretty happy for this.
+[087:02] Okay, so
+[087:04] We I think we are like uh one hour uh
+[087:10] far from the expected programme.

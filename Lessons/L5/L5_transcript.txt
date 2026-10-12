@@ -1,0 +1,1008 @@
+# Trascrizione automatica di L_05.MP4 (30/09/2026) - parakeet-tdt-0.6b, non rivista: nomi e termini tecnici possono essere storpiati (es. 'Fixort' = quicksort, 'Boyere Murra' = Boyer-Moore)
+[000:21] Um okay, let's uh
+[000:25] Let's continue our lecture so we know that uh
+[000:29] Last uh
+[000:33] Last lecture solution can be fixed by using the partitioning algorithm of Fixort. And now let's move on with the solution I had in mind.
+[000:47] Still we are we want to destroy we are allowed to destroy the RA. Uh I'm going to present this solution not because it's better than the previous one that now we fixed, but actually because uh this solution can be improved
+[001:02] and it can be made uh
+[001:05] constant extra space, linear time, without destroying that IA.
+[001:10] Okay, which is our target.
+[001:13] Okay, so
+[001:26] So you said uh you had in mind the solution.
+[001:29] Uh
+[001:31] is been in the in the f in this framework, so we want to destroy A? No.
+[001:37] constant time uh linear linear const a linear time constant space without destroying A or not?
+[001:49] the it's not constant space.
+[001:58] Okay. So we will discuss later on. Okay.
+[002:02] So let me
+[002:06] Present the solution, okay?
+[002:08] Uh
+[002:10] Let's say
+[002:12] We
+[002:14] start from
+[002:16] ER.
+[002:17] Okay? We start from the last position.
+[002:21] So start
+[002:25] We start here and we
+[002:28] begin destroying our array A.
+[002:32] Okay.
+[002:34] What we do? Well, we read the element at the last position.
+[002:39] and we move it in its uh
+[002:44] Uh
+[002:46] in the cell corresponding to its position.
+[002:50] So essentially we remove four and we put here
+[002:55] Seven.
+[002:59] Okay.
+[003:02] Now we do the same for the previous element. The previous element was four
+[003:09] So we move at position four.
+[003:13] We remove five
+[003:16] We place for here and keep doing this.
+[003:21] Okay now
+[003:23] We move to five.
+[003:26] Put five
+[003:28] Remove two.
+[003:32] Move in position two.
+[003:37] Remove five, put two.
+[003:40] Move in position five.
+[003:43] And then what?
+[003:46] We stop. What's the duplicate?
+[003:51] Y five is a duplicate?
+[003:53] Well, because uh we we have two different elements.
+[003:59] So the same element in the same position. So five must be the duplicate.
+[004:05] Okay. This is some similar to something we have seen
+[004:09] In the recent past,
+[004:13] What we are talking about?
+[004:18] uh pitch and all the that's why we have duplicates. But uh
+[004:25] It's
+[004:28] Yes, close to
+[004:32] Yeah, but we have a cycle.
+[004:34] It's not a permutation, but we have uh a cycle of it.
+[004:38] So we are again interpreting positions.
+[004:42] And elements within the their position to so these are essentially
+[004:48] draw words, right?
+[004:50] And the number are our soldiers.
+[004:54] And we want to
+[004:56] Uh to
+[004:59] Find uh the first element which
+[005:03] Has been seen twice, which means we have a sequence of elements.
+[005:10] Then we enter a cycle.
+[005:12] And we
+[005:14] will at the end of the cycle
+[005:18] uh find that a duplicate.
+[005:21] Are you with me?
+[005:23] So if we instead of drawing like this,
+[005:26] Withdrawal.
+[005:28] The
+[005:29] Uh
+[005:31] The cycle like this.
+[005:34] And we label positions.
+[005:37] Positions are eight, seven,
+[005:43] Right.
+[005:44] Eight, seven,
+[005:49] Uh five four.
+[005:57] Four.
+[005:59] Then uh
+[006:01] Then we have water.
+[006:05] What's the next one now?
+[006:07] Are you with me? I'm just writing the the notes that we touched.
+[006:13] Uh we have five here.
+[006:17] Four, five,
+[006:21] What's the next one?
+[006:24] Two, exactly.
+[006:28] And uh in what?
+[006:31] What's the next one?
+[006:34] Okay, so five.
+[006:37] Okay, so we have uh a path, then we enter a loop.
+[006:42] And the duplicate is
+[006:44] What's the duplicate?
+[006:48] The beginning of the loop.
+[006:50] The beginning of the sign.
+[006:55] Is this correct? Yes, it is, because uh we are guaranteed sooner or later to find the same al element twice.
+[007:07] Uh because we cannot have uh
+[007:10] only path. There must be a cycle
+[007:16] So it cannot be
+[007:18] cannot be
+[007:20] uh only just one path, because nodes are labeled with positions.
+[007:26] And we have uh not enough.
+[007:30] Uh to
+[007:32] to
+[007:35] To have just one part. It must be a set.
+[007:39] Okay.
+[007:43] Good.
+[007:47] Uh so A is the
+[007:57] Is this improving uh over the previous one? No.
+[008:03] still linear time.
+[008:08] And uh
+[008:12] constant extra space.
+[008:15] Of course we are destroying uh
+[008:17] destroying A, which is not what we would like to do.
+[008:22] Okay, but what's interesting here? Here it's very interesting
+[008:27] uh the strategy we are using.
+[008:31] What we have? We have uh a
+[008:35] A path.
+[008:37] Then a loop, our goal is to find the beginning of the loop.
+[008:43] 'Kay.
+[008:44] I'm representing this like this, but actually we can traverse this without materializing it, that's super important, okay. Don't need to materialize the graph like this.
+[008:57] Can just uh
+[008:58] Uh
+[009:00] So the the graph is implicitly stored within A, okay?
+[009:05] Start from here so you know you know the beginning.
+[009:09] Just follow the numbers.
+[009:12] Let's say we don't want to destroy A, okay?
+[009:17] I I know it's seven.
+[009:19] So I go to position seven, I go to position four, I go to position five, I go to position two.
+[009:27] I go to position five.
+[009:29] I go to position two, I go to position five, I go to position two, position five,
+[009:35] What's the problem here?
+[009:37] So I can't follow the link the the links.
+[009:40] without destroying A.
+[009:43] The problem is that I cannot
+[009:47] Understand.
+[009:49] Uh where I entering a loop.
+[009:55] problem one and
+[009:58] Also
+[009:59] I cannot say what's the beginning of the look.
+[010:03] So I cannot say, okay, position five is the beginning of the loop.
+[010:17] Yeah, yeah. In general it's uh sites of uh
+[010:22] Yeah, yeah. In this case you could do something, okay. Just remember the last two positions.
+[010:30] The point is that uh in general uh it could be
+[010:36] Okay. For example, you could have seven, six, five, four,
+[010:43] Three.
+[010:45] Uh two and then uh
+[010:49] The seven
+[010:50] For example?
+[010:52] All the elements are with roughly all the elements you can
+[010:56] All the elements are in the loop and you don't know.
+[010:59] that you just entered.
+[011:02] 'Kay.
+[011:08] Okay.
+[011:11] So
+[011:12] Uh
+[011:13] From now on, I'm representing the loop so the so the path and the loop.
+[011:19] Like this.
+[011:21] Even if we are not materialising it,
+[011:26] But actually it's implicitly stored within A and we can navigate the loop the the path without
+[011:33] Destroying A.
+[011:36] What would be a solution for this problem?
+[011:39] Finding the beginning of the loop.
+[011:43] Well you can imagine to mark each node with uh either zero one, zero if uh never touch never uh touched, one I already touched it.
+[011:55] So uh you start here at set one, set one.
+[011:59] Set one, set one.
+[012:02] Set one, come back, it's already one.
+[012:06] That's uh a loop.
+[012:08] Moreover, and also it's the beginning of the loop.
+[012:11] First time.
+[012:13] That note.
+[012:15] We are rediscovering, if you want, the trivial solution which using a bit back.
+[012:23] These correspond exactly with that sort of
+[012:27] So the two problems finding uh the beginning of a cycle and uh and
+[012:36] Finding the beginning of the cycle and finding the distinct the duplicate element are very similar.
+[012:42] The solution with bit vectors is not enough.
+[012:46] Is there any better solution?
+[012:48] So let me say what are the problems. First, identify, understand when I'm within a loop.
+[012:55] If there is a loop.
+[012:57] Second
+[012:58] Uh find the beginning of the look.
+[013:03] give you the intuition of the solution.
+[013:07] Uh let's solve uh only the first problem.
+[013:13] understand when we are
+[013:17] In the loop.
+[013:18] Yes, s
+[013:20] We you can say, okay, this element is for sure in the loop.
+[013:28] any element of the loop.
+[013:31] Which is not enough.
+[013:35] We are not interested in any element of the loop, we are interested in the beginning of the loop, which corresponds to the duplicate.
+[013:43] What's the
+[013:45] What's a possible solution for the
+[013:48] For uh
+[013:50] Finding is the beginning of the
+[013:58] Any idea?
+[014:01] So not the beginning, sorry. An element in the loop.
+[014:16] Okay. Yeah. Yeah, they
+[014:20] So so let's say let's imagine we have two cards having two different speed. One goes at certain speed and the other double speed.
+[014:30] So if you are uh in Monza and you have you are in this situation,
+[014:35] The one that goes uh two times faster, sooner or later will reach
+[014:40] The first one.
+[014:43] At that point uh you're sure that uh you are in Monza and you are not just in uh A one a A one
+[014:51] Uh
+[014:53] Highway.
+[014:54] Moving from
+[014:57] of Italy to south, yeah.
+[014:59] You know that you are in the circ circuit because uh because the second one
+[015:04] Uh reach is the first one.
+[015:07] They start at the same time, but one uh it is two times faster and at the end they will reach
+[015:14] And you can use a similar idea, having two pointers here. The first one goes one step at a time.
+[015:22] And the second one goes two steps at a time.
+[015:26] Actually the first one uh it goes two times uh faster goes uh before, okay?
+[015:33] So when the two will meet again, then you are sure you are in the loop.
+[015:40] Why?
+[015:42] Because uh
+[015:43] special is like this.
+[015:45] Then one
+[015:48] Who?
+[015:51] There you go.
+[015:52] One, two.
+[015:55] Then
+[015:56] One, the mess again.
+[015:59] This is one element in the look.
+[016:03] By coincidence, it's also the first element, but it's uh just a coincidence.
+[016:14] We will uh
+[016:16] Be
+[016:17] uh lighter at the end of this lecture because there is this mosquito eating me piece by piece, okay?
+[016:26] Uh yeah. Is the social clear?
+[016:29] Okay. The idea for uh for the uh for finding uh
+[016:36] The
+[016:37] The beginning of the loop.
+[016:39] is essentially the same.
+[016:44] So we do this and then
+[016:47] One of the two?
+[016:49] the one that goes two times uh two two steps at a time.
+[016:53] He started from scratch.
+[016:56] and uh set its speed to one.
+[017:00] And they contier like this.
+[017:04] And they are guaranteed now.
+[017:06] Two means at the beginning.
+[017:12] So
+[017:14] So they were like this.
+[017:17] every single lecture.
+[017:19] While I'm doing a running example of this algorithm,
+[017:23] got I get it wrong.
+[017:26] Two pointers are not meeting at the beginning, okay?
+[017:30] Uh this is because this uh
+[017:34] Details of this solution are a little bit tricky every time I forget.
+[017:40] Important thing is that the intuition and there is a proof why it works and you can fix the the the plus one, minus one and so on and to get it.
+[017:51] Uh let's see if now I'm correct. Okay. So they start again from the same position and they move uh one element at a time.
+[018:08] By one.
+[018:09] Obviously.
+[018:10] Um
+[018:12] I don't remember why, but uh later on
+[018:16] the proof and we will uh check.
+[018:19] But the the the the the idea is exactly what I said, okay. First, they meet within the loop
+[018:26] Then
+[018:27] One of the two starts from scratch.
+[018:30] going at to a speed one.
+[018:32] And then they meet at the beginning.
+[018:35] 'Kay.
+[018:38] Okay let me
+[018:42] How are you?
+[018:44] Um
+[018:51] Okay.
+[018:57] She died Zanzara going around me.
+[019:06] Good. Okay, this algorithm
+[019:09] Is by
+[019:11] Floyd.
+[019:13] You must uh know him uh by
+[019:17] algorithms uh on graph.
+[019:20] couple of them.
+[019:22] Uh this is another one, no?
+[019:26] And it's called the
+[019:27] Uh cycle finding.
+[019:33] So the problem is find
+[019:37] They begin
+[019:42] Or recycle
+[019:47] In a list.
+[019:53] Least graph is the same, okay? It's a oriented graph in which you move
+[019:59] uh forward starting from a certain point and then uh you enter the cycle and you want to decide what's the element at the beginning.
+[020:07] Uh and that's important the list
+[020:12] is uh
+[020:14] Read uh
+[020:18] Only, okay?
+[020:20] Cannot uh
+[020:22] Use uh
+[020:24] The list to marker.
+[020:26] Something.
+[020:29] Okay.
+[020:31] So I got it.
+[020:55] Okay, yeah, I got it, man.
+[021:01] Use uh
+[021:03] Mm-hmm.
+[021:05] Pointers
+[021:11] Oh so.
+[021:14] Which is this low one, no?
+[021:16] Movie so
+[021:20] Just
+[021:22] By just one step, by just one
+[021:26] Okay.
+[021:29] Instead, f
+[021:32] is faster
+[021:36] More is uh
+[021:38] Bye.
+[021:40] Two.
+[021:43] at a time.
+[021:45] Okay, phase one uh
+[021:51] Uh is first
+[021:57] They met.
+[022:00] in the cycle.
+[022:09] Um
+[022:24] Define the cycle exists. So this algorithm can be found, can be used also for understanding if a certain list has a cycle or not. Because if it doesn't have a cycle, you reach the end. If there is a cycle, you come back to to certain nodes, the internal node. And this algorithm can be used to find the cycle. Because the if there is no cycle, the fast reach the end.
+[022:51] If there is a cycle, faster reaches slow.
+[022:55] Okay.
+[022:59] Phase two.
+[023:14] Move.
+[023:16] F
+[023:18] At the beginning
+[023:24] And set
+[023:28] It's uh
+[023:30] speed the
+[023:38] Two.
+[023:40] Okay.
+[023:41] The magic part
+[023:48] They'll meet again, huh?
+[024:16] of this side.
+[024:32] Okay.
+[024:35] Let's copy this graph.
+[024:37] And let's try the algorithm once again.
+[024:41] If I will not succeed I will ask your help, okay?
+[024:45] So
+[024:47] Uh
+[024:50] Both start at the beginning.
+[024:53] Fast and slow.
+[024:57] Then fast moves two steps.
+[025:01] And slow move just one.
+[025:06] Then fast moves by two steps.
+[025:12] And slow moves only by one.
+[025:16] Then faster moves to step and stay there.
+[025:21] Right?
+[025:22] Then the slow moves here.
+[025:25] Then fast moves two steps and stays there, then slow reaches it.
+[025:31] Okay.
+[025:33] Now.
+[025:34] This is phase one. Phase two.
+[025:38] Slow starts from here, fast starts from here.
+[025:44] Uh slow moves here.
+[025:50] and fast moves here.
+[025:53] Then slow.
+[025:55] Faster
+[025:57] Slow, fast.
+[026:02] Yeah?
+[026:06] So we did it.
+[026:08] Okay.
+[026:11] Uh the problem why I'm often uh uh make mistakes is because uh you lost yourself doing this. Indeed, before they met uh
+[026:24] When I was running the previous uh
+[026:26] The example the previous time they met here, which is not okay, they met here.
+[026:35] Are you convinced?
+[026:38] If you're not convinced, let me know.
+[026:40] Uh
+[026:44] Okay, let's uh
+[026:46] Let's write uh a proof, okay?
+[026:51] question. Why
+[026:54] Is it correct?
+[027:04] Why not
+[027:08] They met.
+[027:13] They moved the
+[027:18] Bye.
+[027:20] S
+[027:22] Say M
+[027:25] Steps.
+[027:27] Okay. So let's say they they met after
+[027:31] M iterations.
+[027:34] S moved by M steps.
+[027:38] And F moves by two M
+[027:43] Steps.
+[027:45] Yeah?
+[027:48] We can decompose M so we know they met, it's easy to see they met within the cycle. The only poss possibility is that fast is within the cycle and S entered the the cycle and then depending on the length of the cycle F reaches
+[028:11] S once again.
+[028:13] Right?
+[028:15] Sure.
+[028:18] It's like this, okay? S and F.
+[028:22] Then F enters the loop, may end may do the the cycle many times, we don't know.
+[028:30] But once S enters the loop for the first time, is not able to conclude the loop between be before uh F is meeting it.
+[028:42] Okay? Do you agree?
+[028:44] Okay, perfect.
+[028:46] So M can be decomposed as A plus B.
+[028:52] What's a
+[028:54] A is uh
+[028:56] uh the number of steps before
+[029:00] The
+[029:01] Begin
+[029:04] of the
+[029:06] Cycle.
+[029:08] It's the length of the path before the beginning of the the cycle. And B.
+[029:15] is the number of steps.
+[029:18] Inside
+[029:21] The
+[029:23] Cycle. It's not the length of the cycle. It's just the number of steps done by S.
+[029:30] in the cycle.
+[029:33] is not concluding the cycle because F is meeting it before the end.
+[029:40] Okay? So B is the length the the the the length of the the part within the cycle.
+[029:49] So let's say we have something like this.
+[029:57] Then we have something else.
+[030:02] And then like this.
+[030:04] Okay, E
+[030:06] Is this part here?
+[030:12] And B is this part here.
+[030:18] B.
+[030:19] If S stops here.
+[030:23] So if at the end S stops here, this is the l the length of B and this is the length of B.
+[030:31] Are you convinced?
+[030:33] Okay.
+[030:36] And we also have
+[030:40] We have this.
+[030:46] And we also have the 2m
+[030:53] which are the number of steps performed by the fast pointer.
+[030:58] is equal to A
+[031:02] Because f needs to
+[031:04] From where it's the part?
+[031:07] Then
+[031:11] B
+[031:17] Uh plus.
+[031:20] K times uh
+[031:24] L
+[031:25] Where L is the length.
+[031:30] of the cycle.
+[031:35] Let me show this here, okay? It's A.
+[031:40] 'Kay.
+[031:42] Then
+[031:43] This is because of the number of repetitions of the l the cycle.
+[031:50] Okay? Then B
+[031:53] are the number of steps before reaching S.
+[031:58] Okay?
+[032:00] Sure.
+[032:02] So what's happened?
+[032:04] F is doing A steps, then he is entering the loop and doing many.
+[032:11] potentially many times within the loop.
+[032:14] 'Kay.
+[032:16] then reaches the end of the loop.
+[032:20] and then is doing B steps before reaching S.
+[032:25] Okay? So
+[032:27] A
+[032:28] Many loops.
+[032:31] Last one, last part before reaching S.
+[032:35] You agree?
+[032:38] Okay.
+[032:47] Now we have uh that uh
+[032:50] Uh
+[032:58] 2A plus 2B equals, what's 2A plus 2B? It's equal to.
+[033:07] Two M, okay?
+[033:08] From this.
+[033:11] Right? If you multiply n by two, you have two a plus two b.
+[033:16] So this is two L.
+[033:17] But two n is also equal to A plus B plus K times L.
+[033:24] Okay? From the second equation.
+[033:27] You can cancel out these, these, these, and this. So we have that A
+[033:34] equals to k times l
+[033:39] minus B.
+[033:44] I do it man.
+[033:46] This is simple algebra, but this is killing me.
+[033:50] Uh
+[033:53] Okay.
+[033:55] Okay, the previous number of steps M and two M's and two M were this number of steps in phase one.
+[034:05] Right?
+[034:07] Before uh they met.
+[034:10] Now they met and we have phase two.
+[034:15] Okay.
+[034:19] And we have that
+[034:21] In phase two
+[034:24] These are the steps.
+[034:28] By F
+[034:32] To reach what? To reach the beginning of the cycle.
+[034:37] Do you agree?
+[034:38] In phase two, f starts from scratch.
+[034:42] is doing A steps, it's reaching the beginning of the loop.
+[034:47] Do you agree?
+[034:51] And
+[034:55] The number of steps performed by F to reach the beginning, and these are the number of steps
+[035:08] Perform the
+[035:16] by S, that's the claim, to reach the beginning of the loop.
+[035:23] Okay.
+[035:26] Let me clarify. Both F and S are doing the same number of steps.
+[035:33] in phase two, because they are going at the same speed.
+[035:37] My claim is that if after eight steps they met at the beginning,
+[035:45] That's my claim.
+[035:47] Are you with me?
+[035:48] Okay.
+[035:50] So
+[035:52] F starts from the beginning. After A step it reaches the beginning of the loop.
+[036:00] Alpha my claim is correct. After a step, F reaches the beginning of the loop.
+[036:09] A steps is equal to K times L minus B steps.
+[036:15] Because we reached this conclusion by looking at the number of steps above.
+[036:20] You agree?
+[036:22] Okay. Is it true that after A steps, which are this many steps,
+[036:29] S, which starts from the point at the m at which they met, is moved to the beginning of the loop.
+[036:43] Well, it's a minus b.
+[036:47] Okay? Times K times L
+[036:51] K times L is uh
+[036:54] The number of repetitions of the loop if it is short, you are doing it manually.
+[037:01] But the situation was like this, okay? We were
+[037:06] Uh something like this, okay. Part at the beginning.
+[037:11] And this length uh is uh
+[037:15] is uh A.
+[037:17] Then B
+[037:20] nodes in the loop
+[037:25] And then something else.
+[037:27] Here?
+[037:29] and then come back to the beginning.
+[037:31] Okay? S starts from here.
+[037:36] With k times l steps from here is doing k
+[037:45] repetition of the the of the cycle in come back in this position.
+[037:50] You agree?
+[037:53] Minus B, and this is uh
+[037:58] B
+[037:59] Minus B is at the beginning of the.
+[038:04] Do you agree?
+[038:07] So F is doing a step.
+[038:11] Uh S is doing a step as well, but A is such that uh you repeat K times the loop and then you end up in this position.
+[038:26] Because the last loop is not fully done, but it's done minus B steps.
+[038:36] Are you convinced?
+[038:39] Yeah.
+[038:42] Okay, why do you have these spaces? The the food at the canteen was too heavy.
+[038:50] What they have now? Rice with mushroom.
+[038:54] was typical when I was a student.
+[038:58] No?
+[038:59] Mensa, what they what they are offering now.
+[039:03] Rice with mushroom? No. The egg which seemed to be
+[039:08] Not an egg.
+[039:13] What they have now.
+[039:16] You don't go to
+[039:18] Rise, Pastor.
+[039:21] Not what? Not yet. Not anymore. Okay. It was uh fantastic. You can play like a ball with that tag.
+[039:32] Cool.
+[039:34] Are you convinced?
+[039:36] Okay.
+[039:38] So now if somebody's giving you a list, you can check if there's a cycle and you can also check what's the beginning of the cycle without extra space.
+[039:49] Uh yeah, apart from this
+[039:53] Uh this cute I grip can be used to solve the original problem which
+[040:01] Ask us for to find uh uh any element which is which occurred at least twice.
+[040:08] We can do just follow the links.
+[040:10] once and then following another time and then
+[040:14] This option.
+[040:16] Yeah.
+[040:21] Okay, questions?
+[040:50] point the that not supply that is a
+[040:53] Okay, so what you are uh saying uh is that uh
+[040:57] You're not convinced by this approach because you don't believe
+[041:01] That
+[041:03] Uh sooner or later you will enter a loop.
+[041:08] So you you say okay.
+[041:10] Uh I don't know.
+[041:13] What's my array oh what's the element what are the elements in my array?
+[041:20] Yeah, yeah, maybe it's what uh I'm saying. Let me just uh telling you.
+[041:30] So they
+[041:32] Being a duplicate means that these
+[041:38] This points to this node.
+[041:41] And this points to this note.
+[041:45] You cannot see any cycle in general. That's your uh observation.
+[041:50] Right?
+[042:01] The the sorry what today?
+[042:05] Okay.
+[042:08] The last element.
+[042:10] That's crucial because the last element uh it's a position which is not pointed by anyone.
+[042:21] Eight ah.
+[042:26] Okay, now now since uh eight is not possible,
+[042:32] Uh you have uh these many pointers.
+[042:37] and you cannot uh come back to eight. If it it would be possible somehow to come back to eight and eight cannot be considered a duplicate, you are right. There may be a path without a cycle.
+[042:55] Now it's impossible to
+[042:59] to reach let's say it's impossible
+[043:03] Uh to
+[043:06] to reach uh if this is the only duplicate element.
+[043:12] impossible to do not reach
+[043:16] This one?
+[043:19] And this one as well.
+[043:22] Because somebody has to point here.
+[043:25] if there is no other domain.
+[043:29] Somebody's pointing here.
+[043:37] Eighth, etc.
+[043:39] cycle but will be neutral.
+[043:42] Yeah, exactly. Exactly.
+[043:45] The point is that you start from the last and there are fewer remaining positions.
+[043:55] more positions than uh possible elements.
+[043:58] My duplicate must exist and so sooner or later you will reach
+[044:04] You are a cheap.
+[044:06] If there are more duplicates uh you are not reaching both, of course, just one of the the let's say two duplicate uh elements, uh two and five.
+[044:16] You are reaching
+[044:18] Either two or five.
+[044:19] But you are guaranteed to reach one of the two.
+[044:23] because uh you can remove just uh the two you are not reaching and the other one there are fewer.
+[044:29] even fewer positions for
+[044:33] elements.
+[044:37] Is this convincing?
+[044:40] So it's uh
+[044:44] So if there is a duplicate, there must be a cycle, essentially.
+[044:51] which starts which you reach from eight.
+[045:03] Say again when?
+[045:06] Okay.
+[045:09] Okay.
+[045:13] Okay.
+[045:27] Um
+[045:30] Let's uh okay okay. Uh
+[045:40] So what uh what's the the example? You reach one
+[045:45] But one was already there.
+[045:50] Yeah, it was cancelling out uh elements. Yeah.
+[045:53] Okay.
+[046:04] Ah, okay, okay. No, that's that the the one that so it's not the original one that destroys uh following the links, but it's the one that marks the positions.
+[046:17] I'm using extra space. So that's
+[046:20] So the solution.
+[046:23] Okay.
+[046:28] Okay, the solution which uses destroys A but uses constant extra space
+[046:37] is uh moving the element to the to the to its position. So seven is moved to to seven. Four is moved to four.
+[046:50] Okay. Yeah. And this is destroying a constant x space.
+[046:56] Then we said that the problem is now to find a loop, a cycle, at the beginning of the cycle.
+[047:02] A possible approach is to use an extra B factor.
+[047:07] on on uh whose sides is equal to A?
+[047:11] It's extra space. And uh instead of moving the element here, we are marking the position.
+[047:22] No, you cannot. Otherwise it's the second solution we had, but without partitioning, so.
+[047:38] Okay, cool.
+[047:42] Can we move on? There is another fantastic problem.
+[047:47] to solve.
+[047:51] Khidi this was uh quite unpopular.
+[047:54] uh few years ago, but now it's gaining a lot of popularity, so I hope you didn't see this before.
+[048:07] It's like the
+[048:09] It's like the problem of uh finding the missing one that we have seen in the first lecture.
+[048:16] That problem was essentially unknown.
+[048:19] Uh
+[048:22] t let's say ten years ago and now it's super popular every everybody
+[048:27] Uh know the solution using a Gauss sum.
+[048:31] And uh hope uh this is not the same for this problem.
+[048:35] Um which is nevertheless is becoming uh more popular recently.
+[048:42] Okay. Uh given uh
+[048:56] Find
+[048:59] If any.
+[049:04] The element
+[049:08] The element E
+[049:11] That occurs.
+[049:16] At least
+[049:21] alpha the time plus one.
+[049:23] So the majority are in it.
+[049:26] The one that will win the election.
+[049:30] Uh the presidential presidential election.
+[049:35] Uh
+[049:39] the first round.
+[049:44] Okay. Any idea for possible trivial solutions?
+[049:56] Is is L n log n uh possible?
+[050:01] and look at time possible.
+[050:04] Sorted a rain.
+[050:06] Then uh scan looking for the rands of the same elements.
+[050:11] find the a run, if any, whose length is n divided by two plus one.
+[050:18] That's the majority area.
+[050:20] If you cannot find any any of such a such a ransom,
+[050:26] Uh then conclude that there is no majority element.
+[050:30] Does it make sense?
+[050:37] So uh
+[050:42] Most of the time
+[050:44] sorting is a good idea.
+[050:47] And many problems.
+[050:49] If you don't know what you have to do, it's like a K means for data mine.
+[050:54] You don't know what you have to do.
+[050:57] Do K means. Here is the same.
+[050:59] You don't know what you have to do.
+[051:01] sorted the elements.
+[051:04] Sorting the elements takes n log n
+[051:09] Uh time
+[051:11] And
+[051:14] And
+[051:16] Base.
+[051:18] and extra space because either you destroy
+[051:22] D R I A or you make a copy and uh
+[051:27] And uh
+[051:31] And that's an and extra space.
+[051:33] Okay, what's another possible approach?
+[051:38] If I give you this task, I I ask you to solve it with uh Python.
+[051:43] What you will do.
+[051:49] Create a dictionary, collect uh elements together with their frequencies.
+[051:53] At the end uh you check uh if one of the elements records uh
+[051:58] Least uh half plus two.
+[052:00] Alpha divided alpha plus one times.
+[052:04] destructed by the same animal.
+[052:07] Okay. So H map.
+[052:23] Again.
+[052:26] The extra space is linear.
+[052:33] Okay, there is a
+[052:37] Well this is not uh
+[052:40] Uh linear time, it's a linear time without probability, so.
+[052:46] May happen that you are using the wrong ash function for your set and uh it's uh terribly slow.
+[052:53] Very unlikely, but uh it could it could happen.
+[052:56] So question.
+[053:00] Is uh
+[053:02] Linear time
+[053:08] And uh
+[053:10] Constant extra space
+[053:17] Possible
+[053:19] Can we drive?
+[053:21] We achieve uh
+[053:23] something incredible like uh fastest uh algorithm with uh essentially no extra space.
+[053:33] General elements, no restriction about the elements, which could be whatever you want. Very super long strings.
+[053:43] Uh
+[053:54] What do you think? Well, apparently seems to be very hard because both solutions
+[054:00] Uh are doing uh one thing, are computing the frequencies of all the elements in the array.
+[054:10] either by impli explicitly collecting them in a in a table,
+[054:16] S map or
+[054:19] moving the elements uh the same elements all together and count uh their cardinalities or their number of frequ of of occurrences by looking at how
+[054:30] How many of them are there?
+[054:32] in the consecutive runs of the same.
+[054:37] So both are computing the frequencies of all the elements.
+[054:42] And then uh our uh
+[054:46] checking if there is a majority at an enter or not.
+[054:51] Apparently uh we cannot have constant space because we may have many possible
+[055:00] elements
+[055:01] And we cannot uh
+[055:03] use a frequency based approach.
+[055:08] in constant space because we cannot even remember the frequency of
+[055:15] few more than uh few elements in that.
+[055:19] at the time.
+[055:21] Okay. So seem to be really hard.
+[055:25] You see it?
+[055:28] Okay. Uh but actually
+[055:33] Yeah.
+[055:35] such a such a solution exists.
+[055:39] And uh it's uh
+[055:42] Due to
+[055:44] Boyere Murra.
+[055:46] If uh any of you is
+[055:48] tending uh bioinformatic uh courts.
+[055:52] Nobody?
+[055:53] you have done in the past? No?
+[055:55] Okay. In bioinformatic uh
+[055:58] Uh there are m many topics which are solved with pattern matching. So you have a pattern you want to find it in a text. And Boyer Moore, so the pair of the two researchers are famous for
+[056:11] For uh
+[056:12] for a popular pattern matching algorithm.
+[056:17] S
+[056:18] probably and uh that probably uh is discussed
+[056:24] uh in that course. Okay.
+[056:27] Anyway.
+[056:34] So the algorithm is by these two researchers.
+[056:39] Okay.
+[056:42] Let me copy the structure of the array from uh the previous example.
+[056:50] And let me uh show you a
+[057:01] I'm just copying the structure so I'm changing the numbers.
+[057:07] Do not copy yet if you will.
+[057:21] numbers are
+[057:25] Five, three, one, one, two.
+[057:30] Yeah.
+[057:32] One one.
+[057:35] One is the majority element and we would like to report it
+[057:40] Uh at the end.
+[057:43] Okay.
+[057:46] Can we check in linear time if a given element is the majority element or not? So if I ask you, is
+[057:56] Uh one the majority element.
+[057:58] Can you do this quickly? Yeah. Scan, count the number of occurrences of that element, report, say yes or not, depending on the
+[058:07] on the frequency.
+[058:08] So
+[058:10] Checking the majority element is easy.
+[058:15] Finding it is the hardest part of the problem.
+[058:20] Okay? So the algorithm is actually
+[058:25] Finding a p a potential candidate.
+[058:28] Report it at the end.
+[058:32] It may be or not a majority element.
+[058:37] What is guaranteed is that if the majority element exists, the algorithm is correctly reporting it, otherwise it's reporting any element.
+[058:49] Always reporting the majority element if it exists, any element, any other element.
+[058:55] if does not exist.
+[058:57] So you take the candidate reported by the algorithm and you check if it is the ma candi the the correct majority or not.
+[059:07] If majority element exists, it is correct.
+[059:10] If it does not exist, you can check and say no majority element.
+[059:15] Okay?
+[059:19] The idea is to keep
+[059:22] Actually, it's uh like two lines uh of Python, nothing more. Okay? Uh the idea is to keep a candidate
+[059:35] See?
+[059:37] And uh
+[059:39] The counter.
+[059:47] The counter is not the number of occurrences of the candidate C
+[059:54] but rather it's uh related to the number of frequen frequency uh to the number of currencies, but actually it's just uh uh a a number that measures how much we trust C is the
+[060:09] Is the
+[060:10] Majority element.
+[060:18] So we process
+[060:21] The array from left to right.
+[060:38] If A
+[060:42] I so the current element in position i is equal to the candidate.
+[060:49] Then
+[060:51] Uh let's see can
+[060:54] C counter C capital C
+[061:00] It's too sim too similar to let's call it all.
+[061:08] O plus equal to one. So we increase the the
+[061:16] They counted by one.
+[061:19] Otherwise
+[061:22] So the current element is not equal to the candidate.
+[061:27] We decrease uh the
+[061:31] The
+[061:33] Count counted by one.
+[061:35] Okay.
+[061:38] If
+[061:39] The counter is equal to zero four.
+[061:43] Terrible name, oh.
+[061:48] Uh Z.
+[061:53] z is equal to zero.
+[061:57] Then
+[061:58] We are not trusting the current candidate at all and
+[062:05] We actually want to change our mind and we
+[062:10] Uh we set the current element as the new candidate.
+[062:17] Yeah? Does it make sense?
+[062:24] So every time we with the current element is equal to the candidate, we increase uh our trustedness in uh the candidate. Every time it is different, we decrease the counter. If the counter reaches zero, we do not trust uh the candidate anymore and we change it.
+[062:49] Let's see a running example. Oh no, don't want.
+[062:56] This one.
+[062:59] Uh let's run a running example.
+[063:13] Okay. So let's uh report uh here
+[063:19] candidate and counter.
+[063:25] Okay. Initially we set the candidate equal to the current element and its uh frequency to one.
+[063:34] Okay. Okay. Not frequency. Counter to one, candidate to five.
+[063:39] Okay.
+[063:41] Then uh we move to the next element uh
+[063:44] is equal to three, so it's different from the candidate, we decrease the counter by one.
+[063:52] Now the counter becomes zero. If it is zero, we do not trust the candidate anymore and we change our mind. So we set to three and one.
+[064:07] Okay.
+[064:13] Okay.
+[064:15] What about the next step?
+[064:19] Three is different than one.
+[064:22] Decrement the counter
+[064:24] Set the it's zero, set the counter set the candidate to one and the frequency sorry the counter to one. Okay?
+[064:36] Now, next element one is equal to the candidate. We want to increase the counter by one.
+[064:45] Next element is two.
+[064:51] Two is different from the candidate, we decrement the counter, but we do not kill our current candidate.
+[065:00] Next element is three.
+[065:04] Decrement the counter, counter reaches zero, three becomes the new candidate. We were.
+[065:12] We we we were believing in the correct result, but we changed the we wrongly changed our mind in favour of three.
+[065:22] Okay.
+[065:24] Now
+[065:27] Uh three is different than one.
+[065:30] Counter reach its zero.
+[065:33] Set the candidate to one again.
+[065:36] One once again, one once again, we reach the end with one and counter equal to three.
+[065:45] Two observations. First observation is that the algorithm is okay on this example.
+[065:54] And the second observation is that the final counter is not to the number of occurrences of the of the candidate.
+[066:02] Some number
+[066:05] Which is
+[066:08] how it relates to the number of occurrences of one.
+[066:20] Hmm.
+[066:22] In this case, but in general how it relates to the number of occurrences of one.
+[066:29] The number of occurrences of one uh is five.
+[066:34] The counter is
+[066:36] smaller than or equal to five.
+[066:38] always. So it's always smaller than or equal to the number of occurrences of one.
+[066:48] We need to scan twice.
+[066:51] check the candle.
+[066:55] but uh it's still a linear time.
+[067:01] Okay.
+[067:03] Why is this correct?
+[067:07] Any idea?
+[067:11] So is it always correct or not?
+[067:29] Okay. I if an element occurs many times, is it difficult to remove it uh from being the candidate?
+[067:37] Okay.
+[067:39] But uh
+[067:42] is guaranteed that the majority element is never removed.
+[067:47] So what's the point? The point is that if there is an element with many occurrences,
+[067:53] You need many other elements different from this one.
+[067:58] Kill it, okay? And each extra element is killing just one occurrence of that candidate.
+[068:07] Okay.
+[068:09] Yeah, that's the intuition.
+[068:11] But is the majority element frequent enough to be guaranteed to be the maximum to the final candidate?
+[068:21] Yeah, the point is that you can associate each occurrence of the majority element to some other element
+[068:33] And at the end uh you will remain uh with other occurrences of the majority element
+[068:40] alone, not associated with any other wrong element.
+[068:47] Okay? Why? Because it's a majority element, Otkurtz, half plus one of the times. So at least one will be not associated.
+[068:57] Do you agree on this?
+[068:59] Okay. What does it mean so we can associate one occurrence of one to one other element, one other wrong element?
+[069:09] It means that from the perspective of the algorithm, these occurrence
+[069:18] is enough to kill
+[069:20] This occurrence.
+[069:22] So if this is increasing the chance of five to be the final candidate.
+[069:29] This occurrence uh of five is increasing the counter by one.
+[069:35] This one is killing that increment.
+[069:41] Okay.
+[069:42] If this is concurring for letting three the final candidate, this one can kill one increment for that.
+[069:53] Okay.
+[069:56] So every increment
+[069:58] Increment means increasing the counter or setting the counter to one for the new candidate just arrived. So five is the is the new candidate and one is the increment I was referring to.
+[070:13] This one can kill this.
+[070:18] Actually
+[070:20] Sometimes the RNA is helping us.
+[070:24] Because this one is not killed by this one,
+[070:27] but it's killed by another wrong element.
+[070:31] Okay.
+[070:33] And that's the case.
+[070:35] But doesn't matter. So we want the r wrong possible order for our algorithm.
+[070:42] The worst possible ordering.
+[070:45] Does it matter?
+[070:47] The other elements are not killing each other. We have enough occurrences of the majority element to to kill each of them.
+[070:55] What's the worst possible ordering for the angle?
+[071:03] Yeah. Five, one, three, one.
+[071:07] Then two, one, three, one and the last one.
+[071:11] Each of these uh is uh used to kill the previous candidate.
+[071:17] The candidate becomes five. No, it's one. The candidate becomes three. No, it's one. The candidate becomes two. No, it's one. The candidate becomes three. No, it's one. Yes, it's one.
+[071:29] Okay, so we have one another one to rainfalls.
+[071:34] Our learning.
+[071:36] Exciting.
+[071:38] Uh
+[071:40] Newest uh buzzword.
+[071:43] Okay.
+[071:45] Yeah.
+[071:52] Super elegant algorithm. You can implement this in two or three lines of Python and it's a super, super.
+[072:01] Scam based, so no jumps here and there in memory.
+[072:06] Uh
+[072:07] Okay, it's too scan, but uh
+[072:10] cancy is usually much, much faster than a linear time aggregate that
+[072:15] jumps here and there in the ray.
+[072:18] And uh you need just uh one counter and it it's there.
+[072:25] Okay
+[072:27] Oh.
+[072:29] Uh last uh last uh three minutes.
+[072:35] Last three minutes uh for uh
+[072:41] For a question, okay?
+[072:43] The question is
+[072:47] What uh about uh
+[072:52] Uh
+[073:01] sessions
+[073:06] So what we want to do is
+[073:08] Uh
+[073:11] Tell the step
+[073:13] They agree.
+[073:14] We want to be able to report
+[073:17] A candidator.
+[073:20] The element is the majority element. If the majority element exists,
+[073:26] Uh or any other element if the majority element does not does not exist.
+[073:35] But we we don't want to be able to check.
+[073:39] Yeah.
+[073:40] The r the answer. Okay? The answer mu b must be correct if the majority element exists, any answer if the majority element does not exist.
+[073:52] We want to support uh insertions. What does it mean? It means that you have uh your array here.
+[074:01] and you want to insert a new element.
+[074:06] in the air value.
+[074:09] In this problem, the ordering doesn't matter.
+[074:14] Insert a new element means insert uh another occurrence of three.
+[074:21] Does it matter where you insert it? No.
+[074:24] So you can just append the next element.
+[074:30] So
+[074:32] So you are insertions means appending the array.
+[074:36] Can the algorithm is the algorithm able to support insertions?
+[074:41] Yes, just keep the counter and the candidate.
+[074:46] Once you add a new element, it's like the algorithm processing the new element.
+[074:52] it's going to do exactly the same steps.
+[074:54] Check if the new element is equal to the candidate. If yes, increment the counter, otherwise decrement the counter.
+[075:02] And set the the new item in the
+[075:05] uh equal to
+[075:07] Uh then you'll
+[075:08] Anyway.
+[075:10] The cardio is the noir.
+[075:12] Okay. Indeed, uh if you keep inserting three,
+[075:17] Three, three, three, three.
+[075:19] The certain point three becomes the majority element.
+[075:22] and the algorithm is starting to report again.
+[075:28] Because uh the new three kiss this one, the other three kiss this one, this one, and so after four.
+[075:37] Currencies of three, three becomes the currency.
+[075:41] Uh and maybe it's also a majority element or maybe not, but it's becoming uh the majority element as soon as uh as soon as you keep uh it's reflecting them.
+[075:51] Okay.
+[075:53] Food.
+[075:54] That's all.
+[075:55] The answer is
+[075:57] Yes, we can do it.
+[076:00] What about uh
+[076:06] Porting
+[076:10] The relations.
+[076:16] Can we support the relations?
+[076:18] Delicious means
+[076:20] Uh I give you so so
+[076:24] Let's say we support both, okay, insertions and emissions.
+[076:28] Its engine means that I'm giving you the array.
+[076:31] And then uh I say okay, there there are two three operations.
+[076:36] I want to insert a new occurrence of some element.
+[076:39] I wanted to delete a previous occurrence of
+[076:43] one element or I ask you to report the majority element.
+[076:49] Ported element is the majority element if it exists and any other element if it does not.
+[076:57] So for example the operation delete five is killing this occurrence of five.
+[077:03] So now delete five is no longer possible. So I cannot ask you to delete another occurrence.
+[077:11] Because there are no more of them.
+[077:15] Now I can ask you to insert the five once again.
+[077:18] There is another five.
+[077:20] Then insert one, there is another one, delete one and killing any occurrences of one and so on.
+[077:30] So
+[077:32] Conceptually is like uh if we have uh a dictionary
+[077:36] For every element we have the occurrences seen so far, every time I ask you for the lead.
+[077:43] I am removing one occurrence of that element in the dictionary.
+[077:49] What do you think then?
+[077:51] Um
+[077:53] But I am allowed you are only to ask you to remove an element if the counter current counter for that element, so number of occurrences of that element is at least one.
+[078:06] Okay? That's the problem.
+[078:10] Is it possible to support it?
+[078:23] Exactly, exactly. This is algorithm.
+[078:26] one we presented so far.
+[078:28] He is not able to support the litians.
+[078:32] in a streaming way.
+[078:35] But essentially you need to rerun the algorithm.
+[078:41] on the same button
+[078:45] What we are going to see
+[078:47] Next lecture, so Monday.
+[078:49] Is a strategy.
+[078:53] which uh allows us uh to
+[078:57] do the the two operations without rescanning.
+[079:01] more without storing the array
+[079:07] You are giving me the array one insertion a a deletion at a time and after every insertion uh every deletion I am able to report you what's the current
+[079:17] Majority are if
+[079:21] So you don't need the array at all.
+[079:28] You must be here on Monday. You see, this great
+[079:34] Okay, so thanks a lot. See you

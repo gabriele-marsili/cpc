@@ -4,7 +4,7 @@ Versione markdown di `L4.pdf` (in VS Code: anteprima con Cmd+Shift+V). Esercizi:
 
 > **Sources.** Recording `L_04.MP4` (1h32m): Teams transcript (`L_04-en-US.docx`) + frames of the professor’s iPad notes (the handwritten images are *his* board). Prof.’s notes of last year on the same topics: `Pearls_2025.pdf` (in this folder), used for the parts marked \[extra\] (the PDF is now in `Lessons/L5/`). Your `notes.md` and your `my_sol` were also used.
 
-> **Where the lecture ended.** The prof stopped at §3.6 (“Does random access help? Destroying $A$”): the bug of that solution is left as homework. The lecture continues in L5 (30/09): `Lessons/L5/L5.pdf` (provisional until the recording is available).
+> **Where the lecture ended.** The prof stopped at §3.6 (“Does random access help? Destroying $A$”): the bug of that solution is left as homework. The lecture continues in L5 (30/09): `Lessons/L5/L5.pdf`, where the prof also says how to fix the bug (Quicksort partitioning).
 
 Code: `Lessons/L4/src/claude.rs` (your `lib.rs` is untouched apart from the line `pub mod claude;`) — `cargo test -p l4`.
 
@@ -111,4 +111,4 @@ Your `my_sol` sends each value $v$ to cell $v$ by swapping, and stops when the c
 
 # Next: L5
 
-The duplicate element continues in L5 (Floyd, destroying $A$ the 2025 way), followed by the majority element: see `Lessons/L5/L5.pdf`. Exercises for this lecture: `Lessons/L4/practice` (`cargo test -p practice_l4`).
+The duplicate element continues in L5 (moving every element to its cell, Floyd), followed by the majority element (Boyer–Moore): see `Lessons/L5/L5.pdf`. Exercises for this lecture: `Lessons/L4/practice` (`cargo test -p practice_l4`).

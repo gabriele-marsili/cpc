@@ -1,0 +1,850 @@
+[000:00] To the code. Okay? So, what we do? We start at the very beginning.
+[000:10] at the first useful point and we place the first person here.
+[000:17] Now, since we have our target distance d to satisfy, we want to place an expression at distance at least d.
+[000:29] If the point which is d d po d d steps forward is within an interval
+[000:39] Place the person here.
+[000:42] like this. Then distance the again, if the point is no longer within an interval,
+[000:50] Then we must place the person in another interval. We choose the next one and place the person as the first in the first point for available point in that next interval. Okay? So the the essentially the greed the the approach is greedy. We move from left to right starting from the very beginning and every time we we do uh
+[001:16] Distance D.
+[001:17] Okay?
+[001:19] Now we reach the end if we were able to place all the people.
+[001:23] In the intervals the answer is yes, true, otherwise the answer is false.
+[001:32] Based on the answer, we e e either move left or right on the possible set of candidate distances.
+[001:42] Notice that every time we
+[001:44] remove half of the remaining candidates.
+[001:49] Bias.
+[001:50] How much time does it take? Well, we need we need log L steps because uh the distance uh is from zero to L.
+[002:04] And the binary searching is doing log and steps. In each step we are trying to place the target uh the people at target uh distance D.
+[002:14] And this can be done in time linear.
+[002:17] Uh stool.
+[002:19] the number of intervals and the number of
+[002:22] people.
+[002:24] Okay.
+[002:26] N
+[002:27] Boston C
+[002:30] Login.
+[002:32] Is this clear to everybody?
+[002:35] So the running time is
+[002:38] is uh
+[002:39] N plus C
+[002:43] because of the time we need to evaluate uh the predicate.
+[002:49] Log L
+[002:53] Uh because uh we did uh this many
+[002:57] These menu.
+[003:00] steps doing a binding set.
+[003:05] This convincing?
+[003:08] And notice that we are assuming that the distance uh d is uh
+[003:12] Anything.
+[003:14] 'Kay.
+[003:16] If you assume uh it's a real number,
+[003:19] Well this is no longer correct.
+[003:24] We need to
+[003:26] Running time proportional to
+[003:28] The huh.
+[003:30] digits
+[003:31] decimal digit digits we want.
+[003:35] Okay.
+[003:38] Uh so this is the running time.
+[003:44] Well is this uh
+[003:48] Precise or not?
+[003:50] We are assuming that the target distance d star.
+[003:55] is in between
+[003:57] Uh
+[003:59] Zero and L.
+[004:02] Is it uh always true?
+[004:06] Always
+[004:08] We can say about something about the maximal distance.
+[004:12] which we can place people.
+[004:20] Can divide that by C? Exactly.
+[004:23] Exactly. See since uh we have C people, the distance minimal distance between uh them is uh log divided by C.
+[004:36] So this is actually the maximum possible.
+[004:40] This tensor?
+[004:42] So we don't need to binary search on the whole interval from 0 to L, but from 0 to L advice.
+[004:51] L divided by C is better if C i is larger, okay?
+[004:57] So
+[005:00] Questions?
+[005:03] Is this clear to everybody?
+[005:06] Now, do you remember at the beginning we discussed this problem and say okay.
+[005:11] Seems to be very hard, I don't want to solve it, let's move on, let's introduce the technique and then reconsider the problem once again.
+[005:22] Do you remember what the problem was? We have a car with some initial fuel in.
+[005:29] Then, no, sorry, yes, with some, with potentially some initial fuel in, then we have.
+[005:36] Um
+[005:38] And uh
+[005:40] Pointsu.
+[005:41] Each distance, some distance D one, D two, D three from the previous one.
+[005:47] and f one, f two, f two, m three and so on, which is the quantity of uh
+[005:52] Who will you can refill your tongue?
+[005:55] once you once you reach uh that
+[005:59] 'Kay.
+[006:00] And we know that the the car consumes F capital F fuel liter of fuel for kilometers.
+[006:11] The goal is to establish what the initial fu fuel we want to put in the tank at the beginning, and we let's call it uh G star.
+[006:25] And the pattern is
+[006:29] More clear now.
+[006:30] if you know what you you have to look at.
+[006:33] and we want to look at uh an answer.
+[006:37] Do we agree?
+[006:38] The answer is G stuff.
+[006:42] Okay, so what's the strategy to solve problems? Have a checklist with all the techniques we have seen.
+[006:49] So far only
+[006:52] Standard data structure plus by search for the answer. Just because we are at the beginning of
+[006:58] Let's go over our checklist and see what we can apply.
+[007:02] We have an answer. G-Star.
+[007:05] Which looks promising for buying a search for the ants.
+[007:09] By searching for the answer is bio searching for them.
+[007:13] And we have an answer to find.
+[007:15] Okay.
+[007:17] Can we apply binary search for the answer here?
+[007:20] Well what we require is uh monotonicity on the answer and the predicate which follows this monoc monoti monotonicity. Okay.
+[007:32] So if we have uh
+[007:35] fewer fu fuel that the target one.
+[007:40] Can we reach uh the end?
+[007:46] Uh there is a
+[007:48] failure.
+[008:03] Okay.
+[008:06] This is what I are doing at the concept, so I think it's cool to do here as well. Okay?
+[008:13] Um
+[008:17] Um okay.
+[008:21] So
+[008:22] Small level value for G, our target G.
+[008:26] We cannot reach the end.
+[008:30] larger value of G, we can reach the end. So the predicate can could be can we reach the end with that amount of uh fuel, initial fuel? And then we simulate.
+[008:43] Okay? We simulate uh our uh
+[008:49] Track and see what happened.
+[008:52] Okay.
+[008:56] Okay, so so we start with a target uh certain target G. We uh move uh D one and we know how much uh fuel we are uh wasting or spending in this uh
+[009:12] range then
+[009:16] there may be out to outcome. We cannot reach so we ha n we don't have enough to reach the next station, or we have. If we have, we keep simulation, otherwise we conclude false.
+[009:29] Uh we reach uh
+[009:32] The first session we change the fuel by s easy calculation, we remove what we have consumed and we add what we are receiving and move on.
+[009:43] And we reach the end.
+[009:45] Okay.
+[009:47] How much time does it take proportional to the number of stations we have?
+[009:53] Okay?
+[009:55] And uh
+[010:07] Yeah. Yeah. This is always the case for most of the problem. So what we have in our checklist is a general technique.
+[010:15] The gyar technique can be used.
+[010:19] in a particular problem and gives you some target, some complexity.
+[010:25] This solution that you get with standard technique may be optimal or not.
+[010:32] 'Kay.
+[010:33] Um
+[010:36] Of course there may exist some
+[010:39] Special
+[010:41] uh oh make the solution for the problem uh at hand which gives a better solution. So the techniques are not guaranteed to be the best for the particular problem, but they are guaranteed to be standard. Something that you take, apply, get a solution which is better than free graph.
+[011:00] Okay? Most of the time this is more than enough for cold interviews.
+[011:06] And uh also for contest, most of them uh
+[011:10] Well, it depends what's up.
+[011:13] Uh uh yeah, so anyway, it's a good starting point and uh it's easy to do, okay. Um
+[011:24] And uh for uh
+[011:27] Code interviews, for sure, it allows you to move almost brainless from zero to a good point.
+[011:38] maybe and usually it is what the interviewer is asking for.
+[011:44] Okay.
+[011:50] So uh this uh this is uh true for all the techniques, okay. For for example binary search binary search is a case, but uh dynamic programming is another case, in which of course is giving you a a better solution than legal one, but if if you think uh about
+[012:11] specific properties of the problem at hand, it could be better.
+[012:17] and you can derive a f faster switch.
+[012:22] Okay. Questions? No questions.
+[012:27] Okay. Anybody was uh
+[012:38] puzzle we discussed last lecture.
+[012:46] Do you have do you have any solution for this?
+[012:56] Ooh.
+[013:02] Do you remember the puzzle?
+[013:05] We had the we had the chessboard, we removed the top left and bottom right. And the question is, can you still cover
+[013:17] The board with dominoes of size two. Yes or no? You are saying no. Why? You are saying no as well. Anybody else?
+[013:32] No. No, you didn't have a solution or no is your answer.
+[013:38] It's not possible. Okay, why? What's the argument?
+[013:47] You cannot remove two blacks if it was one black and one white.
+[013:54] Okay, so the problem is that both are black. If both are black, what's uh happening?
+[014:01] And here we can use uh a parity argument, which
+[014:05] another good technique to know, uh which uh has something to do with uh parity. Okay, now we have two objects, black and uh uh white uh uh cells in our board.
+[014:22] why you cannot fill this board anymore.
+[014:29] Of course, the initial one is possible, okay? You put one domino here, one domino here, one domino here, one domino here. You can move on horizontally, vertically. Maybe there are mixed solutions. There are many ways to do the tiling properly. But what if you remove the two blacks? What's the argument?
+[014:52] Well, every domino is covering one white and one black, no matter how you place it.
+[015:01] either horizontally or vertically, is covering one black and water.
+[015:08] Since we start with more whites than black,
+[015:12] It's not possible to find a tiling because a tiling is not able to let the two be on the same value, which is zero for both.
+[015:27] We start with one value for white, one value for black. Every time we
+[015:33] place a domino. We remove both by one
+[015:39] Okay, but they are different uh sides number and uh you want to reach them zero, which is the same, and it's not possible because every time you are moving both down by one.
+[015:52] So it's not restricted to eight by eight. It's uh a general argument. If you start uh
+[015:58] I if your starting point is different numbers of black
+[016:02] than white, so it could be also the possible, more white than black, it doesn't or more black than white, doesn't matter.
+[016:09] They have not the same number, you can.
+[016:14] because they have to reach both zero and every domino you place is moving down.
+[016:21] Okay?
+[016:25] Good.
+[016:28] So the problem is that both are
+[016:37] Next question.
+[016:41] If I'm going to remove
+[016:44] Two.
+[016:47] No.
+[016:49] Uh you can choose whatever you want, which one you prefer.
+[016:54] Two of them, but they are to be of different colour.
+[016:59] So if they are of the same colour, we already know.
+[017:02] Doesn't work.
+[017:05] What if they have different
+[017:09] Corner?
+[017:11] Anyone, but different colour. Is it possible to find uh a proper tiling with dominance?
+[017:18] If yes.
+[017:19] What's an algorithm to find it?
+[017:22] If yes, what's an efficient upgrade?
+[018:00] Okay. What's your uh
+[018:02] Yes.
+[018:04] Don't want the ideas now, of course, but uh is it possible or not?
+[018:08] Mm.
+[018:13] Do you have an algorithm?
+[018:19] choose a direction, like horizontal and vertical, and you see how many tiles are from the opposition to that direction. If it's even, you can probably just tile and
+[018:33] Mm explain me and
+[018:37] Again
+[018:39] Um I think this board is b is broken now, so that
+[018:45] This was already blocked.
+[018:54] Okay, do you prefer to discuss uh possible solutions together now or think about uh possible solution by yourself or and then we discuss next section?
+[019:05] No preference.
+[019:07] Okay.
+[019:08] Carrots.
+[019:10] It's almost uh the weekend. I'm going to the beach.
+[019:16] I'm going to the beach.
+[019:18] Is is here any fisherman?
+[019:23] Nobody is going to fish.
+[019:25] Are you going to fish? Okay.
+[019:30] And I go to fish.
+[019:32] on the sea.
+[019:33] Castillo actually, because I have an apartment.
+[019:38] I'm going to fishing fish octopuses.
+[019:42] Yeah, you know. Now it's the season.
+[019:45] Quite funny. Bring us some. Huh? You can bring some for us. Yeah. Do you want it alive or dead?
+[019:55] Okay, we can do.
+[020:02] Octopus party.
+[020:08] nobody is going to fish, but anybody is able to cook?
+[020:13] No. I have to go to fish and cook uh the outabus. No.
+[020:18] Okay, I was trying to have a better board and I'm not able. So tell me what's uh it's not uh
+[020:30] Generally, I think
+[020:35] start from any position
+[020:38] Okay. Okay, let's uh do an example. Okay, I want to remove uh uh this one and uh this one.
+[020:51] No, can you can see?
+[020:53] Okay.
+[020:55] Maybe it's you because you are an extreme left.
+[020:59] Stream left is not uh good.
+[021:02] Not good but uh ba much better than the extreme right.
+[021:06] Yeah.
+[021:10] Uh okay.
+[021:18] So
+[021:19] Two rows with uh okay with size seven sort of bits and the same with the columns. And we know that if a row has a even number of positions, you can uh fill it uh uh in a double. Okay, like for example one, two, three, four, five
+[021:44] We have eight minus one seven. So one side has even number of entries, cells, and the other one has a odd number. Okay, so what you are saying? One side is easy. Yes. And the other side? One side is easy, but the upper part may have a odd number of
+[022:15] Oh the
+[022:18] Rows, but you can feel it, so you feel them horizontally, right? Okay.
+[022:25] And then what about the ne the la the the last uh the previous uh the other side which contains a hot number?
+[022:33] Then
+[022:38] one has to be of a different uh orientation.
+[022:43] Mm.
+[022:46] Maybe it is possible, but I'm not not fully convinced by your argument.
+[022:53] No, I'm not saying it's wrong, I'm not saying just uh which is not uh so usually puzzles are easy to state.
+[023:02] Apparently impossible to solve.
+[023:05] Then once you have the solution, you are very surprised by the elegance of the solution. So the solution is like something like, oh, I was not uh able to think about this. So the argument must be brilliant.
+[023:19] Super easy and brilliant. And I'm not saying you are not in the right uh in the right direction in the right way.
+[023:30] Same party.
+[023:34] Uh-huh.
+[023:46] That did we have no results.
+[023:50] The even number of uh uh
+[023:53] cells horizontally and vertically. But in this case they are on two diff two consecutive rows and the distance in number of rows is one.
+[024:06] Yeah, it's a terrible board, but uh
+[024:09] uh what uh what's the distance uh that you are referring to in this case?
+[024:16] Yeah.
+[024:26] must have a different uh party on
+[024:31] So
+[024:33] some uh on some of the today may show.
+[024:39] one of the two? I like so.
+[024:42] Yeah, but one of the two or both dimensions?
+[024:47] Okay, let's do this. You we stop here. You think about a possible solution and then of course it's not an easy puzzle, okay? But think about the solution and then on Monday we will discuss the solution. It's more I think interesting for all if you we all think about the problem. And once you spend enough time on a puzzle you really appreciate
+[025:14] The solution because you spent some time, you were very in the puzzle, and yeah, okay.
+[025:28] Algorithm to find a proper tiling.
+[025:33] with dominoes.
+[025:35] which are able to cover the whole board but the but not the two cells we removed. So you are given any two cells. The only request is that one is black and the other is white. And you need to specify how to place the dominoes on this without touching the two that you removed.
+[026:00] Okay.
+[026:05] Okay.
+[026:07] That's next time we are going to discuss.
+[026:10] Uh then
+[026:12] solution to that.
+[026:17] Okay now let's uh move on.
+[026:21] Uh with uh the next uh technique actually
+[026:28] This is uh uh interesting uh
+[026:39] Easy technique.
+[026:42] Really worth to know, really worth to insert in your checklist.
+[026:47] And once you have a problem, try to work with this and try to find
+[026:54] Out, if it can be used. Okay, the problem is the following.
+[027:03] Longest um
+[027:11] Okay.
+[027:13] Good
+[027:15] Segment
+[027:21] Okay, we are given an array.
+[027:35] Uh A one N.
+[027:40] of values
+[027:45] And uh
+[027:50] Any integer
+[027:55] Okay.
+[027:57] Isabaret.
+[028:03] of a is
+[028:06] Uh K good
+[028:13] If
+[028:14] It contains
+[028:20] No more.
+[028:24] Then
+[028:27] Okay.
+[028:28] Distinct.
+[028:32] elements.
+[028:34] or distinct values.
+[028:38] Okay.
+[028:39] So as an example, let's say we have A
+[029:00] Three.
+[029:04] Two
+[029:06] Three, four.
+[029:16] This is our array.
+[029:22] Let's say k is equal to three.
+[029:32] A three good subarray is a subarray of A which contains at most three distinct values.
+[029:44] For example, this one
+[029:47] is three
+[029:50] Good.
+[029:52] Right? Only three distinct values, there is a duplicate, two.
+[029:57] Okay?
+[029:59] Okay, we are looking for
+[030:03] Find
+[030:04] The
+[030:09] The longest one
+[030:12] We want to find the longest subarray with no more than k distinct values.
+[030:20] Okay.
+[030:22] Any idea?
+[030:27] Where do we want uh to start from? What we would like to do?
+[030:32] For example, this three sa three good segments is
+[030:37] Maximal or not can be
+[030:40] Enlarged both left and right by one position and still be three good.
+[030:48] 'Kay.
+[030:51] So the trivial solution is a solution that tries all the possible segments. We have a quadratic number of segments.
+[031:01] and uh we check uh each of them if we do it uh in the right way, like uh the first problem we discussed uh during the first lecture. Do you remember it?
+[031:15] They want about
+[031:17] Uh previous lecture, first one was maximal subarray in which we were looking for the subarray with maximal sum.
+[031:29] One in one uh one the trivial solution was uh to try all the possible subarrays and for each of them scan uh to
+[031:37] compute the sum, you have to compute the number of distant elements.
+[031:41] Other solution was to
+[031:44] Uh
+[031:46] Quadratic try all of them, but try in a way that uh from one
+[031:50] segment exploits the fact that the next one includes one more position.
+[031:55] You can?
+[031:56] We can do this here the same and uh we
+[032:01] Hmm, we got uh
+[032:04] quadratic time. What do we need to do to keep track of the number of distinct elements in a particular current segment?
+[032:15] Yeah, mesh.
+[032:17] multi set exactly, because we have to keep track of the occurrences as well.
+[032:22] So essentially it's a set with
+[032:25] number of occurrences of each value.
+[032:28] What you were suggesting? Okay, exactly.
+[032:33] So with a set and frequencies if we have
+[032:38] Uh two for loops.
+[032:41] one for position uh initial position I and the other for position J.
+[032:46] We can now.
+[032:47] Uh
+[032:49] Try all the possible subarrays, then move I, try all the one or the other.
+[032:55] Subarray which starts from this position i, move i, try all of them, move i, try all of them, and so on, which is called i.
+[033:05] Can we do button?
+[033:09] Ow.
+[033:14] Yeah.
+[033:16] which is consistent with the title of the lecture.
+[033:20] Not bad.
+[033:22] Mm.
+[033:23] We
+[033:24] Show you at once correctly.
+[033:32] the size of the number of entries.
+[033:35] In the mark is more than K, we move our last point. Well, left we move less point, we decrement
+[033:44] The number of accuracies of the
+[033:47] entries that are pointed by the left pointer. If it's sl equal to zero we remove you know
+[033:54] Okay. So
+[033:57] If I understand correctly, I think it's a correct solution. We have a point, let's call it left, and another point we call right. At the beginning, they start from the same initial position, okay, and we start with the set containing only four number four.
+[034:19] Or if you were fail, you can let start at the beginning.
+[034:22] And then move left right. Okay, every time we move right one position to the right. Okay, so we move this
+[034:34] Yeah.
+[034:39] The new element to
+[034:41] Can be either an element we have already seen, so we update the set by incrementing the frequency by one, or
+[034:50] It's a new element. If it is a new element, then we insert it in into the set.
+[034:56] If the the set contains more than k elements, it must be k plus one elements.
+[035:04] 'Kay.
+[035:06] Then we move left one position to the right.
+[035:11] till we remove enough elements
+[035:16] So that uh the number of remaining uh distinct elements is k.
+[035:23] Okay.
+[035:24] So
+[035:26] Once uh once we have A elements in our set, we move right.
+[035:32] If we introdu we are introducing a new element, we have to move left.
+[035:37] How much times? Well, we may enter a run of the same elements. We need to remove all of them.
+[035:47] once we reach a position such that all the elements in the cell, distinct elements in the cell, are
+[035:55] K again?
+[035:58] Then we keep moving right.
+[036:01] Okay?
+[036:02] Every time we remember what's the largest sub-array we have seen so far, the largest distance.
+[036:11] Between L and R when we are in a condition that the set contains k distinct elements. Or let's.
+[036:19] Okay?
+[036:21] Is this convincing?
+[036:25] So this is the trick, okay? Essentially, it says keep in mind that you can use uh two pointers and this use of two pointers helps
+[036:36] in solving problems.
+[036:41] We want another example.
+[036:43] Let's consider a palindrome stream.
+[036:46] A string is a polynomial if it is made of
+[036:50] Symbols and then
+[036:53] The same sequence reversed.
+[036:56] Okay, if we have a
+[036:58] odd number of symbols, the element in the middle.
+[037:02] Count, otherwise the two parts are the same.
+[037:05] I repeated that and I lost.
+[037:10] Topic non avium forty, it's a very long palindrome.
+[037:14] They're the same time.
+[037:19] Um
+[037:22] How do you check if a given string is a falindrom?
+[037:29] Two pointers, one starts at the beginning, the other starts at the end. You compare them.
+[037:34] If they met, it's a before
+[037:38] Finding a mismatch, then uh it's a palindrome.
+[037:44] So it's not a super sophisticated technique, but always keep in mind that you can use two pointers to solve the problem.
+[037:57] Checklist now contains standard destruction
+[038:01] By a search for the answer to pointer strike.
+[038:05] always guaranteed to find the longest
+[038:08] Uh yes.
+[038:10] Because every time you are moving
+[038:13] Uh left is the beginning
+[038:17] of a possible subarray.
+[038:20] And with right you are extending it as much as you can.
+[038:25] Till you are introducing a new distinct elements which break the property of being a good, and from that point on
+[038:37] All the subarrays that start from this position, L, is no longer a K good subarray.
+[038:45] Okay.
+[038:46] So implicitly with this approach you are trying all the possible L.
+[038:53] This convincing?
+[039:18] Can I find a subarray with T elements of the skin and then we do a binary search for
+[039:26] I need to find one. How can you. Okay, okay, you bio search for the answer and the target answer is the length of the sub-array. Good, yeah. It's slower, but it's a good example of the use of biomass search for the answer. Is the solution clear to everybody? He's suggesting to. Okay, again, we have an answer to find. It's not.
+[039:52] Uh
+[039:54] Find the longest one implies that you want to find the subarray.
+[040:01] Two indices. But behind this is asking you what's the length of the longest k-good subarray because once you know the length, you can simply have sliding windows sliding over the text over the array and checking if the current subarray is k good.
+[040:26] And every time you move the window one position to the to the left, you are spending constant time to remove this element and add this one.
+[040:34] So it's suggesting to say, okay, now if I know the answer, the length, I know the solution, the subarray that I want to report.
+[040:44] Let's binary search for the answer first and then
+[040:48] Uh once you know the length, you can conclude and say what's the sample rate.
+[040:55] And by searching for the answer is possible because you are looking for the maximum.
+[041:00] Sub-array length, meaning that longer sub-arrays are not possible, so the predicate is no, it's not possible. Yes, it is possible if it is short.
+[041:12] And to check if a certain length is possible or not, use the sliding window slide over the array and check if a K good
+[041:21] At least one K good Sabare exists.
+[041:26] What's the running time of this?
+[041:33] No, the okay the two pointers is
+[041:39] Easily.
+[041:41] Why is linear? Because every time you are moving something.
+[041:47] either left or right.
+[041:52] This is the argument, okay? Uh left and right are always moving to the right.
+[041:59] every iteration of our of our algorithm we spend constant time to do something with the the sh the set.
+[042:06] In every iteration, one of the two is moving right by one position.
+[042:12] which means that the number of movements is bounded by the length of time.
+[042:17] which is n plus n.
+[042:21] the what the complexity of the binary search for the answer approach.
+[042:28] words asking or say ah
+[042:36] Array of five elements, four, four, four, four.
+[042:40] Okay.
+[042:41] So I'll start lift and right here.
+[042:46] write on your example. One good.
+[042:51] And then the array is four, four, four, four.
+[042:58] Now I start out with both pointers on four. Exactly. And then I keep moving the right one with all of them are two, I'm still one good. Yeah, exactly. So now I arrive to the last one. Now I'm two good. A certain point you are like this.
+[043:14] And uh your set contains four four. Four because of the value, four because of the number of columns.
+[043:22] Then you move right to one.
+[043:25] No, I know no longer.
+[043:28] So I need to one one. And the set nine con now contains uh
+[043:35] Two.
+[043:36] Now I start moving the left pointer. Exactly. And then I end up with.
+[043:43] subarray that is one exactly but that's not the right answer no no it's not a I mean no no no you have to keep track of what the maximum seen so far is
+[043:55] And you are moving on to find better candidates.
+[044:01] I didn't get that part in the middle. Yeah, so you have to have a maximum. Exactly, you keep track of the maximum. Yeah. Yeah, yeah.
+[044:10] you it's not guaranteed to stop at the longest. This is impossible, okay? Because imagine that uh there's something like five five five.
+[044:28] Okay.
+[044:30] even if the two pointer are stopping at four.
+[044:33] How can you decide if they are have to move on the files because you don't know how many files you are looking you you will find, okay? So it's impossible to decide, okay, I stuck here and then
+[044:48] After the another five I want to move uh another.
+[044:53] So it's uh easier to keep track of the maximum since of our all the the tests you want and then uh
+[045:01] At the end, you report the answer, the best answer you have seen.
+[045:08] Okay. Is there any other comment or question?
+[045:12] So the question now is what's the running time of binary search for the answer?
+[045:20] And
+[045:22] log k minus k why k minus k minus k
+[045:27] N minus K yeah, which is uh which is uh I guess uh
+[045:36] Ah it could be sublinear if uh k is super uh large. Yeah, so yeah, okay.
+[045:42] And
+[045:44] Oh
+[045:52] Okay. The answer in the your case is n times log n
+[046:01] n minus k
+[046:07] And the reason is that the maximal answer is
+[046:12] Uh and minus K
+[046:16] And uh
+[046:19] Okay, we wish you small.
+[046:22] Yeah, yeah, yeah, exactly. So you the the minimum window size uh i the minimum answer is K. Yeah, okay.
+[046:31] In general, if you don't want to be so precise, it's log n times
+[046:37] Because the the binary search and the answer is from zero to n and uh
+[046:45] n is the running time of the algorithm that checks if the target size for the subarray is doable or not.
+[046:57] Okay.
+[047:01] Good.
+[047:02] Okay.
+[047:05] So this is an example of what you were saying before.
+[047:08] Apply the the fact that uh you can apply technique doesn't guarantee that you finding the best solution for the problem.
+[047:17] Uh
+[047:19] Are you
+[047:22] We have uh did you see the
+[047:24] The news about OpenAI that opens a GitHub repo called Mat.
+[047:33] in which a unknown sorry not public model
+[047:41] and provided uh the solution of three hundred and seventy plus mathematical problems.
+[047:50] and wrote the paper for the solution.
+[047:56] Quite interesting. They are solving mathematical conjectures or theorems in batches of hundreds now.
+[048:06] Quite impressive.
+[048:09] Okay. Do you need the running example for this or
+[048:15] Yes? Okay.
+[048:17] So let's uh do another example. Maybe it's uh
+[048:21] One
+[048:23] Not not for the one based on not the one based on bioresearch, right? The one the original one with two points.
+[048:34] Why I search once? Oh, it's very long. Because the complexity of the algorithm.
+[048:40] So the the number of steps we have doing we have to do in the running example is proportional to the time complexity.
+[048:49] So no no, it's uh no problem. Let's do it.
+[048:52] Uh let's speed up a bit, okay. Three, three, four, four.
+[048:59] One, three, two, three. Okay, so what's the idea?
+[049:06] Uh what's uh the length of the result the final subarray, the optimal subarray?
+[049:13] What's the length?
+[049:15] L the length initially is in between.
+[049:21] Uh let's say one
+[049:25] N.
+[049:27] In this case, one, two, three, four, five, six, seven, eight, nine, ten, eleven.
+[049:34] is in between one and uh
+[049:38] And uh eleven. Why one and not zero? Because uh uh
+[049:45] If k is at least one, there is always a solution which is of length one. Okay.
+[049:54] And there is no solution when the sambar ray is. Okay.
+[050:00] Um
+[050:04] So now
+[050:06] Uh what we have to do? Binary search for the answer. So we have our optimal length L star that we have to find.
+[050:17] And we try it
+[050:21] some length L prime which is equal to
+[050:27] Uh eleven plus one divided by two, six.
+[050:31] Six is the middle the point in the middle and we want to try if a subarray of length uh six may be k good with k as before equal to three.
+[050:48] Okay. Now we know what the target length is. So let's investigate all the subarrays of sites
+[050:59] Uh six.
+[051:01] This is the first one.
+[051:02] So we scan all the elements in this subarray and we have a set and count how many distinct elements we have.
+[051:10] There are four distinct elements.
+[051:14] So the answer is no, this is not six good.
+[051:19] Let's move uh on the second one.
+[051:23] Uh still uh
+[051:26] four distinct values.
+[051:28] So it's not six good.
+[051:32] Let's move on to the next one and keep doing this.
+[051:37] Okay? At the end, every subarray contains more than s than three elements, so
+[051:45] A triggered subarray must have a length which is smaller than six.
+[051:52] Okay? Now, after this step, L is now in between six and we excluded all these possibilities.
+[052:06] Let's try it.
+[052:08] one other possible length.
+[052:11] Let's say uh three.
+[052:15] Okay, now if we try three. We try all the sub-arrays of length
+[052:22] uh three. And we check uh if maybe uh three good or not. Of course uh it is always three good because the length is three. Okay. Anyway, let's use the same algorithm, uh iterate over all the possible windows and we conclude yes. Okay, what does it mean? So here the answer is no, here i the answer is yes.
+[052:48] Are you okay now? So far? Okay.
+[052:56] You need just one, but you can do all because from a computational point of view it's the same.
+[053:03] Of course, if you want to really implement it, early exit is better.
+[053:11] Okay, so now L that before was in between uh
+[053:22] in this range.
+[053:24] Now this part is killed and this part is killed as well. Now the remaining possibilities are uh sorry, six is uh removed as well.
+[053:39] excluded six, it's five, okay.
+[053:43] Um okay now we have uh three, four and five as poss the possible values. Let's select the element uh in the middle four and let's uh try.
+[053:57] Four I think uh is possible because uh
+[054:01] This is triggered.
+[054:04] So immediately conclude if we using uh your early exit strategy, we immediately conclude that L prime equal to four has answered yes.
+[054:18] Now L
+[054:20] Uh is either four or five.
+[054:26] Okay.
+[054:28] And we already checked the for now.
+[054:32] Okay, so let's try five.
+[054:36] We have uh
+[054:40] a long enough hand
+[054:44] Uh here we are it's three good five is okay.
+[054:49] Okay.
+[054:51] Perfect.
+[054:54] So yes
+[054:57] Five is okay, six is not, we conclude because we found the last element for
+[055:03] The answer is two.
+[055:07] The two-pointer solution instead is okay for everybody. Do we need to run an example? Okay.
+[055:16] Perfect.
+[055:18] Sure.
+[055:20] Um
+[055:25] We write it to binary.
+[055:30] Search.
+[055:32] Yeah.
+[055:34] The answer.
+[055:40] Good. Now
+[055:47] is of length five
+[055:49] And uh it's any of them uh can report any of them which uh six.
+[055:55] Because I think six from three.
+[055:59] Okay, maybe I was wrong, but uh
+[056:01] We I think we tried six at the beginning. Isn't it? We did.
+[056:09] With uh six uh
+[056:11] Uh it's four. Four elements.
+[056:15] Four nm?
+[056:17] Uh four elements.
+[056:21] Ooh.
+[056:24] Uh
+[056:26] Uh
+[056:33] Anyway, we are not interested in Rad solution, right?
+[056:38] I don't want to see you anymore, okay?
+[056:44] Sorry uh uh I think the the runner example was uh good enough, right? Even if the final answer was incorrect.
+[056:53] Okay. Since we were wrong in uh
+[056:57] First step, very first step of our algorithm, actually this would led us to move on the right part of the interval, the lengths. Okay? Anyway.
+[057:11] Okay.
+[057:20] Let's move on with to the next technique. This is uh very popular in the sense that it occurs very often.
+[057:29] It's called the sweep line.
+[057:34] is concha conceptually very simple.
+[057:38] Sometimes also simple to apply, sometimes it's much harder to see why it works and why we need to apply this.
+[057:49] Okay, let's present uh the problem first and together with the the solution we are going to present the
+[057:56] the sweet line. As I told you so told to the student of today lecture, I was teaching uh from a short rival this morning, I was sick the beginning of the week and now I f feel that I uh not uh be no longer be able
+[058:16] To use my voice. Okay, so if I stop and drink water, that's why.
+[058:24] It's to have my life.
+[058:26] Same frame goal.
+[058:29] catch autopuses in the weekend.
+[058:34] Um
+[058:39] Maximum
+[058:41] Number
+[058:43] of overlapping
+[058:49] uh intermats.
+[058:53] Okay, here we are.
+[058:55] We are given
+[058:59] And uh
+[059:01] intervals
+[059:06] Okay. Sometimes we call them intervals, sometimes we call them ranges, sometimes we call them segments. The concept is always the same. It's a piece of line, a segment on the line.
+[059:22] Um
+[059:24] Here we have uh for each of the n intervals the beginning and the end.
+[059:30] Okay.
+[059:33] Where
+[059:34] Both are integers.
+[059:37] uh both are integers. So S I
+[059:41] Uh and AI are integer values.
+[059:49] We say
+[059:52] That's two.
+[059:55] Interval.
+[060:00] Overlaps.
+[060:05] If
+[060:07] Of course, sir.
+[060:08] There exists
+[060:11] Oxid.
+[060:13] which belong to both.
+[060:22] And
+[060:31] If x belongs to both,
+[060:35] Then
+[060:37] Uh they overlap. So essentially something like this, okay?
+[060:42] Or
+[060:45] Something like this.
+[060:47] Whatever, okay. There must exist
+[060:51] at least one point which belonged to both.
+[060:56] Okay, our goal is to compute
+[061:02] Death. Maximum
+[061:09] Number
+[061:11] of overlaps.
+[061:15] Thus it means we want to report the number of intervals which overlap all together in some point.
+[061:25] Okay.
+[061:28] For example,
+[061:37] If we have uh this
+[062:00] uh this uh set of segments
+[062:09] Say this one as well.
+[062:13] Okay, sorry, let me remove this and
+[062:20] Okay, and this point uh
+[062:26] X we have four
+[062:30] uh say for four intervals together, which means that the maximum number of overlaps is four.
+[062:40] Okay.
+[062:42] Yeah, we have four.
+[062:52] Question. How to find uh the number?
+[063:04] Have an array the length of the line, initialize it all to zero.
+[063:11] And then for every range just add one to the
+[063:16] Okay. Yes. If so we have from zero.
+[063:24] From zero to let's say
+[063:28] L
+[063:31] Okay, if
+[063:34] We if L is small enough,
+[063:37] We can keep track of an array of counters, one for each possible number.
+[063:44] This is what you are saying, and increment the counter for all these points.
+[063:53] Correct, but uh what's the problem?
+[063:57] I'm not sure if I can do it.
+[064:03] Is it L?
+[064:07] It's the sum of the length of all the sub-arrays.
+[064:13] Which means uh that uh you can easily let be
+[064:18] Quadratic. So let's say even if L is in the order of n.
+[064:27] Even if the counters are not
+[064:31] are not expensive to store.
+[064:34] The problem is that filling the array of counters is expensive and may be quadratic.
+[064:43] to have quadratic
+[064:47] Uh
+[064:49] Running time is enough to have very long.
+[064:53] intervals.
+[064:59] If you have something like this.
+[065:04] is quadratic.
+[065:06] Just to feel. Because for every of them you have to scan all the positions and increment all the corresponding
+[065:14] elements.
+[065:19] So
+[065:21] Yes and no.
+[065:23] It's uh
+[065:25] It's yes, because the approach may work. Indeed, we are going to rediscover.
+[065:32] This approach later on, no.
+[065:34] But we cannot uh afford the cost of
+[065:41] explicitly
+[065:43] Uh explicitly
+[065:46] increment the count.
+[065:48] If there is a way.
+[065:50] Avoid
+[065:51] Re-computing, re-incrementing by one each single counter.
+[065:58] Maybe we just go from zero to L in a linear loop.
+[066:02] And then for every point we check if it is within the range. Because then it's a simple constant I would calculate. Like if I for every subarray. Okay, so so. You you start from zero to L and for every point you do what? We go in the subarray and check if it is between I and zero.
+[066:25] And then what? So here for example what you do for this point? We take the rings for the sub rings.
+[066:34] So range is which one? This one? Yeah, yeah, where is the part of if if it is between i and z? Okay, what you do? And then have a counter, you increment it. You increment it, but uh if you do this uh and there are many intervals, you have to touch all the intervals, which means it's quadratic.
+[066:56] Once again.
+[067:06] cells of uh ranges. No, like for example L if we have a range L to R okay we have to process uh from index cell to index R and update the counter of each uh cell. But uh like you can do this in uh constant time offline.
+[067:27] How?
+[067:30] One of the next lectures is called the perfect sum. Okay.
+[067:40] Okay excellent Okay
+[067:46] Um
+[067:48] So this approach doesn't work because of this. There is a solution which is uh related to graphic sums that we are going to the discuss uh next lecture probably.
+[068:02] Any other idea?
+[068:19] Okay, we have to find the one.
+[068:22] Let's say fine.
+[068:24] We want we want to essentially the idea of countries is as follows. We have an array in which we have a position in the the array for every possible position and we store in that entry the number of intersections we have at that position.
+[068:47] But uh it can be computed like uh he was suggesting because we need a lot of increments for every position to take care of the corresponding integrals. But we are wasting a lot of time for nothing.
+[069:07] Because uh
+[069:10] We have n intervals.
+[069:14] And for many positions, the answer is not different from the previous one.
+[069:22] Do we agree on this? For example, here
+[069:26] The answer here the answer is the same as this one.
+[069:30] But in the quadratic approach we were discussing before, we need to update this one and this one.
+[069:39] by adding one, two and three. So we do plus one plus one plus one for this. Then for this, plus one, plus one, plus one, and so on. This is actually a good example for
+[069:54] This is a good example for the approach, but then it's easy to find a worst case approach in which we are spending a lot.
+[070:06] What we would like avoid is to do.
+[070:09] work for for a position that we are sure is not a different is not a different answer with respect to the previous position.
+[070:20] That's essentially the point, right?
+[070:22] You want to say something? Well I
+[070:25] Okay, let's do a running example for his approach.
+[070:44] Uh we have these are rail counters. Let's let's say we have position one, two, three, four, five, six.
+[070:53] seven, eight and blah blah blah. Okay, let's say that uh
+[070:59] We stop here, because otherwise it takes forever.
+[071:02] Okay?
+[071:04] Hmm.
+[071:06] Okay, so
+[071:11] What we have to do. Position number one.
+[071:16] How many sex i i i in
+[071:20] intervals do we have that touch that contains this position?
+[071:26] Two.
+[071:27] How do we compute this?
+[071:41] Bounds the maximum higher than the minimum. Exactly. If we do this and you scan all the intervals, it's super terrible.
+[071:51] Okay? One thing is to keep uh the intervals sorted in some way, for example by starting position, then exclude the ones that are already uh already done and keep outside the the one that needs still need to enter. For example, if you sort by starting position, you have the one that already out.
+[072:18] The one that starts before the current position
+[072:22] The one that has a starting position which is larger.
+[072:26] And for every position you consider okay do I need to add some other segment that is not already in? These are sorted by starting position. You take the first one and you insert if needed. The other one are the ones that are still active, you scan only the still active ones. Okay? Do you agree?
+[072:49] Do we all agree? Okay. So let's say we have the segment sorted in in this way. We only touch for position one, we only touch this one and this one. And the best we can do here is to increment the counter two times.
+[073:09] Okay. Now position two.
+[073:13] We have to to consider this and this once again, and this is two.
+[073:20] 'Kay.
+[073:21] But observe that this position, the counter for this position, is useless.
+[073:28] because it's one position which is equivalent the same as the one before.
+[073:35] This is the consideration. Then we do for position three, one, two, and three, three.
+[073:44] Okay? We pay three.
+[073:47] Then one, two, and three.
+[073:50] One, two and three.
+[073:54] One, two, and three and four.
+[073:57] Let's say it's not properly aligned, but uh yeah.
+[074:02] and qui keep doing this.
+[074:05] Okay.
+[074:08] Why is this solution inefficient? Because we are considering.
+[074:14] Also positions this one, this one, and this one, which does not change with respect to the previous one.
+[074:23] can just jump to the next beginning or end of a subsequence.
+[074:30] Okay.
+[074:31] We want to consider only
+[074:34] the positions which are different from the previous one.
+[074:41] Which are those positions?
+[074:43] Can we re explain something?
+[074:48] Extremes of the English Exactly what you you were saying. Exactly.
+[074:54] So this counted
+[074:57] changes only if.
+[075:01] A new
+[075:02] Segments starts
+[075:06] And a new segment and all the segment ends.
+[075:15] So we are interested not in these positions, because they are equal to the previous one, but we are interested only in the position the position that changes. Those positions are the ones in which new segment enters and old segment exits.
+[075:32] Perfect. That's the solution.
+[075:37] This
+[075:39] has something to do with the technique I would like to present.
+[075:45] In this technique
+[075:50] We are doing exactly what we slowly, slowly find out together. Okay, yes.
+[076:18] Mm.
+[076:23] Take the end of the first segment.
+[076:29] Okay, for example, I process this one, which is the first one by starting position. Then you do what?
+[076:49] One but are still before the ending, and so we like slide through the intervas. Okay, so the first step is consider this one and also its ending position some way. Then you move to what? This one?
+[077:11] Yeah, yeah. So, this is the first one because it's the one that starts first. So then this is the second one because it starts uh second. What you do when you consider this?
+[077:24] Okay.
+[077:28] Exactly. Okay, that's the final uh algorithm. With a twist. Instead of uh somehow considering the end positions, let's replace each segment with a pair.
+[077:45] position and ending or starting.
+[077:51] Like
+[077:54] Every segment has two pairs.
+[077:57] Starting ending. Sort them.
+[078:02] And process in sorted order. Every time you are
+[078:09] Process here. Starting
+[078:12] increment the point, the counter. Every time you consider an ending, decrement the count. Which is exactly what you are saying, but it's uh explicit what you have to do with this with ending. You keep track of them in the ordering as well.
+[078:32] Okay, so that's exactly this weak line.
+[078:35] I agree that we found out. I pretty sure that once you know this week line strategy, that's in
+[078:47] speed up the process that you need to reach the solution. So we reached the solution all together, but we were faster if we were new there we are aware of the sweep line strategy. Because it's exactly what we found out. What this says, it says that we have a conceptual vertical
+[079:13] line that sweeps over the uh over the line.
+[079:22] Okay, for every position
+[079:26] we keep the counter which says how many intervals are intersecting the sweep line.
+[079:36] Okay.
+[079:38] And this immediately gives your solution with counters.
+[079:43] 'Kay.
+[079:44] Now we observe what are the important points for the sweep line? Well, the important points for the sweep line are where the inter number of intersections changes. Where does the intersection change? Well, it changes the intersection. The number of intersections changes if a new segment enters.
+[080:10] Of or if an older segment please.
+[080:14] Okay.
+[080:16] sweep line only for the important points this one, this one, this one, this one, this one, this one, and so on. Okay? Do we need a real sweep line? Of course not. We need to process the segments, actually the important parts of the segments in order of the sweep line, which corresponds to keep
+[080:42] This position, this position, this position, this position, this position, this position, and so on. And for each of them you need to remember what you have to do with the counter. Plus one or minus one.
+[080:56] Okay.
+[081:00] Okay.
+[081:01] So that's the that's the algorithm.
+[081:05] Mm.
+[081:09] Okay, let me use uh the last uh couple of minutes.
+[081:13] To present an alternative solutions solution we come up okay, well before concluding, okay, before moving on actually, let me conclude this.
+[081:26] What's the detail complexity?
+[081:32] Well, the time complexity is n log n.
+[081:37] Because the overall running time is dominated by the time we need to sort of the ending points.
+[081:44] Okay.
+[081:46] Now this is the solution. Perfect.
+[081:52] Okay, let's uh
+[081:54] Find out an alternative way to describe this solution.
+[082:01] Uh which allows me to introduce uh another problem.
+[082:08] Okay actually, last year we come up with this solution uh the other way around.
+[082:15] In one of the first lectures we described the problem I'm going to describe now, and some students understand, recognize that that problem is actually able to solve this current problem, so the essential equivalent.
+[082:30] Okay.
+[082:31] Um what we can do. Okay, for every
+[082:36] For every
+[082:38] Uh beginning of a segment
+[082:41] Let's so let's process the segment in order.
+[082:47] Uh and for every beginning of a segment, let's open a parenthesis.
+[082:56] Here we have one, here we have another one, this is because of this. This is because of this.
+[083:01] then we have another one, then for every uh this goes first, so we have another one because of this and uh for every ending point we close a parenthesis. So for every interval we have an upper parenthesis once we enter the the segment uh a close parenthesis where we
+[083:27] we move out.
+[083:29] Okay. Let's uh keep doing this. Open, closed, closed, closed. Uh maybe it's f open first and then close for this one. Then open then uh close then open close
+[083:48] Open, close, close.
+[083:55] all our fingers crossed.
+[083:59] It's clear what we are doing. For every segment we have two parentheses. One is open and the other is closed. And we are emitting these parentheses following the ordering of the ending point, extreme points of our internet.
+[084:21] Given these parentheses.
+[084:25] which are which are balanced.
+[084:27] Do you really balance?
+[084:31] Uh
+[084:33] What's the solution of the problem before in terms of this sequence of parentheses?
+[084:42] Yeah.
+[084:49] Okay, let me copy the parenthesis here. Open, open, open, open, close.
+[084:57] Open, open, close, closed, closed, open closed, open closed, open closed, open closed, closed.
+[085:10] Every time we
+[085:13] Diagrammer because I mean the mouse. Yeah. One, two, three, four, three, uh four, three, two, one, two, one, two, one, two, one, two, one, zero.
+[085:34] the maximum here, which is the depth for the number of uh maximum depth in this sequence of parentheses, so the maximum number of open parentheses which are not yet closed, then this is the solution for the original problem.
+[085:53] It's not actually a surprise because uh we are uh
+[085:56] Uh we are
+[086:01] This is actually following what the counter is doing, right? Plus one minus one, plus one is an open parenthesis, minus one is a closed one. So it's not a surprise, but uh it's interesting the fact that there are a lot of interesting problems on sequences of balanced parentheses and uh one of them has a strong relationship with another problem on segment.
+[086:28] Okay, on the web page you can find a couple of Rust challenges which are small
+[086:40] Problems to solve, and the goal is to write the shortest possible program in Rust.
+[086:48] Okay. One of them is to uh find the number four with the minimum number of
+[086:56] commas. You know, modern programming languages have a lot of map, filter, count and blah blah blah.
+[087:06] kind of this stuff that you can uh place one after the other to solve a problem.
+[087:12] uh use this uh all this machinery to find the shortest uh program uh for
+[087:23] Okay.
+[087:26] Questions?
+[087:29] Good.
+[087:31] Uh okay, so next uh lecture we have a couple of interesting problem uh closest pair of points, which an a which is another application of uh uh sweep line and then uh a problem that uh needs uh a lot of bio search trees to be solved.
+[087:50] See you on Monday. I will report the number of octopuses I was able to

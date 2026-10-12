@@ -1,0 +1,213 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\setmonofont{DejaVu Sans Mono}[Scale=0.82]
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx,xcolor,listings,booktabs,enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{accent}{HTML}{2B6CB0}
+\definecolor{warn}{HTML}{C53030}
+\newtcolorbox{keybox}[1][]{colback=accent!5,colframe=accent,boxrule=0.6pt,arc=2pt,left=6pt,right=6pt,top=4pt,bottom=4pt,#1}
+\newtcolorbox{warnbox}{colback=warn!5,colframe=warn,boxrule=0.6pt,arc=2pt,left=6pt,right=6pt}
+
+\lstdefinelanguage{Rust}{
+  keywords={fn,let,mut,if,else,for,in,while,return,use,pub,struct,impl,loop,break,Some,None,as,match,const},
+  morekeywords=[2]{usize,i32,u64,f64,bool,Vec,VecDeque,BTreeSet,BinaryHeap,Option},
+  sensitive=true, morecomment=[l]{//}, morestring=[b]"}
+\lstset{language=Rust,basicstyle=\ttfamily,keywordstyle=\color{accent}\bfseries,
+  keywordstyle=[2]\color{teal},commentstyle=\color{gray}\itshape,stringstyle=\color{warn},
+  frame=single,rulecolor=\color{gray!40},backgroundcolor=\color{gray!4},
+  numbers=left,numberstyle=\tiny\color{gray},xleftmargin=1.5em,breaklines=true,
+  columns=fullflexible,keepspaces=true,showstringspaces=false}
+
+\newtheorem*{invariant}{Invariant}
+\theoremstyle{definition}\newtheorem*{definition}{Definition}
+
+
+\usepackage{soul}
+\definecolor{hlY}{HTML}{FFF3A0}\definecolor{hlG}{HTML}{C8F2C2}\definecolor{hlP}{HTML}{E6D2F7}\definecolor{hlB}{HTML}{CFE3FF}
+\newcommand{\hly}[1]{{\sethlcolor{hlY}\hl{#1}}}
+\newcommand{\hlg}[1]{{\sethlcolor{hlG}\hl{#1}}}
+\newcommand{\hlp}[1]{{\sethlcolor{hlP}\hl{#1}}}
+\newcommand{\hlb}[1]{{\sethlcolor{hlB}\hl{#1}}}
+\newcommand{\img}[3]{\begin{center}\fcolorbox{gray!50}{white}{\includegraphics[width=#1]{board/#2}}\\[-2pt]{\footnotesize\textcolor{gray}{#3}}\end{center}}
+\newcommand{\extra}{\textsuperscript{\textcolor{warn}{[extra]}}}
+\newcommand{\notes}[1]{Prof.'s notes of last year, \texttt{Lessons/L6/Binary\_search\_2025.pdf} p.\,#1}
+
+\title{\textbf{CPC --- Lecture 7}\\[2pt]\large Binary search for the answer (end), a parity puzzle, two pointers trick, sweep line}
+\author{Competitive Programming and Contests --- Wednesday 07/10/2026}
+\date{}
+
+\begin{document}\sloppy
+\maketitle
+\vspace{-1.5em}
+\noindent Rewritten from the recording (\texttt{L\_07.MP4}, 88 min; transcript in \texttt{L7\_transcript.txt}); the images are frames of the board.
+\extra{} marks my additions (not said in the lecture).
+Code: \texttt{Lessons/L7/src/lib.rs} (\texttt{cargo test -p l7}). Exercises: \texttt{Lessons/L7/practice}, E28, E29, E31--E34 (\texttt{cargo test -p practice\_l7}).
+
+\begin{warnbox}
+\textbf{What changed with respect to the provisional version.} The course page announced \emph{``Two pointers trick and BST''} with
+Longest $k$-good segment and Frogs and Mosquitoes. In the lecture the prof did the two pointers (Longest $k$-good segment) and then
+\textbf{started the Sweep Line} (maximum number of overlapping intervals). \hlp{Frogs and Mosquitoes was not explained}: at the end he announces for
+the next lecture (L8, Monday 12/10) \emph{closest pair of points} (sweep line) and \emph{``a problem that needs a lot of binary search trees''}
+--- most likely Frogs and Mosquitoes. It was not done in L8 either: my reconstruction from the 2025 notes is now in \texttt{Lessons/L9} (provisional L9.pdf, crate \texttt{l9}, exercise E39).
+\end{warnbox}
+
+\begin{keybox}
+\textbf{Hands-On 1 is out} (\url{https://pages.di.unipi.it/rossano/blog/2024/handson12425/}): BST check and Maximum Path Sum on a binary tree in Rust;
+scaffold in \texttt{CPC/HandsOn/HO1}. \textbf{Rust challenges}: the prof mentions on the web page ``a couple of Rust challenges'', small problems where the goal is
+\hly{the shortest possible Rust program} (chains of \texttt{map}/\texttt{filter}/\texttt{count}\dots).
+\end{keybox}
+
+\noindent\textbf{Highlights:} \hly{general / to remember} \quad \hlg{good: works, efficient, correct} \quad \hlp{bad: pitfalls, wrong ideas, costs} \quad \hlb{definitions and key results}
+
+\tableofcontents
+
+%======================================================================
+\section{Binary search for the answer: end of L6}
+\subsection{Social distancing: running time}
+\img{0.6\linewidth}{l7_socdist.jpg}{Greedy check for a target distance $d$; total cost.}
+Recap of the predicate (L6): start from the first available point, place a person; jump $d$ forward; if the point is inside an interval place
+the next person there, otherwise place it at the first point of the next interval. \hlg{Greedy, left to right, \mbox{$\Theta(n+c)$}} ($n$ intervals, $c$ people).
+At the end, if all $c$ people were placed the answer is yes, otherwise no; \hly{every step removes half of the remaining candidate distances.}
+\begin{keybox}
+\hlb{Time \mbox{$O((n+c)\log\ell)$}}: $\log\ell$ steps of binary search over the distances in $[0,\ell]$, each one evaluates the predicate in $\Theta(n+c)$.
+\end{keybox}
+\begin{itemize}[nosep]
+\item \hlp{This assumes \mbox{$d$} is an integer.} If $d$ is a real number the bound no longer holds: the number of steps depends on \hly{how many decimal digits we want}.
+\item \hlg{Better range: \mbox{$d^*\le \ell/c$}} (student's answer): with $c$ people on a line of length $\ell$ the minimum distance cannot exceed $\ell/c$,
+      so we binary search on $[0,\ell/c]$, which helps when $c$ is large.
+\end{itemize}
+
+\subsection{The car and the fuel, reconsidered}
+\img{0.62\linewidth}{l7_car.jpg}{The problem left open in L6 (``SOLD OUT'' is written on the board, not part of the problem).}
+A car starts with $G$ liters, consumes $F$ liters per km; it meets points at distances $d_1,d_2,\dots$ from the previous one, and at point $i$ it
+refuels $f_i$ liters. \hlb{\mbox{$G^*$} = minimum amount of fuel in the tank at the beginning} to reach the goal. In L6 it ``seemed very hard'';
+\hly{now the pattern is clear: we are asked for an answer} (\mbox{$G^*$}).
+\begin{itemize}[nosep]
+\item \hly{Strategy: keep a checklist of techniques} --- so far \emph{standard data structures} + \emph{binary search for the answer} --- and go through it.
+\item \hlb{Monotonicity}: with less fuel than $G^*$ we fail, with more we arrive. \hlg{Predicate ``can we reach the end with \mbox{$G$}?'' = simulate the trip}:
+      at each segment subtract $F\cdot d_i$ (if it goes negative: false), at each point add $f_i$. \hlg{\mbox{$\Theta(n)$} per check}, $\Theta(n\log(F\sum d_i))$ in total.
+\end{itemize}
+\begin{keybox}
+\hly{General techniques give a solution, not necessarily the optimal one}: they are \emph{standard}, you apply them ``almost brainless'' and get something much
+better than brute force --- \hlg{usually what an interviewer asks for}, and often enough in contests. An ad hoc solution exploiting properties of the problem can be better
+(same for dynamic programming later). \extra{} Here: $G^* = \max_i \big(F\sum_{h\le i} d_h - \sum_{h<i} f_h\big)$ (largest deficit over the prefixes,
+or $0$) in $\Theta(n)$; \texttt{l7::min\_initial\_fuel} and the test compare the two.
+\end{keybox}
+
+%======================================================================
+\section{Puzzle: the mutilated chessboard}
+\img{0.42\linewidth}{l7_chess.jpg}{Top-left and bottom-right cells removed: can we cover the board with $2\times1$ dominoes?}
+\textbf{Answer: no.} \hlb{Parity argument} (``another good technique to know''): the two removed corners have the \hly{same colour}.
+\hlg{Every domino, horizontal or vertical, covers one white and one black cell.} We start with different numbers of white and black cells; each domino lowers both counts by
+one, so they can never both reach $0$. \hly{The argument is general}: not only $8\times 8$, any board with a different number of black and white cells.
+
+\img{0.5\linewidth}{l7_tiling.jpg}{Follow-up: remove two cells of different colour.}
+\textbf{Follow-up (homework, discussed on Monday).} Remove \emph{any} two cells, \hly{one black and one white}. Is a tiling always possible? If yes,
+\hly{give an (efficient) algorithm} that places the dominoes. In class a student tried an argument based on the even/odd lengths of rows and columns; the prof was ``not fully
+convinced'': \hly{puzzles are easy to state, look impossible, and the solution is short and elegant}. Think about it before L8.
+
+%======================================================================
+\section{The two pointers trick}
+\subsection{Longest $k$-good segment}
+\img{0.6\linewidth}{l7_kgood.jpg}{Statement on the board.}
+\textbf{Problem} (Codeforces 616D, \textbf{mandatory}). Given $A[1,n]$ and $k$, \hlb{a subarray is \mbox{$k$}-good if it contains no more than \mbox{$k$} distinct values}.
+Find the longest one. Example ($k=3$): in $4\,\underline{2\,3\,1\,2\,2\,3}\,4$ the underlined subarray is $3$-good (and \hly{it is not maximal}: it can be extended
+by one position on both sides).
+
+\paragraph{Trivial solutions.}
+\begin{itemize}[nosep]
+\item \hlp{Try all the \mbox{$\Theta(n^2)$} subarrays and scan each one} to count the distinct values: cubic.
+\item Like the first lecture's maximum subarray (Kadane's trivial versions): for each start $i$ extend $j$ one position at a time, exploiting that the next segment contains one more element.
+      \hly{To count distinct values we need a multiset} (set + number of occurrences per value). \hlp{Still \mbox{$\Theta(n^2)$}.}
+\end{itemize}
+
+\paragraph{Two pointers (found by a student).} Pointers $L$ and $R$ start at the beginning; the set (with frequencies) contains $A[L..R]$.
+\begin{itemize}[nosep]
+\item Move $R$ one position right: if $A[R]$ is already in the set increment its frequency, otherwise insert it.
+\item If now the set has $k+1$ distinct values, move $L$ right, decrementing frequencies and \hlp{removing a value when its frequency reaches \mbox{$0$}},
+      until the distinct values are $k$ again (we may have to skip a whole run of equal values).
+\item \hly{Keep track of the maximum \mbox{$R-L+1$} seen so far} and report it at the end.
+\end{itemize}
+\img{0.6\linewidth}{l7_kgood_ex.jpg}{A student's question: $1$-good on $4\,4\,4\,4\,1\,5\,5\,5$. The pointers end on a short window: you need the running maximum.}
+\begin{itemize}[nosep]
+\item \hlp{The pointers do not stop on the optimal window}: on $4\,4\,4\,4\,1\,5\,5\,5\,5$ with $k=1$, at $1$ the window shrinks, and when the pointers are on the $4$'s
+      you cannot know how many $5$'s will follow. \hlg{Remember the best so far.}
+\item \hlb{Correctness}: $L$ is the beginning of a candidate subarray and $R$ extends it as much as possible; when $R$ introduces a new distinct value that breaks the
+      property, \hly{no subarray starting at \mbox{$L$} can be \mbox{$k$}-good any more}, so $L$ can be discarded. \hlg{Implicitly we try all the possible \mbox{$L$}.}
+\item \hlb{Running time \mbox{$\Theta(n)$}}: \hlg{at every iteration one of the two pointers moves right by one}, both only move right, so there are at most $n+n$ iterations,
+      each with $O(1)$ work on the set (expected, with a hash map). (\texttt{l7::longest\_k\_good})
+\end{itemize}
+
+\subsection{Another example: palindromes}
+A string is a palindrome if it reads the same reversed (with odd length the middle symbol is free).
+\hlg{Check: one pointer at the beginning, one at the end, compare and move inwards}; if they meet before a mismatch, it is a palindrome. (\texttt{l7::is\_palindrome})
+\begin{keybox}
+\hly{Not a sophisticated technique, but always keep in mind that two pointers can solve the problem.}
+\hlb{Checklist so far: standard data structures, binary search for the answer, two pointers trick.}
+\end{keybox}
+
+\subsection{Alternative: binary search for the answer}
+\img{0.55\linewidth}{l7_kgood_bs.jpg}{The cost of the binary search solution, discussed in class.}
+A student's idea: \hly{``find the longest one'' hides an answer, the length}. Once we know the length $L$, a \emph{sliding window} of size $L$
+(constant time to remove the leftmost element and add the new one) finds a $k$-good subarray of that length.
+\begin{itemize}[nosep]
+\item \hlb{Monotone predicate}: if a $k$-good subarray of length $L$ exists, shorter ones exist too; longer than the optimum: no.
+\item Predicate in $\Theta(n)$ with the sliding window; \hlb{total \mbox{$\Theta(n\log n)$}} (range $[0,n]$); more precisely $\Theta(n\log(n-k))$, since the answer is at least $k$
+      \hly{(sublinear range if \mbox{$k$} is large)}.
+\item \hlp{Slower than the two pointers \mbox{$\Theta(n)$}}: again, applying a technique does not guarantee the best solution. \hly{In a real implementation use early exit} (stop at the first $k$-good window).
+      (\texttt{l7::longest\_k\_good\_len\_bs})
+\end{itemize}
+\img{0.55\linewidth}{l7_bsanswer.jpg}{Running example: $A=1\,1\,2\,3\,3\,4\,4\,7\,3\,2\,3$, $k=3$, $L\in[1,11]$.}
+\paragraph{Running example of the lecture.} $L^*\in[1,11]$ (at least $1$ if $k\ge1$). Try $L'=6$: the prof checks the windows and says that each has $4$ distinct values,
+\textbf{no}; then $L'=3$ yes, $L'=4$ yes, $L'=5$ yes: answer $5$. At the end he doubts it himself (``maybe I was wrong, but the running example was good enough'').
+\begin{warnbox}
+\extra{} \hlp{The final answer of the example is wrong.} The window $3\,3\,4\,4\,7\,3$ (positions $4..9$, 1-based) has only $3$ distinct values, so $L'=6$ is \textbf{yes};
+all windows of length $7$ have $4$ distinct values: \hlb{\mbox{$L^*=6$}}. The error is only in the first check (it sent the search to the left part); the method is correct.
+The test \texttt{k\_good\_binary\_search\_for\_the\_answer} checks it.
+\end{warnbox}
+
+%======================================================================
+\section{Sweep line}
+\hly{A very popular technique: conceptually simple, sometimes simple to apply, sometimes it is hard to see why it works.} The prof presents it through a problem.
+\subsection{Maximum number of overlapping intervals}
+\img{0.62\linewidth}{l7_overlap_def.jpg}{Definition of overlap and an example with $4$ intervals overlapping at $x$.}
+\textbf{Problem.} Given $n$ intervals (ranges, segments) $[s_i,e_i]$ with $s_i,e_i\in\mathbb{N}$, \hlb{two intervals overlap if \mbox{$\exists x$} with \mbox{$x\in[s_i,e_i]$} and \mbox{$x\in[s_j,e_j]$}}.
+\hlb{Compute the maximum number of intervals that overlap all together in some point.} In the example the answer is $4$.
+
+\paragraph{Array of counters.} Proposed in class: if the coordinates are in $[0,\ell]$ with $\ell$ small (say $\ell=\Theta(n)$), keep one counter per position and
+increment it for every interval containing it.
+\begin{itemize}[nosep]
+\item \hlp{Filling the counters costs the sum of the lengths of the intervals: quadratic} even if $\ell=\Theta(n)$ --- it is enough to have many long intervals.
+\item \hlp{Scanning \mbox{$0..\ell$} and checking every interval for every point} is quadratic as well.
+\item \hly{With prefix sums} (a student's remark) the increments can be done in constant time offline: \hly{a later lecture}, where this approach is ``rediscovered''.
+\end{itemize}
+\img{0.55\linewidth}{l7_counters.jpg}{Counters computed position by position: $C=2,2,3,3,3,\dots$}
+\paragraph{Towards the solution.} Sort the intervals by start, insert them when the scan reaches their start and keep only the active ones: for each position we
+increment the counter once per active interval. \hlp{But most positions are useless}: their counter is the same as the previous position.
+\hlb{The counter changes only where a new segment starts or an old segment ends.}
+
+\begin{keybox}
+\hlb{Sweep line algorithm.} Replace each interval with two events \mbox{$(s_i,\text{start})$} and \mbox{$(e_i,\text{end})$}; \hlg{sort them and process them in order}:
+start $\Rightarrow$ counter $+1$, end $\Rightarrow$ counter $-1$; the answer is the maximum value of the counter.
+Conceptually, \hly{a vertical line sweeps the axis and the counter says how many intervals intersect it}; we only stop at the important points (the endpoints).
+\hlb{Time \mbox{$\Theta(n\log n)$}, dominated by the sorting of the endpoints.}
+\end{keybox}
+\noindent\extra{} \hlp{Ties}: the intervals are closed, so at the same coordinate \hly{starts must come before ends} ($[1,3]$ and $[3,5]$ overlap in $3$).
+With \texttt{(coord, 0 = start / 1 = end)} tuples the default sort does it. (\texttt{l7::max\_overlaps}, tested against the counters \texttt{l7::max\_overlaps\_counters})
+
+\subsection{The same thing as balanced parentheses}
+\img{0.6\linewidth}{l7_parens.jpg}{Open a parenthesis at each start, close it at each end; under the sequence the depth: maximum $4$.}
+Process the endpoints in order and emit \texttt{(} for every start and \texttt{)} for every end: we get a \hlb{balanced sequence of parentheses}.
+\hlb{The answer is its maximum depth} (maximum number of open, not yet closed, parentheses). \hly{No surprise}: it is exactly the counter ($+1$ = open, $-1$ = close).
+\hly{There are many interesting problems on balanced parentheses, and one of them is equivalent to this problem on segments}: last year the class went the other way around,
+from the parentheses problem to the intervals. (\texttt{l7::max\_depth\_parentheses})
+
+\paragraph{Next lecture (L8, 12/10).} Closest pair of points (another sweep line application, notes p.\,6--9 of \texttt{Binary\_search\_2025.pdf}) and a problem
+needing many BSTs (Frogs and Mosquitoes, moved to L9); mandatory problem on the course page: \emph{Check if All the Integers in a Range Are Covered}. Solution of the tiling puzzle.
+
+\end{document}

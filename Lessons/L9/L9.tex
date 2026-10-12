@@ -1,0 +1,101 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\setmonofont{DejaVu Sans Mono}[Scale=0.82]
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx,xcolor,listings,booktabs,enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{accent}{HTML}{2B6CB0}
+\definecolor{warn}{HTML}{C53030}
+\newtcolorbox{keybox}[1][]{colback=accent!5,colframe=accent,boxrule=0.6pt,arc=2pt,left=6pt,right=6pt,top=4pt,bottom=4pt,#1}
+\newtcolorbox{warnbox}{colback=warn!5,colframe=warn,boxrule=0.6pt,arc=2pt,left=6pt,right=6pt}
+
+\lstdefinelanguage{Rust}{
+  keywords={fn,let,mut,if,else,for,in,while,return,use,pub,struct,impl,loop,break,Some,None,as,match,const},
+  morekeywords=[2]{usize,i32,u64,f64,bool,Vec,VecDeque,BTreeSet,BinaryHeap,Option},
+  sensitive=true, morecomment=[l]{//}, morestring=[b]"}
+\lstset{language=Rust,basicstyle=\ttfamily,keywordstyle=\color{accent}\bfseries,
+  keywordstyle=[2]\color{teal},commentstyle=\color{gray}\itshape,stringstyle=\color{warn},
+  frame=single,rulecolor=\color{gray!40},backgroundcolor=\color{gray!4},
+  numbers=left,numberstyle=\tiny\color{gray},xleftmargin=1.5em,breaklines=true,
+  columns=fullflexible,keepspaces=true,showstringspaces=false}
+
+\newtheorem*{invariant}{Invariant}
+\theoremstyle{definition}\newtheorem*{definition}{Definition}
+
+
+\usepackage{soul}
+\definecolor{hlY}{HTML}{FFF3A0}\definecolor{hlG}{HTML}{C8F2C2}\definecolor{hlP}{HTML}{E6D2F7}\definecolor{hlB}{HTML}{CFE3FF}
+\newcommand{\hly}[1]{{\sethlcolor{hlY}\hl{#1}}}
+\newcommand{\hlg}[1]{{\sethlcolor{hlG}\hl{#1}}}
+\newcommand{\hlp}[1]{{\sethlcolor{hlP}\hl{#1}}}
+\newcommand{\hlb}[1]{{\sethlcolor{hlB}\hl{#1}}}
+\newcommand{\img}[3]{\begin{center}\fcolorbox{gray!50}{white}{\includegraphics[width=#1]{board/#2}}\\[-2pt]{\footnotesize\textcolor{gray}{#3}}\end{center}}
+\newcommand{\extra}{\textsuperscript{\textcolor{warn}{[extra]}}}
+\newcommand{\notes}[1]{Prof.'s notes of last year, \texttt{Lessons/L6/Binary\_search\_2025.pdf} p.\,#1}
+
+
+\title{\textbf{CPC --- Lecture 9 (provisional)}\\[2pt]\large Frogs and Mosquitoes}
+\author{Competitive Programming and Contests}
+\date{}
+
+\begin{document}\sloppy
+\maketitle
+\vspace{-1.5em}
+\begin{warnbox}
+\textbf{PROVISIONAL --- reconstructed, not from a lecture.} Frogs and Mosquitoes (Codeforces 609F, \textbf{mandatory}) was announced at the end of L7
+(\emph{``a problem that needs a lot of binary search trees''}) but not explained in L7 nor in L8 (the prof is about one hour behind the programme).
+Source: the prof's 2025 notes (\texttt{Lessons/L6/Binary\_search\_2025.pdf} p.\,10--13); the explanations, the worked example and the code are mine (\extra).
+Check everything against the lecture when it is done.
+\end{warnbox}
+\noindent Code: \texttt{Lessons/L9/src/lib.rs} (\texttt{cargo test -p l9}). Exercise: \texttt{Lessons/L9/practice}, E39 (\texttt{cargo test -p practice\_l9}).
+
+\noindent\textbf{Highlights:} \hly{general / to remember} \quad \hlg{good: works, efficient, correct} \quad \hlp{bad: pitfalls, wrong ideas, costs} \quad \hlb{definitions and key results}
+
+\section{Frogs and Mosquitoes}
+\img{0.55\linewidth}{bs2025_p10.png}{\notes{10}}
+\textbf{Problem} (Codeforces 609F, \textbf{mandatory}). $n$ frogs on the $x$-axis: frog $i$ is at $x_i$ and has a tongue of length $t_i$.
+$m$ mosquitoes land one at a time: mosquito $j$ lands at $b_j$ and has value (size) $a_j$. \hlb{Frog \mbox{$i$} can eat mosquito \mbox{$j$} if \mbox{$b_j\in[x_i,x_i+t_i]$}};
+\hly{if many frogs can, only the leftmost one eats it.} \hly{When frog \mbox{$i$} eats a mosquito of value \mbox{$a_j$}, its tongue grows: \mbox{$t_i \gets t_i + a_j$}.}
+Output, for each frog, how many mosquitoes it ate and its final tongue length.
+\img{0.45\linewidth}{bs2025_p11.png}{\notes{11}}
+\textbf{Notice}: \hlp{a mosquito may be not eaten for a while}: nobody reaches it when it lands, but later a tongue grows enough to reach it, and then it is eaten
+(possibly causing another growth, and so on).
+\begin{keybox}
+\hlb{Target time complexity \mbox{$\Theta((n+m)\log(n+m))$}.} In the notes the problem is classified as \hlb{dynamic 1D point location}: a set of intervals that changes
+over time, and queries ``which interval contains this point?''.
+\end{keybox}
+
+\subsection{Solution}
+\img{0.5\linewidth}{bs2025_p12.png}{\notes{12}}
+\begin{itemize}[nosep]
+\item \hly{Store the \mbox{$x_i$} in a BST together with \mbox{$t_i$}.} \hlb{The candidate frog for \mbox{$b_j$} is the predecessor of \mbox{$b_j$}} (largest $x_i\le b_j$):
+      it eats the mosquito if $b_j\le x_i+t_i$. $\Theta(\log n)$.
+\item \textbf{Issue \#1: overlapping intervals.} \hlp{The predecessor is not necessarily the right frog}: a frog $x_h$ further left with a long tongue may also reach
+      $b_j$, and it has priority. \hlg{Preprocess the intervals to remove overlaps}: scanning the frogs by $x$, frog $i$ keeps only the part of
+      $[x_i,x_i+t_i]$ not covered by the frogs on its left (its start moves after their end; if it is covered entirely it is removed: it will never eat).
+      \hlg{Now the intervals are disjoint and the predecessor is the right one.} Sorting: $\Theta(n\log n)$.
+\end{itemize}
+\img{0.5\linewidth}{bs2025_p13.png}{\notes{13}}
+\begin{itemize}[nosep]
+\item \textbf{Issue \#2: an interval grows to the right}, \hlp{introducing new overlaps}. Repeat: move to the next frog; remove it if it is now totally overlapped,
+      otherwise update its starting point (just after the new end) and stop. Each single step is $\Theta(\log n)$; \hlg{a frog is removed at most once, so the overall cost is \mbox{$\Theta(n\log n)$}} (amortized: only the last frog visited is not removed).
+\item \textbf{Issue \#3: not eaten mosquitoes.} \hly{Store them in a BST by position.} After frog $i$ grows, check whether it can eat an old mosquito: the first waiting
+      mosquito at position $\ge$ the start of its interval and $\le x_i+t_i$ (a successor query); eat it, grow, and check again. \hlg{Each mosquito is inserted and removed once: \mbox{$\Theta(m\log m)$}.}
+\end{itemize}
+\begin{keybox}
+\hlb{Total: \mbox{$\Theta((n+m)\log(n+m))$} time with two BSTs} (frogs by start of their disjoint intervals, waiting mosquitoes by position).
+\end{keybox}
+\noindent\extra{} \texttt{l9::frogs\_and\_mosquitoes} implements exactly these three points with \texttt{BTreeMap} (predecessor =
+\texttt{range(..=b).next\_back()}); it passes the Codeforces sample and is tested against an $O(nm)$ brute force on random inputs.
+
+\paragraph{\extra{} Codeforces sample.} Frogs $(x,t)$: $(10,2),(15,0),(6,1),(0,1)$; mosquitoes $(b,a)$ in order: $(110,10),(1,1),(6,0),(15,10),(14,100),(12,2)$.
+$(110,10)$: nobody, it waits. $(1,1)$: frog at $0$ eats it, tongue $2$. $(6,0)$: frog at $6$. $(15,10)$: frog at $15$ (tongue $0$ reaches exactly $15$), tongue $10$.
+$(14,100)$: nobody ($14$ is after $10+2$ and before $15$), waits. $(12,2)$: frog at $10$ eats it, tongue $4$, now reaches $14$: eats $(14,100)$,
+tongue $104$, reaches $110$: eats $(110,10)$, tongue $114$. \hlb{Output: \mbox{$(3,114),(1,10),(1,1),(1,2)$}.}
+
+
+\end{document}

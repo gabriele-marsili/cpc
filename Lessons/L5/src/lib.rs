@@ -1,9 +1,25 @@
-// L5 (30/09/2026) — PROVVISORIA: la registrazione non è ancora disponibile; ricostruita dalle
-// note 2025 del prof (Pearls_2025.pdf p.8-17). Codice generato da Claude, NON del prof.
-// Test: cargo test -p l5
+// L5 (30/09/2026) — dalla registrazione. Codice generato da Claude, NON del prof (a lezione non
+// ha scritto codice). Test: cargo test -p l5
 //
-// Duplicato con accesso casuale (destroy A, Floyd), elemento di maggioranza (Boyer-Moore,
-// contatori per bit con inserimenti/cancellazioni), heavy hitters di Misra-Gries.
+// Duplicato con accesso casuale: la soluzione del prof che sposta ogni elemento nella sua cella
+// partendo da n (distrugge A), Floyd (A in sola lettura); elemento di maggioranza (Boyer-Moore).
+// Maggioranza con cancellazioni e Misra-Gries non sono stati fatti in L5: sono in Lessons/L6.
+
+/// Soluzione del prof in L5: si parte dall'ultima posizione n, si prende l'elemento e lo si mette
+/// nella cella col suo indice, togliendo quello che c'era; si continua con l'elemento tolto.
+/// Quando la cella di destinazione contiene già quel valore, è il duplicato.
+/// Esempio: 7 va in 7 (esce 4), 4 in 4 (esce 5), 5 in 5 (esce 2), 2 in 2 (esce 5), 5 in 5: c'è già.
+/// Θ(n) tempo, O(1) spazio extra, A distrutto.
+pub fn place_from_n(a: &mut [usize]) -> usize {
+    let n = a.len() - 1;
+    let mut x = a[n];
+    loop {
+        if a[x] == x {
+            return x;
+        }
+        x = std::mem::replace(&mut a[x], x);
+    }
+}
 
 /// Note 2025 p.9-10: Floyd. Si vede A come lista: i -> A[i].
 /// Nessuna cella punta a n (i valori sono < n), quindi partendo da n si entra in un ciclo
@@ -26,7 +42,7 @@ pub fn floyd(a: &[usize]) -> usize {
 }
 
 
-/// Note 2025 p.8, "destroy A": si segue la lista i -> A[i] partendo da n (nessuna cella punta
+/// [extra] Variante delle note 2025 (p.8): si segue la lista i -> A[i] partendo da n (nessuna cella punta
 /// a n). Ogni cella visitata viene marcata con il valore n (che non è un valore valido):
 /// la prima volta che arriviamo su una cella già marcata, quel numero di cella ha due frecce
 /// entranti, cioè è un valore duplicato. Θ(n) tempo, O(1) spazio extra, ma A viene distrutto.
@@ -72,69 +88,6 @@ pub fn majority(a: &[i64]) -> Option<i64> {
     (a.iter().filter(|&&x| x == c).count() > a.len() / 2).then_some(c)
 }
 
-/// Note 2025 p.14: maggioranza con inserimenti e cancellazioni. Per ogni bit si tiene quanti
-/// elementi hanno quel bit a 1; il bit i dell'elemento di maggioranza è il valore più frequente
-/// in posizione i. O(log u) tempo per operazione e O(log u) spazio (u = valore massimo).
-/// Il risultato è significativo solo se una maggioranza esiste.
-pub struct BitMajority {
-    ones: Vec<usize>,
-    len: usize,
-}
-
-impl BitMajority {
-    pub fn new(bits: usize) -> Self {
-        BitMajority { ones: vec![0; bits], len: 0 }
-    }
-    pub fn insert(&mut self, x: u64) {
-        self.len += 1;
-        for (b, c) in self.ones.iter_mut().enumerate() {
-            *c += ((x >> b) & 1) as usize;
-        }
-    }
-    pub fn delete(&mut self, x: u64) {
-        self.len -= 1;
-        for (b, c) in self.ones.iter_mut().enumerate() {
-            *c -= ((x >> b) & 1) as usize;
-        }
-    }
-    pub fn candidate(&self) -> u64 {
-        self.ones.iter().enumerate()
-            .filter(|&(_, &c)| c > self.len - c)
-            .map(|(b, _)| 1u64 << b)
-            .sum()
-    }
-}
-
-/// Note 2025 p.16-17: Misra-Gries heavy hitters. Gli elementi con almeno n/T + 1 occorrenze
-/// sono di sicuro tra i candidati restituiti (ma possono esserci falsi positivi: per averli
-/// esatti serve una seconda passata, `heavy_hitters`) [extra].
-/// Come nelle note: si aggiunge il nuovo elemento; se i candidati diventano più di T, si
-/// decrementano tutti e si eliminano gli zeri. Θ(n) e non O(T·n): ogni decremento "paga"
-/// un incremento precedente, e gli incrementi sono n.
-pub fn misra_gries(a: &[i64], t: usize) -> std::collections::HashMap<i64, usize> {
-    let mut k: std::collections::HashMap<i64, usize> = std::collections::HashMap::new();
-    for &e in a {
-        *k.entry(e).or_insert(0) += 1;
-        if k.len() > t {
-            k.retain(|_, c| {
-                *c -= 1;
-                *c > 0
-            });
-        }
-    }
-    k
-}
-
-/// Misra-Gries + verifica: gli elementi con almeno n/T + 1 occorrenze, ordinati.
-pub fn heavy_hitters(a: &[i64], t: usize) -> Vec<i64> {
-    let mut out: Vec<i64> = misra_gries(a, t)
-        .into_keys()
-        .filter(|c| a.iter().filter(|&&x| x == *c).count() >= a.len() / t + 1)
-        .collect();
-    out.sort();
-    out
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -154,6 +107,17 @@ mod tests {
     }
 
     const LESSON: [usize; 9] = [1, 3, 5, 6, 5, 2, 0, 4, 7];
+
+    #[test]
+    fn place_from_n_example_from_lesson() {
+        assert_eq!(place_from_n(&mut LESSON.to_vec()), 5);
+        let mut rng = Rng(555);
+        for _ in 0..3000 {
+            let n = 1 + rng.below(40);
+            let a: Vec<usize> = (0..=n).map(|_| rng.below(n)).collect();
+            assert!(is_dup(&a, place_from_n(&mut a.clone())), "{a:?}");
+        }
+    }
 
     #[test]
     fn destroy_a_example_from_notes() {
@@ -191,35 +155,6 @@ mod tests {
             let a: Vec<i64> = (0..n).map(|_| rng.below(3) as i64).collect();
             let brute = (0..3).find(|&v| a.iter().filter(|&&x| x == v).count() > n / 2);
             assert_eq!(majority(&a), brute, "{a:?}");
-        }
-    }
-
-    #[test]
-    fn bit_majority_example_from_notes() {
-        let mut m = BitMajority::new(3);
-        for &x in &BM {
-            m.insert(x as u64);
-        }
-        assert_eq!(m.candidate(), 1);
-        for _ in 0..5 {
-            m.delete(1); // D D D D D
-        }
-        m.insert(3); // I  -> rimane 5 3 2 3 3
-        assert_eq!(m.candidate(), 3);
-    }
-
-    #[test]
-    fn misra_gries_against_brute_force() {
-        let mut rng = Rng(99);
-        for _ in 0..2000 {
-            let n = 1 + rng.below(40);
-            let t = 1 + rng.below(4);
-            let a: Vec<i64> = (0..n).map(|_| rng.below(6) as i64).collect();
-            let mut brute: Vec<i64> = (0..6)
-                .filter(|&v| a.iter().filter(|&&x| x == v).count() >= n / t + 1)
-                .collect();
-            brute.sort();
-            assert_eq!(heavy_hitters(&a, t), brute, "{a:?} t={t}");
         }
     }
 }

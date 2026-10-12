@@ -9,7 +9,6 @@
 #[cfg(test)]
 mod util;
 
-
 /// E01 — Leaders in array.
 /// Un elemento è un *leader* se è strettamente maggiore di tutti gli elementi alla sua destra
 /// (l'ultimo elemento è sempre un leader). Restituisci i leader nell'ordine in cui compaiono.
@@ -17,7 +16,24 @@ mod util;
 /// Obiettivo: Θ(n) tempo, una sola scansione (da destra).
 /// Rust: iteratori al contrario (`.iter().rev()`), `Vec::reverse`.
 pub fn leaders(a: &[i32]) -> Vec<i32> {
-    todo!()
+    if a.is_empty() {
+        return Vec::new();
+    }
+
+    let mut r = Vec::new();
+    let mut max_so_far = i32::MIN;
+
+    for &el in a.iter().rev() {
+        // Se r è vuoto prendiamo sempre il primo elemento a destra (l'ultimo dell'array),
+        // altrimenti controlliamo se è strettamente maggiore del massimo visto finora.
+        if r.is_empty() || el > max_so_far {
+            max_so_far = el;
+            r.push(el);
+        }
+    }
+
+    r.reverse();
+    r
 }
 
 /// E02 — Kadane: somma massima di un sottoarray contiguo NON vuoto.
@@ -25,7 +41,15 @@ pub fn leaders(a: &[i32]) -> Vec<i32> {
 /// Obiettivo: Θ(n) tempo, O(1) spazio. Attenzione al caso con tutti numeri negativi.
 /// LeetCode: https://leetcode.com/problems/maximum-subarray/
 pub fn max_subarray(a: &[i64]) -> i64 {
-    todo!()
+    let mut current_sum = a[0];
+    let mut max_sum = a[0];
+
+    for &el in &a[1..] {
+        current_sum = (current_sum + el).max(el);
+        max_sum = max_sum.max(current_sum);
+    }
+
+    max_sum
 }
 
 /// E03 — Missing number. `a` contiene n numeri DISTINTI presi da {0, 1, ..., n}:
@@ -34,7 +58,17 @@ pub fn max_subarray(a: &[i64]) -> i64 {
 /// Obiettivo: Θ(n) tempo, O(1) spazio (somma attesa meno somma, oppure XOR).
 /// Rust: attenzione all'overflow se usi la somma (usa u64 o lo XOR).
 pub fn missing_number(a: &[u32]) -> u32 {
-    todo!()
+    let n = a.len() as u32;
+    let mut xor_all = 0;
+
+    for i in 0..=n {
+        xor_all ^= i;
+    }
+    for &el in a {
+        xor_all ^= el;
+    }
+
+    xor_all
 }
 
 #[cfg(test)]
@@ -76,7 +110,11 @@ mod tests {
         let mut rng = Rng(2);
         for _ in 0..200 {
             let n = 1 + rng.below(50);
-            let mut p: Vec<u32> = rng.permutation(n + 1).into_iter().map(|x| x as u32).collect();
+            let mut p: Vec<u32> = rng
+                .permutation(n + 1)
+                .into_iter()
+                .map(|x| x as u32)
+                .collect();
             let missing = p.pop().unwrap();
             assert_eq!(missing_number(&p), missing);
         }

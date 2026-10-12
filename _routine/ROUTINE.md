@@ -112,3 +112,65 @@ stesse box. È lo standard da mantenere.
   Per una lezione nuova crea `practice/` così (2-5 esercizi), aggiungi `"Lessons/L<n>/practice"` e `"Lessons/L<n>"` ai members del
   Cargo.toml radice, verifica nel cloud che le soluzioni passino i test e che le tracce compilino senza warning.
   Non sovrascrivere mai un `practice/src/lib.rs` esistente: può contenere le soluzioni di Octech.
+
+## Stato al 05/10/2026
+- L5 è stata rifatta sulla registrazione (non è più provvisoria). Il prof è arrivato fino a Boyer-Moore (inserimenti sì,
+  cancellazioni annunciate per L6).
+- L6 (lunedì 05/10) NON è ancora integrata: in `Lessons/L6/` ci sono già `notes.md` di Octech (sezione [L5] ripasso + [L6]),
+  `Binary_search_2025.pdf` (note 2025 del prof: puzzle scacchiera/Alice&Bob, binary search for the answer, exponential search,
+  two pointers, sweep line, closest pair, frogs and mosquitoes), e un codice/practice PROVVISORI su maggioranza con
+  cancellazioni e Misra-Gries (`src/lib.rs`, `practice/` E22-E23, dalle note 2025). Quando arriva la registrazione di L6:
+  scrivi L6.tex/pdf sulla registrazione partendo da dove finisce L5, includi le pagine di `Pearls_2025.pdf` (in Lessons/L5) e di
+  `Binary_search_2025.pdf` per ciò che è stato fatto, sistema `src/lib.rs` (generato da te) e AGGIUNGI esercizi in practice
+  (non toccare E22-E23 se Octech li ha modificati: controlla generated_edited_by_user / confronta con soluzioni).
+- Gli esercizi ora sono numerati: L5 = E19-E21, L6 = E22-E23 (+ nuovi da E24).
+- (05/10) Creato `Lessons/L6/L6.pdf` PROVVISORIO (da notes.md di Octech + Pearls_2025 p.14-17): maggioranza con
+  inserimenti/cancellazioni (contatori per bit), Misra-Gries, puzzle scacchiera. Quando arriva la registrazione di L6,
+  rifallo sulla registrazione mantenendo questo inizio e aggiungendo ciò che segue (probabilmente Binary_search_2025.pdf).
+- (05/10) L6.pdf provvisorio ora include anche puzzle (scacchiera, Alice & Bob) e binary search (Binary_search_2025.pdf p.1-4 +
+  blog del prof): ricerca binaria, binary search for the answer (sqrt, social distancing), exponential search, problema
+  dell'auto/carburante (solo enunciato). practice L6 = E22-E27. Trovato un bug nel codice del blog (select_intervals: limite
+  superiore l = numero di punti invece dell'ampiezza), corretto in L6/src/lib.rs. Le pagine 5-13 (two pointers, sweep line,
+  closest pair, frogs) NON sono in L6: vanno nella lezione in cui il prof le fa.
+- (05/10, 13:30) L6 provvisorio riallineato agli appunti presi da Octech DURANTE la lezione (notes.md 12:57): fatti a lezione, in ordine,
+  maggioranza con cancellazioni → Misra-Gries → scacchiera → auto/carburante (enunciato completo: rifornimento f_i in ogni punto) →
+  binary search for the answer → social distancing (le note si fermano qui). Alice & Bob, codice binary search/sqrt, exponential search
+  NON sono nelle note: marcati "[not in your notes]". Aggiunti l6::min_initial_fuel (BS) e min_initial_fuel_linear [extra] con test.
+  Ancora nessuna registrazione L6 in Download.
+- (09/10) Creato `Lessons/L7/` PROVVISORIO (registrazione non ancora uscita): dalla pagina del corso (07/10 = "Two pointers
+  trick and BST", obbligatori Longest k-Good Segment e Frogs and Mosquitoes) + Binary_search_2025.pdf p.5 e p.10-13.
+  Codice l7 + practice E28-E30. Quando arriva la registrazione di L7, rifallo su quella. La pagina del corso indica L8 (12/10)
+  = Sweep Line (blog 2023/sweepline, note p.6-9: max overlapping intervals, closest pair of points).
+- Il problema dell'auto/carburante in L6 è chiarito dalle note di Octech (L6/notes.md): a ogni punto si rifornisce di f_i litri,
+  G* = carburante minimo iniziale; da integrare quando L6 viene rifatta sulla registrazione.
+- (09/10) Evidenziazione nei PDF (richiesta di Octech, provata su L7.pdf): legenda in testa e quattro colori con il pacchetto
+  `soul` -> \hly{} giallo = generale/da ricordare, \hlg{} verde = cose buone (funziona, efficiente, corretto),
+  \hlp{} viola = cose cattive (errori, trappole, costi), \hlb{} blu = definizioni e risultati chiave. Macro e legenda:
+  copia il preambolo e la riga "Highlights" da Lessons/L7/L7.tex. Dentro \hl* la matematica va in \mbox{$...$}.
+  Nel cloud soul.sty non c'è: curl -sLo /tmp/soul.zip https://mirrors.ctan.org/macros/generic/soul.zip, unzip,
+  `latex soul.ins`, copia i .sty in ~/texmf/tex/latex/soul/. Usala per le lezioni nuove (frasi brevi, senza esagerare).
+- (12/10) L7 rifatta sulla registrazione (Lessons/L7/L_07.MP4, trascrizione L7_transcript.txt). Contenuto REALE del 07/10:
+  fine binary search for the answer (social distancing O((n+c) log l), d* <= l/c; auto/carburante con BS) -> puzzle scacchiera
+  mutilata (parità) + follow-up aperto "togli 1 nera e 1 bianca: tiling sempre possibile? algoritmo?" (soluzione in L8) ->
+  two pointers (longest k-good, palindromo, alternativa BS for the answer Θ(n log n); l'esempio del prof dà 5 ma la risposta
+  giusta è 6) -> SWEEP LINE: max intervalli sovrapposti (contatori -> eventi ordinati Θ(n log n) -> parentesi bilanciate).
+  Frogs and Mosquitoes NON spiegato: resta come appendice "preview" in L7.pdf (e E30). Il prof annuncia per L8: closest pair
+  of points (sweep line) + "un problema con molti BST" (probabilmente Frogs). In L8 quindi NON rifare max overlapping intervals:
+  parti da closest pair, e se fa Frogs integra/sposta l'appendice di L7 in L8. practice L7 = E28-E34.
+- (12/10) Hands-On 1 uscito: scaffold in CPC/HandsOn/HO1 (crate handson1, membro del workspace) con SOLO il codice del prof.
+  Octech lo risolve A MANO; la correzione con Claude solo quando lo chiede. NON scrivere soluzioni/suggerimenti, NON toccare
+  HandsOn/ nelle routine (solo segnalare se cambia), NON pubblicarlo (pubblica.json): condividere codice è vietato.
+- (12/10) Su richiesta di Octech: L7/notes.md (sue note) riordinate e integrate con tutta la lezione 07/10; la parte su
+  Frogs and Mosquitoes spostata in Lessons/L8/notes.md (creata, solo notes.md per ora). Backup dell'originale in
+  _routine/tmp/L7/notes_backup_2026-10-12.md. Quando arriva L8: crea L8.tex/pdf, sposta l'appendice Frogs da L7.pdf
+  (e frogs_and_mosquitoes / E30 da L7 se Octech lo vuole) e integra L8/notes.md.
+- (12/10) L8 fatta dalla registrazione (Lessons/L8/L_08.MP4): soluzione puzzle tiling (catena/ciclo, Gomory), puzzle Alice & Bob
+  (pari/dispari, albero di gioco -> DP), closest pair of points (sweep line per x + BST per y con cancellazione dei punti a
+  sinistra della striscia). Crate l8 + practice E35-E38 (workspace aggiornato). Frogs and Mosquitoes ANCORA non spiegato
+  ("siamo 1 ora indietro"): resta in L7 (appendice, E30) e in fondo a L8/notes.md; quando lo fa, mettilo nella lezione giusta.
+  L8/notes.md (di Octech) integrato su richiesta; backup in _routine/tmp/L8/notes_backup_2026-10-12.md.
+- (12/10) Su richiesta di Octech: Frogs and Mosquitoes spostato in Lessons/L9 (PROVVISORIA): L9.tex/pdf (dalle note 2025),
+  crate l9 (frogs_and_mosquitoes + test), practice_l9 E39 (ex E30, tolto da L7), notes.md (la sua sezione, tolta da L8/notes.md).
+  L7.pdf senza più appendice. Quando arriva la registrazione L9: rifai L9 sulla registrazione (Frogs se lo fa, più il resto).
+  Download: cancellato L_08.MP4 (copia in Lessons/L8). L_07.MP4 NON cancellato: Lessons/L7/L_07.MP4 non esiste più (rimosso da
+  Octech), quindi quella in Download è l'unica copia -> chiedere prima di cancellarla.

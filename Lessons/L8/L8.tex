@@ -1,0 +1,168 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\setmonofont{DejaVu Sans Mono}[Scale=0.82]
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx,xcolor,listings,booktabs,enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{accent}{HTML}{2B6CB0}
+\definecolor{warn}{HTML}{C53030}
+\newtcolorbox{keybox}[1][]{colback=accent!5,colframe=accent,boxrule=0.6pt,arc=2pt,left=6pt,right=6pt,top=4pt,bottom=4pt,#1}
+\newtcolorbox{warnbox}{colback=warn!5,colframe=warn,boxrule=0.6pt,arc=2pt,left=6pt,right=6pt}
+
+\lstdefinelanguage{Rust}{
+  keywords={fn,let,mut,if,else,for,in,while,return,use,pub,struct,impl,loop,break,Some,None,as,match,const},
+  morekeywords=[2]{usize,i32,u64,f64,bool,Vec,VecDeque,BTreeSet,BinaryHeap,Option},
+  sensitive=true, morecomment=[l]{//}, morestring=[b]"}
+\lstset{language=Rust,basicstyle=\ttfamily,keywordstyle=\color{accent}\bfseries,
+  keywordstyle=[2]\color{teal},commentstyle=\color{gray}\itshape,stringstyle=\color{warn},
+  frame=single,rulecolor=\color{gray!40},backgroundcolor=\color{gray!4},
+  numbers=left,numberstyle=\tiny\color{gray},xleftmargin=1.5em,breaklines=true,
+  columns=fullflexible,keepspaces=true,showstringspaces=false}
+
+\newtheorem*{invariant}{Invariant}
+\theoremstyle{definition}\newtheorem*{definition}{Definition}
+
+
+\usepackage{soul}
+\definecolor{hlY}{HTML}{FFF3A0}\definecolor{hlG}{HTML}{C8F2C2}\definecolor{hlP}{HTML}{E6D2F7}\definecolor{hlB}{HTML}{CFE3FF}
+\newcommand{\hly}[1]{{\sethlcolor{hlY}\hl{#1}}}
+\newcommand{\hlg}[1]{{\sethlcolor{hlG}\hl{#1}}}
+\newcommand{\hlp}[1]{{\sethlcolor{hlP}\hl{#1}}}
+\newcommand{\hlb}[1]{{\sethlcolor{hlB}\hl{#1}}}
+\newcommand{\img}[3]{\begin{center}\fcolorbox{gray!50}{white}{\includegraphics[width=#1]{board/#2}}\\[-2pt]{\footnotesize\textcolor{gray}{#3}}\end{center}}
+\newcommand{\extra}{\textsuperscript{\textcolor{warn}{[extra]}}}
+
+
+
+\title{\textbf{CPC --- Lecture 8}\\[2pt]\large Puzzles solved (tiling, Alice \& Bob), closest pair of points with a sweep line}
+\author{Competitive Programming and Contests --- Monday 12/10/2026}
+\date{}
+
+\begin{document}\sloppy
+\maketitle
+\vspace{-1.5em}
+\noindent Written from the recording (\texttt{L\_08.MP4}, 87 min; transcript in \texttt{L8\_transcript.txt}); the images are frames of the board.
+\extra{} marks my additions (not said in the lecture).
+Code: \texttt{Lessons/L8/src/lib.rs} (\texttt{cargo test -p l8}). Exercises: \texttt{Lessons/L8/practice}, E35--E38 (\texttt{cargo test -p practice\_l8}).
+
+\begin{warnbox}
+\textbf{Not in this lecture: Frogs and Mosquitoes.} Announced at the end of L7, but the whole lecture went on the two puzzles and on
+closest pair; at the end the prof says \hly{``we are about one hour behind the expected programme''}. The reconstruction (with your notes on it) is now in
+\texttt{Lessons/L9}: provisional L9.pdf, crate \texttt{l9}, exercise E39.
+\end{warnbox}
+
+\begin{keybox}
+\textbf{Material from the prof.} On his web page there are \hly{detailed notes in English (with code) for this problem and the previous ones on binary search},
+and there will be notes for the next topics (Fenwick tree, \dots) and for dynamic programming: \hlg{use them as the reference}.
+He also shares last year's handwritten notes. \textbf{Oral exam}: \hly{in the Italian system it goes in depth}: for every topic you must know everything behind
+the introduction, not only the introduction (if it is your first exam here, he offers to talk about it).
+\end{keybox}
+
+\noindent\textbf{Highlights:} \hly{general / to remember} \quad \hlg{good: works, efficient, correct} \quad \hlp{bad: pitfalls, wrong ideas, costs} \quad \hlb{definitions and key results}
+
+\tableofcontents
+
+%======================================================================
+\section{Solution of the tiling puzzle (from L7)}
+\img{0.38\linewidth}{l8_chain.jpg}{The chain (in green) through all the cells; the two red crosses are the removed cells.}
+\textbf{Question} (L7): remove any two cells \emph{of different colour} from the chessboard; can the rest always be tiled with dominoes, and how?
+\begin{itemize}[nosep]
+\item \hlp{Solving it by cases (``what if the cells are here, what if there\dots'') is possible but worthless} --- the prof also failed this way the first time.
+\item \hlg{Elegant idea: draw one chain (a closed loop) through all the cells of the board}, regardless of which cells are missing (each step goes to an adjacent cell).
+\item Removing two cells breaks the loop into \hlb{two sub-chains, each starting and ending with different colours} (because the removed cells have different colours).
+      A chain that starts and ends with different colours has an even number of cells: \hlg{cover it with dominoes on consecutive cells}. Same for the other sub-chain.
+\item \hly{No cases, no sub-cases}: works for any pair of removed cells of different colour.
+\end{itemize}
+\noindent\extra{} This is \emph{Gomory's theorem}. \texttt{l8::board\_cycle} builds the loop of the board (row 0, a snake over the other columns, back up column 0;
+it needs an even number of columns) and \texttt{l8::domino\_tiling} returns the tiling; the test checks all pairs of cells on $8\times8$, $4\times6$, $3\times4$.
+
+%======================================================================
+\section{Puzzle: Alice and Bob}
+\img{0.55\linewidth}{l8_alicebob.jpg}{A game on $10\,2\,100\,1\,5\,6\,3\,4$: Alice (blue) gets $21$, Bob (red) $110$.}
+\textbf{Game.} A sequence of $2n$ numbers (values of coins, even length). \hly{Alice starts, then they alternate; at each turn a player takes one of the two coins at the ends.}
+Both have \hly{full knowledge of the sequence}. Whoever collects more money wins. With an even length, Alice starts and Bob ends.
+\hlb{Question: is there a strategy for Alice to always get at least as much as Bob}, for any sequence and no matter how clever Bob is? Her only advantage is moving first.
+\begin{itemize}[nosep]
+\item \hlp{Taking the largest end is not enough}: it ignores the inside of the sequence (e.g.\ $10\;1\;1\text{M}\;5$ with a ``super coin'' of one million).
+      (If they could see only the ends that would be the only option; if they could take any coin, sort and alternate: both trivial.)
+\item \textbf{Super coin} (a coin larger than the sum of all the others): \hly{Alice never takes a coin adjacent to it}. The ``kernel'' (super coin + its two neighbours) has odd length,
+      and odd lengths are Bob's turns: Bob is eventually forced to free it and Alice takes it.
+\end{itemize}
+\img{0.45\linewidth}{l8_oddeven.jpg}{Odd (O) and even (E) positions: $O=118$, $E=13$.}
+\begin{keybox}
+\hlb{Strategy (found by a student): label coins in odd and even positions, compute the two sums, take the class with the larger sum.}
+Alice can always take \emph{all} the coins of her class: \hlg{at the start the two ends have different parity}; she takes the one of her class; now Bob sees only
+coins of the other class at both ends; whatever he takes uncovers a coin of Alice's class, and so on. In the example: odd $=10+100+5+3=118$, even $=2+1+6+4=13$.
+\hlg{In the worst case the two sums are equal: Alice does not win but gets as much as Bob.}
+\end{keybox}
+\img{0.32\linewidth}{l8_gametree.jpg}{Game tree: Alice (A) chooses L or R, then Bob (B), \dots}
+\paragraph{Best possible gain.} \hlp{The odd/even strategy guarantees not losing, not the best gain.} To compute the best gain, explore the game tree:
+Alice takes left or right, then the problem is ``what is the best gain for Bob on the remaining sequence'', and so on.
+\begin{itemize}[nosep]
+\item \hlp{The tree has \mbox{$2^{2n}$} leaves}: exponential.
+\item \hlg{But every node is a sub-problem on a contiguous subsequence, and there are only \mbox{$\Theta(n^2)$} distinct subsequences}: the same one appears in many nodes.
+      \hlg{Remember the solution of the subsequences already solved} $\Rightarrow$ \hlb{dynamic programming}, a topic coming soon (``quite a hard DP problem'').
+      Bob plays only on odd lengths, Alice on even ones; e.g.\ maximize (my gain $-$ opponent's gain), assuming the opponent plays optimally.
+\end{itemize}
+\noindent\extra{} \texttt{l8::best\_difference} (memoized, $\Theta(n^2)$) and the tests: Alice with the odd/even strategy never loses against a random Bob or an optimal Bob.
+\hly{Why these puzzles}: they raise questions strongly related to the next topics (here: advanced dynamic programming).
+
+%======================================================================
+\section{Closest pair of points}
+\img{0.6\linewidth}{l8_cp.jpg}{Statement, Euclidean distance, trivial solution.}
+\textbf{Problem} (``super classic''). Given $n$ points in the plane, \hlb{find the two closest ones} w.r.t.\ the Euclidean distance
+$d((x_1,y_1),(x_2,y_2))=\sqrt{(x_1-x_2)^2+(y_1-y_2)^2}$.
+\begin{itemize}[nosep]
+\item \hlp{Trivial solution: all pairs, \mbox{$\Theta(n^2)$} time.} \hlb{Target: \mbox{$\Theta(n\log n)$}.}
+\item There is a $\Theta(n\log n)$ \hly{divide and conquer} solution (split the points in two halves, solve each, deal explicitly with the ``dangerous'' points near the cut):
+      \hly{worth reading}, not done in class.
+\item Here: \hlb{sweep line} (as in L7): conceptually a vertical line sweeps the plane; in practice \hly{sort by \mbox{$x$} and process the points in that order}.
+\end{itemize}
+
+\subsection{The algorithm with an oracle}
+Sort the points by $x$ ($\Theta(n\log n)$) and process them left to right, keeping \hlb{\mbox{$\delta$} = smallest distance among the points processed so far}
+(only among them). When we reach $(x,y)$: \hlp{comparing it with all the previous points is quadratic again}; we want to compare it only with the points that
+\emph{may} be at distance $<\delta$.
+\img{0.42\linewidth}{l8_rect.jpg}{The rectangle $[x-\delta,x]\times[y-\delta,y+\delta]$ split into $8$ squares of side $\delta/2$.}
+\begin{itemize}[nosep]
+\item \hlb{Candidates: the points in the rectangle \mbox{$[x-\delta,x]\times[y-\delta,y+\delta]$}} (only on the left: the points on the right are compared with $(x,y)$ when they are processed).
+      Any point outside it is at distance $>\delta$ already in one coordinate.
+\item Suppose an \emph{oracle} gives the points in the rectangle: compute their distances from $(x,y)$, update $\delta$, move on.
+\item \hlb{Few points in the rectangle}: \hly{two points inside it are at distance \mbox{$\ge\delta$}}, otherwise $\delta$ would already be smaller (both were processed before).
+      \hlg{At most \mbox{$8$}}: split the rectangle in $8$ squares of side $\delta/2$; two points in the same square would be at distance $\le\delta/\sqrt2<\delta$ \extra{}, so at most one
+      per square. (A more involved proof gives $6$.) \hlg{So, with the oracle, linear time after sorting.}
+\end{itemize}
+\noindent\extra{} \hlp{On the board the bottom-left corner is labelled \mbox{$(x-\delta,y+\delta)$}: it is \mbox{$(x-\delta,y-\delta)$}.}
+
+\subsection{Implementing the oracle}
+\img{0.6\linewidth}{l8_regions.jpg}{Blue: what an $x$-sorted range returns. Green: what a $y$-sorted range returns besides the rectangle.}
+\begin{itemize}[nosep]
+\item \hlp{BST sorted by \mbox{$x$}} (range $x' \ge x-\delta$): it excludes only the points on the far left; it returns the vertical strip above and below the rectangle
+      (\textbf{blue}): \hlp{potentially most of the points} (adversarial input: wide in $y$, narrow in $x$).
+\item \hlg{BST sorted by \mbox{$y$}} with the points processed so far: find the first point with $y'\ge y-\delta$ (successor, $O(\log n)$), then move to the next one in $O(1)$
+      until $y' > y+\delta$. It returns the rectangle plus the horizontal band on its left (\textbf{green}): still potentially many points. \hly{So what is the difference?}
+\item \hlb{Crucial difference: a green point (\mbox{$x'<x-\delta$}) is useless forever}: the next points have larger $x$ and $\delta$ only decreases, so its distance from
+      any future point is $>\delta$ already in $x$. A blue point instead may be needed later (it may be close to a future point on the right).
+      \hlg{So every green point we touch is deleted from the BST immediately.}
+\end{itemize}
+\begin{keybox}
+\hlb{Algorithm.} Sort by $x$. For each point $(x,y)$: range query on the BST sorted by $y$ for $[y-\delta,y+\delta]$; for each point found, if $x'<x-\delta$ delete it,
+otherwise compute the distance and update $\delta$; then insert $(x,y)$ in the BST.
+\hlb{Cost}: range search $O(\log n)$ per point; at most $8$ (6) points in the rectangle per point; \hlg{every point is inserted once and deleted at most once}, so the
+green points cost $O(n\log n)$ overall. \hlb{Total \mbox{$\Theta(n\log n)$}.}
+\end{keybox}
+\begin{itemize}[nosep]
+\item \hlp{The BST must be built step by step}, inserting each point when it is processed: if all the points were inserted at the beginning, the range would also return points
+      on the right of the rectangle, which are not restricted by $x$.
+\item \hly{The bound on the points in the rectangle is needed}: they are not deleted, so if there could be many of them (e.g.\ $\Theta(n)$) the algorithm would be quadratic.
+\end{itemize}
+\noindent\extra{} \texttt{l8::closest\_pair} works with squared integer distances (no square roots) using \texttt{BTreeSet<(y, x, index)>} and \texttt{range}; it is tested
+against brute force and on $2000$ points with the same $x$ (the adversarial case of the lecture).
+
+\paragraph{Next.} Frogs and Mosquitoes (the BST problem announced in L7, provisional notes in \texttt{Lessons/L9}), then Fenwick tree and the rest of the programme; \textbf{Hands-On 1} is open (\texttt{CPC/HandsOn/HO1}).
+
+\end{document}
