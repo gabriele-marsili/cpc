@@ -1,11 +1,13 @@
-// L9 — PROVVISORIA: Frogs and Mosquitoes (Codeforces 609F, problema OBBLIGATORIO), annunciato a fine L7
-// ("un problema che richiede molti BST") ma non ancora spiegato (né in L7 né in L8). Ricostruito dalle
-// note 2025 del prof (Lessons/L6/Binary_search_2025.pdf p.10-13). Da verificare sulla registrazione.
-// Codice scritto da Claude, NON del prof. Test: cargo test -p l9
+// L9 (mercoledì 14/10/2026) — Frogs and Mosquitoes (Codeforces 609F, problema OBBLIGATORIO), spiegato a lezione
+// (registrazione L09.MP4, prima ora), + prefix sums statiche (modulo `prefix_sums`, seconda parte della lezione).
+// frogs_and_mosquitoes: codice scritto da Claude, NON del prof (il prof non ha dato codice per questo problema);
+// segue la soluzione della lezione (issue #1, #2, #3). Test: cargo test -p l9
+
+pub mod prefix_sums;
 
 use std::collections::BTreeMap;
 
-/// Frogs and Mosquitoes (note 2025 p.10-13, Codeforces 609F) — PROVVISORIO: non ancora spiegato a lezione.
+/// Frogs and Mosquitoes (lezione del 14/10 e note 2025 p.10-13, Codeforces 609F).
 /// `frogs[i] = (x_i, t_i)`: posizione e lunghezza della lingua (le x sono distinte).
 /// `mosquitoes[j] = (b_j, a_j)`: posizione e valore, nell'ordine in cui atterrano.
 /// Una rana i mangia b se x_i <= b <= x_i + t_i; se più rane possono, mangia la più a sinistra;

@@ -1,0 +1,942 @@
+# Trascrizione AUTOMATICA (sherpa-onnx, parakeet-tdt-0.6b) di Lessons/L9/L09.MP4 (lezione del 14/10/2026), NON rivista: termini tecnici spesso storpiati. Formato [MMM:SS].
+[000:00] We present this problem and we stop, and you are going to try to solve the problem by yourself, and then we discuss together.
+[000:06] what uh the what a possible solution uh is.
+[000:11] Okay, the problem is a problem about frog and mosquitoes.
+[000:19] So don't come back home and tell uh your parents that you are going to the university, that they they they are paying a lot.
+[000:26] Uh and then you are solving uh problems about uh uh frogs and mosquitoes, otherwise they are think uh they think you are uh
+[000:34] going to Agraria not here.
+[000:37] Uh
+[000:47] So the problem is um
+[000:51] is about fragment fragment mosquitoes and we have uh there are given
+[001:01] There are n
+[001:04] Frogs.
+[001:07] Place it on the x axis.
+[001:14] This line up.
+[001:25] with uh frogs.
+[001:28] frogs. A frog is uh a single point, which is the position of the frog. But we also have a value uh Ti. So each
+[001:43] Frog
+[001:45] Uh I
+[001:48] As uh
+[001:50] The position
+[001:55] X i
+[001:58] And the
+[002:02] A value
+[002:05] T i which is the length
+[002:16] Of its
+[002:19] song.
+[002:24] like this, okay? It's more uh cal Camale alta then the frog.
+[002:29] Uh so we have this one and this this is the Ti value.
+[002:36] Okay.
+[002:42] Okay, now we have n mosquitoes.
+[002:49] If we
+[002:51] Course this is not a real problem, otherwise the number of mosquitoes will be plus infinity, as you know better than me, which starts landing in the in the x-axis.
+[003:07] Okay.
+[003:09] One after the other.
+[003:22] So for every mosquito we have the position and
+[003:27] uh value associated with the mosquito.
+[003:57] Okay.
+[004:00] So
+[004:02] There are two possibilities so the mosquito starts arriving one after the other and we have M of them. Uh we have two possibilities for the mosquito.
+[004:10] Uh either it lands in uh in a position which is uh
+[004:18] within the uh frog
+[004:22] including uh the the tongue.
+[004:24] Like
+[004:29] Yeah.
+[004:33] and uh so within the within the frog or it lands uh here in the middle of nothing.
+[004:42] Okay.
+[004:44] So if it lands uh in the middle of nothing, it stays in that position.
+[004:50] for a while.
+[004:52] If instead it lands in the position corresponding to a frog,
+[004:59] The frog gets his tongue increased by value AJ.
+[005:07] Okay, so we have the situation before TI and the mosquito lands here. After that the the tongue is Ti plus A J
+[005:27] 'Kay.
+[005:28] Is this clear?
+[005:31] No?
+[005:35] So we have
+[005:36] Uh this change.
+[005:40] So a frog and so a frog
+[005:45] It's a mosquito.
+[005:50] BJ, so the frog I eats the mosquito BJ if
+[005:56] Bj belongs to
+[005:59] X I
+[006:02] Xi plus T I okay.
+[006:11] Okay, so this is the new TI. Essentially, the TI increases by AI. Okay?
+[006:17] by AJ sorry.
+[006:19] Is this uh okay?
+[006:22] Yes or no?
+[006:24] Okay.
+[006:27] It may happen that there is a cluster of frogs.
+[006:33] Like this one, then this one, then this one, and so on. And the mosquito lands in this position.
+[006:46] position which is shared by many frogs, in this case three frogs.
+[006:52] If
+[006:54] There are
+[006:59] Many.
+[007:02] Frogs.
+[007:05] Aval.
+[007:07] to eat a mosquito
+[007:14] Uh
+[007:17] We
+[007:19] Left the leftmost.
+[007:28] Frog to
+[007:30] It
+[007:33] Okay.
+[007:35] Le the leftmost frog which can eat the mosquito. This one.
+[007:44] 'Kay.
+[007:49] This is clear.
+[007:54] Okay.
+[007:59] Uh as we said before, notice uh
+[008:03] Then
+[008:05] A mosquito.
+[008:15] BJ.
+[008:18] May
+[008:20] Be an eaten.
+[008:26] For a while.
+[008:31] Okay, what may happen?
+[008:33] We have the mosquito here.
+[008:35] We have a frog here.
+[008:38] The leftmost frog
+[008:41] uh to eat the mosquito for example it is one.
+[008:45] Uh the mosquito is not eaten now.
+[008:50] Later on, another mosquito ends up here. The tongue of the frog is increased by and becomes this one.
+[009:00] Now the frog can eat the mosquito and
+[009:04] uh the length uh is increased uh
+[009:08] Yeah.
+[009:11] Okay.
+[009:14] Uh actually I think it's also ambiguous the fact that there may be several uh
+[009:20] Uh waiting for mosquitoes.
+[009:26] could be this case. There is a mosquito waiting here.
+[009:33] There is a mosquito eating uh waiting here. Another mosquito waiting here. There is a frog here and there is a frog here.
+[009:48] Okay.
+[009:53] Well, which uh which of the two cases uh
+[009:57] Uh so what what what could happen actually is that if a mosquito arrives here, this one uh is the one that eats the one on the right.
+[010:10] If a mosquito arrives here, this can screw the this frog and eat also this one.
+[010:16] Okay? So it's crucial to take care of the pos position to which the mosquitoes arrives.
+[010:24] Okay? Because they are going to influence also that uh the the uneaten one
+[010:31] uh which are waiting for uh frog to eat them. Okay.
+[010:37] So
+[010:39] Any idea for the solution?
+[010:47] The quest okay. The question is uh uh not stated yet, but uh what you have to do is to uh present
+[010:58] uh the re the final result.
+[011:01] After having uh ev all the mosquitoes arrives, you have a situation which is the frog with the corresponding tongue lactose.
+[011:12] Okay, let me clarify something, okay. Uh frogs are
+[011:20] intervals.
+[011:23] on the X plane.
+[011:25] Uh dose interval may increase.
+[011:30] Okay, because uh after uh
+[011:33] Mm.
+[011:35] Each mosquito has been eaten, the the corresponding interval of a frog is increased.
+[011:42] So we have a set
+[011:47] Of
+[011:48] Segments
+[011:52] which are dynamic.
+[011:55] And you have a set of points arriving in this dynamic uh scenario.
+[012:04] which in for which uh you have to understand what's the interval that contains that particular point.
+[012:13] If you if you lecture the
+[012:18] The intervals do do not change.
+[012:22] This is one D point location. So this problem has a name, it's called one D point location. What does it mean? You have the intervals, a point is a are is given and you want to understand what's the interval containing that point.
+[012:38] Okay? If you let the dyna the the interval be dynamic
+[012:45] The problem is called dynamic
+[012:52] Uh one D
+[012:54] Point
+[012:57] Location.
+[012:59] Okay, this problem is a serious problem.
+[013:03] which belong to a class of algorithms which are called geometric algorithms.
+[013:10] 1d is the number of dimensions, and usually the hardness of the problem increases very rapidly with the dimension size.
+[013:21] There are many problems.
+[013:24] Um
+[013:26] which for example include
+[013:29] Uh regions in the s in the space, in a 2D space.
+[013:34] And you have to do, for example, point location. You are given a point, you have to establish which of the rectangle
+[013:42] Contential part.
+[013:45] Okay. So
+[013:48] Point location means you have objects you want to understand, given a point, which object contains your point.
+[013:55] 1D means uh intervals
+[013:59] uh rectangles or uh
+[014:03] three D and four D and so on.
+[014:06] Okay, so the hardness of the problem increases with the number of dimensions.
+[014:11] and with the fact that it's static or dynamic.
+[014:18] If a problem is dynamic, uh is usually harder than uh the static content.
+[014:24] 'Kay.
+[014:26] Here we have a special
+[014:30] a special uh instance of the dynamic 1D pointer here.
+[014:37] The intervals are increasing
+[014:41] inside
+[014:43] They are dynamic, but they always increase.
+[014:47] And they always increase on the right.
+[014:55] So
+[014:56] Part so, apart from talking about frogs and mosquitoes, this is a serious problem. It's a easier uh slightly easier instance of
+[015:05] A serious problem.
+[015:08] What's the fi the goal? The goal is to see what are the last uh intervals.
+[015:14] probably could ask you, okay, report me.
+[015:17] The
+[015:19] Uh the size of the
+[015:21] the final set of internals.
+[015:24] Okay.
+[015:29] Or what's the length of the tongue of the heightest flock, whatever. The important thing is to see the final to be able to say something about the final
+[015:41] uh positions of uh frogs uh
+[015:45] and their talks.
+[015:46] Okay.
+[015:56] Time
+[016:00] Complexity.
+[016:03] Well what we would like to achieve is n plus m
+[016:09] linear
+[016:11] In the s the size of the problem times log n plus m
+[016:35] So any idea?
+[016:51] Not not from left to right, uh in any order, so you have uh permutation of the motion. For example, like assume they are all already
+[017:00] In the x-axis, for example. No, that's the point I was saying before. If you assume they are already there, then
+[017:09] The order in which the frog eats the mosquito changes the result. That's exactly the
+[017:18] So let's say this is that these are two frogs. One and one are the mosquitoes.
+[017:24] And then you have two other mosquitoes, one here and one here.
+[017:29] Okay, depending on which one you let it first.
+[017:34] Then you, for example, you let the frog eat this one. The tongue may increase up to this position, may also eat this one.
+[017:47] Eat this one. Then he's going to eat this one.
+[017:51] Then this one, because this one is no longer the leftmost one.
+[017:56] Okay so it's very important which what's the order of the mosquitoes.
+[018:05] Of the mosquitoes, it's given. It's a part of the input.
+[018:16] Repeating one hour.
+[018:19] Three of them.
+[018:25] skip of the right one or they eat only one the one skin on the right.
+[018:32] What's uh what's the what's the ambiguous uh step? So if we let uh the mosquitoes arrive in a particular given order, so you have no control on the timing of their arrival.
+[018:46] Okay? Then there is no possible ambiguity in the solution. Because uh the only ambiguity is this one. Okay, you have two frogs and uh just one mosquito here.
+[019:04] They do not spawn simultaneously, right? No, one after the other.
+[019:08] If they arrive simultaneously, it's uh full of ambiguities, including many different possible results.
+[019:17] No, no, no, no. The order is given, it's part of the input and it's po it's important. That's what I was saying before. So it's important the order is given. Otherwise, depending on the order you choose, you get different results.
+[019:37] This clear 21.
+[019:41] Yeah.
+[019:46] Okay, so any idea?
+[020:07] the the points by their x axis and for each muscle we
+[020:18] find the points whose x are less than most key with x.
+[020:25] and see from the leftmost which ones uh which
+[020:35] Okay, so we have uh this uh situation, the x-axis.
+[020:40] These are the intervals corresponding to a frog.
+[020:46] This is an interval corresponding to a frog, this is an interval corresponding to another frog, and so on.
+[020:54] So what do we want to do? Short, the extreme?
+[021:05] Okay. So a mosquito arrives uh let's say here
+[021:09] Position.
+[021:11] We are looking for what?
+[021:14] We are looking at starter from the leftmost uh
+[021:21] Right, let's forget about for a moment, let's forget about possible overlaps.
+[021:28] There is no Vela, okay? No frog are n in in in interfering uh each other. We're looking for the frog whose x value is less than the
+[021:43] This one. Yeah, and with x plus y value is uh greater than uh
+[021:50] Okay, so what they are looking for?
+[021:56] Predecession.
+[022:01] Form the
+[022:03] BJ, where BJ is the position of the current market. Do we need to impose something about the right extreme?
+[022:17] No. So I mean we first search for this frog, let's say xi. Once we find xi, which is the predecessor of bj, there are two cases. Bj is included in the interval corresponding to the frog or not. If not, do nothing.
+[022:38] For the moment.
+[022:40] If the frog is
+[022:44] within the interval then it's the frog that uh it's the mosquito.
+[022:50] Do we all agree on this? Good. So it's a query on on
+[022:57] On
+[023:00] It's a quick predecessor on a sorted array.
+[023:06] So today by research and we find the pencil.
+[023:10] Fourth.
+[023:12] What's uh so so buying research
+[023:22] login time.
+[023:25] Good.
+[023:26] Now
+[023:27] Uh what's the problem we have?
+[023:30] So this is a simplified version of our problem.
+[023:34] The issue we have, so issue let's say issue number one.
+[023:42] is the case in which we have
+[023:46] x k and x i such that the tongues overlaps.
+[023:56] And a mosquito arrives here.
+[024:02] Predecessor is no longer the right answer.
+[024:17] Do you all agree on this?
+[024:21] What uh can we do?
+[024:27] Okay, one possibility is to search for the predecessor.
+[024:31] No?
+[024:37] Predecessor is the operation that gives you given a number.
+[024:45] BJ
+[024:47] And a set of positions gives you the
+[024:53] Greater position which is smaller than or equal to b j.
+[025:11] Yeah.
+[025:17] If the point is within, you put it into your.
+[025:23] How can you do this?
+[025:31] Yeah, but you have to search them uh
+[025:34] Efficiently, right? So we have positions. Okay, so the positions are. Let's make a concrete example, okay? So we have position one length ten. Okay, not not not length, final position. Okay, so let's write directly the interval: one ten. Then we have three.
+[026:00] fourteen
+[026:02] Okay, then we have uh
+[026:04] Four
+[026:06] Uh thirteen.
+[026:12] Then we have uh six uh eighteen and so on.
+[026:19] Okay.
+[026:22] Position eight, what's the answer?
+[026:29] One, ten.
+[026:31] Okay, position eleven, what's the answer?
+[026:36] Three forty.
+[026:38] How can we decide uh discriminating between f case one number one and case number two?
+[026:45] So one thing would be, okay, let me compute the predecessor of the number I'm looking for.
+[026:52] Eleven. What's the precessor of eleven among the starting points?
+[026:58] Six.
+[027:01] He seeks the answer.
+[027:03] No. Why? Because there is another one with a smaller start which is uh
+[027:13] which contains eleven.
+[027:16] We are interested in the leftmost, so we have to go back and find the so we can go back one after the other and find the position.
+[027:31] Yeah, that's wrong. That's uh that's uh very expensive because you potentially you have to to begin uh from the to start from the beginning and go back. When do you stop? Even stopping is uh uncle. So even when we have to stop is completely unclear in this
+[027:52] Because let's add another prog.
+[027:55] Uh zero twenty.
+[027:59] if the position is twenty.
+[028:02] Predecessor of 26.
+[028:05] It's outside, so you can conclude that it's not uh
+[028:10] Inna.
+[028:12] You have to go back. Back how much?
+[028:15] Till the beginning, so it's always linear.
+[028:30] Yeah, but it's linear uh yeah
+[028:37] It's linear as well because you don't know there is no predicate which separates yes from no.
+[028:47] So so s to to run binary search you need the uh yes, yes, yes, yes, no, no, no, and no forever or no for e no for some part and yes forever. Something which okay is monotone.
+[029:05] Here it's not yes, yes, yes and then no.
+[029:11] Or the opposite. Why? Because it depends on the query. For example, in this case, the question is 19.
+[029:24] Okay? Nineteen is uh no, no, no, no, yes and then you can add another frog for which is no and so on. You can alternate yes and no.
+[029:37] So you cannot have uh it
+[029:47] starting from the
+[029:53] and look for the right until there is a mosquito. The first interval that I'm going to find like in this case, what you are doing going to do? Like if the if it was the mosquito was in position nineteen, if I start from the uh the interval that has uh the x but there is the initial the the left side of the interval that there is uh
+[030:19] the minimum, in this case uh zero twenty. I will uh I will start from that because it uh has uh the okay so so you you process from left to right and you say okay this is the leftmost because it's the first one I found which contains ten nineteen none of the previous one uh was containing nineteen so let's conclude. But that's linear.
+[030:44] Linear time. Yes. Okay, linear time you can do it. Left or right, whatever. You stop when you find you remember the last answer or the first or whatever.
+[030:56] linear can be done. But uh is it possible to do it in logarithmic time?
+[031:03] That's the part.
+[031:08] interval is uh strictly is included in another interval, then the smaller interval for example in this case all the intervals that are containing one hundred and twenty, we we don't care about them because any frog will be eaten by the bigger interval that by that uh we have uh that our only problem at this point is how to manage uh overlapping intervals but that are not strictly contained in the one in a uh suggestion is that
+[031:39] If there is an interval that strictly contains another one
+[031:47] The second one can be excluded from our consideration because we never eat a frog which we are able to eat. So if we are the bigger interval, we are going to eat everything in this interval because we are the leftmost one. Good. Then the problem that remains is the problem in which
+[032:13] we have this equation here.
+[032:17] You have a solution.
+[032:32] So good that can you data?
+[032:35] Okay.
+[032:37] And uh but uh it's it's kinda awful because strokes uh I believe uh we will sort them by x axis and the sorting uh in of the the intervals is awkward because uh like uh we we should uh sort them uh
+[032:55] X increasing y
+[033:02] Okay. The the first uh
+[033:05] Idea is that okay, we need the preprocessing.
+[033:10] A preprocessing that eliminates some flock, the ones which are contained completely contained in another flock.
+[033:20] Do you want to add something?
+[033:23] sort by
+[033:26] We are just considering the the the folks who came uh uh
+[033:32] can uh eat the eat the mosquito. If we sort by Y, we can pinpoint the uh position onwards from which there are for sure point uh frogs that uh can uh
+[033:49] We solve these two cases.
+[033:53] One frog in fully contain another one, case number one, and case number two.
+[034:02] Two frogs are overlapped, two or more
+[034:06] mix of this but it's like this or fully contained.
+[034:15] Yeah.
+[034:16] The solution for the first one is to kill a frog
+[034:24] The second case uh is to reduce, to move the beginning of the frog and cut its tongue. I know which of the two is worse for the for the frog.
+[034:33] Anyway. Okay?
+[034:37] So we move the right stream.
+[034:40] Left stream, and we remove this piece.
+[034:46] Okay, so we want to pre-process the
+[034:52] Um the frog.
+[034:56] from left to right in order to eliminate these problems.
+[035:03] Fully contained intervals and
+[035:09] fully contained intervals and partially contained intervals.
+[035:16] Okay.
+[035:20] Is this convincing?
+[035:23] Okay.
+[035:24] Uh so this year I'm changed my mind, so I'm let you participate more and uh me present less.
+[035:32] Doing this, I'm going to sketch the solutions, okay? Because uh otherwise I have to stop, write uh something that we already said uh and uh so I'm completely for I'm not showing sharing with you these notes and I'm sharing the full notes uh which are not uh
+[035:53] I'm written more or less in the same way.
+[035:56] More stuff. If you don't like this kind of new approach, let me know. I will
+[036:06] Do it anyway, but I know your opinion.
+[036:11] Okay so remove uh process the intervals first and remove the overlaps, killing frogs or moving frogs.
+[036:22] Okay, how much time does it take and look at time? Why? We sort by x.
+[036:29] Then we process by X coordinate and we know how much far the the tongue of the current frog is.
+[036:38] Everything which is
+[036:41] Starts.
+[036:42] Before the current end is either reduced or killed.
+[036:55] Book.
+[036:58] Okay.
+[037:00] Now
+[037:02] What happened?
+[037:03] So
+[037:05] This is the solution essentially for the problem in which mosquitoes arrives.
+[037:14] And we want to decide which frog eats which mosquito.
+[037:19] We do the preprocessing first. We have the points.
+[037:24] A mosquito arrives and we
+[037:26] Let's uh
+[037:28] Yeah.
+[037:29] If I get it.
+[037:32] Okay.
+[037:35] How do we deal with
+[037:38] the change of Ti
+[037:41] The frog eats the mosquito, the tongue is increased, which means
+[037:46] A longer interval
+[037:48] needs so the the interval needs to be make made uh longer.
+[038:04] So i i our in our preprocessing they are all disjoint at this point.
+[038:09] Yeah, after the preprocessing. Now, when we elongate an interval, they can overlap again and it be in the first or in the second case. So what we need to do is uh to make them disjoint again after so let's say we are in this situation, the frog eats the mosquito, there are the subsequent uh intervals, which we know are not overlapping by
+[038:36] Our pre-processing: a frog eats a mosquito, the tongue becomes this one.
+[038:45] And what we do is to remove this part from the other fork.
+[038:52] Okay.
+[038:55] Yeah. But what if uh the so so uh first of all, how do we do this?
+[039:06] Mm successful.
+[039:09] Or oh yeah, okay. It could be either successor of this one or predecessor of this one.
+[039:16] Okay. Which one of the two we select? We choose.
+[039:23] It's the same, but it changes what we have to do next. Let's say predecessor, okay?
+[039:29] No, let's say let's say successor of this one, of this point. Successor of this point will identify this.
+[039:38] Okay?
+[039:40] And then we go over this frog and we change the position.
+[039:47] How much does it take in time?
+[039:54] Log n
+[039:59] How many frogs do we need to modify?
+[040:06] uh goes all the way to the end.
+[040:09] Yeah, that's exactly the point. So if we have the same s here, in this case we have just one frog to modify.
+[040:20] If instead the mosquito was very big and the value was very large, it could be like this.
+[040:31] So it's log n plus the number of rogues that we have to modify.
+[040:35] Mm.
+[040:47] Go on, go on. We are here to discuss language.
+[040:54] So log n to find the predecessor, this one.
+[040:58] Right?
+[040:59] This one gives us the predecessor, and that's the first frog that we have to modify.
+[041:05] Then we go to the next one.
+[041:10] Do we do? So we do we always go to the next one?
+[041:15] No, it's not necessary. When do we move to the next one?
+[041:20] to take the last one that we can reach.
+[041:24] The last one, no?
+[041:28] I insist uh so this is not predecessor, this is successor. That's the second time s I'm drawing about this.
+[041:36] Success. Could be predecessor and then we are processing this uh in this order from the last one. Does it change uh something?
+[041:55] Exactly. If we have more than one frog to ma to deal with,
+[042:00] Then it means that the first ones are killed.
+[042:06] Every frog is removed once, so the overall running time will be n log n, because each frog can be removed only once. So how many times we have seen this argument so far? I mean, almost every time. Yeah. Okay.
+[042:24] So this part is n log n nice.
+[042:35] Okay. So
+[042:37] To summarize.
+[042:39] Frogs are stored in a BST.
+[042:46] Y B S T
+[042:48] because we want to remove
+[042:53] uh frogs and change their starting point.
+[042:57] Change the starting point, it is equivalent to remove the frog and change it and set it back. Anyway, so we want a BST because we want to be able to remove frogs.
+[043:11] I need so.
+[043:14] So we have this uh this uh DST sorted by beginning.
+[043:21] Satellite information is the length of the tongue.
+[043:25] which is not indexed, it's just there.
+[043:28] We are starting after the processing with no overlap.
+[043:35] We want to modify
+[043:37] The interval corresponding to a frog, keenly removing all the possible overlaps.
+[043:43] So we would defy a frog.
+[043:46] We change we search for it, we change the tongue, then we go to the next one.
+[043:53] In the order this is possible with a BST. This corresponds to a successor.
+[044:02] cheaper because we have to move to the next node. That's why successor is better than predecessor.
+[044:08] I win, you lose.
+[044:09] No, I didn't remember this, but no no, uh uh it's indeed uh a good point for the for the succession.
+[044:19] Not for for for the computational I mean, asymptotic point of view, but in practice it will be better to search for the the
+[044:35] Search for the for the successor and then
+[044:40] uh so you identify the frog and then you do not do the successor because you are looking for the next frog in the ordering, which is uh easy to follow because it's the next node in the BST in the b in the in order visit. So
+[044:58] Just destroyed the pen. Hope it's working.
+[045:02] No.
+[045:10] Okay. It's this one.
+[045:15] I have maybe I have another one.
+[045:18] Not another fan, the only the
+[045:21] Give me
+[045:28] Mm-hmm.
+[045:36] My son is playing with it, so
+[045:39] Okay.
+[045:40] It's no longer here.
+[045:46] Oh yeah.
+[045:49] I need your friends.
+[045:57] Comment?
+[046:04] Because it's not a good thing.
+[046:08] Oh, that's it.
+[046:12] Yeah.
+[046:18] Oh.
+[046:21] Thanks.
+[046:22] Okay.
+[046:25] Uh where are we? Uh successor, which is the next node in the in order visit of the tree.
+[046:35] Uh then we find uh this point here.
+[046:40] We check if the frog overlaps.
+[046:43] If it overlaps partially, we remove a piece.
+[046:48] So we delete the frog, insert it once again with a different beginning. If
+[046:56] it does overlap completely, we remove it.
+[047:00] Then move to the next one, which is the next one in the inordered visit.
+[047:05] Okay? And then uh
+[047:09] Certain point we either reach
+[047:12] a point in which the frog does not overlap or there is a final partial overlap. If there is a fi final partial overlap, just remove it and stop.
+[047:23] Okay.
+[047:24] The argument is what we already said.
+[047:31] The
+[047:33] The change of the frog.
+[047:36] can be amortized over the the mosquito.
+[047:41] Yeah?
+[047:42] The
+[047:45] The deletion of the frog can be done only once.
+[047:49] Per frog, so it's a look and overall.
+[047:53] Yeah.
+[047:56] Nice. Okay.
+[048:01] So that that was the final the the second issue, okay? The fact that we have to
+[048:08] to let the intervals grow.
+[048:11] on the right.
+[048:13] What's the last issue we have?
+[048:17] No eaten mosquitoes, right? It may happen that a mosquito arrives, it's not eaten.
+[048:24] We let it remain there.
+[048:30] Okay.
+[048:32] Let it remain there until a frog can eat it. What does it mean, sir?
+[048:38] So we want uh to be triggered.
+[048:41] Once a mosquito is now
+[048:44] Eatable by some frog.
+[048:47] Okay, so we let's say
+[048:54] Okay.
+[048:56] Let's say let's imagine my garden. Okay, my garden is like this. A lot of mosquitoes there ready actually they are ready to eat me.
+[049:07] Uh but we have a lot of anite mosquitoes.
+[049:11] Right? And some frog here, here, here, here.
+[049:20] How do we organize the data in order to be
+[049:25] Triggered once a frog can eat a mosquito, which is there. So initially, the mosquito may be uneat, potentially.
+[049:37] Uh then one.
+[049:40] Let the frog increase and we start uh eating everything.
+[049:51] Organized by what?
+[049:55] Okay, we positions of mosquitoes positions. So we store a BST with mosquitoes positions and
+[050:11] Okay, so with their positions. And now what happened? So these are stored in a BST. Good. So Anita and Mosquito are stored in a B S T. Perfect. Then what we have to do?
+[050:27] Also in the VST of the
+[050:34] Okay, what happened? Eh mosquito
+[050:39] Uh so uh what how when do we have to check something about an eaten mosquito when a mosquito arrives in a frog and let it tongue to increase in size. So let's say we have this this mosquito the a mosquito arrives let's say here let the frog eat it
+[051:04] tongue increases and we have to check if now the longer tongue can eat the musket.
+[051:11] So we know.
+[051:12] What what let a mosquito to be eaten?
+[051:19] A tongue gets longer and we have to check if the longer tongue now includes a enite mosquito.
+[051:30] 'Kay.
+[051:31] And what do we do?
+[051:36] We we search for the
+[051:39] successor of this or the predecessor of that.
+[051:46] Uh we searched for the success, so we identify the mosquito.
+[051:50] And we treat it like a new mosquito that arrives. We remove it from the BST and we let consider it a novel mosquito arriving. But we already know the answer. What's the frog that is going to eat it?
+[052:08] This convincing?
+[052:10] Okay, do you need uh me to write more details or?
+[052:15] Clear? No, let me write, okay.
+[052:17] The issue
+[052:22] Number three is the not eaten mosquito.
+[052:34] Uh store
+[052:36] Mosquitoes
+[052:42] Uh in ABST
+[052:45] sorted by position force.
+[052:50] Check.
+[052:52] If the latest
+[052:57] Yeah.
+[052:59] Frog latest uh frog changed.
+[053:08] Uh can it
+[053:13] A old
+[053:16] Mosquito.
+[053:22] In it in old mosquito means if.
+[053:28] Uh
+[053:35] Success or let's say
+[053:38] Latest frog changed uh I.
+[053:42] Okay, we do successor of x i
+[053:50] uh is smaller than or equal to
+[053:55] Uh
+[053:57] More than or equal to what? x i plus t i
+[054:03] Uh so the length of the the final position of the frog.
+[054:08] Okay?
+[054:13] Okay?
+[054:17] Uh
+[054:20] Remove.
+[054:24] Huh?
+[054:25] And uh
+[054:28] Insert
+[054:31] It. What does it mean? It's insert it. You pretend it's a new mosquito and use the previous algorithm.
+[054:38] Or you can directly increase the length of the tongue of that frog.
+[054:45] 'Kay.
+[054:47] So that there there is nothing to to trigger, okay? Actually we implicitly explicitly go over the BST with mosquitoes looking for something we can now eat. If there is nothing, do nothing, otherwise.
+[055:02] Remove the mosquito from the BST and pretend it's a new mosquito that's just arrived. But we already know that.
+[055:10] Now it's arriving and some frog can eat it.
+[055:15] Okay.
+[055:17] Is this convincing? Okay, so that's the final
+[055:21] The final solution. Why? Let's come back.
+[055:28] Okay, removing uh
+[055:30] Overlapping intervals can be done in L log n. We sort by
+[055:36] by initial position and we scan them from left to right, removing what what's overlapped.
+[055:47] Okay. Um
+[055:52] Now the issue we have is this one, so it can be solved in an organ time. Remove the overlaps. The issue num the issue number two
+[056:04] Was uh
+[056:06] was the fact that uh
+[056:08] Uh the the issue number two was the fact that frogs are increasing in size. So we need to store the beginning the starting point of a frog within a BST.
+[056:21] Then given a if a mosquito search for its predecessor, log n time per mosquito, so m log n.
+[056:33] Uh plus we have to change the tongue of the carrot frog and search for
+[056:42] uh some frog that we can remove or
+[056:46] Move up.
+[056:49] We start from the next one.
+[056:53] If it is partial overlap, change it.
+[056:57] A stopper if there is no overlap.
+[057:01] Stop.
+[057:02] If there is a total overlap, so completely contained, remove it. Check the next one. We will stop.
+[057:11] only if partial overlap and no overlap.
+[057:15] The point is that when we have a total overlap the frog is killed and every frog cannot be killed more than once.
+[057:24] So this second part
+[057:28] takes M
+[057:32] Plus n
+[057:35] Login.
+[057:37] M log n because we do for every mosquito. E predecessor
+[057:42] And again, because of the fact that every frog is removed.
+[057:48] potentially once.
+[057:51] Yeah?
+[057:53] So Safari and Logan.
+[057:56] n log n plus m log n and finally
+[058:01] What about issue number three?
+[058:04] In the worst case we have for every frog
+[058:10] We have to search for not in the worst case. Every time we modify something,
+[058:18] Yeah.
+[058:20] happen m times we have to change the
+[058:26] we have to search the BST for the uh successor.
+[058:37] and then repeat uh the insertion of the mosquito.
+[058:41] So how many times does it happen? It happens M time.
+[058:45] one for each mosquito, and we spend log M time. This is the last part.
+[058:53] So it's Log L.
+[058:54] N log n
+[058:57] Plus M look N
+[059:00] plus m log m.
+[059:03] So it's like n plus m
+[059:10] log n plus m
+[059:15] Kinda this is the overall uh
+[059:18] Ranita.
+[059:21] Is this convincing? Do you need to me to redescribe uh describe again uh the the solution?
+[059:29] No problem. I will be close when and where?
+[059:43] Okay.
+[059:44] So here we have the
+[059:48] So it's not clear why
+[059:53] It's n log n plus m. Okay, let me explain why we are using n plus m in a time complexity.
+[060:08] The point is that n plus m
+[060:12] is used uh when you don't know
+[060:15] Which one of the two is the greatest one?
+[060:18] Could be M is small then N dominates or the opposite.
+[060:24] Okay, and plus Master is okay. No matter what, are you okay? Okay.
+[060:31] Uh
+[060:34] don't know which one of the two is the greatest, I'm always taking the maximum of the two.
+[060:45] Yes. But n plus m it's easier and uh it says uh says the exactly the same uh
+[060:54] the same uh uh conclusion because we are uh
+[060:59] in the symptotic analysis so.
+[061:02] After after this is everything okay?
+[061:07] I mean
+[061:10] Anything to discuss?
+[061:22] the when we have a chain of mosquitoes that we and uh we have this kind of growing uh
+[061:29] Like the the the last issue that we noticed. Uh
+[061:35] We propose uh to like uh do the like BST the f the the first mosquito, like l let's say a frog can eat this m this mosquito, okay, and then the frog gets uh gets bigger, okay, we we may eliminate one and then we repeat to the algorithm. That's the idea basically.
+[061:56] another can't we just instead of repeating the algorithm can't we just like sweep uh like the mosquitoes and uh like see how much it gets longer?
+[062:09] Because I think like if like the new f the the first frog hits the first mosquito, it gets longer, it hits another mosquito, this has to be the right frog, so we can like the
+[062:22] Yeah, yeah, I understand the point. Maybe it's maybe easier because you can't. So so so so the one I described probably is not the fastest algorithm, but it's uh what uh uh it's uh easier to implement.
+[062:41] Okay, you have a procedure to insert a mosquito within the BST of the frogs.
+[062:49] Okay? What we have to do? Insert the mosquito, go down, check uh if it's eaten or not. Uh if it is eaten, increase the length the tongue of the frog, kill other frogs after that, stop.
+[063:08] Then there is another procedure which says, okay, I give you a frog.
+[063:14] check if he is able to eat it is able to eat a mosquito within the BST of uneaten mosquitoes.
+[063:22] This can be done by searching for the successor of the frog, check if the tongue of the harrowed frog is greater than the frog is given, is the last uh one that we changed.
+[063:34] search for the for the successor, identify the mosquito. If it's not eaten by the new tongue, stop. Otherwise you have a mosquito.
+[063:49] insert this mosquito using the other procedure.
+[063:52] So you have two procedures, one is calling the other with a target frog or a target mosquito.
+[064:02] You process the mosquito one after the other with the procedure to deal with mosquitoes.
+[064:08] When you have a frog, use the procedure to deal with mosquitoes, which may give you a frog that you have to insert in the other with the other procedure.
+[064:19] Uh no, not gives you back a mosquito that you have to insert with the other procedure. But I'm saying instead of doing this uh procedure.
+[064:29] Yeah, yeah, yeah, yeah. You can you can do you can do everything within uh the second procedure, which may may become just one sweep on the mosquitoes, which gives me the final.
+[064:45] Yes, yes, yes, yes, you can do a
+[064:49] you can implement something which is faster because it's doing more things at once without this ping pong between one function and the other. The only point is that once you know the mosquito from the BSD of mosquitoes, you are sure that the frog is eating it. Otherwise the the complexity may may grow up.
+[065:21] Yeah yeah yeah yeah yeah exactly. Yeah yeah yeah.
+[065:27] Give me the next one, next one, next one, next one, next one, so.
+[065:39] Okay. Uh other questions?
+[065:42] No
+[065:44] Okay, let's uh move on with uh the next uh topic.
+[065:50] Which actually is opening a lot of
+[065:57] is just the beginning of a series of lectures we are going to do, taking us
+[066:05] Least two weeks or more.
+[066:07] It's uh the problem of uh prefix sums.
+[066:12] and in general what are called range queries. We are given an array
+[066:19] Many, many, many, many problems can be solved by asking questions about a range, sub-range, sub-array in this bigger array.
+[066:32] The problem may be dynamic or static. The query may be
+[066:38] graphics sums, so sums or
+[066:42] Uh minimum, maximum and many other.
+[066:46] operations. We will start with sums.
+[066:51] We we start with the static version of the problem.
+[066:56] This is just uh the first uh the first lecture, then we immediately move to dynamic.
+[067:04] Pref exams, and we will see a super, super, super elegant solution next lecture.
+[067:12] Okay, and then we will present another solution, another data structure which is more general, it allows you to solve many other problems.
+[067:21] Apart from some
+[067:23] It's less elegant and uh it's slightly more inefficient.
+[067:29] in practice.
+[067:31] Okay. So let me start with static.
+[067:36] Uh prefix sums.
+[067:41] Pref exams are surprisingly popular.
+[067:48] course many, many times.
+[067:51] I have implemented these
+[067:55] in many solutions, apparently problems that doesn't need
+[068:00] uh prefix sums uh later or sooner or later prefix sum will blow up.
+[068:10] Very, surprisingly very, very popular.
+[068:14] Okay. So we are given an array, so
+[068:17] Even
+[068:20] Hey.
+[068:21] One n
+[068:24] of integers.
+[068:30] We would like
+[068:37] Two
+[068:49] Sum of i
+[068:53] and range some
+[069:00] I
+[069:01] J.
+[069:03] What is sum i? This uh also gives the the name prefix sums.
+[069:11] because you are looking for the sum
+[069:14] Uh of
+[069:16] All the positions.
+[069:19] From k from I sorry from one to y in the array
+[069:27] Traffic stops.
+[069:29] Okay.
+[069:30] And the other operation is range sum because you are giving asking for the sum in the range.
+[069:47] Just introducing the problem about uh
+[069:50] Refisci.
+[069:53] Okay.
+[069:55] Uh
+[069:57] Notice that if you have an array A
+[070:03] like this
+[070:12] Samuel.
+[070:17] is equal to
+[070:21] This part here.
+[070:26] and arrange some
+[070:36] is equal to the say this one.
+[070:40] uh is equal to this part here.
+[070:45] That's essentially the query, what the query means.
+[070:49] Okay, notice that it's enough to consider some i
+[070:55] Because once we have some i
+[070:58] Range sum i j equals to sum j minus sum
+[071:09] i minus one.
+[071:12] Pretty obvious.
+[071:15] Okay, what's uh the solution for the problem?
+[071:19] solution for the problem is
+[071:24] Uh what?
+[071:30] Okay. Every time.
+[071:34] You so
+[071:36] Open your checklist.
+[071:38] And by research for the answer to pointer trick.
+[071:45] Rip line.
+[071:48] Another entry in this checklist is every time somebody is asking you about a data structure,
+[071:58] You have to ask yourself how many possible queries do I have?
+[072:09] Okay.
+[072:11] If the number is small,
+[072:14] What's the the solution?
+[072:18] Which means
+[072:22] Okay, okay. Let me let me restate the problem uh the the the the question a bit. Okay, you are given uh a d you are given a problem which relates to uh queries, which means that you have to build a data structure which later on uh is able to answer efficiently these queries.
+[072:44] So what I'm I'm asking to reorganize the data in any way you want.
+[072:50] So that later on I ask you arrange some ij and you have to give me the answer.
+[073:00] Okay.
+[073:04] Now, if
+[073:06] The problem is how many distinct query so so the question is how many distinct queries do we have?
+[073:16] For this problem. So that that's a question that you always you should always ask yourself.
+[073:23] Because if the number of the possible queries
+[073:27] is smaller
+[073:29] What's the solution? What's the data structure?
+[073:36] Pre-processed with the case.
+[073:39] three possible queries, like if for example here he asks only for one, one, two, like like three ranges. Okay. You can and maybe it's static, you don't even need practical exam, you just compute uh these three answers. Okay, so like a list a list of the the three results if they can answer okay, so n it's not precompu it's not uh preprocess, it's uh
+[074:04] pre-compute the answers. Okay, do we all agree? Okay. If we have three possible queries, just store the results. If
+[074:19] Italy is uh okay.
+[074:22] And the the the space required by the data structure is proportional to the number of answers you have to remember.
+[074:31] Okay. How many answers do we have?
+[074:36] How many queries do we have?
+[074:40] and one squared.
+[074:48] Okay, if we consider range sum we have quadratic number of queries. If we consider sum, we have n possible queries. But since range sum can be solved with two
+[075:03] Cancer.
+[075:05] it's better to consider some and derive range sum. So the number of possible queries is n.
+[075:14] Okay. So with n possible queries what what we w we w we can do.
+[075:24] Just store the answers.
+[075:26] Okay, here is trivial, okay. So if if I tell you okay uh if we have to solve this, let's let's store the prefix sums.
+[075:38] But the the the general rule and this this problem is actually easy to derive solution, but in general you can always you have always to consider to ask yourself this question. Because there are problems in which the solution is not so trivial, like in this case. It's more involved and it's enough to consider how many queries do I have.
+[076:06] Yeah.
+[076:07] Precompute everything.
+[076:09] Okay.
+[076:11] This is u usually can be often, can be done when the problem is static. When the problem is dynamic, the problem is also update the pre-computed answers which is the
+[076:26] real problem.
+[076:28] Okay, so
+[076:31] Essentially store all the possible answers, which means store.
+[076:37] P
+[076:39] such that
+[076:42] P I
+[076:44] Equals
+[076:46] Some
+[076:48] Aye.
+[076:50] Okay.
+[076:56] In this way, sum i
+[077:00] Takes uh
+[077:06] Constantine.
+[077:09] Do we all agree on this?
+[077:12] We can also discard the
+[077:17] A
+[077:21] What does it mean? You give me an array, I pre-compute P and then forget about A. This means that the the data structure is also implicit in the sense that uh you are not not using more space than the space of the original array.
+[077:38] Can we re recover A if we want? Yeah, it's just uh the difference between consecutive elements.
+[077:46] Okay.
+[077:48] Uh
+[077:50] Okay, usually when uh you have uh
+[077:53] It's a great idea to consider the number of queries before even thinking about
+[078:00] possible more advanced data structures.
+[078:04] Often, however, the problem is how to pre-compute the answers of the answers efficiently.
+[078:14] 'Kay.
+[078:16] Here is particularly easy. But i you could mess up everything if for every P I you go on, start from the beginning and compute the sum.
+[078:28] up to position I.
+[078:30] Okay, this is very
+[078:33] Stupid idea, okay, but
+[078:35] In general, uh it could be harder.
+[078:39] uh it could it could be harder to to to precompute the answers uh efficiently.
+[078:45] And here how can you build the PI?
+[078:49] not following the d the definition, but actually computing it from left to right.
+[078:59] Yes?
+[079:02] Okay.
+[079:03] So I'm just saying that in
+[079:07] No, the stupid way would be to to implement some starting from the beginning up to position I compute everything.
+[079:17] Of course it's very stupid, okay, but it could be a possibility.
+[079:22] uh in case of other data structures, okay?
+[079:27] Uh in which you
+[079:29] you you need a clever way to comp pre-compute the answers. Here is very obvious.
+[079:37] Start from from the beginning.
+[079:39] accumulate the the sum.
+[079:43] uh from left to right.
+[079:47] Okay.
+[079:49] Be
+[079:53] P can be
+[079:56] Pre-computed
+[080:01] in linear time.
+[080:07] Okay.
+[080:15] Well, it's uh very surprising the number of problems we can solve uh with prefixams.
+[080:24] Many problems can be uh actually uh easier easily solved by using uh uh that array. Okay, let me start with the first and we I will I will stop five minutes each.
+[080:43] to let you think about the possible solution and then we discuss the solution.
+[080:48] Uh since uh it's already
+[080:50] three thirty five I think we can solve only the first one and then
+[080:56] we will solve the other.
+[080:59] Next week.
+[081:06] Okay. The problem is called uh uh
+[081:11] Ilia and Aquirus.
+[081:14] and is as follow. We are given
+[081:19] A binary.
+[081:24] String.
+[081:26] S one n
+[081:31] Consisting
+[081:39] Consisting in
+[081:43] A's
+[081:45] Symbol A.
+[081:48] or symbol B.
+[081:51] So we have a string made of two different symbols.
+[081:56] And uh
+[082:00] It said
+[082:03] Of
+[082:05] M
+[082:09] Queries.
+[082:12] Okay. The query is Q i j
+[082:18] and retires
+[082:25] The number.
+[082:30] Of positions.
+[082:38] uh k in the range that goes from i j
+[082:43] Such that
+[082:48] S K
+[082:52] is different, no, it's equal.
+[082:56] to S k plus one.
+[083:00] Okay, let me clarify you with an example.
+[083:03] We have a string S a
+[083:09] B B
+[083:12] A B B A
+[083:17] Positions are one.
+[083:20] Two, three, four, five, six, and seven.
+[083:25] These are the positions P
+[083:28] The query is, for example, q two six
+[083:34] which corresponds to this uh
+[083:37] Substringer.
+[083:40] And we want to check how many symbols in this range
+[083:45] are equal to the next symbol.
+[083:49] So
+[083:51] So this one is equal to the next one, B.
+[083:56] This one uh sorry.
+[084:00] This one is different than this one, so does it count? This one is different than this one, so does it count? This one is equal to this one, so.
+[084:11] Two
+[084:13] This one is different than this one, so only two and two is the answer.
+[084:23] Yes.
+[084:24] Okay.
+[084:28] The solution
+[084:31] That we want to find
+[084:36] Takes
+[084:39] N
+[084:42] The length of the string.
+[084:44] Plus um
+[084:46] M
+[084:48] Time.
+[084:50] M is the number of Queris.
+[084:57] Let me clarify one thing. There are problems
+[085:01] uh which it's it's often the case that we are given a problem and we ask for answering queries.
+[085:09] The queries may be offline or online.
+[085:14] Offline means that you are given all the queries at the beginning and we are expecting all the answers one after the other.
+[085:25] Online queries instead are queries that are given one after the other and
+[085:32] You get you want a result.
+[085:37] one after the other.
+[085:39] So at the beginning you don't even know the queries.
+[085:45] 'Kay.
+[085:46] This is a crucial difference.
+[085:49] Because online is usually harder than offline. Indeed, any solution which is inline online is also offline, but the vis the vice versa is not true.
+[086:01] Okay. Uh
+[086:05] How can you so so the system that evaluates this kind of stuff, uh how can so it's it's giving you the input and the input contains also the query.
+[086:18] How can you
+[086:20] Be sure that you are solving the online version of the problem and not the offline one.
+[086:29] Yeah.
+[086:34] Yeah. It has to be like in sessions, deletions, and in and etc. So so if there are queries that change
+[086:43] the state of the data.
+[086:46] Then, of course, you have to run them online because if there is an insertion or deletion, you have to. If there are no insertion and no deletions,
+[086:59] like in this case.
+[087:02] Can they
+[087:03] Uh
+[087:06] be made online.
+[087:11] Yes, if the input of a query is influenced by the output of the other one. Like the stream J can be influenced by
+[087:21] Uh I
+[087:23] Okay? Does it make sense? Hey, you could okay.
+[087:28] For our course this is very important because onli online is usually harder than offline. So sometimes we will talk about algorithms which are only offline, so they work by rearranging the queries in some way.
+[087:45] and algorithms that build a data structure which is efficient online.
+[087:50] For our course, this is the the difference. But it's actually uh interesting, modifying the query uh to make sure that something is done online while you are implementing something
+[088:05] Value.
+[088:07] system.
+[088:08] your projects and you want to be sure that the compiler is not so you are benchmarking something.
+[088:17] And you want to be sure that the compiler is not reorganizing your code.
+[088:22] to make its life easier.
+[088:28] Because the compiler is doing. So let's say you want to measure, you have a set of queries to run and the data structure.
+[088:36] And you you uh you provide all the queries.
+[088:41] And you want to measure how much time does it take. The compiler is very clever in optimizing code and could reorganize the query in some way to take advantage of what you are running. Okay? So it's often
+[088:58] the case in which you want to force something to be online and not.
+[089:05] This is one of the case. Okay.
+[089:08] So uh
+[089:12] Is the problem clear?
+[089:14] Okay, the in this case it's not specified if it is on online or offline.
+[089:21] Since the query each query is not influenced by the other one.
+[089:25] who can be done offline.
+[089:28] But uh uh but there is on an online version of the problem which is uh able to reach the target complexity complexity without
+[089:40] Uh without any problem, so
+[089:43] There is no distinction in this case.
+[089:45] in between being online and offline for a time complexity point of view.
+[089:51] Okay, let's stop for five minutes, then we'll
+[089:55] You claim a solution that we go home by.
+[089:58] Very happy for being able to apply our first and
+[090:03] for our first time.
+[090:05] The uh
+[090:06] Perfect sums.
+[090:12] is the time to build a
+[090:15] and answer the queries.
+[090:18] N is for the preprocessing.
+[090:21] M is for the
+[090:24] Very tight.
+[090:35] Okay, in this kind of complexities, no. So potentially it could be amortized.
+[090:42] In the sense that the first squirrel is super expensive and the other ones are very cheap.
+[090:47] But actually for this problem you can build something which guarantees you to solve the queries in a constant time.
+[091:05] I'm giving you this back, otherwise I will forget.
+[091:19] Okay, this is yours.
+[091:21] Oh no, no, no. These I'm joking, I'm joking.
+[091:33] Okay.
+[092:28] Do you have a possible solution or do you need uh more time?
+[092:40] For each element, if the next one is the same, we add one starting from zero. Okay. And then when we have equality, we can do.
+[092:52] Okay, you you you can you can build a binary vector in which there is one if the next one is equal or not and then use prefix sums on this array which is giving you what you were suggesting add plus one yeah do you agree then for a range the answer is how many
+[093:19] ones are in the binary original binary vector which is exactly a range sum from i to j
+[093:29] The question is how many ones are there?
+[093:34] This competition?
+[093:37] No?
+[093:51] one zero zero one zero zero. That's the binary vector.
+[094:00] Then we prefix some.
+[094:03] just to be able to compute the number of ones in any range.
+[094:08] This takes little time
+[094:11] to build uh the binary vector, graphic sums and then uh cost and time per query.
+[094:19] No, I just want to say something about implementation, the fact that the binary vector is long n minus one because it's for each adjacent pair. But this is at least how I do it. And uh so like when they give me a range in the query, usually if you uh I do J minus one, so like we we don't overshoot because it's uh it's uh yes, just uh this d bay.
+[094:47] pre-compute the equivalent of the sum. Yeah, yeah. That's uh it's the same.
+[094:54] What do you mean by pre-cumulative sum? Every position. Cumulative sum is another way to say pre-exams.
+[095:03] Yeah. Yeah, yeah, yeah. That's what I was suggesting. I was just uh coming back to binary just because uh consider binarying, binary vector, and then prefix sum.
+[095:17] which is gives exactly the same result. But in terms of binary vector, praffic sums are used to give you how many ones are there.
+[095:30] same solution, okay? We are just talking about the same stuff.
+[095:35] What about cooling sounds? Perfect sums? Meant that in every position you store how many uh once before.
+[095:45] Uh basically, yeah. So you when the query comes, you need to access to this instead of the entire range.
+[095:53] Yeah, yeah. Even in this case.
+[095:57] So exactly the same thing. Okay. Binary intensive binary vector. 0, 1, 0, 0, 1, 0, 0.
+[096:08] Well does it mean s the next symbol is equal to myself or not?
+[096:13] Okay? Given a query, what do you like to count? The number of ones in the corresponding subarray of the binary vector.
+[096:24] How can you compute the number ones in a suburb?
+[096:30] Do by prefix sums, pre-compute prefix sums from left to right.
+[096:37] And then this one, so the number of ones up to this position, minus the number of ones in the prefix that you have to remove. Exactly what you say. Okay? So to compute how many ones here, I don't scan everything, of course, otherwise it's too expensive. But I take this number here and this number here, subtract them and get the number of ones.
+[097:03] Which is what uh you are saying.
+[097:05] Okay.
+[097:08] Nice.
+[097:11] So she you stop here I think yeah see you on
+[097:18] you on Monday.
+[097:20] How many of you are tending?

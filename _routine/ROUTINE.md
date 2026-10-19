@@ -174,3 +174,19 @@ stesse box. È lo standard da mantenere.
   L7.pdf senza più appendice. Quando arriva la registrazione L9: rifai L9 sulla registrazione (Frogs se lo fa, più il resto).
   Download: cancellato L_08.MP4 (copia in Lessons/L8). L_07.MP4 NON cancellato: Lessons/L7/L_07.MP4 non esiste più (rimosso da
   Octech), quindi quella in Download è l'unica copia -> chiedere prima di cancellarla.
+- (17/10) Hands-On 1: Octech l'ha risolto a mano (src/lib.rs, corretto: verificato con brute force). Su sua richiesta, bozza di
+  chiusura in HandsOn/HO1/draft/ (lib.rs rifinito, report Handson_1_solution_YOUR_NAME.tex/pdf, EMAIL.txt, README_DRAFT.md).
+  src/lib.rs NON toccato: decide lui cosa copiare. Ancora da fare (lui): nome/matricola, scadenza, invio.
+- (19/10) Octech: il codice e il report dell'Hands-On devono essere SUOI. HandsOn/HO1/src/lib.rs = sua versione (non toccarla).
+  Tutto ciò che è generato sta in HandsOn/HO1/_GENERATO_DA_CLAUDE/ (file con suffisso _GENERATO; LEGGIMI.md spiega). Al massimo
+  test generati (test_aggiuntivi_GENERATI.rs, sulla sua API), che decide lui se incollare. Mai scrivere soluzioni/report in src/.
+- (19/10) L9 rifatta sulla registrazione (Lessons/L9/L09.MP4, spostata lì da Octech; trascrizione L9_transcript.txt).
+  Contenuto REALE del 14/10: Frogs and Mosquitoes spiegato per intero (dynamic 1D point location, predecessore, issue #1-#3,
+  Θ((n+m) log(n+m))), poi prefix sums STATICHE (checklist "quante query distinte?", P in Θ(n), A scartabile) e
+  Ilya and Queries (CF 313B, online vs offline). Crate l9 + modulo prefix_sums (codice del blog), practice E39-E42.
+  In Lessons/L9 ci sono anche due PDF estranei al corso (Robinhood_in_Octech_2026-09-26.pdf, StonkFun_in_breve.pdf): non toccati.
+- (19/10) L10 (lunedì 19/10) PROVVISORIA dalle note di Octech + blog prefixsums/fenwick: Little Girl and Maximum Sum,
+  Number of Ways (il "problem #2" non è nelle note), Fenwick tree (costruzione; le note si fermano ai tempi di sum/add).
+  Crate l10 (little_girl, number_of_ways, fenwick::FenwickTree, codice del prof + test), aggiunto ai members. Niente practice
+  finché è provvisoria. Bug nel codice del blog: number_of_ways panica con n = 1 (a.len() - 2). Quando arriva la
+  registrazione di L10 (o la .docx Teams): rifarla sulla registrazione e aggiungere practice L10 (da E43).

@@ -1,9 +1,20 @@
 {
  "generated": {
-  "Cargo.toml": "b487ecc37b71a05f736ed6184ed8d3b7b0c57aee",
+  "Cargo.toml": "c1e6d559c97c616e59bb92b57d613815cfcdcd32",
   "HandsOn/HO1/Cargo.toml": "00d2ee90cdb5c4c088a4748ff7b7112400047067",
   "HandsOn/HO1/README.md": "8d1446bc47f690d216f87d9e7afaaeab7b186f43",
+  "HandsOn/HO1/draft/EMAIL.txt": "e48d098b0a84f0f633036093b82c09f4c895da6b",
+  "HandsOn/HO1/draft/Handson_1_solution_YOUR_NAME.pdf": "283a264af40eb1f822f68e7399e3f69add67b2f9",
+  "HandsOn/HO1/draft/Handson_1_solution_YOUR_NAME.tex": "5c9c99a1ca2a58201207458e8d5015a0cb1d970b",
+  "HandsOn/HO1/draft/README_DRAFT.md": "7553e231c8aa67e8e24cfdfdec60a1c9c2c68447",
+  "HandsOn/HO1/draft/lib.rs": "84fc6e100cbc56ef972c6ead64f75a9977e537f0",
   "HandsOn/HO1/src/lib.rs": "46715e60f5212e91c97c529ae32ec81557dfcd21",
+  "Lessons/L10/Cargo.toml": "51b54d3955b5bf8d2e899ec1e31d94061e4275e3",
+  "Lessons/L10/L10.pdf": "1a2d445da49436cb58438728e2055569036fcaf1",
+  "Lessons/L10/L10.tex": "e80b30c9683154a3593bdc502ad4411bceee3bb6",
+  "Lessons/L10/claude_notes.md": "1177be8769ab6a1cf0801b6b41cb9a03cce1ab93",
+  "Lessons/L10/src/fenwick.rs": "e4af69a5ed6978bbe54bd10612c2ae367d145362",
+  "Lessons/L10/src/lib.rs": "218e6d2f0972b9db3bd9622fd485ef271b74a344",
   "Lessons/L3/L3.pdf": "c695b0f9b4aeb301a79c0648bd65d23efd2e276e",
   "Lessons/L3/L3.tex": "404a6c12f209f9577b7b8827fa52f14a46b82a93",
   "Lessons/L3/claude_notes.md": "1d2ab4cef12bceeca41bb50548da433c83c73181",
@@ -42,21 +53,46 @@
   "Lessons/L8/practice/src/util.rs": "bad3c7910add4964b7175bce31979af1fe025738",
   "Lessons/L8/src/lib.rs": "a63c374ac7a4959d30d2860d0b607a3b2fac0378",
   "Lessons/L9/Cargo.toml": "725ef703b55e3fd176fe421f180a9c67d601e2fe",
-  "Lessons/L9/L9.pdf": "c3ab9b7b66e4c88811c4d23652f55dc15cb95067",
-  "Lessons/L9/L9.tex": "24920d4758529dc26006c5554ca516cd665b661b",
-  "Lessons/L9/claude_notes.md": "4737b6239b37262ebef5f56b22115ea2d9e284df",
+  "Lessons/L9/L9.pdf": "6ae05690c779bd62f51f178f4dd94fa90365b5e9",
+  "Lessons/L9/L9.tex": "d87de29ec748dae31f321c519d6c4dac81c283a0",
+  "Lessons/L9/L9_transcript.txt": "189b1beaa0778cb373b498bc706ed8faf3a06c1a",
+  "Lessons/L9/board/l9_cases.jpg": "923e40d99d10ef2a1a1eff7ab8094fc2f25562ce",
+  "Lessons/L9/board/l9_grow.jpg": "14f8397d2e4ed609914de3a428d64b93a9404549",
+  "Lessons/L9/board/l9_ilya.jpg": "e7fb4641b2578951d131bd032716449c069a1b5f",
+  "Lessons/L9/board/l9_issue1.jpg": "1d0de7bf643113b0dc6421132e988f9429e63d3e",
+  "Lessons/L9/board/l9_leftmost.jpg": "b675f00e62390dc117e699805b1f8a23dd4ddb1b",
+  "Lessons/L9/board/l9_psums_def.jpg": "5d0478af3730851c7584920fe0c06bffab8a43a5",
+  "Lessons/L9/board/l9_psums_sol.jpg": "6d772d36a0fc5e633a6c3f3017ef6aeeb65d7dc3",
+  "Lessons/L9/board/l9_statement.jpg": "429a2211c7a3bd3f0eb14906fd81880f88323a06",
+  "Lessons/L9/board/l9_target.jpg": "9fcc996475f2470a7d7ae3e17a47e1fd36138b47",
+  "Lessons/L9/board/l9_total.jpg": "2409f9bbc45f4edbd4afb38e5010eb31001aacd2",
+  "Lessons/L9/board/l9_uneaten.jpg": "bed113521a2202741f3a8b42bd7959b583e3e865",
+  "Lessons/L9/claude_notes.md": "d204bbabb5a644086ded35f0a9a7f71980e9da2b",
   "Lessons/L9/practice/Cargo.toml": "4d80ae7f4a043607c78155655a2891071f726f3c",
-  "Lessons/L9/practice/README.md": "cb1f6a641f6e1e515b4d6af6e00b02d48887e96b",
-  "Lessons/L9/practice/soluzioni/lib.rs": "af0a3a5d6f99807751e8329889a29b4ec9587be2",
-  "Lessons/L9/practice/src/lib.rs": "52e58d7993d6608f4bab1d4bffb919cd6463187d",
+  "Lessons/L9/practice/README.md": "93439af6e3c7858b462532a07c88933734ef4932",
+  "Lessons/L9/practice/soluzioni/lib.rs": "ea67a95479904ed29e9d937aa31994f34e58e139",
+  "Lessons/L9/practice/src/lib.rs": "94119a3db79afe2f74d827e0ef37ccb3d6f10428",
   "Lessons/L9/practice/src/util.rs": "bad3c7910add4964b7175bce31979af1fe025738",
-  "Lessons/L9/src/lib.rs": "453e5274e6a8a6e0fb4cb4d3dd8ed7d4726f2e80"
+  "Lessons/L9/src/lib.rs": "6457f21086f998ef979551c21518c789f0391aa8",
+  "Lessons/L9/src/prefix_sums.rs": "c1cd80c015eed69d579889eb7f96d91487df1ea2"
  },
- "last_run": "2026-10-12 13:56",
+ "last_run": "2026-10-19 13:32",
  "seen": {
-  "DOWNLOADS/L_07.MP4": {
-   "mtime": 1791794502,
-   "size": 440578003
+  "Lessons/L10/Cargo.toml": {
+   "mtime": 1792416710,
+   "size": 89
+  },
+  "Lessons/L10/notes.md": {
+   "mtime": 1792407325,
+   "size": 4389
+  },
+  "Lessons/L10/src/fenwick.rs": {
+   "mtime": 1792416710,
+   "size": 3616
+  },
+  "Lessons/L10/src/lib.rs": {
+   "mtime": 1792416710,
+   "size": 6510
   },
   "Lessons/L2/Cargo.toml": {
    "mtime": 1789983210,
@@ -178,10 +214,6 @@
    "mtime": 1791813000,
    "size": 88
   },
-  "Lessons/L8/L_08.MP4": {
-   "mtime": 1791811962,
-   "size": 503378657
-  },
   "Lessons/L8/notes.md": {
    "mtime": 1791813366,
    "size": 4228
@@ -194,13 +226,21 @@
    "mtime": 1791813340,
    "size": 88
   },
+  "Lessons/L9/L09.MP4": {
+   "mtime": 1792058199,
+   "size": 492722542
+  },
   "Lessons/L9/notes.md": {
    "mtime": 1791813366,
    "size": 2505
   },
   "Lessons/L9/src/lib.rs": {
-   "mtime": 1791813347,
-   "size": 7143
+   "mtime": 1792416705,
+   "size": 7181
+  },
+  "Lessons/L9/src/prefix_sums.rs": {
+   "mtime": 1792416706,
+   "size": 4855
   }
  }
 }

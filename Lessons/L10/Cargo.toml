@@ -1,0 +1,6 @@
+[package]
+name = "l10"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
