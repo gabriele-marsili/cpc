@@ -1,0 +1,814 @@
+# L10 (19/10/2026) — trascrizione AUTOMATICA (sherpa-onnx parakeet) di L_10.MP4, non rivista: termini tecnici spesso storpiati ("Fenwit/fanwood"=Fenwick, "prefixums/graphic sums"=prefix sums). La registrazione si interrompe a 84:54.
+[000:00] Let's continue our discussion about problems about pref exams, so problems that can be solved with prefixums.
+[000:07] Uh the first one uh we are going to see today is called uh uh Little Girl and Queries.
+[000:22] Little girl and queries.
+[000:29] And uh it's interesting because it's a problem talking about graphic sums.
+[000:35] which can be solved with prefix samples.
+[000:38] Okay, indeed we are given
+[000:41] Uh an array
+[000:44] With n elements and a set of queries.
+[000:55] Uh a set of M queries. So we have M queries to solve.
+[001:02] And the sector is called uh
+[001:06] Q.
+[001:07] Okay. Each query
+[001:14] Is uh
+[001:16] A ranger
+[001:20] Some
+[001:21] I j okay? So we have a set of query uh range sum over this array A
+[001:31] Okay, our goal
+[001:37] is to
+[001:39] Permuto.
+[001:44] the values of the array.
+[001:51] To maximize, so we are free to permute the element of the array in any way we want to.
+[001:57] The elements must remain the same, of course, permuted, in order to maximize the overall sum of the results of the K of the M queries in our set Q.
+[002:11] Okay, so essentially we have a set of ranges.
+[002:15] For us one c one each of this range range corresponds to a query, and we are free to remo to re permute the elements in the array so that the sum of the elements in these intervals are maximized.
+[002:32] is maximized. The sum of all these sums.
+[002:39] to maximize
+[002:45] This armament.
+[002:49] Oh.
+[002:51] The values
+[002:54] uh uh of the results uh
+[002:59] of queries.
+[003:06] In tube.
+[003:09] Let's uh see an example just to be sure that we understood what the problem is talking about.
+[003:21] A
+[003:23] Is there a five?
+[003:26] Two.
+[003:28] Four
+[003:30] One
+[003:31] three
+[003:33] Okay, this is the array.
+[003:38] This is the first range sum whose total sum is fifteen.
+[003:44] Then we have this range sum. Then another time this one. Both cases the sum is six.
+[003:54] And uh the overall
+[003:56] Sum of the ranges is fifteen plus six twenty one plus six equal to twenty six.
+[004:06] Okay.
+[004:08] possible permuted array is uh a pi.
+[004:13] which is, for example, two.
+[004:16] Five
+[004:17] Four.
+[004:18] One, three, four.
+[004:21] Whose total sum is
+[004:24] Uh fifteen plus nine plus nine which is uh
+[004:32] Uh thirty three.
+[004:36] Okay.
+[004:39] Yeah?
+[004:42] See?
+[004:44] Nice.
+[004:46] Our goal uh is to find the permutation which gives uh the highest possible
+[004:53] Sama, oerotsa.
+[004:56] Okay.
+[004:58] Okay, let's stop for uh uh five minutes.
+[005:04] So you can think about a possible solution, then we discuss that solution.
+[005:09] Okay.
+[005:13] Is the problem clear to everybody?
+[005:22] Say again?
+[005:26] From uh oh yeah. Aye.
+[005:32] Okay. So these are each of these query is a range.
+[005:37] Okay. Let me briefly re restate the problem so you you can uh
+[005:45] So we are given an array and we have n queries q.
+[005:50] Each query is a very sub, huh?
+[005:53] Uh so we have an address. Each query is uh arranged.
+[005:59] Okay? And the result of the query is the sum of all the elements of either.
+[006:06] 'Kay.
+[006:07] Yeah.
+[006:09] The result is the sum of all these ranges.
+[006:15] Okay? We are free to permute the elements of the array in any way we want.
+[006:23] For example, you just commuted the Q and file it could do whatever you want.
+[006:30] And then we compute the sum of the range sums once again, in this case fifty nine nine. Overall sum is definitely. Our goal uh is to find the permutation which maximizes the overall sum.
+[006:51] The uh target right time complexity
+[006:55] Uh target time complexity is uh
+[007:12] Yes. And
+[007:15] Log n?
+[007:17] plus uh mm
+[007:23] Don't remember.
+[007:27] Plus m log n.
+[007:39] can be improved a bit, but uh we will discuss later.
+[007:48] 'Kay.
+[007:51] can potentially uh shape the
+[007:56] Again, uh we're getting fucked.
+[008:03] Well let's stop for ten minutes so we can uh
+[008:06] briefly discuss together. Then once you know
+[008:11] you have some uh some intuition we can discuss together possible uh possible solutions.
+[008:24] By the way.
+[008:51] Yeah, makes uh makes a lot of sense, right? What we could do is to uh count the number of
+[009:00] For every position of the array, we can count how many uh
+[009:07] Queries are touching that position.
+[009:13] And
+[009:14] We place the highest values
+[009:17] to the master frequent positions.
+[009:21] Okay, it could be like uh one
+[009:24] Three
+[009:26] To the
+[009:27] One, one so
+[009:31] The highest value is five fa na.
+[009:36] Yellow is a terrible choice.
+[009:39] Uh we place five year five uh five year four here.
+[009:46] Then uh
+[009:48] Ukerz one, two, three.
+[009:51] Okay? This is the one that maximizes the sum. The sum is uh of this assignment is fifteen plus nine plus nine equal thirty three, which is the previous uh the previous uh reordering uh
+[010:11] Okay, that we have discussed.
+[010:14] uh before in the in the example.
+[010:17] Uh
+[010:21] Good. That's uh that's the goal, okay? Count the number of frequencies the count the frequencies of each position with respect to the number of queries attaching that position, and then we sort the value by position sorry, by value, and then we assign to the most frequent position.
+[010:45] Okay?
+[010:48] Do do you agree?
+[010:50] Okay, so let's uh let's split the task uh into steps.
+[010:56] Step number one.
+[010:59] Counts
+[011:01] Frequency
+[011:05] of every
+[011:09] position
+[011:12] Re shon up.
+[011:15] Step number two
+[011:19] Sorter
+[011:22] Sort what?
+[011:24] Sort A.
+[011:26] Because we want to the
+[011:28] the values in in uh decreasing uh sorted by by the in decreasing order.
+[011:35] Uh then sort uh
+[011:39] Frequency positions pairs.
+[011:44] Do you agree?
+[011:47] in uh decreasing order.
+[011:50] Then assign to the first most frequent position the highest value of A.
+[011:59] Do we all agree on this?
+[012:10] Uh assign the greatest.
+[012:16] Value
+[012:18] Most frequent.
+[012:25] position.
+[012:27] Okay, what's the cost uh of these?
+[012:33] N Log N.
+[012:35] What's the cost of these?
+[012:53] Say again.
+[013:01] Yeah, it's a
+[013:04] So yep.
+[013:12] Okay, maybe if we have some uh uh some constraint about the value in A we can use counting sort.
+[013:22] Alright extort uh if we have uh some
+[013:32] constraint on M, we can use counting sort for the frequencies and yeah, and we can potentially shave, remove the logarithmic factors.
+[013:44] Okay.
+[013:46] Good. What about step number one?
+[013:52] Okay, for step number one, the we have two different possible solutions.
+[014:00] Uh so
+[014:02] I want you to think about this and then we can discuss a possible solution. For the new entry in the room,
+[014:14] Uh we are talking about this problem. We are given an array A and the set of query uh Q and m is the number of queries and is the number of elements in the array. Each query is a range sum. So essentially we have this array, a set of intervals corresponding each of them corresponding to a range sum. For each range sum we have the sum of the value
+[014:40] within the range and the result is the sum of all these ranges.
+[014:48] Our goal is to per to permute the elements in the array so that we want to maximize the fin final result. So for example, in this case we swap these two elements and we get the result.
+[015:02] Uh what we want to do is to find the arrangement, so the permutation that maximizes the overload sum and this is the target running time.
+[015:13] n log n plus m log n.
+[015:18] Okay? Uh the approach we discovered together is made of three step uh sorry two steps. Uh in the first uh step we uh count the frequency of every position. Why we are doing this? Well, because we want to assign the highest value, the greatest value to the most frequent position.
+[015:44] positions because we want to maximize the orders. So first step count the frequency of the position. Second step solve A in decreasing order, sort the parents frequency and position in decreasing order then assign the recent greatest value in A to the most frequent positions in
+[016:09] the chart is bad.
+[016:12] Okay?
+[016:16] This can be done in the logand, this can be done in another game, matching the complexity we have in mind.
+[016:24] What we are trying to show now is step number one in which we want to count the frequency of a requisition. There are two possible approaches.
+[016:35] first and then you check one okay
+[016:39] So I have to do.
+[016:45] There is a name I don't understand anything. So even an interval, no? Every cellular in this segment, okay, is marked
+[017:04] Okay, so my idea is to use this is to process any interval and the marker with the difference array uh the
+[017:18] Starting point and the ending point and then with the traffic sign we compute the frequency of each cell. Okay. And this is a possible approach? We can use a new line. Exactly. That's a simple approach. Okay so one approach uh is uh something that we already uh discovered if you want because uh in the problem of uh finding the position with the most uh
+[017:45] overlapping intervals, we were using the sweep line algorithm and we were moving from the front and at every position we were able to compute how many intervals are overlapping in that position. We were moving only at the beginning or the end of the segments while actually this is not a problem here because we have the possibility of scanning all the end line.
+[018:17] positions. So what essentially we are doing move the snipp line, sort the intervals by ending or subscribing or ending position, then move only the segments and add one every time we find the beginning or a new interval minus one every time we find the end of a segment. And that's exactly the approach we used, but it's uh
+[018:44] What we can use to compute the frequencies here. Okay?
+[018:51] Is this clear to everybody?
+[018:54] Very convincing, yes, because I'm not going to note this in the with the iPad. Do you have any good okay, what's the running time of this?
+[019:07] M log m because we have to sort the beginning and the end of the segments, and we have a segment for each possible.
+[019:17] Good. Uh i his approach instead is something different, but it's very useful because we are going to reuse the idea later.
+[019:29] Uh it's uh
+[019:33] Uh is the following, okay?
+[019:36] I
+[019:38] Mm.
+[019:46] Let's say we have these positions here.
+[019:51] One, two, three, four, five. Okay?
+[019:57] Let's uh consider the different segments otherwise designed.
+[020:07] Let's say we have this one.
+[020:14] This one
+[020:16] Uh this one uh
+[020:20] And uh uh
+[020:23] and these one.
+[020:29] I want to
+[020:31] Uh
+[020:33] Right.
+[020:35] Build NRI.
+[020:38] such that it's perfect sum
+[020:43] equals the frequency array
+[020:46] We we want to compute.
+[020:49] Okay? So we want to we would like to compute the frequency array which is uh one
+[020:56] Two, three.
+[020:59] Uh three
+[021:03] Two
+[021:05] one. This is the frequency array we would like to compute.
+[021:10] Do we agree?
+[021:12] And we want to build uh an array B.
+[021:17] whose prefix sum is equal to f.
+[021:23] We agree?
+[021:25] Okay.
+[021:28] Okay, let's consider the beginning of this.
+[021:33] Okay.
+[021:34] If I add
+[021:38] We initially start with all the values set to zero.
+[021:44] Okay.
+[021:46] Now what if I because of this position
+[021:52] the interval at the start at position two.
+[021:58] What if I had plus one here?
+[022:03] Okay? What's the effect of this uh in the prefix sample?
+[022:12] Finish your fragments. This remains zero, this is one, this is one, this is one, and this is one. Okay?
+[022:25] What's uh instead so we the brain sum will be one one one one zero okay what's the contribution of this uh segment?
+[022:36] For the frequency.
+[022:39] Okay, this contribute one in this position, one in this position, one in this position, zero in this position, and zero in this position as well. How different is what we obtained with graphic sum from what we would like to obtain?
+[023:01] And the second uh
+[023:06] negative sound. Exactly. So every time we put plus one in a certain position of B, present sums propagate this one till the end.
+[023:17] So plus one in B equals plus one plus one plus one plus one in the graphic sample.
+[023:28] 'Kay?
+[023:30] But we want, since we have this segment, to end the preparation in this position. Okay? The position immediately after the end of this segment.
+[023:42] How can let the propagation stop at that position?
+[023:50] A minus one.
+[024:00] 'Kay?
+[024:01] A minus one in the prefix sum ends the propagation from that position on.
+[024:10] Okay.
+[024:11] So uh to get a B which
+[024:18] Once we do prefix sums, is exactly equal to f.
+[024:23] Yeah? We need uh to
+[024:27] Add the plus one at the beginning of the interval, minus one
+[024:32] in the position
+[024:34] after the end of the segment.
+[024:39] Do you all like any of these?
+[024:44] Okay.
+[024:46] Perfect.
+[024:48] So we do plus one minus one then
+[024:53] Plus one.
+[024:55] Uh minus one.
+[024:58] Then for the last one, plus one
+[025:03] Uh
+[025:07] Myoswan, which is outside.
+[025:10] Okay?
+[025:13] Is this correct? No?
+[025:19] The second one starts here, minus one here is drawn, then it's a position after here.
+[025:29] Oh.
+[025:30] Yeah.
+[025:32] Okay, it's the position after the end.
+[025:36] Okay, now let's do uh okay, what's B? B, the final B is uh
+[025:45] is uh one
+[025:49] One
+[025:52] So
+[025:54] Mm minus one.
+[025:57] zero minus one.
+[026:00] Okay, this is the final B.
+[026:03] This is B at the end.
+[026:06] Okay? Because every time I do plus one, I add one. Every time I
+[026:11] Do minus one I remove.
+[026:14] One, of course.
+[026:16] Okay? What's the F that we obtain using this B?
+[026:24] It's one.
+[026:26] Three.
+[026:30] Two, and why is wrong?
+[026:44] No, we have uh three.
+[026:49] Because this minus one is wrong.
+[026:56] Position after.
+[026:57] Okay, let's uh redo everything from scratch.
+[027:02] Gold part.
+[027:04] Okay.
+[027:09] Let's do
+[027:11] Start everything from scratch.
+[027:17] Let's let me label the position of these is uh two, position uh four. This is one and three, this is uh two and uh
+[027:32] Five. Okay, these are the positions. Let me change B. Because of two, I remove this, add
+[027:43] What?
+[027:46] Add one.
+[027:49] Then
+[027:51] four, I go in position five
+[027:56] My sword.
+[027:58] It's one plus the end.
+[028:01] Then position one
+[028:08] Okay? Hence in position three so I so I add the
+[028:18] minus one in position three plus one.
+[028:22] Then two?
+[028:24] I had plus one
+[028:27] Thank you.
+[028:29] uh and five in position six, which is outside, so I do nothing. Okay, this is B. What's the F I get from this B?
+[028:40] Prefixum.
+[028:41] So one
+[028:45] One.
+[028:48] Three.
+[028:50] Sorry.
+[028:52] Two?
+[028:53] One and then.
+[028:58] This F matches our target F. So we are very happy.
+[029:04] Okay? It's convincing.
+[029:08] Great. What's the running time of this?
+[029:19] Yeah, it's n plus m, if we all.
+[029:22] Exactly. N to zero out and zero out B and compute the prefix M because of the plus one minus one that we have to add. So this solution is better than the sweep line approach.
+[029:40] Why?
+[029:51] We have to start boat water.
+[029:56] The end at the beginning of the segments.
+[030:00] Right? And then we have to scan uh
+[030:03] The segments.
+[030:05] The is it uh
+[030:07] True that we need the n log n time, m log m time.
+[030:15] Well, an log and time is because of
+[030:20] merch sort, which is a comparison based uh algorithm. Do we really need M log M time, so the use of a comparison based algorithm to sort uh the beginning and the end of the segments? Yes or no?
+[030:40] Counting sort. Yeah, counting sort can be used when we know that the maximum element is small compared to the number of segments we have. Here we know that the the largest possible endpoint is n. So we need just an array of counters, of sides
+[031:04] sites
+[031:07] Not.
+[031:08] Okay.
+[031:10] And uh
+[031:12] Yeah.
+[031:14] So counting sorta. What counting sort will do with these segments?
+[031:21] Okay, everything is zero at the beginning. We want to count how many
+[031:29] Segments are starting and ending.
+[031:33] Okay?
+[031:34] Uh
+[031:38] Are you with me?
+[031:40] Okay, but we have to remember satellite information together with the counters.
+[031:45] Okay? Because we want to remember if it is uh the beginning or the end.
+[031:49] If we mix uh everything up, uh we we lose this information.
+[031:55] Is this clear?
+[031:56] Okay. So uh how many so let's start with two. Two is uh so how do I remember the satellite information?
+[032:08] Uh
+[032:10] Ooh.
+[032:14] Okay. We want to sort the s the starting and the ending of segments. Is this clear to everybody?
+[032:23] Okay.
+[032:24] Uh but if I
+[032:27] Don't so it's so I have paints, okay? Position
+[032:31] Is it the beginning or the end? Okay, so it's a page.
+[032:39] What can I do? Well, there are two possibilities. Uh use two n counters.
+[032:47] Okay? In which I have one
+[032:51] Beginning, one end, two beginning, two end, and so on. Or use two different arrays, which is the same approach. Okay, but I have to distinguish the two.
+[033:03] Okay.
+[033:06] Okay, let's use uh uh two arrays, beginning uh and uh end. Okay? So d we have this.
+[033:15] So we scan all the beginnings. Two becomes plus one
+[033:24] Then two?
+[033:27] Okay? And then the answer. Uh four
+[033:36] Three
+[033:39] Five.
+[033:41] Okay?
+[033:43] Okay, now observe uh that actually
+[033:46] Uh these will be good.
+[033:50] is an alternative way to represent these two, which is more uh direct to the point. Okay, here we are using uh C B and C E to distinguish uh beginning and end, and here we are using plus one, minus one to distinguish the beginning and the end. Okay, after that complex option what what's it do what what
+[034:16] is doing private sums. You remember Radik Short is doing praffit sums?
+[034:24] Yes or no? The stable version of Counting Sort is doing pref exams.
+[034:29] Because we want to know for each element what's the ending position in the sorted array of an element equal to that element.
+[034:43] Okay.
+[034:46] Okay. So here we are doing sales. Uh minus one is used uh instead of beginning or end. A more or less approach is uh is the same.
+[035:01] Yeah.
+[035:02] Yep, everybody.
+[035:04] Okay, so we are we are rediscovering uh the same approaches often, okay? And uh the same tech techniques are going to be used and reused and reused and reused again. For uh for your life
+[035:24] Uh I I
+[035:29] I remark I would like to remark this, okay? You can have a great advantage if you can limit the numbers involved in your task to some bound.
+[035:46] In that case always consider what's the magnitude of your values, because uh uh approaches which are based uh which are exploiting this can get a great advantage in time. Okay? If your uh numbers are somehow limited
+[036:09] You may avoid the use of hashing because direct uh attach table are more than enough. You can use Comping Sort or Radic sort, which are m faster than merge sort and so on. Okay, so.
+[036:23] Always consider in your task what's the magnitude of the elements you are dealing with.
+[036:33] Okay, questions?
+[036:36] No worse.
+[036:40] Okay, now po problem number three.
+[036:45] It's the last uh problem for
+[036:49] Uh
+[037:01] Uh is there a pro last problem about uh prefixums, uh static prefix exams?
+[037:08] These prefix sums are static are static because the array on which you are building the prefix sum remains uh fixed. So you compute it, then you prefix sum over it and then uh what's uh what's uh that's what you get. Okay, let me
+[037:32] Uh
+[037:34] Let me present the problem. We are given an array
+[037:38] We want to count in our many.
+[037:47] Uh so that's the the crucial part. In how many ways
+[037:56] We we can
+[038:01] Please.
+[038:06] A
+[038:08] In
+[038:11] Three parts.
+[038:17] So that
+[038:21] The sum
+[038:25] Oh
+[038:27] The
+[038:29] Parts.
+[038:33] is the
+[038:36] Same.
+[038:38] Okay?
+[038:40] So for example we have uh A
+[038:44] Which is equal to one, two, three.
+[038:50] Zero three. To make the problem interesting, we want to have
+[038:57] Negative numbers as well or zero. Zero negative numbers. If all the numbers are positive, there is if any, just one.
+[039:08] uh possible uh splitting. Okay, so if there are pos positive elements only, there is at most one possibility. So just check if it is either zero or one.
+[039:22] If there are negative numbers or zero, then uh we have many possibilities potentially, and uh in this case we have just two possibilities. This is the first one, this is the
+[039:43] Uh this is the
+[039:46] Second one.
+[039:48] Okay.
+[039:53] No? In both cases uh the sum of the element uh is uh three, three, three, three, three and three.
+[040:04] Okay? Do we all agree on this?
+[040:08] Nice.
+[040:11] Our goal is to find the solution.
+[040:16] the a number of possibilities that we can uh split uh the array into parts.
+[040:24] Okay.
+[040:26] What's an alley time?
+[040:30] Linear.
+[040:35] 'Kay.
+[040:37] Before reaching the the optimal solution, maybe we can
+[040:43] we can uh discuss the quadratic solution.
+[040:49] Cubic solution is super trivial. Just try all the possible
+[040:54] All the possible uh uh
+[040:58] Subdivisions in three parts and and uh what?
+[041:07] There are three splitting points.
+[041:15] It's a splitting uh in three parts.
+[041:21] Yes.
+[041:25] Ah right, right, right, right, right, yeah, yeah, yeah, yeah, sure, sure, yeah, sure, sure, sure, sure, sure, sure. You have uh to find uh the central segment right.
+[041:35] So this solution is uh super including you try all of them and uh you need uh prefix sum to compute for every
+[041:49] Uh for every
+[041:52] Let me elaborate it a bit more.
+[041:55] Okay, we let's say S is the sum of all the elements in the array.
+[042:02] So we have a target sum which is equal to S3.
+[042:08] Okay?
+[042:10] Now, if we have our ray like this, we can try
+[042:16] Uh
+[042:18] we can fix the internal interval.
+[042:22] Okay? To be any of the possible internal intervals.
+[042:28] Do we all agree on this?
+[042:30] If we have already pre-computed the so let's say this goes from position I to position J. We try all possible i and j it's quadratic number as he was suggesting so we know all i and j to know
+[042:48] We have range sum.
+[042:55] I and J and we have to check if it is equal to T.
+[043:02] Okay.
+[043:03] If it is different than t no possibility to to get the three.
+[043:11] If instead is equal to t
+[043:15] What may go wrong?
+[043:21] we know that uh this plus this is equal to two t.
+[043:29] Yeah, to check if this is T as well. Okay? So with two regions from here here plus this prefix,
+[043:42] uh both must be T. If both are T, since the content is 3T, or S divided by 3, then uh this one uh is T as well.
+[043:57] Yeah?
+[043:59] Becon this convincing. So quadratic so we should try on the possible
+[044:05] all the possible uh uh splitting.
+[044:11] We check all the possible elements in the metal.
+[044:16] Is this clear to everybody?
+[044:18] Okay, how can we improve this?
+[044:26] Say again.
+[044:29] We already what?
+[044:33] The starting
+[044:35] Okay, T.
+[044:37] Let me close the door because there are uh
+[044:40] Airplanes.
+[044:51] We okay.
+[044:58] We moved from left
+[045:01] Yeah.
+[045:08] people see.
+[045:12] So so so wait wait a second.
+[045:19] Uh
+[045:28] This is our array A.
+[045:31] You are suggesting we have a target team.
+[045:36] You are suggesting to move from left to right. Do what?
+[045:40] Compute the graphic sample.
+[045:49] Okay.
+[046:05] The team has been failed.
+[046:08] That well becomes a cool tea.
+[046:15] Yeah.
+[046:18] Okay. You are using your checklist and the two pointer trick is what you are suggesting, right? Okay, so you keep uh this point.
+[046:33] And uh also this one.
+[046:37] or not.
+[046:39] So one trick point one pointer trick. So what you are suggesting to do? I I was understanding that you you were moving right one of the two points.
+[046:53] Okay, so you have two pointers.
+[046:58] Left one uh is at the beginning. So we are scanning from left to right.
+[047:03] Okay. So this is the current position.
+[047:09] Okay, and what they are doing here?
+[047:23] Left position, what's left position?
+[047:27] This is left position.
+[047:40] Say again.
+[047:44] Okay, this one.
+[047:50] Yeah. So this this region here is the left uh portion.
+[047:56] So it wasn't act.
+[047:58] Okay, then
+[048:00] People continue. Yeah.
+[048:03] Sit or left and
+[048:09] You move your right
+[048:13] That people experience, it's either it's left or less than tea, it's equal than t or it's bigger than tea.
+[048:22] Yeah. Let's start with the basis. Uh I think the only option the uh only interesting option uh is equality.
+[048:34] Yeah.
+[048:44] Yeah, but it's not enough to move uh let's say we have this pointer, okay? This pointer is uh
+[048:55] Here.
+[048:57] and is position I. We are interested in find finding. I
+[049:03] J
+[049:05] And the end.
+[049:06] Okay? We are looking for the position j such that this is t, this is t and this is t.
+[049:17] That's what we are interested in. It's not enough to find one j.
+[049:23] But we want to count how many J's are there.
+[049:30] such that we are in this situation. So once we hit the side,
+[049:34] We want to find how many j's are here such that we are in this situation, T, T and T.
+[049:43] It's not enough to find one, we want to find all of them, and we cannot even scan the remitting part, but otherwise it's going to be quadratic.
+[049:57] But we are on the right uh path.
+[050:09] And one is the button in the middle. Okay, if we find all the rest of brackets as something, so the button in the middle is going to be to be s. If we find all brackets that is S.
+[050:21] Yes.
+[050:25] T also. Yeah okay. So uh
+[050:30] Sun and the graphic sun.
+[050:32] Okay uh in this in this way
+[050:38] So important thing.
+[050:40] suffix equal to T. At this point we can scan all the all the prefix for the suffix. We we have to we have to use uh for example if we scan from the s from the end to the beginning, okay, and keep a counter of suffix equal to t.
+[051:00] Okay, and when I use the prefix equal to key I sum my contribution of all the suffixes. Okay, let's uh let's uh
+[051:11] Let's uh summarize what you are saying. We move from left to right computing uh traffic sams.
+[051:20] Good. What are the interesting positions?
+[051:28] Okay. And uh following the annotation introduced by a student today that was uh
+[051:36] Doing the order exam, let's mark these interesting positions with a plus.
+[051:43] Okay? These are all the positions such that the sum
+[051:52] in the prefix up to that position is equal to t.
+[052:00] These are the interesting positions for the prefix. And we may have many of them.
+[052:08] Do we all agree on this?
+[052:11] Okay. For every of these positions that previously we were marking with I,
+[052:18] here, for example. We are interested in knowing
+[052:24] How many?
+[052:29] Two splits.
+[052:32] of T each.
+[052:36] This is our target. Okay? How many
+[052:41] splits of the suffix into parts, both summing to t.
+[052:46] Okay? If we know how many
+[052:49] then this is needed to be summed on sum up to the total results.
+[052:57] Okay? So for each of these plus we consider the subtle and we want out the instruments into parts, summing up to be.
+[053:07] Seriously on the phone.
+[053:16] Say again.
+[053:33] Yeah.
+[053:39] Uh let me conclude and then I mean say how far uh is this uh from your area. And uh uh
+[053:49] Otherwise you claim different approach. Okay?
+[053:55] So is the target clear to everybody?
+[053:59] Yeah. Okay. So let me
+[054:02] Gold.
+[054:04] From right to left.
+[054:07] as uh he was suggesting. And let me mark with a dot
+[054:15] All the interesting positions
+[054:21] Here, here, and so on. All the interesting positions, let me remove this one, the positions w such that the prep the suffix sum.
+[054:34] Suddenly the dog
+[054:38] such that the current satisfaction is equal to T. Keep doing this, equal to T, different and T equal to D, different and T equal to T, different and D, equal to D and so on.
+[054:52] Do we all agree on this?
+[054:55] Now the graph is be funny.
+[054:58] How many hostiles?
+[055:02] In the remaining part is equal to
+[055:11] Let's uh no no no no no no no no no
+[055:14] For each blue point
+[055:18] How many dot point in the right?
+[055:22] If we but yeah, if you're doing D so so it depends on what you meant. If the is the number of blue times number of red is not correct.
+[055:34] Excellent.
+[055:37] And this is not correct.
+[055:41] You move on interesting blue points and you add the number of red points to the icons.
+[055:55] Which is different than what uh because you are double counting if you do.
+[056:01] Yeah? Is clear to everybody? Please. Is it clear to everybody? Must be a very convincing yes. If not, let me start from scratch.
+[056:13] From scratch?
+[056:15] So what do you mean for?
+[056:18] Um
+[056:20] E every blue point uh is a point uh such that the sum from here to the blue point is equal to T.
+[056:28] These are the uh right stream of the first interval.
+[056:34] Or me right such.
+[056:37] Okay? So we do this from left to right. Every time we we uh tip we mark the position with blue.
+[056:47] Uh so T different than T different than T different than T T and so on. Okay? Every blue point is such that the prefix up to that position is equal to T. And th this is possible because uh we are numbers, then posting number you are more than T, then Erdogan number you are below T blah blah and T again and so on.
+[057:13] This is what we are computing with the prefix sum and we mark interesting point like this. This blue point is the beginning of the first segment of a valid of a valid solution. For each of them, let's say this one, how many solutions, how many splitting have these
+[057:38] First segment.
+[057:41] Well, for each time you use this first segment, you can end for splitting which is corresponds to the red hole.
+[057:54] So for example, this and this invalid three-way splitting.
+[058:00] Do you agree with this?
+[058:03] Why? Because up to this point in ski.
+[058:07] In the two samples we have TR2 disposition. In total is three T, so one T must be here.
+[058:16] Okay? The same for this one. T.
+[058:21] T and T in the middle.
+[058:25] Do we all agree on this?
+[058:29] Okay, so how many how many split and for this first uh segment this first integral? How many of them? One for each possible red point on the right of this.
+[058:47] Yeah?
+[058:49] Do you agree? How can I compute how many red points on the right with a prefix sum?
+[059:00] So I'll fix something actually.
+[059:02] Uh a game.
+[059:04] Okay, which currents are made?
+[059:08] So it's zero or one if it is.
+[059:13] Okay?
+[059:17] Questions?
+[059:20] Is this matching uh
+[059:23] Uh
+[059:25] Clear enough for you?
+[059:29] No doubt, nothing like this.
+[059:33] Okay. Good.
+[059:35] Can we move on?
+[059:38] Okay. Mm, are you ready for the
+[059:42] one of the most elegant data structure that we are going to see in this course, which, by the way, is selecting elegant data structure.
+[059:54] Yeah? Okay. Do we uh do we all agree
+[060:00] Okay, the topic will be
+[060:03] Family. How many oh, thirteen percent. Wow.
+[060:09] Oh.
+[060:17] Uh
+[060:22] This is the name of the data structure. How many of you know already know this data structure? Raise your hand. Uh, do you agree with me that uh superaling are the data structure?
+[060:33] You never use it. Why?
+[060:39] Yeah. Okay. Uh good part of it is that it's super elegant. Data structure to do
+[060:49] Dynamic perfect sums. What dynamic perfect sums ask for? You have given an array and you
+[060:59] Uh you are given an array and uh you are you you are asked to to return range sum of every range you want or add some value to a certain position. So you are able to modify the value in that position.
+[061:19] Okay? So you have to keep the array updated and you are able still able to do prefix subs.
+[061:30] Uh the family tree is able to do these operations in log and time, both. Super elegant because it needs like uh just uh three operations three instruction per operation.
+[061:46] A before depends on the programme.
+[061:48] Super elegant.
+[061:50] It's uh very fast. It's uh uh
+[061:58] It's uh
+[062:00] Uh
+[062:02] What is my pen?
+[062:05] Mm-hmm.
+[062:08] Um
+[062:11] Uh another virtue of the Fine Wee tree is the fact that it needs no more space than the array it's indexing.
+[062:21] Okay.
+[062:22] It's also an implicit construction
+[062:26] The problem of the Fenwit tree is that there exists another data structure called Segment Tree, which uh has the same virtue, but the space, which is m more expensive for the segment tree, so the segment tree are less uh uh efficient for what uh space is concerned, but the great advantage of the segment tree is that you can modify
+[062:53] uh a bit data structure and it's able to solve other operations.
+[062:59] Okay.
+[063:05] So you can uh use it for perfect sum, for computing the mean uh in a ray, in a subarray uh whatever. It's uh vali value
+[063:18] Easy to be modified to solve other problems. While the fairway tree is
+[063:25] mostly used for uh dynamic graphs.
+[063:30] Okay.
+[063:35] Okay, the name uh is Fenwick Tree, like the inventor of the data structure.
+[063:42] uh who is uh new from New Zealand and uh is working on who he was working on I don't know if it is if he is still alive
+[063:56] And the re recording of the lectures are private.
+[064:01] You're not going to listen then. Uh oh, no, it no battery. Um
+[064:10] Uh and uh yeah, he was using the data structure because of uh
+[064:18] A compression algorithm called arithmetic needs to uh compute prefix sums on the frequency of the uh symbols in the alphabet. While you are scanning the text from left to right, you keep the frequency updated, then you want to know how many symbols, let's say smaller than B, how many occurrences of the symbols smaller than B are in the text.
+[064:45] And how many symbols greater than?
+[064:49] B exists in the text. Okay? So that's why he was using the data structure for data compression. But actually, dynamic graphic sums are very useful in many, many, many, many, many other problems. So the data structure goes under this name or
+[065:11] uh under the name uh binary index set
+[065:17] Uh three.
+[065:19] Or beat for short.
+[065:21] And the name the second name is because of the main operation
+[065:26] The uh
+[065:28] Most important operation the data structure is doing. Essentially, we have a binary tree.
+[065:36] which is implicitly represented within an array.
+[065:43] So we are not storing the structure of the three. Structure is implicitly in the ordering of the elements in the array. And we are indexing these three with binary operations only. Okay? So we can move from one element to the parent or from the parent to the child's the children with
+[066:09] uh changing uh there.
+[066:12] uh number with binary operation.
+[066:17] Okay.
+[066:19] What's the problem we are solving? The problem is
+[066:24] That we are running out of
+[066:27] energy in this laptop in this sorry this uh uh iPad and I think uh we cannot recharge it just by using
+[066:40] Uh
+[066:44] These mostly behaviours
+[066:51] This is uh this has been
+[066:54] Oh yeah.
+[066:56] Can you see this?
+[067:07] Maybe here.
+[067:14] Okay.
+[067:18] Maybe.
+[067:19] Okay, let's see. Um
+[067:23] I hear a charging.
+[067:24] Okay? It's not my fault. But uh the iPad is getting uh older and older. I'm recording, uh writing and uh yeah, I'm running out of uh battery pretty soon.
+[067:37] Okay, sure.
+[067:40] Given
+[067:42] In a ray
+[067:44] of n elements uh we would uh like
+[067:52] To support
+[067:59] Uh the following operations.
+[068:02] Um
+[068:05] Some
+[068:08] up to position I. With some you can solve range sum.
+[068:14] But we discuss only Sam because it's easier to be implemented.
+[068:20] Okay?
+[068:22] Which returns
+[068:25] Uh
+[068:28] Cave.
+[068:31] one y a k okay and then we add we have the other operation which is add
+[068:43] I V
+[068:47] And uh changes uh
+[068:50] the element in position I by adding V. Okay, V can be positive or negative, so you can uh subtract values if you want.
+[069:02] Okay, by adding a negative the negative value.
+[069:06] Remember that uh range sum as we said i j is equal to sum
+[069:17] Uh j minus sum i minus one.
+[069:24] Can
+[069:27] Just want to solve one of the two
+[069:32] Let's start with trivial
+[069:37] Solution.
+[069:40] Because there are two of them. The first one.
+[069:44] Just store A. We store A as it is.
+[069:50] Uh
+[069:53] Some I
+[069:57] needs uh linear time
+[070:03] Okay? Because I need to scan uh the array from uh the beginning to to position I.
+[070:09] While ad
+[070:12] I V takes uh constant time.
+[070:18] Do we agree on this?
+[070:22] Great.
+[070:23] The other uh
+[070:28] Approach
+[070:30] is to pre-compute prefix sums
+[070:38] of A story.
+[070:42] Okay?
+[070:43] What about sum? Well, the prefix sum has been already computed, so it takes constant time.
+[070:54] While adding a particular value at a certain position may take up to linear time because we have to
+[071:07] Change all the prefix, all the suffixes that follow position I.
+[071:13] Good?
+[071:15] Yeah, it's the opposite of what uh
+[071:18] First to answer.
+[071:21] Instead of
+[071:24] Binary indexed three.
+[071:27] Takes
+[071:37] linear time uh uh sorry logarithmic time for both.
+[071:42] Okay.
+[071:43] So none of the two trivial solutions is satisfactory once you have an equal number of operations of both kind. Okay? Because in i i s these are convenient only if there is a huge imbalance between the two operations. When when the the
+[072:09] Cheaper one is the vast majority.
+[072:13] and the other takes on the constant number of
+[072:17] Uh what is it
+[072:19] If instead the two operations are more or less balanced or
+[072:26] Uh
+[072:28] So, then uh bit is much better.
+[072:34] Okay, let me b be more pref precise. The trivial ones are uh useful only when one of the two is done a linear number of times, and the other one is done fewer than
+[072:52] synthetically fewer than log n.
+[072:57] Okay.
+[073:00] Bit is better in any other case, which is the vast majority of the cases.
+[073:05] Okay.
+[073:25] Yes, when you have a group of ad and then a group of Yeah yeah yeah yeah yeah.
+[073:37] Okay.
+[073:41] Is this convincing?
+[073:44] Okay. Let's uh
+[073:46] Let's move on and let's present the fanwit.
+[073:55] Let's present the fanwood tree with uh an example.
+[074:01] Which will be our running example uh for a while. So we have uh one, two, three, four, five, six, seven, eight eight positions.
+[074:17] In a the array.
+[074:30] In uh in my dreams uh I would like to write like this, okay?
+[074:37] This is Bethlehem.
+[074:39] Unfortunately, I write like this, okay, which is terrible. But for the family tree, I will do my best to be I mean
+[074:49] At least in the drawing to be very precise, okay, because uh part of the understanding uh is the structure that we are using.
+[075:00] And how we place the elements in the space. Okay?
+[075:08] So positions one, two, three, four, five, six, seven, and eight.
+[075:16] These are the positions element.
+[075:20] Three, two, one.
+[075:22] Minus one.
+[075:25] Five.
+[075:26] Sharing.
+[075:27] Minus three
+[075:30] Two and one. These are the elements of our array.
+[075:36] Okay, let's uh
+[075:39] Solver
+[075:40] In relaxed version
+[075:47] of the
+[075:52] Problem.
+[075:56] In this relaxed version of the problem, we sum
+[076:02] We want to solve the sum operation.
+[076:06] Which is uh give me
+[076:10] AK
+[076:13] K equal to one i
+[076:17] Only
+[076:19] If
+[076:22] Position.
+[076:25] Aye.
+[076:27] is a power of two.
+[076:34] I want to solve the sum operation only if the position is a power of two.
+[076:41] undefined it otherwise.
+[076:44] So it's a relaxed version of the the full version is asking for any position. In this relaxed version I'm asking I only if I is a power node.
+[076:57] Then I want to solve hard operation.
+[077:10] for every position.
+[077:15] Okay.
+[077:18] If it is a power of two.
+[077:21] So so sum only if i is the power of two, add for every position.
+[077:27] What's the best we can hope for this relaxed adventure?
+[077:42] Can we
+[077:45] Can we match
+[077:49] The random time
+[077:52] get better than our targets
+[077:57] The instruction.
+[078:11] Checklist.
+[078:13] Uh minus H for the answer, the point L Stick, sweep line blah blah blah, then we have two nodes. Uh if we have to solve uh a problem uh regarding data structure, the first thing uh the first thing I need to do is to check how many possible questions are there. If there are few questions
+[078:38] Maybe I can pre-compute the answers.
+[078:44] Good suggestion.
+[078:47] uh to have in the checklist. How many possible questions do we have?
+[078:54] Logan.
+[078:59] What's the target time complexity login?
+[079:03] Does it mean? It means that I'm free to uh store recompute all the possible answers. Okay, so we have uh our array
+[079:22] Positions which are a power of two are one, two.
+[079:28] uh four and eight. You c you are free to ask any of these positions. I am going to answer for these positions. I am not going to answer for the other positions. And uh you are free to add to any position y you want.
+[079:47] Okay, so only log n positions.
+[079:52] It's a good idea to store the answer for these positions only.
+[080:00] Okay, this is uh
+[080:02] The answer for the first position. What's the answer?
+[080:08] Three?
+[080:09] Position number one, let's remember the position. Then we have two.
+[080:17] Posi position number two.
+[080:22] Five is the answer, two is the position.
+[080:25] What's the next?
+[080:30] Position four.
+[080:34] Four. What's the sum? Five minus one is four nine.
+[080:41] Okay?
+[080:42] What's uh the last?
+[080:48] Eight. Position eight.
+[080:53] What's the the the answer, pre-computed answer in this case?
+[081:02] Please do the with the
+[081:04] The sum I'm too
+[081:09] Too lazy for doing this? Okay, nine plus seven is sixteen, minus three is thirteen, plus two plus one is sixteen.
+[081:21] Maybe. At the check? Yes. Yes.
+[081:27] Okay. Uh this is the precomputed uh these are the precomputed answers.
+[081:37] If I ask you some of four, what's the answer? Nine.
+[081:43] If I ask you to add uh five in position six,
+[081:52] Five position six.
+[081:55] Well love.
+[081:57] Maybe we can change what you rate.
+[082:02] Then you go down.
+[082:05] Power of two which are greater than position position six by adding five. So you add five here and that becomes uh twenty-one. Okay, so you have to update the pre-computed axis. What's the running time? Some runs in constant time.
+[082:28] Add takes longer time.
+[082:31] The worst case for Abda is when you have the Inquisition 1 under
+[082:36] All the power to that we change. Great.
+[082:43] Let me uh I promised a three to you, right? So let me add uh a fake root uh to make uh this solution a three. The fake root is zero and the value is zero as well.
+[083:03] Okay, let's connect these to all the notes we have. So far
+[083:15] Good. Okay?
+[083:18] Promise the tree. Here is a tree.
+[083:21] Okay.
+[083:23] Good. Uh let me uh write also the range at which uh each of these nodes corresponds to
+[083:36] This goes from one to one, so it's the sum of the first uh element. This is uh one two, which means uh five is the sum of the first two positions. This goes from one to four,
+[083:51] Yeah? And this is for one to eight.
+[083:56] Okay. Let me also so it's a binary index ooh, sorry. It's a binary index t three, so let me let me also write the binary representation of the position.
+[084:13] All the elements.
+[084:16] Zero.
+[084:18] Zero, zero, zero one, zero, zero, one, zero, zero one, zero, zero, zero.
+[084:27] One, zero, zero, zero. This is the binary represent.
+[084:32] Uh
+[084:35] One of these
+[084:37] For the first that tell me
+[084:40] Uh
+[084:43] What's the characteristic of these numbers?
+[084:46] Oh you already know the solution. You are cheating, cheating, cheating, cheating, you are cheating.
+[084:54] Yeah, yeah, but I'm looking at uh B, what I just wrote, what's the characteristic of this position?

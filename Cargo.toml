@@ -5,7 +5,7 @@ resolver = "3"
 members = [
     "Lessons/L2", "Lessons/L3", "Lessons/L4", "Lessons/L5", "Lessons/L6", "Lessons/L7", "Lessons/L8", "Lessons/L9", "Lessons/L10",
     # esercizi: una cartella practice per lezione
-    "Lessons/L1/practice", "Lessons/L2/practice", "Lessons/L3/practice", "Lessons/L4/practice", "Lessons/L5/practice", "Lessons/L6/practice", "Lessons/L7/practice", "Lessons/L8/practice", "Lessons/L9/practice",
+    "Lessons/L1/practice", "Lessons/L2/practice", "Lessons/L3/practice", "Lessons/L4/practice", "Lessons/L5/practice", "Lessons/L6/practice", "Lessons/L7/practice", "Lessons/L8/practice", "Lessons/L9/practice", "Lessons/L10/practice",
     # hands-on (assignment da consegnare)
     "HandsOn/HO1",
 ]

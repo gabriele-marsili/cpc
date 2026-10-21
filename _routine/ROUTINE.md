@@ -190,3 +190,12 @@ stesse box. È lo standard da mantenere.
   Crate l10 (little_girl, number_of_ways, fenwick::FenwickTree, codice del prof + test), aggiunto ai members. Niente practice
   finché è provvisoria. Bug nel codice del blog: number_of_ways panica con n = 1 (a.len() - 2). Quando arriva la
   registrazione di L10 (o la .docx Teams): rifarla sulla registrazione e aggiungere practice L10 (da E43).
+- (21/10) L10 rifatta sulla registrazione (Lessons/L10/L_10.MP4, 85 min, trascrizione L10_transcript.txt). Contenuto REALE del 19/10:
+  Little Girl ("problem #2": il #1 era Ilya in L9) con frequenze via sweep line Θ(m log m) e via array B (+1/-1) Θ(n+m),
+  counting sort C_b/C_e ≡ B, lezione "considera la grandezza dei valori"; Number of Ways ("problem #3", lineare: + blu / punti rossi,
+  suffix sum sugli indicatori); Fenwick tree: motivazioni, soluzioni banali, versione rilassata (somme solo a potenze di 2), radice finta.
+  LA REGISTRAZIONE SI FERMA A 84:54 (iPad scarico): il resto del Fenwick (sottoproblemi, figli = zeri finali, sum/add) è solo dalle note
+  di Octech -> in L11 controllare se il prof riprende e integrare. practice L10 = E43-E46 (workspace aggiornato).
+  PDF del prof aggiunti da Octech il 21/10: Prefix_sums_2025.pdf -> Lessons/L10 (p.1-2 = L9, p.3-7 = L10);
+  Segment_tree_2025.pdf -> Lessons/L11 (non ancora fatto a lezione: usarlo per L11+); SlidingWindowMaxima.pdf era un doppione
+  identico di Lessons/L3/SlidingWindowMaxima.pdf -> spostato in _routine/tmp/_to_delete/ (cancellazione non permessa).

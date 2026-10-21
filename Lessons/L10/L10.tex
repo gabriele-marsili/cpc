@@ -6,6 +6,7 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{graphicx,xcolor,listings,booktabs,enumitem}
 \usepackage[most]{tcolorbox}
+\usepackage{tikz}
 \usepackage[hidelinks]{hyperref}
 
 \definecolor{accent}{HTML}{2B6CB0}
@@ -33,53 +34,101 @@
 \newcommand{\hlp}[1]{{\sethlcolor{hlP}\hl{#1}}}
 \newcommand{\hlb}[1]{{\sethlcolor{hlB}\hl{#1}}}
 \newcommand{\img}[3]{\begin{center}\fcolorbox{gray!50}{white}{\includegraphics[width=#1]{board/#2}}\\[-2pt]{\footnotesize\textcolor{gray}{#3}}\end{center}}
-\newcommand{\board}[3]{\img{#1}{#2}{Board, #3 (recording)}}
+\newcommand{\board}[3]{\img{#1}{#2}{Board, #3 (recording \texttt{L\_10.MP4})}}
 \newcommand{\extra}{\textsuperscript{\textcolor{warn}{[extra]}}}
-\newcommand{\notes}[1]{Prof.'s notes of last year, \texttt{Lessons/L6/Binary\_search\_2025.pdf} p.\,#1}
-\title{\textbf{CPC --- Lecture 10 (provisional)}\\[2pt]\large Applications of prefix sums $\cdot$ Fenwick tree (start)}
+% pages of the prof's 2025 notes on prefix sums (Lessons/L10/Prefix_sums_2025.pdf)
+\newcommand{\oldnotes}[3]{\begin{center}\fcolorbox{gray!50}{white}{\includegraphics[page=#1,width=#2,trim=0 #3 190 0,clip]{Prefix_sums_2025.pdf}}\\[-2pt]
+  {\footnotesize\textcolor{gray}{Prof.'s notes of \textbf{last year} (2025), \texttt{Prefix\_sums\_2025.pdf} p.\,#1}}\end{center}}
+\title{\textbf{CPC --- Lecture 10}\\[2pt]\large Little Girl and Maximum Sum $\cdot$ Number of Ways $\cdot$ Fenwick tree (start)}
 \author{Competitive Programming and Contests --- Monday 19/10/2026}
 \date{}
 
 \begin{document}\sloppy
 \maketitle
 \vspace{-1.5em}
-\begin{warnbox}
-\textbf{PROVISIONAL --- recording not available yet.} Reconstructed from your notes taken during the lecture (\texttt{Lessons/L10/notes.md}) and from the prof's blog
-posts \emph{The Power of Prefix Sums} (\url{https://pages.di.unipi.it/rossano/blog/2023/prefixsums}) and \emph{Dynamic Prefix Sums with Fenwick Tree}
-(\url{https://pages.di.unipi.it/rossano/blog/2023/fenwick}), whose code is copied verbatim. What comes from the blog and not from your notes is marked
-\textbf{[blog]}; my additions are marked \extra. To be redone on the recording when it is out.
-\end{warnbox}
-\noindent Code: \texttt{Lessons/L10/src} (\texttt{cargo test -p l10}).
+\begin{keybox}
+\textbf{Sources.} Recording \texttt{Lessons/L10/L\_10.MP4} (85 min) and its automatic transcript \texttt{L10\_transcript.txt} (not revised);
+the prof's handwritten board (frames of the recording, \texttt{board/l10\_*.jpg});
+the prof's 2025 notes \texttt{Lessons/L10/Prefix\_sums\_2025.pdf} (static prefix sums, Ilya, Little Girl, Number of Ways);
+the prof's blog posts \emph{The Power of Prefix Sums} (\url{https://pages.di.unipi.it/rossano/blog/2023/prefixsums}) and
+\emph{Dynamic Prefix Sums with Fenwick Tree} (\url{https://pages.di.unipi.it/rossano/blog/2023/fenwick}), code copied verbatim;
+your notes \texttt{Lessons/L10/notes.md}.
+\hlp{The recording stops at 84:54, in the middle of the Fenwick tree} (the iPad was running out of battery): the last part of \S\ref{sec:fenwick}
+comes \textbf{only from your notes} and is marked as such.
+Everything marked \extra{} was \emph{not} said or written in the lecture (my explanations, examples, code).
 
+\smallskip
+\noindent Code: \texttt{Lessons/L10/src} (\texttt{cargo test -p l10}). Exercises: \texttt{Lessons/L10/practice}, E43--E46 (\texttt{cargo test -p practice\_l10}).
+
+\smallskip
 \noindent\textbf{Highlights:} \hly{general / to remember} \quad \hlg{good: works, efficient, correct} \quad \hlp{bad: pitfalls, wrong ideas, costs} \quad \hlb{definitions and key results}
+\end{keybox}
 
-\noindent\textbf{Where we are.} L9 (14/10) ended Frogs and Mosquitoes and started static prefix sums with \emph{Ilya and Queries}; the prof announced the other prefix-sum
-problems and then dynamic prefix sums for this lecture.
+\begin{keybox}[colback=gray!4,colframe=gray!60]
+\textbf{Where we are.} L9 (14/10) ended Frogs and Mosquitoes and solved the first static prefix-sum problem, \emph{Ilya and Queries} (``problem \#1'').
+Today: \textbf{problem \#2} \emph{Little Girl and Queries} and \textbf{problem \#3} \emph{Number of Ways}, ``the last problem about static prefix sums'',
+then the start of \textbf{dynamic prefix sums} with the \textbf{Fenwick tree}. (This explains the numbering in your notes: the ``problem \#2'' you could not find is Little Girl.)
+\end{keybox}
 
 \tableofcontents
 
-\section{Little Girl and Maximum Sum (Codeforces 276C)}
-\textbf{Problem.} An array $A[1,n]$ and a set $Q$ of $m$ queries, each a $\textsf{RangeSum}(i,j)$. \hlb{Permute the values of \mbox{$A$} to maximize the total of the answers of the queries.}
+%==========================================================
+\section{Problem \#2: Little Girl and Queries (Codeforces 276C)}
+%==========================================================
+\subsection{The problem}
+\textbf{Problem.} Given an array $A[1,n]$ and a set $Q$ of $m$ queries, each query a $\textsf{RangeSum}(i,j)$.
+\hlb{Permute the values of \mbox{$A$} to maximize the sum of the results of the queries in \mbox{$Q$}}
+(``we are free to permute the elements in any way we want; the elements must remain the same'').
 
-\noindent\textbf{Example} (your notes). $A=[5,2,4,1,3]$, total $15$; with the queries $(1,5),(2,3),(2,3)$ the value is $15+(2+4)+(2+4)=27$;
-with $A_\pi=[2,5,4,1,3]$ it is $15+(5+4)+(5+4)=33$.
-\extra{} Your notes write the queries as $(1,5),(1,2),(1,2)$, but the sums $2+4$ and the frequencies $1,3,3,1,1$ correspond to $(2,3)$: I used $(2,3)$.
+\noindent\textbf{Example.} $A=[5,2,4,1,3]$, queries $(1,5)$, $(2,3)$, $(2,3)$: value $15+6+6=27$
+(the prof says ``26'' at 03:56, a slip: the board says 27). With $A^\pi=[2,5,4,1,3]$: $15+9+9=\mathbf{33}$, which is the optimum.
+\board{0.62\textwidth}{l10_little_example.jpg}{10:00}
+\noindent\hlb{Target time complexity: \mbox{$\Theta(n\log n+m\log m)$}} (board; ``can be improved a bit, we will discuss later'').
+\extra{} Your notes write the two short queries as $(1,2)$: on the board they are under the values $2,4$, i.e.\ positions $2,3$.
 
-\noindent\textbf{Idea.} \hlb{Put the largest values in the positions touched by most queries.}
-\begin{enumerate}[nosep]
-\item \textbf{Count the frequency of every position} (how many queries contain it). Example: $F=[1,3,3,1,1]$; assigning $5,4$ to the two positions of frequency $3$ gives $33$.
-  \begin{itemize}[nosep]
-  \item with a sweep line (your notes: $\Theta(n\log m)$);
-  \item \hlg{with prefix sums}: build an array $B$ whose prefix sums are $F$: \hly{every query \mbox{$(i,j)$} adds \mbox{$+1$} at \mbox{$i$} and \mbox{$-1$} at \mbox{$j+1$}}
-        (``the position after the end of a segment contributes $-1$''). Example: $Q=(2,4),(1,3),(2,5)$ $\Rightarrow$ $B=[1,2,0,-1,-1]$, prefix sums $F=[1,3,3,2,1]$.
-        \hlg{\mbox{$\Theta(n+m)$}.} Equivalently two counting arrays, $C_{\text{begins}}=[1,2,0,0,0]$ and $C_{\text{ends}}=[0,0,1,1,1]$: $B$ is their combination.
-  \end{itemize}
-\item \textbf{Sort} $A$ in decreasing order and the positions by decreasing frequency, and assign the largest value to the most frequent position.
-\end{enumerate}
-Your notes give the total time as $\Theta(n\log n+m\log m)$. \extra{} With the $B$ array the frequencies cost $\Theta(n+m)$ and only the two sorts of $n$ values remain:
-$\Theta(n\log n+m)$ (the $m\log m$ belongs to a version that sorts the queries).
+\subsection{The idea (found in class)}
+\hlb{For every position count how many queries touch it (its \emph{frequency}); put the largest values in the most frequent positions.}
+In the example the frequencies are $1,3,3,1,1$: $5$ and $4$ go to positions $2,3$, then $1,2,3$ anywhere $\Rightarrow 15+9+9=33$.
+\begin{itemize}[nosep]
+\item \textbf{Step \#1}: count the frequency of every position.
+\item \textbf{Step \#2}: sort $A$ in decreasing order, $\Theta(n\log n)$; sort the pairs (frequency, position) in decreasing order, $\Theta(m\log m)$ on the board
+      \extra{} (there are $n$ pairs, so strictly $\Theta(n\log n)$); assign the greatest value to the most frequent position.
+\end{itemize}
+\board{0.62\textwidth}{l10_little_steps.jpg}{16:00}
+\noindent\hly{Remark: with constraints on the values of \mbox{$A$}, or on \mbox{$m$} (frequencies are \mbox{$\le m$}), counting sort removes the logarithmic factors.}
 
-\noindent\textbf{Prof's code} [blog] (verbatim):
+\subsection{Step \#1, solution 1: sweep line --- $\Theta(n+m\log m)$}
+Proposed by a student, ``something we already discovered'' in the \emph{maximum number of overlapping intervals} problem (L7):
+\hly{sort the begin/end points of the segments, move the sweep line, \mbox{$+1$} at every beginning, \mbox{$-1$} at every end}; here we can also scan
+all the $n$ positions to write down every frequency. Cost: \hlp{\mbox{$\Theta(m\log m)$} for sorting} the $2m$ endpoints. (The prof did not write this one on the iPad.)
+
+\subsection{Step \#1, solution 2: an array whose prefix sums are $F$ --- $\Theta(n+m)$}
+``Very useful because we are going to reuse the idea later.'' Queries $(2,4)$, $(1,3)$, $(2,5)$ on $n=5$: the target is $F=[1,3,3,2,1]$.
+\hlb{Build an array \mbox{$B$} such that its prefix sums are \mbox{$F$}.}
+\begin{itemize}[nosep]
+\item A $+1$ in $B[i]$ is propagated by the prefix sums \emph{until the end} of the array: $+1$ at 2 gives $0,1,1,1,1$.
+\item The segment $(2,4)$ should give $0,1,1,1,0$: we must stop the propagation \hly{at the position immediately after the end of the segment, with a \mbox{$-1$}}.
+\item So every query $(i,j)$ does \hlb{\mbox{$B[i]\mathrel{+}=1$} and \mbox{$B[j+1]\mathrel{-}=1$}} (nothing if $j+1>n$). Then $F$ = prefix sums of $B$.
+\end{itemize}
+Example: $B=[1,2,0,-1,-1]\Rightarrow F=[1,3,3,2,1]$. (The prof made a mistake on the first try, putting a $-1$ at the end instead of after it,
+and redid it from scratch: \hlp{the \mbox{$-1$} goes at \mbox{$j+1$}, not at \mbox{$j$}}.)
+\hlg{Time \mbox{$\Theta(n+m)$}}: zero out $B$, two updates per query, one prefix-sum pass. \hlg{Better than the sweep line}, which sorts.
+\board{0.55\textwidth}{l10_little_B.jpg}{36:20}
+
+\noindent\textbf{But the sweep line can be linear too: counting sort.} Do we really need a comparison-based sort ($m\log m$) for the endpoints? No:
+\hly{the largest possible endpoint is \mbox{$n$}, so counting sort with an array of \mbox{$n$} counters works}. We must keep the
+\emph{satellite information} (beginning or end?): either $2n$ counters, or two arrays $C_b$ (beginnings) and $C_e$ (ends).
+In the example $C_b=[1,2,0,0,0]$, $C_e=[0,0,1,1,1]$ (positions of the ends).
+\hlb{\mbox{$B$} is just a more direct representation of \mbox{$C_b$} and \mbox{$C_e$}}: $+1/-1$ instead of ``beginning/end''. And the (stable) counting sort
+is itself doing prefix sums, to find where the elements equal to a key end in the sorted array: ``we are rediscovering the same approaches often''.
+\oldnotes{5}{0.5\textwidth}{470}
+
+\begin{keybox}
+\textbf{Lesson (``I would like to remark this'').} \hlb{Always consider the magnitude of the values in your task.} If the numbers are bounded,
+direct-access tables instead of hashing, counting sort / radix sort instead of merge sort: much faster.
+\end{keybox}
+
+\noindent\textbf{Prof's code} [blog] (verbatim; \texttt{l10::little\_girl}):
 \begin{lstlisting}
 // We assumes queries are 0-based indexed
 pub fn little_girl(a: &[i64], q: &[(usize, usize)]) -> i64 {
@@ -118,24 +167,43 @@ pub fn little_girl(a: &[i64], q: &[(usize, usize)]) -> i64 {
         .fold(0, |result, (value, freq)| result + value * freq)
 }
 \end{lstlisting}
-\noindent\extra{} It sorts both in \emph{increasing} order: pairing the $k$-th smallest with the $k$-th smallest is the same as pairing the largest with the largest.
+\noindent\extra{} \texttt{u} is the array $B$. Both arrays are sorted in \emph{increasing} order: pairing the $k$-th smallest with the $k$-th smallest is the same as pairing
+the largest with the largest. Total: $\Theta(m+n\log n)$.
 
-\section{Number of Ways (Codeforces 466C)}
-\emph{(``Problem \#3'' in your notes; problem \#2 is not in your notes.)}
+%==========================================================
+\section{Problem \#3: Number of Ways (Codeforces 466C)}
+%==========================================================
+``The last problem about \emph{static} prefix sums'' (static: the array does not change after computing the prefix sums).
 
-\noindent\textbf{Problem.} Given $A[1,n]$, count \hlb{in how many ways we can split \mbox{$A$} into 3 (non-empty, contiguous) parts with the same sum}. Example: $A=[1,2,3,0,3]$
-(answer $2$: $[1,2\,|\,3\,|\,0,3]$ and $[1,2\,|\,3,0\,|\,3]$ \extra).
+\noindent\textbf{Problem.} Given $A[1,n]$, count \hlb{in how many ways we can split \mbox{$A$} into 3 parts so that the sums of the parts are the same}.
+\hly{To make it interesting, the values can be zero or negative}: \hlp{with positive values only there is at most one split} (just check 0 or 1).
 
-\noindent\textbf{Idea} (your notes). $S$ = sum of $A$, target $T=S/3$ (if $3\nmid S$ the answer is $0$ \extra).
-\begin{itemize}[nosep]
-\item Scan left to right computing prefix sums and \hly{mark with ``+'' every position where the prefix sum is \mbox{$T$}} (end of a valid first part).
-\item Scan right to left and \hly{mark ``red'' every position where the suffix sum is \mbox{$T$}} (start of a valid third part).
-\item \hlb{Answer = number of pairs (``+'', red) with the red point to the right of the ``+''} (leaving a non-empty middle part). For each ``+'', the number of red points to its right
-      is a \hly{suffix sum on the red marks}: precompute it and the whole thing is \hlg{linear}.
-\end{itemize}
-\extra{} Why the middle part is fine automatically: if the first part sums to $T$ and the last to $T$, the middle sums to $S-2T=T$.
+\noindent\textbf{Example.} $A=[1,2,3,0,3]$: 2 ways, $[1,2\,|\,3\,|\,0,3]$ and $[1,2\,|\,3,0\,|\,3]$, all parts sum to 3.
+\board{0.42\textwidth}{l10_ways_example.jpg}{42:00}
+\noindent Target: \hlb{linear time}.
 
-\noindent\textbf{Prof's code} [blog] (verbatim):
+\subsection{Cubic and quadratic}
+Cubic: try all the splittings and compute the sums. Quadratic: $S$ = sum of $A$, \hly{target \mbox{$T=S/3$}}; with prefix sums,
+\hly{fix the central part \mbox{$[i,j]$}} (quadratically many) and check $\textsf{RangeSum}(i,j)=T$ in $O(1)$. If it is, the prefix and the suffix sum to $2T$ together:
+check that the prefix is $T$ (then the suffix is $T$ too, the total being $3T$).
+
+\subsection{Linear}
+The class went towards two pointers, then towards counting. Summary given by the prof:
+\begin{enumerate}[nosep]
+\item Left to right, compute the prefix sums and \hly{mark with ``+'' (blue) every position where the prefix sum is \mbox{$T$}}: each one is the end of a valid first part.
+      ``We may have many of them'' (zeros and negative numbers).
+\item For each ``+'' we want \hly{how many splits of the remaining suffix into 2 parts of sum \mbox{$T$} each}, and sum these numbers. It is not enough to find one $j$,
+      and \hlp{scanning the remaining part for every ``+'' is quadratic}.
+\item Right to left, compute suffix sums and \hly{mark with a (red) dot every position where the suffix sum is \mbox{$T$}}: the beginning of a valid third part.
+      Then the middle part sums to $3T-T-T=T$ automatically.
+\item \hlb{Answer = \mbox{$\sum$} over the ``+'' of the number of red dots to its right.} \hlp{Not ``\#blue \mbox{$\times$} \#red''}: that counts pairs with the red dot on the left (double counting).
+\item ``How many red points on the right?'' is \hlg{a suffix sum on 0/1 indicators} (1 if the position is red): precomputed, \hlg{\mbox{$\Theta(n)$} overall}.
+\end{enumerate}
+\board{0.55\textwidth}{l10_ways_marks.jpg}{59:40}
+\noindent\extra{} ``To the right'' must leave a non-empty middle part: if the first part ends at $i$, the third part starts at $\ge i+2$.
+Last year the prof also warmed up with the easier problem of splitting into \emph{2} parts (one scan, check $p=S/2$): not done this year, see p.\,6 of the 2025 notes.
+
+\noindent\textbf{Prof's code} [blog] (verbatim; \texttt{l10::number\_of\_ways}):
 \begin{lstlisting}
 pub fn number_of_ways(a: &[i64]) -> usize {
     let sum: i64 = a.iter().sum();
@@ -174,43 +242,88 @@ pub fn number_of_ways(a: &[i64]) -> usize {
     result
 }
 \end{lstlisting}
-\noindent\extra{} $c[i]$ = number of red points at positions $\ge i$ (the suffix sum on the red marks); \texttt{c[i + 2]} leaves at least one element in the middle.
+\noindent\extra{} $c[i]$ = number of red dots at positions $\ge i$ (the suffix sum on the indicators); \texttt{c[i + 2]} leaves at least one element in the middle.
 \hlp{Pitfall: with \mbox{$n=1$} (allowed by Codeforces) \texttt{a.len() - 2} underflows and the function panics} (\texttt{number\_of\_ways(\&[0])}); guard with
 \texttt{if a.len() < 3 \{ return 0; \}}. Tested in \texttt{l10} against an $O(n^2)$ brute force.
 
-\section{Fenwick tree (Binary Indexed Tree)}
-\textbf{Problem: dynamic prefix sums.} Given $A[1,n]$, support
-$\textsf{Sum}(i)=\sum_{k=1}^{i}A[k]$ and $\textsf{Add}(i,v)$: $A[i]\mathrel{+}=v$ (and $\textsf{RangeSum}(i,j)=\textsf{Sum}(j)-\textsf{Sum}(i-1)$).
-
-\noindent\textbf{Trivial solutions.}
+%==========================================================
+\section{Dynamic prefix sums: the Fenwick tree}\label{sec:fenwick}
+%==========================================================
+\subsection{Why it matters}
+``One of the most elegant data structures we are going to see in this course.''
 \begin{itemize}[nosep]
-\item Store $A$: \hlp{\textsf{Sum} \mbox{$\Theta(n)$}}, \textsf{Add} $O(1)$.
-\item Store the prefix sums: \textsf{Sum} $O(1)$, \hlp{\textsf{Add} \mbox{$O(n)$}} (all the following prefix sums change).
+\item \hlb{Both operations in \mbox{$O(\log n)$}}, ``just three instructions per operation'', very fast.
+\item \hlg{No more space than the array it indexes}: \hly{implicit} --- a binary tree stored in an array, the structure is in the order of the elements, and we move
+      between parent and children with \hly{binary operations on the index} (hence the other name, \textbf{Binary Indexed Tree, BIT}).
+\item Alternative: the \textbf{segment tree} (coming next): same time, \hlp{more space}, but \hlg{easy to modify for other operations} (minimum of a subarray, \dots).
+      The Fenwick tree is mostly used for dynamic prefix sums.
+\item Named after its inventor, P.\ Fenwick (New Zealand), who used it for \emph{arithmetic coding}: while scanning a text you keep the frequencies of the symbols
+      updated and need how many occurrences of symbols smaller than $b$ there are, i.e.\ prefix sums on dynamic frequencies.
 \end{itemize}
-\hlb{The BIT supports both in \mbox{$\Theta(\log n)$} time.}
 
-\subsection{Construction (from your notes)}
-Example: $A=[3,2,-1,5,7,-3,2,1]$, $n=8$.
-\begin{enumerate}[nosep]
-\item \textbf{Relaxed problem}: answer $\textsf{Sum}(i)$ only when $i$ is a power of 2 (and \textsf{Add} for any $i$). Store only those prefix sums: $[3,5,\cdot,9,\cdot,\cdot,\cdot,16]$.
-      \textsf{Sum} $O(1)$, \textsf{Add} $\Theta(\log n)$ (only $\log n$ stored values can change).
-\item Add a \hly{fake root at position 0} (value $0$) and link to it the stored nodes, which cover the ranges $[1,1],[1,2],[1,4],[1,8]$: positions $0001,0010,0100,1000$ in binary,
-      \hlb{exactly one bit set}.
-\item \hly{Cover the uncovered parts by applying the same principle recursively.} Between $4$ and $8$ the uncovered part is $[7,-3,2]$ (positions $5,6,7$, i.e.\ $1,2,3$ shifted by $4$):
-      its relaxed solution stores $[5,5]=7$ and $[5,6]=4$, positions $0101$ and $0110$ (\hlb{two bits set}), children of node $4$. Then $[-1]$ at position $3=0011$, range $[3,3]$,
-      child of node $2$; and $2$ at position $7=0111$ \extra.
-\item Observation in your notes: \hlb{the number of trailing 0s in the binary representation of a node = number of its children.}
-\end{enumerate}
-\textbf{Operations} (your notes stop here, running times not written):
+\subsection{The problem and the trivial solutions}
+Given $A[1,n]$, support \hlb{\mbox{$\textsf{Sum}(i)=\sum_{k=1}^{i}A[k]$} and \mbox{$\textsf{Add}(i,v)$}: \mbox{$A[i]\mathrel{+}=v$}} ($v$ may be negative).
+$\textsf{RangeSum}(i,j)=\textsf{Sum}(j)-\textsf{Sum}(i-1)$, so we only discuss \textsf{Sum} (``easier to implement'').
+\begin{center}
+\begin{tabular}{lcc}\toprule
+ & \textsf{Sum}$(i)$ & \textsf{Add}$(i,v)$ \\\midrule
+store $A$ & \hlp{$\Theta(n)$} & $O(1)$ \\
+store the prefix sums of $A$ & $O(1)$ & \hlp{$\Theta(n)$} (all following prefix sums change) \\
+\textbf{BIT} & \hlg{$\Theta(\log n)$} & \hlg{$\Theta(\log n)$} \\\bottomrule
+\end{tabular}
+\end{center}
+\board{0.5\textwidth}{l10_fenwick_trivial.jpg}{72:40}
+\noindent\hly{The trivial solutions are useful only with a huge imbalance}: one operation done a linear number of times and the other asymptotically fewer than
+$\log n$ times (or, a student noted, a group of all the adds followed by all the sums). In any other case, the vast majority, the BIT is better.
+
+\subsection{Relaxed version: Sum only at powers of two}
+Running example (``for a while''): $A=[3,2,-1,5,7,-3,2,1]$, positions $1..8$.
 \begin{itemize}[nosep]
-\item $\textsf{Sum}(i)$: start from the node whose range ends at $i$ (node $i$) and sum its value and the values of its ancestors up to the root.
-\item $\textsf{Add}(i,v)$: update the values of all the nodes whose range contains $i$.
+\item \textbf{Relaxed problem}: $\textsf{Sum}(i)$ \hly{only if \mbox{$i$} is a power of 2} (undefined otherwise); $\textsf{Add}(i,v)$ for every $i$.
+\item Checklist entry for data-structure problems: \hlb{how many possible questions are there? If few, precompute the answers.} Here only $\log n$ positions can be asked:
+      store $\textsf{Sum}(1)=3$, $\textsf{Sum}(2)=5$, $\textsf{Sum}(4)=9$, $\textsf{Sum}(8)=16$.
+\item $\textsf{Sum}$: \hlg{\mbox{$O(1)$}}. $\textsf{Add}(i,v)$: update the stored answers at the powers of two $\ge i$, \hlg{\mbox{$O(\log n)$}} (worst case $i=1$, all of them change).
+      Example: $\textsf{Add}(6,5)$ changes only position 8: $16\to21$.
+\item ``I promised a tree'': add a \hly{fake root (position 0, value 0)} and connect it to the stored nodes. Write the range of each node, $[1,1],[1,2],[1,4],[1,8]$,
+      and the positions in binary: $0001,0010,0100,1000$. ``What's the characteristic of these positions?'' \extra{} \hlb{exactly one bit set to 1}.
 \end{itemize}
-\extra{} Node $i$ covers the range $(i-\text{lsb}(i),\,i]$, where $\text{lsb}(i)$ is the lowest set bit of $i$. The parent of $i$ is $i-\text{lsb}(i)$ (clear the lowest set bit),
-so \textsf{Sum} visits at most $\log n+1$ nodes; \textsf{Add} visits $i,\ i+\text{lsb}(i),\dots$ (the ``next sibling'' in the blog), again $O(\log n)$ nodes.
-For the example: the array is $[0\,|\,3,5,-1,9,7,4,2,16]$; $\textsf{Sum}(7)=T[7]+T[6]+T[4]=2+4+9=15$.
+\board{0.45\textwidth}{l10_fenwick_relaxed.jpg}{84:00}
 
-\noindent\textbf{Prof's code} [blog] (verbatim):
+\subsection{After the recording: from your notes}
+\begin{warnbox}
+\textbf{The recording ends here (84:54).} What follows is from your notes only (\texttt{notes.md}); figure and \extra{} parts are mine.
+To be checked against L11 if the prof recaps.
+\end{warnbox}
+\begin{itemize}[nosep]
+\item \hly{Cover the uncovered parts by applying the same principle recursively.} Between 4 and 8 the uncovered part is $[7,-3,2]$ (positions $5,6,7$, i.e.\ $1,2,3$ shifted by 4):
+      its relaxed solution stores $[5,5]=7$ and $[5,6]=4$, positions $0101$ and $0110$ (\hlb{two bits set}), linked to their parent, node 4.
+      Then $[-1]$ at position $3=0011$, range $[3,3]$, child of node 2; and \extra{} $2$ at position $7=0111$, range $[7,7]$, child of node 6.
+\item \hlb{Number of trailing 0s in the binary representation of a node = number of its children.}
+\item $\textsf{Sum}(i)$: start from the node whose range ends at $i$ (node $i$) and \hly{sum its value and the values of its ancestors up to the root}.
+\item $\textsf{Add}(i,v)$: \hly{update the values of all the nodes whose range contains \mbox{$i$}}. (Running times: not written in your notes.)
+\end{itemize}
+
+\noindent\extra{} The whole tree of the example (value, range, position in binary):
+\begin{center}
+\begin{tikzpicture}[every node/.style={draw,rounded corners=2pt,align=center,font=\footnotesize,minimum width=12mm},
+  level distance=15mm, level 1/.style={sibling distance=30mm}, level 2/.style={sibling distance=18mm}, level 3/.style={sibling distance=15mm}, edge from parent/.style={draw,gray}]
+\node[fill=gray!10] {0\\\texttt{0000}}
+  child {node {3\\$[1,1]$\\\texttt{0001}}}
+  child {node {5\\$[1,2]$\\\texttt{0010}}
+     child {node {$-1$\\$[3,3]$\\\texttt{0011}}}}
+  child {node {9\\$[1,4]$\\\texttt{0100}}
+     child {node {7\\$[5,5]$\\\texttt{0101}}}
+     child {node {4\\$[5,6]$\\\texttt{0110}}
+        child {node {2\\$[7,7]$\\\texttt{0111}}}}}
+  child {node {16\\$[1,8]$\\\texttt{1000}}};
+\end{tikzpicture}
+\end{center}
+\noindent\extra{} \hlb{Node \mbox{$i$} covers \mbox{$(i-\mathrm{lsb}(i),\,i]$}}, where $\mathrm{lsb}(i)$ is the lowest set bit of $i$. The parent of $i$ is $i-\mathrm{lsb}(i)$
+(clear the lowest set bit), so \textsf{Sum} visits at most $\log n+1$ nodes: $\textsf{Sum}(7)=T[7]+T[6]+T[4]=2+4+9=15$.
+\textsf{Add} visits $i,\ i+\mathrm{lsb}(i),\dots$ (the ``next sibling'' in the blog), again $O(\log n)$ nodes: $\textsf{Add}(3,v)$ touches $3,4,8$.
+Stored as an array, the tree is $[0\,|\,3,5,-1,9,7,4,2,16]$: \hlg{\mbox{$n+1$} integers, no pointers}.
+
+\noindent\textbf{Prof's code} [blog] (verbatim; \texttt{l10::fenwick::FenwickTree}):
 \begin{lstlisting}
 #[derive(Debug)]
 pub struct FenwickTree {
@@ -276,8 +389,15 @@ impl FenwickTree {
 \end{lstlisting}
 \noindent\extra{} Tested in \texttt{l10::fenwick}: on the example (internal array $[0,3,5,-1,9,7,4,2,16]$) and against the trivial array on random add/sum sequences.
 
+%==========================================================
 \section{Next time}
-Probably the end of the Fenwick tree (running times, why it works) and its applications. \extra{} In last year's course (course page): counting inversions, \emph{Update the array}
-(SPOJ UPDATEIT, mandatory in 2025), range updates, \emph{Nested segments} (Codeforces 652D). To be checked on the recording.
+%==========================================================
+\begin{itemize}[nosep]
+\item Continue the Fenwick tree (the lecture ended in the middle of it): why it works, running times, and applications.
+\item Announced in this lecture: the \textbf{segment tree} (``more space, but easy to modify to solve other problems''). The prof's 2025 notes on it are in
+      \texttt{Lessons/L11/Segment\_tree\_2025.pdf} (dynamic prefix sums, RMQ, RMQ with occurrences, Search, \#occurrences, successor, triplets, lazy propagation,
+      persistent segment tree).
+\item No homework was assigned in this lecture.
+\end{itemize}
 
 \end{document}

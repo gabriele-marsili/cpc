@@ -1,6 +1,6 @@
 {
  "generated": {
-  "Cargo.toml": "c1e6d559c97c616e59bb92b57d613815cfcdcd32",
+  "Cargo.toml": "a40679f3c5577f18bad308721f37f55e54741a21",
   "HandsOn/HO1/Cargo.toml": "00d2ee90cdb5c4c088a4748ff7b7112400047067",
   "HandsOn/HO1/README.md": "8d1446bc47f690d216f87d9e7afaaeab7b186f43",
   "HandsOn/HO1/draft/EMAIL.txt": "e48d098b0a84f0f633036093b82c09f4c895da6b",
@@ -10,11 +10,24 @@
   "HandsOn/HO1/draft/lib.rs": "84fc6e100cbc56ef972c6ead64f75a9977e537f0",
   "HandsOn/HO1/src/lib.rs": "46715e60f5212e91c97c529ae32ec81557dfcd21",
   "Lessons/L10/Cargo.toml": "51b54d3955b5bf8d2e899ec1e31d94061e4275e3",
-  "Lessons/L10/L10.pdf": "1a2d445da49436cb58438728e2055569036fcaf1",
-  "Lessons/L10/L10.tex": "e80b30c9683154a3593bdc502ad4411bceee3bb6",
-  "Lessons/L10/claude_notes.md": "1177be8769ab6a1cf0801b6b41cb9a03cce1ab93",
-  "Lessons/L10/src/fenwick.rs": "e4af69a5ed6978bbe54bd10612c2ae367d145362",
-  "Lessons/L10/src/lib.rs": "218e6d2f0972b9db3bd9622fd485ef271b74a344",
+  "Lessons/L10/L10.pdf": "a2e5d2abc6592933e2e07fe57a7185fb8d668c71",
+  "Lessons/L10/L10.tex": "8045fafe7dbe65252182a416c93c3cb53874bd82",
+  "Lessons/L10/L10_transcript.txt": "0cc0cf5e62b935b4ae03653ab0b383c780fc386f",
+  "Lessons/L10/board/l10_fenwick_relaxed.jpg": "4ccb55fb5bbb75c28bb5081c26f401dae779b09f",
+  "Lessons/L10/board/l10_fenwick_trivial.jpg": "fb9095d2616eab77846030bc6a83c27c9d4b8941",
+  "Lessons/L10/board/l10_little_B.jpg": "e10a769982e5661db381efcd5d3bc781ee348c5b",
+  "Lessons/L10/board/l10_little_example.jpg": "83bce48e682508b8bbcd646672b6f4552c20b0c4",
+  "Lessons/L10/board/l10_little_steps.jpg": "015e3ced3f40af70fbf82e8d1e18af2b42533cc4",
+  "Lessons/L10/board/l10_ways_example.jpg": "dc82df6c4937da314747513550ffafabba01b4b2",
+  "Lessons/L10/board/l10_ways_marks.jpg": "ad1db2749eaaf7e7984195d7aeb272ebf47e824a",
+  "Lessons/L10/claude_notes.md": "7130e95d5a6545d259b63d69ddf98585bdf0b864",
+  "Lessons/L10/practice/Cargo.toml": "9360f8afa1e525957a05f27145edea2a48276e72",
+  "Lessons/L10/practice/README.md": "b67af583ca59e4b96dd8244125ed2cb51f86051c",
+  "Lessons/L10/practice/soluzioni/lib.rs": "103bb972b0ac1d84ba268c567135c2e27a750353",
+  "Lessons/L10/practice/src/lib.rs": "2181922b9d27c2dd3e3ed707fcd8c80c2db80e06",
+  "Lessons/L10/practice/src/util.rs": "bad3c7910add4964b7175bce31979af1fe025738",
+  "Lessons/L10/src/fenwick.rs": "b7a4e59f2872c652d303e9ae7b17ae5b7bf20675",
+  "Lessons/L10/src/lib.rs": "3286dd201f90c5d2e32edbab669e9b89a430f901",
   "Lessons/L3/L3.pdf": "c695b0f9b4aeb301a79c0648bd65d23efd2e276e",
   "Lessons/L3/L3.tex": "404a6c12f209f9577b7b8827fa52f14a46b82a93",
   "Lessons/L3/claude_notes.md": "1d2ab4cef12bceeca41bb50548da433c83c73181",
@@ -76,23 +89,39 @@
   "Lessons/L9/src/lib.rs": "6457f21086f998ef979551c21518c789f0391aa8",
   "Lessons/L9/src/prefix_sums.rs": "c1cd80c015eed69d579889eb7f96d91487df1ea2"
  },
- "last_run": "2026-10-19 13:32",
+ "last_run": "2026-10-21 12:31",
  "seen": {
   "Lessons/L10/Cargo.toml": {
    "mtime": 1792416710,
    "size": 89
+  },
+  "Lessons/L10/L_10.MP4": {
+   "mtime": 1792584818,
+   "size": 483797638
+  },
+  "Lessons/L10/Prefix_sums_2025.pdf": {
+   "mtime": 1792584758,
+   "size": 1400014
   },
   "Lessons/L10/notes.md": {
    "mtime": 1792407325,
    "size": 4389
   },
   "Lessons/L10/src/fenwick.rs": {
-   "mtime": 1792416710,
-   "size": 3616
+   "mtime": 1792585882,
+   "size": 3638
   },
   "Lessons/L10/src/lib.rs": {
-   "mtime": 1792416710,
-   "size": 6510
+   "mtime": 1792585883,
+   "size": 7676
+  },
+  "Lessons/L11/Segment_tree_2025.pdf": {
+   "mtime": 1792584758,
+   "size": 3953284
+  },
+  "Lessons/L11/notes.md": {
+   "mtime": 1792584508,
+   "size": 0
   },
   "Lessons/L2/Cargo.toml": {
    "mtime": 1789983210,

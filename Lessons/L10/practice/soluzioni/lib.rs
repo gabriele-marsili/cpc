@@ -1,0 +1,256 @@
+//! SOLUZIONI di practice_l10 (scritte da Claude, non dal prof). Per provarle:
+//! copia questo file al posto di `src/lib.rs` (tieni `src/util.rs`) e lancia `cargo test -p practice_l10`.
+
+#[cfg(test)]
+mod util;
+
+/// E43 — soluzione: difference array + prefix sums, poi due sort decrescenti.
+pub fn little_girl(a: &[i64], q: &[(usize, usize)]) -> i64 {
+    let n = a.len();
+    let mut b = vec![0i64; n + 1]; // b[n] raccoglie i -1 "oltre la fine": niente if
+    for &(i, j) in q {
+        b[i - 1] += 1; // 1-based -> 0-based
+        b[j] -= 1;
+    }
+    let mut f: Vec<i64> = b[..n]
+        .iter()
+        .scan(0, |s, &x| {
+            *s += x;
+            Some(*s)
+        })
+        .collect();
+    let mut a = a.to_vec();
+    a.sort_unstable_by(|x, y| y.cmp(x));
+    f.sort_unstable_by(|x, y| y.cmp(x));
+    a.iter().zip(&f).map(|(v, c)| v * c).sum()
+}
+
+/// E44 — soluzione: eventi (posizione, +1/-1) ordinati, poi una scansione delle posizioni.
+pub fn frequencies_sweep(n: usize, q: &[(usize, usize)]) -> Vec<i64> {
+    let mut ev: Vec<(usize, i64)> = Vec::with_capacity(2 * q.len());
+    for &(i, j) in q {
+        ev.push((i, 1));
+        ev.push((j + 1, -1));
+    }
+    ev.sort_unstable();
+    let mut f = vec![0i64; n];
+    let mut k = 0;
+    let mut cur = 0;
+    for p in 1..=n {
+        while k < ev.len() && ev[k].0 == p {
+            cur += ev[k].1;
+            k += 1;
+        }
+        f[p - 1] = cur;
+    }
+    f
+}
+
+/// E45 — soluzione: c[k] = numero di "punti rossi" (suffissi di somma T) in posizioni >= k.
+pub fn number_of_ways(a: &[i64]) -> u64 {
+    let n = a.len();
+    if n < 3 {
+        return 0;
+    }
+    let s: i64 = a.iter().sum();
+    if s % 3 != 0 {
+        return 0;
+    }
+    let t = s / 3;
+    let mut c = vec![0u64; n + 1];
+    let mut suf = 0;
+    for k in (0..n).rev() {
+        suf += a[k];
+        c[k] = c[k + 1] + u64::from(suf == t);
+    }
+    let mut res = 0;
+    let mut pre = 0;
+    for i in 0..n - 2 {
+        pre += a[i];
+        if pre == t {
+            res += c[i + 2];
+        }
+    }
+    res
+}
+
+/// E46 — soluzione.
+pub struct Bit {
+    t: Vec<i64>,
+}
+
+impl Bit {
+    pub fn new(n: usize) -> Self {
+        Bit { t: vec![0; n + 1] }
+    }
+    fn lsb(i: usize) -> usize {
+        i & i.wrapping_neg()
+    }
+    pub fn add(&mut self, mut i: usize, v: i64) {
+        while i < self.t.len() {
+            self.t[i] += v;
+            i += Self::lsb(i);
+        }
+    }
+    pub fn sum(&self, mut i: usize) -> i64 {
+        let mut s = 0;
+        while i > 0 {
+            s += self.t[i];
+            i -= Self::lsb(i);
+        }
+        s
+    }
+    pub fn range_sum(&self, i: usize, j: usize) -> i64 {
+        self.sum(j) - self.sum(i - 1)
+    }
+    pub fn node(&self, i: usize) -> i64 {
+        self.t[i]
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::util::Rng;
+    use super::*;
+
+    fn value(a: &[i64], q: &[(usize, usize)]) -> i64 {
+        q.iter().map(|&(i, j)| a[i - 1..j].iter().sum::<i64>()).sum()
+    }
+    fn little_brute(a: &[i64], q: &[(usize, usize)]) -> i64 {
+        fn rec(a: &mut Vec<i64>, k: usize, q: &[(usize, usize)], best: &mut i64) {
+            if k == a.len() {
+                *best = (*best).max(value(a, q));
+                return;
+            }
+            for i in k..a.len() {
+                a.swap(k, i);
+                rec(a, k + 1, q, best);
+                a.swap(k, i);
+            }
+        }
+        let mut best = i64::MIN;
+        rec(&mut a.to_vec(), 0, q, &mut best);
+        best
+    }
+    fn freq_brute(n: usize, q: &[(usize, usize)]) -> Vec<i64> {
+        (1..=n).map(|p| q.iter().filter(|&&(i, j)| i <= p && p <= j).count() as i64).collect()
+    }
+    fn ways_brute(a: &[i64]) -> u64 {
+        let n = a.len();
+        let mut c = 0;
+        for i in 1..n {
+            for j in i + 1..n {
+                let (x, y, z): (i64, i64, i64) = (a[..i].iter().sum(), a[i..j].iter().sum(), a[j..].iter().sum());
+                if x == y && y == z {
+                    c += 1;
+                }
+            }
+        }
+        c
+    }
+    fn rand_queries(rng: &mut Rng, n: usize, m: usize) -> Vec<(usize, usize)> {
+        (0..m)
+            .map(|_| {
+                let i = 1 + rng.below(n);
+                (i, i + rng.below(n - i + 1))
+            })
+            .collect()
+    }
+
+    #[test]
+    fn e43_lecture_example() {
+        // lezione: A = [5,2,4,1,3], query (1,5), (2,3), (2,3): 27 così com'è, 33 il massimo
+        let q = [(1, 5), (2, 3), (2, 3)];
+        assert_eq!(little_girl(&[5, 2, 4, 1, 3], &q), 33);
+        // Codeforces 276C, primo esempio
+        assert_eq!(little_girl(&[5, 3, 2], &[(1, 2), (2, 3), (1, 3)]), 25);
+    }
+
+    #[test]
+    fn e43_against_brute_force() {
+        let mut rng = Rng(43);
+        for _ in 0..400 {
+            let n = 1 + rng.below(6);
+            let a: Vec<i64> = rng.vec_i32(n, -5, 10).into_iter().map(i64::from).collect();
+            let m = rng.below(6);
+            let q = rand_queries(&mut rng, n, m);
+            assert_eq!(little_girl(&a, &q), little_brute(&a, &q), "a={a:?} q={q:?}");
+        }
+    }
+
+    #[test]
+    fn e44_lecture_example() {
+        // lezione: Q = (2,4), (1,3), (2,5) su n = 5 -> F = [1,3,3,2,1]
+        assert_eq!(frequencies_sweep(5, &[(2, 4), (1, 3), (2, 5)]), vec![1, 3, 3, 2, 1]);
+        assert_eq!(frequencies_sweep(3, &[]), vec![0, 0, 0]);
+    }
+
+    #[test]
+    fn e44_against_brute_force() {
+        let mut rng = Rng(44);
+        for _ in 0..500 {
+            let n = 1 + rng.below(20);
+            let m = rng.below(15);
+            let q = rand_queries(&mut rng, n, m);
+            assert_eq!(frequencies_sweep(n, &q), freq_brute(n, &q), "n={n} q={q:?}");
+        }
+    }
+
+    #[test]
+    fn e45_examples() {
+        assert_eq!(number_of_ways(&[1, 2, 3, 0, 3]), 2); // lezione
+        assert_eq!(number_of_ways(&[0, 1, -1, 0]), 1); // Codeforces
+        assert_eq!(number_of_ways(&[4, 1]), 0); // Codeforces
+        assert_eq!(number_of_ways(&[0]), 0); // n = 1: il codice del blog qui va in panic
+        assert_eq!(number_of_ways(&[0, 0, 0, 0]), 3);
+    }
+
+    #[test]
+    fn e45_against_brute_force() {
+        let mut rng = Rng(45);
+        for _ in 0..800 {
+            let n = rng.below(14);
+            let a: Vec<i64> = rng.vec_i32(n, -2, 3).into_iter().map(i64::from).collect();
+            assert_eq!(number_of_ways(&a), ways_brute(&a), "a={a:?}");
+        }
+    }
+
+    #[test]
+    fn e46_lecture_example() {
+        // lezione: A = [3,2,-1,5,7,-3,2,1]; nodi 1,2,4,8 = 3,5,9,16 (prefissi), 6 = [5,6] = 4
+        let a = [3, 2, -1, 5, 7, -3, 2, 1];
+        let mut b = Bit::new(8);
+        for (k, &v) in a.iter().enumerate() {
+            b.add(k + 1, v);
+        }
+        let nodes: Vec<i64> = (1..=8).map(|i| b.node(i)).collect();
+        assert_eq!(nodes, vec![3, 5, -1, 9, 7, 4, 2, 16]);
+        assert_eq!(b.sum(7), 15);
+        assert_eq!(b.range_sum(3, 5), 11);
+        b.add(3, 10);
+        assert_eq!(b.sum(8), 26);
+        assert_eq!(b.node(4), 19);
+    }
+
+    #[test]
+    fn e46_against_naive() {
+        let mut rng = Rng(46);
+        for _ in 0..100 {
+            let n = 1 + rng.below(40);
+            let mut b = Bit::new(n);
+            let mut a = vec![0i64; n + 1];
+            for _ in 0..300 {
+                let i = 1 + rng.below(n);
+                if rng.below(2) == 0 {
+                    let v = rng.below(201) as i64 - 100;
+                    b.add(i, v);
+                    a[i] += v;
+                } else {
+                    let j = i + rng.below(n - i + 1);
+                    assert_eq!(b.sum(i), a[1..=i].iter().sum::<i64>());
+                    assert_eq!(b.range_sum(i, j), a[i..=j].iter().sum::<i64>());
+                }
+            }
+        }
+    }
+}

@@ -1,7 +1,7 @@
 //! Fenwick tree (Binary Indexed Tree). `FenwickTree` is the prof's code, copied verbatim from
 //! <https://pages.di.unipi.it/rossano/blog/2023/fenwick> (only comments added).
-//! PROVISIONAL: in the lecture of 19/10 the construction was explained (your notes), the running
-//! times of sum/add were not yet in your notes. Tests and `NaiveArray` are [extra].
+//! In the lecture of 19/10 the Fenwick tree was only started (trivial solutions, relaxed version,
+//! fake root; the recording stops there, the rest is in your notes). Tests and `NaiveArray` are [extra].
 
 #[derive(Debug)]
 pub struct FenwickTree {

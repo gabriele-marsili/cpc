@@ -1,4 +1,5 @@
-//! L10 (19/10/2026) — PROVISIONAL (no recording yet): applications of prefix sums and the Fenwick tree.
+//! L10 (19/10/2026): Little Girl and Maximum Sum, Number of Ways, Fenwick tree (start).
+//! Redone on the recording L_10.MP4 (21/10); notes in L10.pdf.
 //!
 //! `little_girl`, `number_of_ways` are the prof's code from
 //! <https://pages.di.unipi.it/rossano/blog/2023/prefixsums>; `FenwickTree` is the prof's code from
@@ -87,6 +88,26 @@ pub fn number_of_ways(a: &[i64]) -> usize {
     result
 }
 
+/// [extra] Step #1 of Little Girl with the FIRST solution discussed in class: sweep line.
+/// Events (+1 at the beginning, -1 after the end) sorted by position, then a scan of all the
+/// positions: Theta(n + m log m). With counting sort on the positions (endpoints are <= n) it becomes
+/// Theta(n + m), and the counting arrays C_b / C_e are exactly the array B of the prof's code.
+/// Queries 0-based, as in `little_girl`.
+pub fn frequencies_sweep(n: usize, q: &[(usize, usize)]) -> Vec<i64> {
+    let mut events: Vec<(usize, i64)> = q.iter().flat_map(|&(l, r)| [(l, 1), (r + 1, -1)]).collect();
+    events.sort_unstable();
+    let mut f = vec![0i64; n];
+    let (mut k, mut cur) = (0, 0);
+    for (p, fp) in f.iter_mut().enumerate() {
+        while k < events.len() && events[k].0 == p {
+            cur += events[k].1;
+            k += 1;
+        }
+        *fp = cur;
+    }
+    f
+}
+
 /// [extra] Brute force for Little Girl: the value of a given arrangement.
 pub fn queries_value(a: &[i64], q: &[(usize, usize)]) -> i64 {
     q.iter().map(|&(l, r)| a[l..=r].iter().sum::<i64>()).sum()
@@ -153,7 +174,7 @@ mod tests {
 
     #[test]
     fn notes_example_little_girl() {
-        // your notes: A = [5,2,4,1,3], queries (1,5),(2,3),(2,3) (1-based) -> 27 as given, 33 optimal
+        // lecture: A = [5,2,4,1,3], queries (1,5),(2,3),(2,3) (1-based) -> 27 as given, 33 optimal
         let a = [5, 2, 4, 1, 3];
         let q = [(0, 4), (1, 2), (1, 2)];
         assert_eq!(queries_value(&a, &q), 27);
@@ -164,7 +185,7 @@ mod tests {
 
     #[test]
     fn notes_example_frequencies() {
-        // your notes: Q = (2,4),(1,3),(2,5) (1-based) -> F = [1,3,3,2,1], B = [1,2,0,-1,-1]
+        // lecture: Q = (2,4),(1,3),(2,5) (1-based) -> F = [1,3,3,2,1], B = [1,2,0,-1,-1]
         let q = [(1, 3), (0, 2), (1, 4)];
         let mut b = vec![0i64; 5];
         for &(l, r) in &q {
@@ -176,6 +197,7 @@ mod tests {
         assert_eq!(b, vec![1, 2, 0, -1, -1]);
         let f: Vec<i64> = b.iter().scan(0, |s, e| { *s += e; Some(*s) }).collect();
         assert_eq!(f, vec![1, 3, 3, 2, 1]);
+        assert_eq!(frequencies_sweep(5, &q), f);
     }
 
     #[test]
@@ -207,6 +229,8 @@ mod tests {
                 })
                 .collect();
             assert_eq!(little_girl(&a, &q), little_girl_brute(&a, &q), "a={a:?} q={q:?}");
+            let brute: Vec<i64> = (0..n).map(|p| q.iter().filter(|&&(l, r)| l <= p && p <= r).count() as i64).collect();
+            assert_eq!(frequencies_sweep(n, &q), brute, "q={q:?}");
         }
         for _ in 0..500 {
             let n = 3 + rng.below(12) as usize;
