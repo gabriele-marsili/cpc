@@ -1,0 +1,288 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\setmonofont{DejaVu Sans Mono}[Scale=0.82]
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx,xcolor,listings,booktabs,enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usepackage{needspace}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{accent}{HTML}{2B6CB0}
+\definecolor{warn}{HTML}{C53030}
+\newtcolorbox{keybox}[1][]{colback=accent!5,colframe=accent,boxrule=0.6pt,arc=2pt,left=6pt,right=6pt,top=4pt,bottom=4pt,#1}
+\newtcolorbox{warnbox}{colback=warn!5,colframe=warn,boxrule=0.6pt,arc=2pt,left=6pt,right=6pt}
+
+\lstdefinelanguage{Rust}{
+  keywords={fn,let,mut,if,else,for,in,while,return,use,pub,struct,impl,loop,break,Some,None,as,match,const,Self,self},
+  morekeywords=[2]{usize,i32,i64,u64,f64,bool,Vec,VecDeque,BTreeSet,BTreeMap,BinaryHeap,Option,str},
+  sensitive=true, morecomment=[l]{//}, morestring=[b]"}
+\lstset{language=Rust,basicstyle=\ttfamily,keywordstyle=\color{accent}\bfseries,
+  keywordstyle=[2]\color{teal},commentstyle=\color{gray}\itshape,stringstyle=\color{warn},
+  frame=single,rulecolor=\color{gray!40},backgroundcolor=\color{gray!4},
+  numbers=left,numberstyle=\tiny\color{gray},xleftmargin=1.5em,breaklines=true,
+  columns=fullflexible,keepspaces=true,showstringspaces=false}
+
+\newtheorem*{invariant}{Invariant}
+\theoremstyle{definition}\newtheorem*{definition}{Definition}
+
+\usepackage{soul}
+\definecolor{hlY}{HTML}{FFF3A0}\definecolor{hlG}{HTML}{C8F2C2}\definecolor{hlP}{HTML}{E6D2F7}\definecolor{hlB}{HTML}{CFE3FF}
+\newcommand{\hly}[1]{{\sethlcolor{hlY}\hl{#1}}}
+\newcommand{\hlg}[1]{{\sethlcolor{hlG}\hl{#1}}}
+\newcommand{\hlp}[1]{{\sethlcolor{hlP}\hl{#1}}}
+\newcommand{\hlb}[1]{{\sethlcolor{hlB}\hl{#1}}}
+\newcommand{\img}[3]{\begin{center}\fcolorbox{gray!50}{white}{\includegraphics[width=#1]{board/#2}}\\[-2pt]{\footnotesize\textcolor{gray}{#3}}\end{center}}
+\newcommand{\extra}{\textsuperscript{\textcolor{warn}{[extra]}}}
+\newcommand{\board}[3]{\img{#1}{#2}{Board, #3 (recording \texttt{L\_11.MP4})}}
+% pages of the prof's 2025 notes on the Fenwick tree (Lessons/L11/FenwickTree_2025.pdf)
+\newcommand{\twonotes}[2]{\begin{center}\begin{minipage}{0.49\textwidth}\centering\fcolorbox{gray!50}{white}{\includegraphics[page=#1,width=0.95\linewidth,trim=20 20 20 20,clip]{FenwickTree_2025.pdf}}\end{minipage}\hfill
+  \begin{minipage}{0.49\textwidth}\centering\fcolorbox{gray!50}{white}{\includegraphics[page=#2,width=0.95\linewidth,trim=20 20 20 20,clip]{FenwickTree_2025.pdf}}\end{minipage}\\[2pt]
+  {\footnotesize\textcolor{gray}{Prof.'s notes of \textbf{last year} (2025), \texttt{FenwickTree\_2025.pdf} p.\,#1 and p.\,#2}}\end{center}}
+\title{\textbf{CPC --- Lecture 11}\\[2pt]\large Fenwick tree: levels, \textsf{Sum} and \textsf{Add} with bit tricks $\cdot$ Counting inversions}
+\author{Competitive Programming and Contests --- Wednesday 21/10/2026}
+\date{}
+
+\begin{document}\sloppy
+\maketitle
+\vspace{-1.5em}
+\begin{keybox}
+\textbf{Sources.} Recording \texttt{Lessons/L11/L\_11.MP4} (91 min) and its automatic transcript \texttt{L11\_transcript.txt} (not revised);
+the prof's handwritten board (frames of the recording, \texttt{board/l11\_*.jpg});
+the prof's 2025 notes \texttt{Lessons/L11/FenwickTree\_2025.pdf} (p.\,1--6 cover this lecture, p.\,7--15 the next one);
+the prof's blog post \emph{Dynamic Prefix Sums with Fenwick Tree} (\url{https://pages.di.unipi.it/rossano/blog/2023/fenwick});
+your notes \texttt{Lessons/L11/notes.md} (they match the recording: \hlg{they stop exactly where the lecture stops}).
+Everything marked \extra{} was \emph{not} said or written in the lecture (my explanations, examples, code).
+\hlp{This replaces the provisional version of 21/10}: the parts it had marked ``not in your notes'' (inversions with a Fenwick tree, Nested Segments,
+Update the Array, range updates) were indeed \emph{not} done on 21/10 and have moved to \texttt{Lessons/L12/L12.pdf}.
+
+\smallskip
+\noindent Code: \texttt{Lessons/L11/src} (\texttt{cargo test -p l11}). Exercises: \texttt{Lessons/L11/practice}, E47--E49 (\texttt{cargo test -p practice\_l11}).
+
+\smallskip
+\noindent\textbf{Highlights:} \hly{general / to remember} \quad \hlg{good: works, efficient, correct} \quad \hlp{bad: pitfalls, wrong ideas, costs} \quad \hlb{definitions and key results}
+\end{keybox}
+
+\begin{keybox}[colback=gray!4,colframe=gray!60]
+\textbf{Where we are.} L10 (19/10) introduced the Fenwick tree, but \hlp{its recording stops at 84:54}: the end of L10 was reconstructed from your notes
+(\texttt{L10.pdf} \S3.4). Today the prof \hlg{recaps it from the start} (relaxed version, recursion on the uncovered subarrays, fake root), so this PDF also
+confirms that reconstruction. Then \textsf{Sum}, \textsf{Add}, their complexity, and the start of \textbf{counting inversions}.
+\end{keybox}
+
+\tableofcontents
+
+%==========================================================
+\section{Fenwick tree: recap and levels}\label{sec:levels}
+%==========================================================
+\textbf{Problem} (dynamic prefix sums). Given $A[1,n]$ support \hlb{\mbox{$\textsf{Sum}(i)=\sum_{k\le i}A[k]$}} and \hlb{\mbox{$\textsf{Add}(i,v)$}: \mbox{$A[i]\mathrel{+}=v$}},
+both in \hlg{logarithmic time}. Running example (from L10): $A=[3,2,-1,5,7,-3,2,1]$; the tree stored as an array is $H=[0\,|\,3,5,-1,9,7,4,2,16]$.
+
+\noindent\textbf{Recap of L10} (0:00--7:30). \emph{Relaxed version}: $\textsf{Add}$ on any position, but $\textsf{Sum}$ only on positions that are a power of two.
+Following the footnote of our checklist (``\hly{if there are few possible queries, precompute all the answers}''), we store the $\log n$ answers:
+the nodes $1,2,4,8$ under a \emph{fake root} 0, labelled with their position and the range they cover ($[1,1]=3$, $[1,2]=5$, $[1,4]=9$, $[1,8]=16$).
+\hly{The labels (ranges, binary representations) are for our understanding only: the data structure is just the array \mbox{$H$}.}
+The ranges that are not covered ($[3,3]$ and $[5,7]$ here; in general $2^k+1..2^{k+1}-1$) are handled \hlb{recursively with exactly the same approach},
+using positions \emph{relative to the subarray}: their nodes become children of the power of two just before the subarray.
+\board{0.62\textwidth}{l11_relaxed.jpg}{8:20: the relaxed version, first level of the tree}
+
+\subsection{Levels and height}
+\begin{itemize}[nosep]
+\item \hlb{Level 1: positions with one bit set to 1} (powers of two); level 2: two bits set (sums of two powers of two); level 3: three bits, \dots
+      ``the power of our data structure is improving level by level''.
+\item Node 7 $=\texttt{0111}$ covers $[7,7]$: \hlb{node \mbox{$i$} covers \mbox{$(i-\mathrm{lsb}(i),\,i]$}}, where $\mathrm{lsb}(i)$ is the least significant bit set to 1.
+\item \textbf{Height.} The deepest node is $2^{\mathrm{msb}}-1$ (all ones), or: the last level has at most $\log n$ bits set to 1, so
+      \hlb{the number of levels is at most \mbox{$\log n$}}. Not all levels need to be ``full'' (here the subtree of 8 is missing: ``you need a bigger array'').
+\item \textbf{Children.} The children of a node set one more bit to 1 \hly{in the trailing zeros} of the node: for $\texttt{0100}$ they are $\texttt{0101}$ and $\texttt{0110}$
+      (and $\texttt{0111}$ is a child of $\texttt{0110}$). \hly{The position of the least significant bit tells you how many possibilities you have in the subtree.}
+\end{itemize}
+\board{0.55\textwidth}{l11_tree_sum7.jpg}{15:40: the whole tree of the example, levels by number of bits set to 1, and $\textsf{Sum}(7)$}
+
+%==========================================================
+\section{\textsf{Sum}$(i)$ and the parent}
+%==========================================================
+\textsf{Sum}(7): ``on trees you are used to start from the root; here \hly{we start from exactly the position we are querying}'' (a leaf in this case,
+an internal node in general), and \hly{use nodes that fully cover the interval \mbox{$[1,7]$}}: $[7,7]$, $[5,6]$, $[1,4]$, so
+\[ \textsf{Sum}(7)=2+4+9=15 . \]
+We go to the parent, the parent, the parent, \dots\ until we reach the root 0. The positions touched are
+\[ 7 = \texttt{0111}\ \to\ 6 = \texttt{0110}\ \to\ 4 = \texttt{0100}\ \to\ 0 = \texttt{0000}: \]
+\hlb{at every step we cancel the least significant bit set to 1}. It is consistent with what we know: the parent is one level up, so it has one bit less set to 1;
+and a child sets one more bit to 1 in the trailing zeros of the parent, so to go back we remove the \emph{lowest} one.
+\begin{itemize}[nosep]
+\item \hlg{We do not need to store the structure of the tree.} With explicit pointers up we could climb anyway (and \textsf{Add} would need even more pointers,
+      as we will see); with this observation \hlg{we only store the array}.
+\item $\textsf{parent}(i)=i-\mathrm{lsb}(i)$: isolate the least significant bit ($\texttt{0111}\to\texttt{0001}$) and subtract it.
+\end{itemize}
+\board{0.45\textwidth}{l11_parent.jpg}{37:20: the positions visited by $\textsf{Sum}(7)$ and the parent}
+
+\subsection{How to isolate the least significant bit}
+\begin{itemize}
+\item \textbf{The engineer's trick} (``if you don't care about elegance''): split the 32-bit number into \hly{4 blocks of 8 bits} and precompute a
+      \hly{table with 256 entries} giving the least significant bit of every possible byte; a loop of 4 iterations finds the first non-zero byte and reads the table.
+      A table for the whole 32-bit world would have $2^{32}$ entries: too big, so you split into pieces. \hly{This table trick is popular and used in many cases}, but here it is not needed.
+\item \textbf{Count the trailing zeros} (there is a CPU instruction), then shift: $1\ll\mathrm{tz}(i)$. It works, \hlp{but it needs two steps and counting is more than what you need}:
+      you do not need the position, only the isolated bit. (\extra{} It is what the prof's Rust code does: \texttt{1 << i.trailing\_zeros()}.)
+\item \textbf{The elegant bit trick: two's complement.} Negative numbers are stored in two's complement:
+      \hlb{\mbox{$-i$} has every bit of \mbox{$i$} flipped except the least significant 1 and the zeros after it}. Indeed, on $N$ bits, \hlb{\mbox{$i+(-i)=2^N$}}:
+      in the sum the trailing zeros stay zero, the lowest 1 plus 1 gives 0 with carry 1, and every flipped pair plus the carry gives again 0 with carry 1, up to the
+      extra bit $2^N$ we do not have. So
+      \[ \boxed{\mathrm{lsb}(i)=i\ \&\ (-i)}\qquad\Rightarrow\qquad \boxed{\textsf{parent}(i)=i-(i\,\&\,{-i})} . \]
+\end{itemize}
+\begin{center}
+\begin{minipage}{0.48\textwidth}\centering\fcolorbox{gray!50}{white}{\includegraphics[width=0.95\linewidth]{board/l11_bytetable.jpg}}\\[-1pt]{\footnotesize\textcolor{gray}{Board, 25:00: blocks of 8 bits and a table of 256 entries}}\end{minipage}\hfill
+\begin{minipage}{0.48\textwidth}\centering\fcolorbox{gray!50}{white}{\includegraphics[width=0.95\linewidth]{board/l11_twos_complement.jpg}}\\[-1pt]{\footnotesize\textcolor{gray}{Board, 32:20: $i$, $-i$, $i+(-i)=2^N$ and $i\,\&\,{-i}$}}\end{minipage}
+\end{center}
+
+\subsection{The code of \textsf{Sum}}
+\begin{lstlisting}[language={},numbers=none]
+Sum(i):
+    s = 0
+    while i != 0:            // 0 is the root
+        s += H[i]            // the board says A[i]: it is the array where the tree is stored
+        i -= (i & -i)        // go to the parent
+    return s
+\end{lstlisting}
+Example: $7\,\&\,{-7}$: $-7=\texttt{1001}$ (on 4 bits), the AND leaves $\texttt{0001}$, $7-1=6$; then $6\,\&\,{-6}=\texttt{0010}$, $6-2=4$; then $4-4=0$.
+\hlg{Complexity \mbox{$\Theta(\log n)$}}: we climb one level per step and there are $\log n$ levels.
+\board{0.42\textwidth}{l11_sum_code.jpg}{37:00}
+\twonotes{3}{4}
+
+%==========================================================
+\section{\textsf{Add}$(i,v)$ and the right siblings}
+%==========================================================
+$\textsf{Add}(5,10)$: start from position 5 and add 10 there; then \hly{add 10 to every node whose range contains position 5}.
+\begin{itemize}[nosep]
+\item \hlp{Intuition ``go up to the root'' fails immediately}: the parent of 5 is 4, which covers $[1,4]$ and does not contain 5. The children of a power of two
+      represent the subarray \emph{after} it.
+\item The nodes containing $i$ are: \hlb{myself, my right siblings, the right siblings of my parent, of my grandparent}, \dots\
+      Left siblings are useless: they end before my position.
+      ``From a tree point of view this is quite complicated'': for 5 we touch 5, 6 and 8, which are not even connected to each other.
+\end{itemize}
+In binary: $5=\texttt{0101}\to 6=\texttt{0110}\to 8=\texttt{1000}$. Bigger example: a node $\texttt{101}\,\texttt{0000}$ has children
+$\texttt{101}\,\texttt{0001}$, $\texttt{101}\,\texttt{0010}$, $\texttt{101}\,\texttt{0100}$, $\texttt{101}\,\texttt{1000}$: same prefix, one bit set in the trailing zeros.
+\hlb{The right sibling moves the least significant bit one position to the left}, and this is obtained by \hlb{adding the isolated least significant bit}
+(1+1 gives 0 with carry 1 one position to the left).
+\begin{itemize}[nosep]
+\item First idea: right sibling, right sibling, \dots, check every time whether we reached the last sibling, then move to the parent: \hlp{correct but ``very much inelegant''}.
+\item Suggestion from a student: \hlg{just keep adding the least significant bit of the current position}. When we are at the last sibling ($\texttt{101}\,\texttt{1000}$),
+      adding $\texttt{000}\,\texttt{1000}$ gives $\texttt{110}\,\texttt{0000}$: the carry moves the least significant bit \emph{of the parent} one position to the left,
+      ``price surprise, this is the right sibling of my parent''. ``Thanks to Fenwick that invented this.''
+\end{itemize}
+\begin{lstlisting}[language={},numbers=none]
+Add(i, v):
+    while i <= n:            // the board says i < n; with 1-based positions it is <= n
+        H[i] += v
+        i += (i & -i)        // right sibling of me or of an ancestor
+\end{lstlisting}
+We stop when the next index is \hly{out of range}: a power of two larger than the last one we have (5, 6, 8, then 16: out).
+\begin{center}
+\begin{minipage}{0.4\textwidth}\centering\fcolorbox{gray!50}{white}{\includegraphics[width=0.9\linewidth]{board/l11_right_siblings.jpg}}\\[-1pt]{\footnotesize\textcolor{gray}{Board, 51:20: children of \texttt{1010000}, carry to the parent's sibling}}\end{minipage}\hfill
+\begin{minipage}{0.5\textwidth}\centering\fcolorbox{gray!50}{white}{\includegraphics[width=0.9\linewidth]{board/l11_add_code.jpg}}\\[-1pt]{\footnotesize\textcolor{gray}{Board, 57:40}}\end{minipage}
+\end{center}
+
+\noindent\textbf{Complexity.} A ``lazy'' analysis: at most $\log n$ right siblings per level, $\log n$ levels, so \hlp{\mbox{$O(\log^2 n)$}}:
+\hly{correct, it is an upper bound, but not the tightest}. Better: \hlg{in each iteration the least significant bit moves at least one position to the left}
+(sometimes many positions), and it can do so at most $\log n$ times: \hlb{\mbox{$\Theta(\log n)$}}.
+
+\noindent\textbf{Why the $\log^2 n$ worst case never happens (discussion with the students, 59:00--70:40).} To pay $\log n\cdot\log n$ a node should be
+\emph{both} very deep \emph{and} far on the left. But \hly{the tree is very unbalanced on the right}: the deep nodes are towards the end of the array
+(they have many bits set to 1), so once they climb they are close to the end and few right moves remain; the nodes on the left are shallow but pay
+more moves to the right. ``You are amortizing the fact that you are low with not paying too much'': think of a $\log n\times\log n$ square
+that you cross along a diagonal, about $2\log n$ steps (a student's picture, approved by the prof). A subtree of a power of two with 7 positions has
+\emph{the same structure} as the tree of $[1,7]$, since the structure depends only on the number of positions.
+
+\begin{keybox}
+\textbf{Remark of the prof.} He knows many competition experts (e.g.\ IOI medallists) who use the Fenwick tree without knowing \emph{why} it works:
+it is easy to remember. The intuition is the recursion: \hlb{a solution for an easier problem (answers at powers of two) leaves smaller subarrays,
+on which we apply the same solution again}, until nothing is left; ``the other part is magic'' until you reason about it.
+The prof's notes (blog) are ``quite complete'' if something is not clear.
+\end{keybox}
+
+%==========================================================
+\section{Counting inversions}
+%==========================================================
+``Let me present a problem which can be solved with the Fenwick tree'' (70:50).
+
+\noindent\textbf{Problem.} Given $A[1,n]$ of positive numbers $\le n$, \hlb{count the number of inversions in \mbox{$A$}}: pairs of positions $(i,j)$ with
+\hlb{\mbox{$i<j$} and \mbox{$A[i]>A[j]$}}. Why ``inversions''? Because to sort the array you have to invert the relative position of the two.
+\begin{itemize}[nosep]
+\item \hly{The number of inversions is up to \mbox{$n^2$}} (every pair may be one; \extra{} exactly $\binom n2=n(n-1)/2$ for a decreasing array) and
+      \hlb{it is a measure of the sortedness of the array}: how many swaps you need to sort it.
+\item Example on the board: $A=[3,2,1,6,5,4]$: $(3,2),(3,1),(2,1),(6,5),(6,4),(5,4)$, \hlb{6 inversions}.
+\end{itemize}
+
+\subsection{Sorting algorithms and inversions}
+\begin{itemize}
+\item \textbf{Insertion sort} runs in time proportional to the number of inversions: when it reaches an element, the elements before it are already in order,
+      and it moves it backward by as many steps as the earlier elements greater than it. \hly{Insertion sort can count the inversions},
+      in a number of steps equal to the number we are reporting, \hlp{which may be quadratic}: not efficient.
+\item \textbf{Bubble sort} also does exactly as many swaps as inversions (only adjacent swaps), but \hlp{its running time is always quadratic}:
+      ``bubble sort is always terrible, never use it''. (A student: if you only allow adjacent swaps, bubble sort is optimal in that model.)
+\item The ``stupid sort'' (\extra{} usually called \emph{bogosort}): draw a random permutation, apply it, check if the array is sorted; with distinct values only one
+      permutation works, so \hlp{\mbox{$n!$} expected time}.
+\item \hlg{Insertion sort is really used in practice}: it is the last step of many sorting algorithms in standard libraries (quicksort recurses until the subarrays are small,
+      then switches to insertion sort): it is \hlg{more local, cache friendly on small arrays}, and after quicksort the array is almost sorted.
+\end{itemize}
+
+\subsection{Mergesort variant: $\Theta(n\log n)$}
+``One of them is based on the Fenwick tree. But can you think about another approach based on some sorting algorithm you are aware of?''
+A student: \hly{a variant of mergesort}.
+
+\noindent\textbf{Mergesort recap.} Split in the middle recursively down to single elements, then merge pairs of sorted subarrays: it is like a complete binary tree on top of the array,
+whose leaves are the elements. Board example: $[3,2,6,5,4,3,7,8]$ $\to$ $[2,3],[5,6],[3,4],[7,8]$ $\to$ $[2,3,5,6],[3,4,7,8]$ $\to$ sorted.
+$\log n$ levels, each touching all the elements in linear time: \hlg{\mbox{$\Theta(n\log n)$}}.
+
+\noindent\textbf{Counting during the merge.} \hly{Inversions inside each half have already been counted recursively}; in the merge we count only the inversions
+between an element of the right half and the elements of the left half. The merge compares the two pointers and outputs the smaller element:
+\begin{itemize}[nosep]
+\item if it comes from the \textbf{left}: no inversion (it was already on the left and it is the smallest);
+\item if it comes from the \textbf{right}: it was on the right of all the left elements and is smaller than \hlb{all the elements still left on the left side}:
+      add their number.
+\end{itemize}
+Board example: left $[2,4,6,7]$, right $[1,3,5,6]$: $1\to+4$; $2\to+0$; $3\to+3$ ($4,6,7$ remain); ``and so on''.
+\extra{} Continuing: $4\to0$, $5\to+2$, $6_L\to0$, $6_R\to+1$ (only 7 is left, equal values are not inversions), $7\to0$: total $10$.
+\hlg{Running time: the merge plus a check ``am I advancing the right pointer? then add'': still \mbox{$\Theta(n\log n)$}.}
+\board{0.6\textwidth}{l11_mergesort.jpg}{90:20: mergesort tree on $[3,2,6,5,4,3,7,8]$ and the merge of $[2,4,6,7]$ with $[1,3,5,6]$ (blue)}
+
+\begin{warnbox}
+\textbf{End of the lecture (90:44).} ``Can we get the same running time using the Fenwick tree? \dots\ unfortunately it's almost four o'clock.''
+\hlb{The Fenwick-tree solution was not given}: it is in \texttt{Lessons/L12/L12.pdf}, together with Nested Segments; the range updates are in \texttt{Lessons/L13/L13.pdf}
+(the topics of 21/10 on the course page, not reached today).
+\end{warnbox}
+
+\noindent\extra{} Code: \texttt{l11::inversions::merge\_sort\_inversions} and \texttt{insertion\_sort\_inversions}, tested against an $O(n^2)$ brute force.
+The prof's 2025 notes on this lecture's content:
+\twonotes{5}{6}
+
+%==========================================================
+\section{Exercises and deadlines (course page)}
+%==========================================================
+\begin{keybox}
+\begin{itemize}[nosep]
+\item \textbf{Mandatory} (21/10): \textbf{Nested Segments}, \url{http://codeforces.com/problemset/problem/652/D} (needs the material of L12).
+\item Optional (21/10): \emph{Pashmak and Parmida's problem}, \url{http://codeforces.com/problemset/problem/459/D}.
+\item \textbf{Mandatory} (19/10): \textbf{Update the Array}, \url{http://www.spoj.com/problems/UPDATEIT/} (explained in L13).
+\item \hlp{\textbf{Hands-On 1: deadline 25/10/2026}} (course page).
+\item No homework given orally in this lecture.
+\item Practice: \texttt{Lessons/L11/practice}, E47--E49 (\texttt{cargo test -p practice\_l11}).
+\end{itemize}
+\end{keybox}
+
+%==========================================================
+\section{Corrections to your notes \extra}\label{sec:fix}
+%==========================================================
+\begin{itemize}[nosep]
+\item \texttt{i -= (i \&\& -i)} and \texttt{i += (i \&\& -1)}: it is the \hlp{bitwise} AND with $-i$, \texttt{i \& -i} (\texttt{\&\&} is the logical AND, and \texttt{-1} is a typo).
+\item In \textsf{Sum}: \texttt{s + A[i]} should be \texttt{s += H[i]} (the array storing the tree; the board also writes $A[i]$).
+\item In \textsf{Add} with 1-based positions the loop is \texttt{while i <= n} (position $n$ must be updated too; the board and your notes say $i<n$; the blog uses \texttt{i < tree.len()} $=n+1$).
+\item ``Complexity: $\Theta(\log n\cdot\log n)$'': the prof called it the lazy upper bound, correct but not tight; the answer is $\Theta(\log n)$ (you wrote it right after).
+\item ``$[3,2,1]\Rightarrow(n-1)!$ inversions'': the count 3 is right, the formula is not; the maximum is $n(n-1)/2$ (for $n=3$: $3$, while $(n-1)!=2$).
+\end{itemize}
+
+%==========================================================
+\section{Next time}
+L12 (26/10, \texttt{Lessons/L12/L12.pdf}, from the recording): counting inversions with the Fenwick tree (the answer to the final question), remapping the values,
+Nested Segments. Update the Array and range updates were postponed again, to L13 (28/10).
+
+\end{document}

@@ -1,0 +1,965 @@
+# Automatic transcript (sherpa-onnx, parakeet-tdt-0.6b) of L_11.MP4, lecture of 21/10/2026. NOT revised: names and terms are often garbled (e.g. "fanway/Femweet three" = Fenwick tree).
+[000:00] Okay, so let's start today's lecture. We are
+[000:08] Talking about fanway three, super elegant uh solution.
+[000:12] for uh dynamic graphic sums.
+[000:16] The problem is
+[000:19] We are given an array.
+[000:21] like this.
+[000:22] And we would like to support two operations, one of them is sum and the other is add.
+[000:28] uh some operation is uh given an index and we want to uh return uh
+[000:33] uh the sum of the value in the array up to that position. With add instead we want to
+[000:38] to be able to modify any
+[000:40] element in the array.
+[000:44] What we want to do is to do both operation in logarithmic
+[000:50] Okay.
+[000:51] So we started presenting Femweet three by considering a relaxed version of the problem.
+[001:00] This relaxed addression assumes that you can uh add any value in any position.
+[001:06] Boss.
+[001:07] The sum operation is forced to act only on a position which is a power of
+[001:17] Uh
+[001:20] Sean.
+[001:24] So we we have uh
+[001:28] possible solution for this, which is something that follows our checklist, in which there is a footnote which says, okay, every time you have to solve a problem based on a data structure, observe
+[001:42] That if there are a few
+[001:44] possible queries you can always
+[001:48] Pre-compute the answer for two squares.
+[001:52] Essentially, following this advice, we can since we have only one, two,
+[001:59] Three and four positions.
+[002:02] For which we have uh
+[002:04] possible querying.
+[002:06] logarithmic of them.
+[002:09] So
+[002:09] For those positions we store the possible answers.
+[002:16] We are labeling, we are pretending to be all the three, and we are labeling each node with the position in the array.
+[002:25] and the range of position covering covered by this element.
+[002:32] So from one to position one to position one, so the sum up to from one to one is three, the sum from one to two
+[002:42] is three plus two five, the sum from one to four
+[002:48] is nine, the sum from one to eight is sixty.
+[002:54] Okay, now
+[002:56] Uh we also label each node with a binary representation of the number
+[003:04] In the data structure we are not using any of these extra information, okay, everything is for our understanding only.
+[003:12] In the data structure actually we have uh
+[003:15] They are red?
+[003:16] modified in some way and we
+[003:20] we actually interpret the position of this array as a binary no, not a binary, a trig.
+[003:30] Okay.
+[003:34] This however uh this is the first level.
+[003:37] And we are answering uh the query we we were talking before, okay? So we were asking only for some up to a certain position, which is a power.
+[003:54] Rad the
+[003:56] you can add uh an alue to any position.
+[004:00] What we are going to do is to
+[004:03] uh update uh the nodes that follow this uh position.
+[004:09] for the node which contains this position in their range.
+[004:16] No.
+[004:18] Given this solution for the relaxed problem,
+[004:22] What we can observe.
+[004:24] Well you can observe that there are ranges.
+[004:27] subarrays which are not covered by our solution.
+[004:32] In particular, in this example,
+[004:35] We had this range.
+[004:37] and this range.
+[004:40] In one element uh some array, in three elements some array.
+[004:46] If the array was bigger then we have uh a
+[004:50] Oh many islands?
+[004:53] Silent.
+[004:55] Eight minus three. My minus one, not seven.
+[004:59] So because it's two minus one.
+[005:02] Four minus one.
+[005:04] Three?
+[005:05] Eight minus one, seven.
+[005:09] No.
+[005:10] We can observe
+[005:13] That we can
+[005:15] Reuse it.
+[005:17] Exactly the same approach, yeah.
+[005:19] on these short suburban.
+[005:25] Let's pretend to apply the solution for the relaxed version of the problem in this sub-agrain.
+[005:33] What are the power of two?
+[005:36] position which are power of two.
+[005:39] Well, in these relaxed subarrays, the indexes relative to this subarray are one, two, three.
+[005:46] one and two are the two indexes which are power of two.
+[005:53] Here we have just one element which is covered with uh
+[005:57] The only power of
+[005:59] Good.
+[006:01] This way we obtain uh the second level of
+[006:06] which is exactly as the first level.
+[006:09] Done on the uncovered supper rubbish.
+[006:14] We link the node
+[006:17] Here we link the node to a fake root.
+[006:21] In the subarrays we link the node to the parent, which is the node
+[006:26] corresponding to the pay two position, just one position before the beginning of the sum.
+[006:33] Is this true? Uh is this uh clear?
+[006:37] Okay. So
+[006:39] Uh this morning this morning I woke we woke up at uh three o'clock.
+[006:46] Going to
+[006:48] Mm-hmm.
+[006:49] correct my myself many times, okay?
+[006:53] If I'm going to sleep like this, just say yay, okay?
+[006:57] So
+[006:59] What are the values here?
+[007:03] The value the values are relative to the subarray.
+[007:07] because uh it's exactly as the first level restricted to CP subarray.
+[007:14] Salvin
+[007:15] Because these
+[007:18] Four because this.
+[007:21] Range.
+[007:22] If the Sambara was
+[007:25] longer then we have other positions.
+[007:30] one length, two length, four length, eighth and so on.
+[007:35] Okay.
+[007:38] Now.
+[007:40] Just one level.
+[007:42] we are able to answer queries
+[007:45] only for positions which are a power of two.
+[007:50] Two level.
+[007:51] The indexes which are covered are binary numbers adding to ones.
+[007:58] Which means are numbered positions
+[008:02] such that those those positions are the sum of two.
+[008:07] Yeah.
+[008:09] 'Kay.
+[008:10] This is only one.
+[008:13] Only power of two?
+[008:15] Two ones
+[008:17] means uh the sum of two power of two.
+[008:22] And then we can go on. Okay? First level, only one beat.
+[008:28] Two level, two bits at one. What about the fifth level?
+[008:37] How many beats is set to one?
+[008:39] Three.
+[008:41] And the power of our data structure is improving level by level.
+[008:46] Because at the beginning is only solving the relaxed problem with uh answer which answer
+[008:52] chance it's only power of two.
+[008:55] Sum of two power of two.
+[008:57] Sum of three power of two.
+[009:01] Three power two, four power two, six six, seven, eight, till
+[009:08] log n power of two, which is the wool.
+[009:14] 'Kay.
+[009:21] Okay, let's add the last level in our data structure, which is uh this one now.
+[009:29] Unfortunately the example is small and uh it cannot be in any other way because otherwise I need
+[009:36] Uh
+[009:39] too much space.
+[009:40] This is position seven.
+[009:43] Seven in binary is
+[009:47] Zero.
+[009:49] One, one, one.
+[009:52] And the range covered by this node is seven, seven. Why seven seven? Because it's
+[009:59] Subarray
+[010:01] The subarray contains seven, consists only seven.
+[010:06] Yeah.
+[010:24] Okay, this is uh
+[010:42] So
+[010:44] What's the height of the tree?
+[010:54] And the deepest element has to be 2 to the msb minus 1, okay, because it's all 1.
+[011:04] Okay. So it's M S P, so it's log n. Yeah. You can do this or you can consider the fact that first level one bit set one, two bits at one, three bits to one. The last one must have at most log n bits at one, so the number of levels cannot be more than log n.
+[011:26] Okay.
+[011:28] There are cases like this one in which not all uh the levels are covered, no so because uh the largest number of bits at one is three, not four, okay?
+[011:44] Yeah?
+[011:46] Fully covered because the whole sub battery routed at eight is missing.
+[011:52] you need a bigger array for alpha.
+[011:55] We have this covered. Okay.
+[011:59] Uh of course the value here is uh two.
+[012:04] Okay, so the height of the tree is log n.
+[012:08] What was the other property we discovered last time? The other property is that if this is 0, 1,
+[012:19] this case
+[012:21] The sub three
+[012:24] is going to set bits set to one in the uh l training uh bits uh set to zero. Okay? Either here or here.
+[012:38] Indeed, zero, one, one, zero and the other possibility is both are one.
+[012:44] Can you see this?
+[012:46] Yes or no?
+[012:48] Okay.
+[012:49] Uh so here there are more possibilities because there are three beats to zero. So in the first we would have one
+[013:00] zero zero one zero zero no sorry zero one zero
+[013:05] One zero zero
+[013:09] Are you following me? And then go on, okay? So l the least significant bit is the position of this least significant bit is telling you how many opportunities you have in the subtree. Okay?
+[013:26] Yeah, because first we are going to add a single bit in this uh trailing uh uh zeros, then two bits, three bits, four bits and so on.
+[013:37] depending on the position.
+[013:40] Nice.
+[013:43] Okay, now let's uh try to understand how do we solve the operations.
+[013:54] Yeah.
+[013:55] For example, some
+[014:00] Seven
+[014:04] Where do we start from?
+[014:08] And usually on trees you are uh
+[014:14] you are used to start from the root.
+[014:18] In this case we start from
+[014:21] The leaf. Which one?
+[014:25] It's not always the leaf, it's an old, okay? In general. In this case, it's a leaf. We start from exactly the same position you are querying on.
+[014:34] And we are using the notes in order to fully cover the interval from one to seven.
+[014:44] Okay, the the the interval from one to seven is covered as seven seven.
+[014:55] Then
+[014:56] Uh then
+[015:00] Five, six, then one, four, and that's all.
+[015:08] Okay, so the sum of uh up to seven is two.
+[015:15] So the it's the sum on on all these uh uh intervals.
+[015:22] is two plus four plus nine
+[015:29] which is equal to
+[015:33] Oh
+[015:35] Fifteen.
+[015:39] Nice.
+[015:41] Okay, let's consider the nodes we are touching. So we start from this position.
+[015:51] Go to the parent.
+[015:55] Go to the parent, go to the parent.
+[015:59] until we reach zero. Zero is the root and we stop.
+[016:03] Okay, what are the positions we are touching? Okay, we are touching position seven.
+[016:10] Which in binary is zero one one one.
+[016:18] Position uh six, which in b in binary is one, zero sorry zero one one zero
+[016:30] Then we have uh four
+[016:34] zero one zero zero
+[016:37] And then we have uh
+[016:41] Zero.
+[016:43] which is zero, zero, zero, zero.
+[016:47] Okay, what's the pattern?
+[016:55] We are all lazy.
+[016:57] cancelling out the least significant bit.
+[017:01] Okay.
+[017:02] Does it make sense with respect to what we. So it's just in this case, so it's always like this. And why?
+[017:12] But actually the reason why we are always removing so it's it's clear to everybody that we are removing this bit, then the most the least significant bit, then the least significant bit till we reach zero. No significant bit.
+[017:26] Well, is this consistent with what we learned so far?
+[017:31] Let's see. Okay. We start from the level containing position seven.
+[017:37] Okay? And then we move up.
+[017:40] we would like to move to the part. We know that the parent is one level up. So how many bits set to one are in the level of the parent?
+[017:51] one lesser than the level of the trillion.
+[017:57] The child has three, the parent has two only. So removing one bit is consistent with what we have seen so far. Because we move up in a level
+[018:10] Okay. Now, is it consistent with the other observations we have made?
+[018:18] Yeah, because uh when we were observing, for example, this node, we said okay, the children are going to add a bit set one either here or here.
+[018:32] This is a child of this which is going to use uh is using this bit set one. So i if I want to move to the parent, I have to move uh to s to remove the bit that was set one.
+[018:48] which is the least significant bit.
+[018:51] Okay?
+[018:54] Nice.
+[018:56] Uh yeah, so exact that's exactly what we want to do. Remove the least significant bit.
+[019:05] Okay. Let me
+[019:10] Show you that, okay, we could actually do everything without what I'm going to tell you now.
+[019:19] Okay, so if you re m uh you store the structure of the tree.
+[019:26] For every link you put a link down and a link up.
+[019:32] You can start from here. This is a node, real node.
+[019:37] You follow the link up, you go to the parent, then the grandparent, then the grandgrandparent, till you reach the root.
+[019:45] This would be possible anyway.
+[019:48] What we are di trying to do now?
+[019:51] with the observation we just made, is to avoid storing the structure of the tree.
+[019:59] For the end, actually the operation will be possible anyway. For the other for the sum that we are going to solve now. For the other actually the pointers that we need to add are more we are going to see later on.
+[020:16] Okay. So
+[020:18] The structure of the three the operation will be
+[020:21] Easy.
+[020:23] It's slow than time because uh
+[020:25] We are moving up every time by a level. We have log n levels.
+[020:30] Look at it.
+[020:32] Can we do this?
+[020:34] without storing the three. So we only store the array as it is.
+[020:40] For doing this, we need to use the observation we said before.
+[020:47] So every time we want to move up we have to remove the least significant bit set one.
+[020:57] 'Kay.
+[020:59] So we want to use this.
+[021:05] Implementer.
+[021:09] The operation
+[021:10] Parent.
+[021:12] of I
+[021:15] which allows us to move up
+[021:21] Okay.
+[021:24] Okay, first thing I want to do is to isolate the least significant bit set to one.
+[021:32] What does it mean? It means that uh in this case I want the number zero, zero, zero one
+[021:44] Only the least significant bit set one is survived. Now, with this
+[021:53] And the original position, I can just do this minus this.
+[021:59] And I obtained this one.
+[022:02] Okay. So apparently par not not apparently given this the parent of I is I minus
+[022:15] the operation we need to isolate the least significant bit.
+[022:22] Okay.
+[022:23] Mm.
+[022:25] How can we isolate the least significantly?
+[022:36] Okay.
+[022:38] If you are an engineer and you don't care about the beauty of the solution you are presenting, the elegance of what you are doing, you can use a trick that is often used. It co it consists in saying, okay, my numbers have
+[022:57] Thirty-two bits.
+[023:01] Uh
+[023:03] Tellty to
+[023:04] Zero.
+[023:06] There's two on now.
+[023:08] Okay. I split them into blocks.
+[023:15] Let's say
+[023:17] Four blocks of eight bits each.
+[023:22] Okay. Now I pre-compute a table
+[023:28] That for every single byte possible byte, so we have a table with
+[023:35] Uh
+[023:37] these many entries
+[023:41] For every possible byte, I store here what's the least significant bit.
+[023:49] Yeah?
+[023:51] Does it make sense?
+[023:53] Is it clear what uh what I'm doing? So you have a while loop that iterates for four times.
+[024:00] You check this one. If it is zero, go on with the next one. If it is different than zero, the answer is in the table. Actually access the table with the content of your byte and you get the bit.
+[024:18] Does it make sense? This trick is used uh often. When there are no properties that allows you to do everything in an ele an elegant way, you can always resort on this. Okay, you cannot you have a cable for the whole thirty-two-bit world. Why?
+[024:39] Too big because it's two to the thirty-two. So you split it into pieces.
+[024:46] Few pieces are enough to have blocks small enough to allow a table, in this case, to do the eight.
+[024:56] Okay.
+[024:57] This uh trick of uh uh using tables uh is quite popular, and it's it's used in many cases, and uh
+[025:07] In this particular case, actually, this is not needed because.
+[025:15] Uh because actually a bit trick is enough to get the solution. Super elegant bit.
+[025:25] Chain zeros.
+[025:28] Uh yes, you can count the three trading zeros. Uh indeed there exists an operation uh on the CPU that uh is providing you this.
+[025:39] Uh yep.
+[025:44] But uh counting the trailing zeros is more than what you need.
+[025:51] So what you can do?
+[025:53] Okay, you have uh zero zero zero zero zero zero zero zero zero, for example.
+[026:01] You have an operation that tells you okay
+[026:04] Uh number of trading zeros is one, two, three, four, five.
+[026:09] So you get
+[026:13] Five.
+[026:14] Then the position of
+[026:18] The bit set one is the fifth. You compute shift one of five positions and you get what you want.
+[026:27] Isolating the least significant weight.
+[026:29] Okay? But you need two steps.
+[026:33] First counting and then
+[026:35] And counting is more than what you need, okay. You don't need to c t to return the position. You just want to isolate them the list significantly.
+[026:45] With the position you can get a least significant bit.
+[026:49] isolated.
+[026:50] But you can go directly to the least significant.
+[026:54] 'Kay.
+[026:56] That's where the elegance of this
+[027:00] Bitoika is uh
+[027:04] Relies on. Okay.
+[027:10] Okay, so you know how the negative numbers are represented uh in a machine?
+[027:16] Those are represented in complement two.
+[027:20] What does it mean complement to?
+[027:23] Well it means that if you have a number, let's say one uh
+[027:28] One, one, one, one, one, one, one, zero no, sorry.
+[027:35] too many ones to make it uh interesting.
+[027:43] One zero zero zero zero one zero zero zero zero zero. For example, the complement two
+[027:54] is complementing every single bit
+[027:57] but not the least significant one.
+[028:01] So the complement to this, so this number minus, so the the minus of this number is equal to zero one
+[028:12] Um
+[028:15] Like this actually, because you have negative numbers, and the most significant bit of negative numbers is one.
+[028:24] uh zero one one zero one zero one and that's the only bit that remained the same and after that everything remained zero.
+[028:37] Okay, this is the compl the tools complement.
+[028:41] Okay?
+[028:42] Why is that?
+[028:45] The representation is such that if you have numbers with n bits,
+[028:53] The two's complement of I is minus I.
+[029:00] And the representation is such that
+[029:03] This plus this is equal to two to the n.
+[029:11] We should zero because zero because we have only n bits. But it will be two to the n if we have one extra bit.
+[029:21] Okay.
+[029:23] So reinterpreting this so this is the the ratio why okay if we interpret this looking at this well this representation which flips every bit but the least significant one is exactly what is zeroing out every bit and have one extra bit one.
+[029:49] Why? Because this plus this gives an extra one. Which plus this gives an extra one. Which plus this gives an extra one.
+[030:01] So everything is zero so far if we sum the two.
+[030:05] Are you with me?
+[030:06] So if we sum these two, these ones are zero
+[030:11] with one extra bit.
+[030:13] Plus this is zero plus an extra bit, plus one, blah, blah, blah. So flipping the bit guarantees that you have just one bit set one in the two.
+[030:26] Exactly one.
+[030:28] which with the the reminder of the previous operation gives zero and one extra bit as reminder.
+[030:36] This convincing
+[030:38] So everything is zeroed out in the sum
+[030:43] up to this point in which we have one
+[030:47] The reminder of the previous operation plus this one gives zero with one as the reminder, which is the one for the exabit we don't have.
+[030:59] Is this convincing?
+[031:01] Okay, so this the this is the two's two's counter.
+[031:06] Okay?
+[031:09] Okay.
+[031:10] So if I have a such a big number
+[031:18] for the in this example, okay?
+[031:23] This is uh
+[031:25] This is I
+[031:28] And this is minus i.
+[031:32] Okay.
+[031:36] How can we isolate?
+[031:38] The least uh
+[031:39] significant bit zone.
+[031:46] Exactly.
+[031:47] If I do the logical end,
+[031:51] This is uh
+[031:56] This is zero, zero, zero, zero, only the only one.
+[032:01] zero, zero, zero.
+[032:11] So we isolated the listing figure by doing what?
+[032:16] Aye.
+[032:17] And
+[032:19] Minus i.
+[032:23] So
+[032:25] Here
+[032:27] is I minus sorry and
+[032:32] Mayus I
+[032:35] So this uh is going to isolate the least significant bit.
+[032:39] Once we have isolated the least significant bit, we do I minus the least significant bit isolated and we remove this least significant bit from I.
+[032:52] So to move from an old I to its parent, it's enough to do I minus I and minus I.
+[033:04] 'Kay.
+[033:10] Mm.
+[033:16] Not enough uh surprising for you.
+[033:20] Uh
+[033:23] So what uh what's the code of sum?
+[033:28] Code of sum.
+[033:31] Ease.
+[033:35] Uh the sum is equal to zero initially.
+[033:40] Then while I'm not the root.
+[033:47] When uh when wh wh what is the root?
+[033:50] I is
+[033:53] different than uh zero.
+[033:58] Yeah?
+[034:01] Uh what I have to do? S plus the current node.
+[034:09] Uh then
+[034:13] Aye.
+[034:17] minus equal i and minus i
+[034:28] Super cool, I think.
+[034:31] And uh okay forget uh
+[034:34] Retirement S.
+[034:36] Okay? So
+[034:40] I is this one.
+[034:42] I minus my and minus I, so seven and minus seven. Minus seven is one zero zero zero. No, sorry, one zero zero one.
+[034:59] This is minus seven. We do the end. The only bit remains one.
+[035:05] This so seven minus this number is giving you six.
+[035:12] Six.
+[035:14] This one.
+[035:16] Six.
+[035:18] And minus six. What's minus six? Minus six is one zero. One zero.
+[035:29] I have no idea, I'm just uh speculating on what the what the the result I'm and looking at. Uh but it's thus just the two two's complement, you know. To get the two's complement uh the f I have to uh flip every single bit before
+[035:49] The more the least significant one, which remains one.
+[035:53] And then everything remains the same.
+[035:56] Okay? And this is consistent because that resinfit is the one that lets start the cascade of ones
+[036:09] Goes goes after that and reset every single bit with zero.
+[036:15] Okay.
+[036:17] Uh this is what we have to remember.
+[036:20] And so from seven we move to six, from six we move to four, and from four we move to zero. And we get the answer in logarithmic time.
+[036:31] Cool.
+[036:33] Okay, complexity is of course uh log n. Why is log n? Because the number of levels is log n. So we have log n levels and we are climbing the tree
+[036:47] starting from the uh internal node or leaves.
+[036:53] Nice. So complexity.
+[037:11] Nice.
+[037:14] Okay, what about uh add? Let's say I want to add
+[037:22] Uh at position five the number ten.
+[037:28] Okay.
+[037:29] What I have to do.
+[037:32] I start from position five
+[037:37] I add the ten there, that's the easiest uh possible part. Then what I have to do? I have to add the ten.
+[037:45] to every node corresponding to a range that contains the position file.
+[037:53] Because I have to update all of them.
+[038:00] Uh so I start from five and go up to the root.
+[038:04] your intuition may suggest.
+[038:07] But we fail this intuition fails immediately because we observe that the parent is not containing the position five.
+[038:18] And did the
+[038:19] was the case because the parent was let's say a power of two
+[038:25] then the the the children are representing the subarray between this power of two and the next power of two.
+[038:34] 'Kay.
+[038:36] So if the position is in the se this sub-array, the parent is not covering.
+[038:41] that interval who is covering that position.
+[038:48] Okay.
+[038:50] So
+[038:51] At the same level.
+[038:53] The other children after me of my parent.
+[039:01] That's all. And the previous level is successful of your parent.
+[039:08] It then
+[039:14] No, the children are not.
+[039:17] Because uh if you have a a power of two and another power of two,
+[039:22] A position here, a position which is in the previous range is covered by this power of two, but not in this sub-array, because this sub-array.
+[039:35] uh is low calendar.
+[039:38] 'Kay.
+[039:46] seedling of the current
+[039:48] Then we go up as you send and on like uh the sibling on the right and then we go up and the sibling on the right. Yeah. Okay. The
+[040:05] Uh the answer is the sibling my sibling my my right siblings my the siblings at my right
+[040:14] So at the beginning is me and the right siblings. Then I go to the parent and I want the right siblings of the parent.
+[040:26] Then go up the right siblings of the grandparent, right siblings of the grandgrandparent, and so on.
+[040:35] Cool. Seems to be very complicated, right?
+[040:42] Reducing the number of ones because we always put the parent parent and we are always shifting the last one to the left.
+[040:53] So is it complicated or not? So if we talk about operation CD3, seems to be very complicated. Because it's the my right siblings. The right siblings of my parent. The right siblings of my grandparent. The right siblings of my grand-grandparent. Which, from a three point of view, is quite complicated, right? Because let's say five. I'm modifying this.
+[041:20] This and these, which are not even connected to each other in a normal tree.
+[041:27] Right?
+[041:29] And uh imagine a bigger array, this one, this one, and then go up this one, this one, these one, and so on. So even nodes which are not connected. So from a three point of view, it's a very complicated uh
+[041:45] Overage.
+[041:47] But uh as you observed uh there are some tricks on bits.
+[041:56] Okay, let's see what does it mean the same operation in terms of the bits. Okay, what are the nodes we need to traverse?
+[042:08] Okay. Node number five. The pa the the right sibling of uh five is uh six.
+[042:19] Right? And then the um
+[042:24] The the the right sibling of my parent. My parent is four. The right sibling of my parent is eight.
+[042:35] Represent let's represent these in binary.
+[042:39] Five is zero. Uh one zero one.
+[042:46] Six is zero, one, one, zero
+[042:55] Eight is one, zero, zero zero.
+[043:08] Let's see. Okay. Observe, let's say we have a node.
+[043:14] Okay, let's uh this is very small example. Okay, let's consider a bigger example. Okay, zero for spray one, zero.
+[043:25] Uh one zero zero zero zero. This is an odd.
+[043:31] The children, accordingly to what we said before, are have the same prefix
+[043:39] And one bit.
+[043:43] Which moves from these, these, this, and this. Right? Because we are talking about the sub-interval which sub-array which is locally just this one, and we are selecting power of two in this local sub-array. The power of two are setting one bit here, then one bit here, then one bit here, and then one bit here. This is what
+[044:08] means being local in the suburb.
+[044:14] This be set to one plus the prefix of the part.
+[044:19] Blast them.
+[044:20] concatenated with.
+[044:22] The Python plus Monk Streets. Okay, so children are one.
+[044:32] one zero one because of the pattern then zero zero zero
+[044:39] One?
+[044:41] This is the first children. The second children has the same prefix, indeed.
+[044:48] All of them.
+[044:51] have this same prefix.
+[044:56] Okay? The only difference is the position of the one, which is here, here and here.
+[045:05] Are you all with me?
+[045:15] I'm uh in any of these nodes.
+[045:19] For example, I want to update with add this node.
+[045:25] These
+[045:27] Is there left.
+[045:29] Seedling.
+[045:31] I don't care about it.
+[045:33] Okay? Why? Because in the subarray it is a power of two that ends bef is it's before my position, so it's not including myself.
+[045:45] left simply we don't care.
+[045:50] Right, siblings is what we want.
+[045:54] We want.
+[045:55] This and this.
+[045:58] What happened to the right siblings?
+[046:01] Well, as he was suggesting, this least significant bit is moved one position
+[046:10] Oh
+[046:12] I had can.
+[046:19] I think that's the
+[046:23] seems to be easy to.
+[046:27] So I'm starting from this one. Let's say it's our five before. I want this and this.
+[046:35] How can you do this?
+[046:37] I want to move the bit set one position uh to the left.
+[046:50] Let's select as before the least significant bit.
+[046:56] 'Kay.
+[046:58] So I have this number plus.
+[047:03] The least significant bit is related.
+[047:06] Everything is zero apart from this one.
+[047:09] This one plus this one gives zero.
+[047:13] Then one, which is the reminder, I'm pressing here.
+[047:17] Which means I obtained these one.
+[047:21] Okay?
+[047:22] Do the same. Isolate this one, this number plus the least significant bit isolated. One plus one is zero, plus one here gives this one.
+[047:34] Cool. Okay.
+[047:37] Seems to work.
+[047:39] But then I need to okay, right sibling on myself. So my right sibling, right sibling, right sibling, check one every time if I reach the end of my right sibling and then move to the parent.
+[047:53] And then right sibling of the parent, right sibling of the parent, every time I check if I reach the end and then move up. Well there is an easier way.
+[048:14] Okay.
+[048:16] Uh yeah.
+[048:18] Do we all agree that the check every time if I reach the end of my riceibling, then move to the part will be
+[048:27] Okay, but uh uh it's uh much much uh inelegant, very much.
+[048:37] Okay, what he is suggesting is to keep adding uh the least significant bit of the position, current position.
+[048:49] And so what's the algorithm?
+[048:51] Isolate and received cut bit.
+[048:54] Yeah or yeah, whatever.
+[048:56] Ah the
+[048:58] the number and the least significant bit isolated to get this one.
+[049:04] isolate the least significant bit. This number pu plus the re least significant bit isolated gives this one.
+[049:10] We all agree on this so far.
+[049:13] Least significant bit isolated plus this one, this gives this one. Now, least significant bit isolated here. So exactly the same algorithm.
+[049:23] Plus this number, what is giving? Let's do it. So it's one zero zero.
+[049:34] One no.
+[049:37] Uh one.
+[049:40] Uh no.
+[049:43] One.
+[049:45] zero zero zero
+[049:47] Okay? Plus the least significant bit isolated, which is zero, zero, zero, zero, zero, zero.
+[049:59] one ear.
+[050:02] These gifts
+[050:04] Zero.
+[050:07] zero, zero, zero, one plus one is zero.
+[050:15] We have one as a reminder.
+[050:19] And the great effect of this reminder is to move the one
+[050:26] The least significant bit of my parent
+[050:30] One position
+[050:32] To the left.
+[050:37] And that's exactly what we want. We want to move.
+[050:40] Two.
+[050:42] My grandparent, which is equal to my parent, the only difference is that its least significant bit is one position.
+[050:50] Okay?
+[050:52] Great. So one plus one is zero, one, one. That's the result.
+[051:00] Price surprise, this is the right sibling of my parent.
+[051:08] Yeah.
+[051:10] So
+[051:12] Myself, right, sibling, right sibling, right sibling, right sibling. Stop.
+[051:18] Rise hebing of my parent. Rise he wing of my parent. Rice hebbing of my parent. Stop.
+[051:25] Right sibling of my grandparents.
+[051:27] Right sibling of my grandparent, stop. Right sibling of my grandgrandparent, and so on.
+[051:35] Fan Sao to be?
+[051:40] I
+[051:41] plus equal I and minus I
+[051:49] That's the end.
+[051:51] Thanks to Fenwick that invented this.
+[051:55] Okay.
+[051:59] Uh and the final algorithm for add
+[052:06] is I V
+[052:10] While
+[052:14] I hear some
+[052:16] When do we have to stop?
+[052:26] Yeah, because we we start from our level.
+[052:32] Right, right.
+[052:34] Right, right, we stop when the
+[052:39] The next index reaches the highest level.
+[052:45] and it's out of range.
+[052:51] Last level means a power of two.
+[052:56] number which is a power of two out of range bigger than the last power of two we have.
+[053:03] Okay.
+[053:10] Uh yeah.
+[053:30] Okay.
+[053:36] Is the algorithm clear to everybody? Do I need to repeat it?
+[053:40] Uh okay. So we start from uh
+[053:45] Uh any node like five five six
+[053:54] Eight.
+[053:57] Yeah, out of range.
+[053:59] Okay, but bigger please right, right, right, right, right, right, right, right, right, right, right, right, and so on.
+[054:08] Okay. Complexity.
+[054:11] Okay.
+[054:14] You already know.
+[054:17] That's next to me.
+[054:20] Complexity.
+[054:24] Okay, a pa wolf. What you may think is
+[054:31] one lazy approach for uh
+[054:35] running time is the following. How many nodes do we have
+[054:43] Most for each large.
+[054:46] in eleven. What's the largest number of nodes you have in eleven?
+[054:52] Top level login.
+[054:55] all the power of two up to eight.
+[054:58] How many levers do we have?
+[055:02] Blogging.
+[055:03] What's the running time? It's log n
+[055:07] Because I'm
+[055:13] Times log n, because at most I'm touching uh log n right siblings of myself.
+[055:23] much sad for my grandpa and grandgrandpa.
+[055:29] Okay.
+[055:31] Log
+[055:34] Square n
+[055:36] two times so so n log n times log n.
+[055:41] Okay?
+[055:43] Is it correct?
+[055:45] Pernod.
+[055:47] It is correct. It's an upper mountain.
+[055:49] But uh is the tiniest uh upper bound we can have.
+[055:56] case we move.
+[056:00] So we are plugging this okay what does it mean moving one bit at a time? It means that the least significant bit is moved one posi always in each iteration of the while loop one position to the left.
+[056:23] Okay?
+[056:26] Actually, there are cases in which the least significant bit is moved many positions to
+[056:35] right left in uh in uh
+[056:46] Yeah?
+[056:49] So since they are this doing this,
+[056:53] How many times can we move the least significant bit one position to the left? Log n at one point.
+[057:01] Because once it reaches this position, we are out of reach.
+[057:08] Exactly.
+[057:11] So the complexity is
+[057:16] Is
+[057:19] Login.
+[057:24] Questions?
+[057:28] Is the solution uh clear to everybody?
+[057:32] Okay, if not, there are notes which are I think well quite quite com complete.
+[057:38] You can read them.
+[057:40] Uh
+[057:42] Want I know about many experts in competitions like one guys that are
+[057:54] participate to uh
+[057:57] IOE, which are Olympians in Informatica, or elsewhere, or other competitions, that
+[058:07] Um
+[058:09] Didn't know why the family worked.
+[058:12] actually they remember this because it's easier super easy to remember and then you know
+[058:19] over there. Oh it's the the three but the
+[058:23] didn't know how to how why it's working like this and why
+[058:29] and why uh we have this uh this structure.
+[058:35] The structure is is here just because we have a solution for for a easier problem.
+[058:43] Which gives us answer for particular positions. What is left is a subarray, which is a smaller problem. We can apply the same solution once again. Keep doing this till uh the subarray contains no position at all and there is no need therefore.
+[059:05] Repeat recursively the approach. Okay, that's the intuition. And the other part is magic.
+[059:15] at the beginning and then you know why. Uh if you reason about it.
+[059:21] Um
+[059:29] Fixer after bound is uh login.
+[059:34] Yeah.
+[059:36] same rolling yeah
+[059:39] summing the L S D uh one at a time.
+[059:47] Uh the layers uh without uh
+[059:50] as the before her as the first uh approximation of uh complexity and you have to updating also the top level. So it's just that is because the worst that can happen is that uh some in the ones are into the top level.
+[060:09] So you don't
+[060:12] get why the complexity is log n like uh I think that I understood the so you you know why it's log n i with following our argument.
+[060:26] Uh you don't understand why. It's Logan looking at the picture. This is the case? Yes. Okay, can you can we would you like to reason together about why?
+[060:40] So the argument the wrong argument, which is not wrong, is giving up per bound. So the other one is more precise only. Okay? Is saying, okay, how many nodes per level at the most? Log n.
+[060:56] How many letters do we have? Log n.
+[061:00] This, French this is giving you the upper bound.
+[061:05] Okay.
+[061:07] So let's forget about the fact that the the least significant bit is moving every time one position to the left. So at the end we know it's log n.
+[061:18] But why is not the case log n time times log n?
+[061:25] Okay? Because this worst case, log n times log n, actually never happened.
+[061:33] That's the point then.
+[061:34] Okay, why it never happened?
+[061:39] Okay. What do you want to say? No, uh nothing. I i it's like if it's uh like an argument with the structure of the tree, I don't know, like
+[061:48] I don't even know an argument based on the structure of the tree, but we can grasp the intuition which is enough to be informal because the formal proof we already have. The least significant bit is moved one position, always one position to the left. But what's the informal argument? So why?
+[062:14] It's not uh these times these.
+[062:18] Okay.
+[062:20] You were the first one. Looking at the three, I guess that for each position we have on the left.
+[062:29] Many elements that uh
+[062:32] we are subtracting from the first log n, so for example the minus one.
+[062:39] If we have to consider that, it's logatic because we are looking at it and also the upper ones, but not the one on the left. And so the upper levels are not really logical but less. And so we have as many elements on the left that we don't do not consider that are not. Can you generalize a bit? What's the point?
+[063:05] Okay, the wrong argument is telling us that the complexity must be this.
+[063:15] times these.
+[063:17] So it would be log n square if there is a node for which you are very low in the tree.
+[063:27] And you have uh you are very left in the three as well.
+[063:33] Okay.
+[063:34] So in order to to pay these
+[063:38] times this must be.
+[063:41] The bottom of the three
+[063:44] and to pay this and on the left to pay this.
+[063:51] Five? Okay.
+[063:54] not wa I don't want to conclude, I want just to brace something today.
+[064:08] Yeah.
+[064:12] Only the first level there are login. Yeah. Right.
+[064:22] Basically I imagine a a square, okay like like imagine a square log n times log n. Okay, and we start from the left side. No. We don't do every level whole, like for each level. We we every time we move in a diagonal way in this square, right? Yeah. And uh since the the the the square uh the diagonal of the square must be log n plus log n
+[064:53] Okay, it's two log n. Because if the square is log n times log n, the diagonal has to be like uh two log n. Okay, and so maybe it it's a yeah better way to see it. Yeah, good point.
+[065:10] Yeah.
+[065:15] Yes, like I said, um the the the largest level is always the first one. So to get the worst of the of that dimension you would have to be the first element. But the deepest level is always in the middle. In the middle? Actually there would be a a huge subtree here.
+[065:40] Which is exactly the replication of this wool. Yeah, not in the middle, towards the end.
+[065:47] the the deepest is always towards the end.
+[065:53] Yeah.
+[065:54] because it has the the most amount of ones.
+[065:58] Mm yeah?
+[066:01] The electric mouse.
+[066:03] Yeah.
+[066:04] So essentially the one that pays the most
+[066:11] For the sibling.
+[066:14] is the one that is paying the less.
+[066:19] For the height.
+[066:22] Which is exactly what you are saying, because uh it's uh yeah.
+[066:28] And then the one that pays a little bit more in the height is paying a little bit less on the
+[066:40] First line.
+[066:43] And you are going like this, like a diagonal.
+[066:48] Uh yeah. So the w and and finally the one actually it would be better to have the complete tree because which is uh uh another tree like this rooted than this.
+[067:00] Can you see this?
+[067:03] Because uh it's uh
+[067:06] This would be a a subarray of sites si yes, seven if you don't want another l another node here. Seven is is exactly as this sub tree.
+[067:20] See same structure because the structure depends only on the number of positions we have. Here we have seven positions, so we have a replication of these rooted at this, so here. And the l lowest possible node will be the two here, okay? One level down.
+[067:38] Okay?
+[067:39] So the the node being the node on the top of the tree, so the one which is paying the most in terms of high is actually the one which is closer to the end on the top level.
+[067:57] Okay.
+[067:58] So you are amortizing the fact that you are low with not paying too much.
+[068:05] Yeah?
+[068:07] This convincing? More convincing.
+[068:10] So it's exactly because of the structure of the tree, which is very unbalanced, very unbalanced on the right.
+[068:18] Why on the right?
+[068:21] Because on the right is where you pay you can pay more for the height, less for moving right.
+[068:30] once you go out.
+[068:34] That's why it's very unbala unbalanced on the left.
+[068:37] Oh sorry on the right. And here the nodes which have a very small
+[068:45] Uh hi
+[068:48] are the ones that are paying more for moving right once you reach ISL.
+[069:00] Yeah?
+[069:02] And if you translate these in terms of
+[069:05] Binary representation, a node which is, for example, a leaf, leaf here.
+[069:14] as one single bit
+[069:19] which is at the beginning of the bio representation.
+[069:22] 'Kay.
+[069:25] And you need to move this bit
+[069:28] To the right.
+[069:40] We are not convinced.
+[069:49] Because I'm two. I confused too, but yeah.
+[069:55] Yeah, uh okay. This is uh right, right.
+[070:02] Okay?
+[070:06] You have uh
+[070:08] Very large height.
+[070:12] Here he said the eye is very small.
+[070:15] And why? Because uh if you are here you need to pay a lot.
+[070:21] To reach the end.
+[070:24] If you're here, even if you have to j to to climb a lot, you are pretty close to the end once you reach the top.
+[070:34] And that's the trick which is unbalanced on the right.
+[070:38] Okay.
+[070:44] Other questions? No more questions.
+[070:48] Okay. Uh let me
+[070:53] present a problem which can be solved with
+[071:00] Uh
+[071:03] Uh family tree.
+[071:12] which is called counting inversions.
+[071:16] And uh
+[071:21] uh it's the following. We are given uh an array
+[071:26] Of n elements of positive integrals, for example.
+[071:34] Uh poem let's say
+[071:38] Yeah, positive in positive.
+[071:42] Numbers.
+[071:46] Smaller than n, no?
+[071:49] Okay.
+[071:51] Count
+[071:54] The number
+[071:58] of in there.
+[072:03] In A.
+[072:06] An inversion is a pair of positions
+[072:12] I injure.
+[072:14] such that uh
+[072:19] So you have two positions, i and j.
+[072:22] Okay, the value in position I is greater than the value in position j.
+[072:32] Why inversions? Because if you want to sort the array, you have to invert the position, relative position of the two.
+[072:41] Okay?
+[072:44] Indeed, the num total number should
+[072:48] These inver inversions the
+[072:52] Uh
+[072:53] The total number of inversions
+[072:57] since we are considering pairs, is up to uh
+[073:02] n squared.
+[073:04] Right? Because we have n squared.
+[073:07] and square uh pales, each of them may be an inversion.
+[073:13] Uh
+[073:15] So the number of possible inversions is the number of possible types, and the number of inversions is somehow a measure of the sortedness of the array.
+[073:28] Which is how many swaps you have to do in order to let it sorted. Indeed.
+[073:37] In session sort is running in time proportional to the number of inversions in the array. Why? Because every time you have an inversion like this,
+[073:50] Once uh insertion sort reaches this position, this has been already placed this number has been already placed in its correct position. To move it in its correct position you have to go backward
+[074:03] And you the number of steps you have to do backward equals the number of numbers that were before this.
+[074:11] but they were greaser then.
+[074:15] So you go move uh left.
+[074:18] Listen, I I don't
+[074:28] Jason's words. Uh bubble stop, bubble sorta is always uh quadratic for spin time.
+[074:37] Because bubble chart
+[074:41] Always uh uh
+[074:44] So it moves from left to right n times, and every time moves the current element
+[074:55] one position to the ra so sorry, process the array from left to right. We are here we are, we compare this element with this one and swap.
+[075:06] and so on. So the number of swaps
+[075:10] Done by bubble sort is equal to the number of impressions. This is, of course, true because if you have two numbers that need to be moved,
+[075:20] First you have to move uh eight uh
+[075:23] Backward for all the elements in between which are smaller than this element.
+[075:30] till these are close together and then you have to smoke.
+[075:37] But the time complexity is proportional, always quadratic.
+[075:45] What's the number of operations to sort the array? I can just count the number like if I only allow adjacent swaps. Okay, like in the case of bubble sort. Yeah. If you find a model for which bubble sort is the perfect algorithm, then bubble sort is the perfect algorithm. Yeah. Because it is also like the random swaps, which uh is very complex.
+[076:08] We are okay, yeah.
+[076:12] So bubble shot is the most terrible algorithm unless you force yourself to be words. Words as dandies is like you
+[076:23] Draw a random permutation
+[076:28] permute the elements according to that random permutation, then you check if the array sorted.
+[076:35] Since there is just one permutation that works if all the numbers are different, then
+[076:41] You need expectation and factorial time.
+[076:47] She's worse much worse than the Marbot site.
+[076:53] Can call these a stupid sort, probably. Probably it's the right correct name for these algorithms. I mean, not the correct, the right, the existing name for this algorithm is stupid sort.
+[077:06] Maybe, yeah. I don't think there is a stupid sort I agree. Maybe it's
+[077:11] Much worse than this, I don't remember, yeah.
+[077:15] Uh yeah.
+[077:17] But bubble sort is terrible because it always takes quadrant time. Insertion sort instead it depends on the number of inversions. Indeed, there are cases, best cases, in which insertion sort is pretty good. Indeed, insertion sort is really used in practice.
+[077:37] It's the last step of many sorting algorithms in standard libraries. They do like quick sort, so recursively split uh according with the pivot re light and red until they reach a subarray size which is small enough uh to to switch uh to insertion sort. Insertion sort is better because it's uh
+[078:02] Uh more local.
+[078:05] cache friendly when the array is very small. And since you have done a lot of swaps here and there with b uh with quick sort, this array is almost sorted. So insertion sort is pretty good.
+[078:21] Well bubble sort is always terrible, never bu never never use it.
+[078:27] So counting the number of inception is our goal.
+[078:30] Uh one possible approach uh is to use insertion sort, since the running time of insertion sort is uh the number of inversions every time we move an element backward at one.
+[078:45] And this algorithm runs in time proportional to the size of the output. So if you have many
+[078:52] Size of the output is incorrect actually. So, in the number of steps equal to the number you are reporting.
+[079:05] Which may be quadratic, which is bad. So, in session, sort is able to compute the number of inversions, but is not.
+[079:15] Efficient.
+[079:17] Is there any better algorithm?
+[079:22] Uh
+[079:23] One of them is based on fair weight. But can you think about another possible approach based on some sorting algorithm you are aware of?
+[079:34] In the meanwhile, so while you're thinking, let me
+[079:39] Uh let me write this array.
+[079:44] Which is uh
+[079:45] An array unsorted for each element let's put a link for each induction that involves this element.
+[079:57] Uh
+[080:01] There are two numbers which are smaller on the right of this element.
+[080:09] Also, two and one makes investion. Six and five, six and four.
+[080:17] five and four. And I guess it's all
+[080:22] Uh number of inversions is equal to six.
+[080:31] Number of investions, how do we count them quickly?
+[080:39] Yeah, standard approaches to run uh
+[080:43] make a variant of merge of
+[080:47] You remember Mercott? Split in the middle, split in the middle, split in the middle, split in the middle.
+[080:55] Which corresponds to, assuming we have an array which is a side whose size is the power of two, consisting
+[081:02] Having a split
+[081:06] The base cases are single elements.
+[081:09] Right.
+[081:10] Then we take pens.
+[081:13] And we merge them and we make a new node in which the two pairs are merged. Merge means sorted.
+[081:22] Okay, so it's like having a complete binary tree on top of our array. The leaves are our numbers.
+[081:31] We merged pairs.
+[081:34] To make a new node in the three?
+[081:36] Do you need to
+[081:39] Good idea.
+[081:41] So we have uh nodes, so leaves, which are the elements in our array.
+[081:47] Let's say the the array has uh eight elements, which may be like three.
+[081:55] Two
+[081:56] Six, five, uh four, three,
+[082:03] Seven, eight.
+[082:08] The matchup works
+[082:10] Top down.
+[082:11] Splitting in the middle, splitting in the middle, splitting in the middle.
+[082:15] Do nothing till you reach the base cakes.
+[082:19] Once we reach the base case, the base case is an element, single element, okay?
+[082:25] So what we what what we are doing is to
+[082:28] This is already sorted, just one element. This is already sorted. Let's merge the two.
+[082:35] To get a sub-array of sites to sort this mentor. Do you agree with me?
+[082:41] Okay, so we merge the two.
+[082:45] And we have another node here is two, three.
+[082:49] corresponding sorted subarray.
+[082:52] Do the same here.
+[082:54] And we have five six.
+[082:57] Do the same here and we have three, four. Do the same here and we have seven, eight. Now what? We do the merge between these two to get a subarray of size four. Keep doing this.
+[083:13] So subarray of sites four.
+[083:18] Magic who is two, three.
+[083:21] Five, six here is
+[083:25] Three, four, seven, eight, then final merge is uh the sorted array.
+[083:34] Two, three
+[083:38] Two, three. Okay. Three, four.
+[083:47] Five, six, seven, eight.
+[083:50] Are you convinced?
+[083:52] Why it's log n mesho? Because we have log names.
+[083:57] And each level all together touches all the elements.
+[084:02] expand the overall linear time.
+[084:06] Core manage with this.
+[084:09] n log n times.
+[084:15] Okay. How can we count on the number of inversions in this trip?
+[084:22] Has to be.
+[084:25] If we have to
+[084:28] I element for variety.
+[084:32] Yeah.
+[084:34] Much more than this actually.
+[084:37] Let's say uh okay how the merger of merger works. We have two pointers, compare the element
+[084:46] The smallest one among the two goes first.
+[084:50] and move the corresponding point. Compare, move, and so on.
+[084:56] Okay.
+[084:58] The the the we have to compute the number of inversion in this merge step.
+[085:04] Okay.
+[085:05] So let's say we have
+[085:10] Something like
+[085:11] Uh two.
+[085:13] Four
+[085:15] Six, seven on one side.
+[085:19] One uh
+[085:21] One, three,
+[085:24] five, six on the other side.
+[085:28] The pointer is initially here.
+[085:32] Okay.
+[085:34] We compare two and one. What's the smallest? One. So immerge, we would say, Okay, one is the smallest. Move this pointer one position to the right.
+[085:48] Our goal is to count how many inversions involves this number.
+[085:57] and any number on the right.
+[086:01] Uh on the left uh today is uh
+[086:06] Okay?
+[086:08] How many?
+[086:12] I have a counter, counting the number of inversion I have seen so far. By how much do I have to increment this count?
+[086:22] Um if the left pointer is uh three steps ahead, then that's three inversions. Then um if we have to use the right one, then that means it is smaller than three of them. Okay, so let's say if okay the inversions involving these numbers has been already counted recursively while we were merging
+[086:48] subarrays to obtain this sorted subarray. The same here
+[086:53] Been already counted below. Now, these numbers here.
+[086:59] Other coming from right in the subarray.
+[087:04] So they are at the right of these numbers. These numbers were on the left.
+[087:11] We don't care about inversion among these ones. We don't care about inversions among these ones. We don't care about inversions coming from other side of the screen. We just want to count how many inversions are involving this number against these ones.
+[087:30] Is this clear? That's our goal. Okay, let's consider this number. This is the smallest one. This goes first.
+[087:41] This means that this was at the right of all these numbers, this is by definition what we are doing.
+[087:49] How many inversions do we have between this number and these ones?
+[087:56] Four.
+[087:57] Because this is smaller than four of them.
+[088:03] Yeah?
+[088:04] So it's plus four.
+[088:08] This gives us plasto.
+[088:11] Now, three and two.
+[088:14] Two is the smallest.
+[088:15] How many inversions involves two?
+[088:21] Zero. Why zero? Because
+[088:25] We don't care about inversion among these we only care about inversions between this and this. But this is coming from left.
+[088:35] These are coming from right, this is coming from left, and it's as small as the one.
+[088:43] No inversion.
+[088:45] was already on the left.
+[088:47] But zero.
+[088:50] Then we move the pointer here.
+[088:52] Four right and three.
+[088:55] Three is the smallest.
+[088:57] We have three.
+[088:59] How many versions do we have in this case?
+[089:03] Well
+[089:04] is coming for the minimum
+[089:07] Smallest element now is coming from right. Right means I need to compute some inversion. How many?
+[089:16] Well, all of them minus the one which are smaller than three.
+[089:24] The ones that are smaller than three are the ones that are already gone.
+[089:29] So essentially the one that I have to consider are the ones that are here.
+[089:36] 'Kay.
+[089:37] The one that are left on the left.
+[089:40] Okay?
+[089:43] Nice. So here is plastery.
+[089:46] And so on.
+[089:49] This is computing the number of inversion between a part subarray and a non-subarray. We merge the two.
+[089:59] We merge again, we are computing other inversion involving other subarrays.
+[090:06] Okay.
+[090:08] What's the running time here?
+[090:12] Sexati merge plus A.
+[090:16] Change which says okay, I'm am I increasing pointer j? Yes, then add.
+[090:25] Yeah.
+[090:27] The element left.
+[090:29] on the left.
+[090:31] Okay.
+[090:32] Great.
+[090:33] So this merge sort approach is giving us
+[090:38] And
+[090:40] And login.
+[090:44] Okay, can we get the same running time using fan with three?
+[090:52] I know you are going you would like to stay with me forever, but unfortunately it's almost four o'clock.

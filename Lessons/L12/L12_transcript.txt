@@ -1,0 +1,793 @@
+# Automatic transcript (sherpa-onnx, parakeet-tdt-0.6b) of L_12.MP4, lecture of 26/10/2026. NOT revised: names and terms are often garbled (e.g. "fanway/family/fermi tree" = Fenwick tree, "Mel Short" = merge sort).
+[000:04] Okay. Uh we will continue our discussion about favourite, in particular we will uh uh see
+[000:13] Uh
+[000:15] are possible applications and we will start with the problem of counting inversions in an array and
+[000:28] So the problem asks to identify, to count the number of positions i and j such that the value in position i is greater than the value in position uh j. Which means that these two values are are inverted in the sense that to get the array sorted, one has the the the second one has to be big
+[000:57] Uh the f
+[000:59] before the second one in their life.
+[001:03] Yeah.
+[001:05] Here is an example in which we have an array with six elements and uh six uh inversions. The number of possible inversions is uh quadratic and indeed uh it's uh equal to the number of uh uh steps that uh insertion sorts sort need to uh needs to perform in order to make the array sorted.
+[001:32] Okay.
+[001:35] We also observe that it is possible to uh to sort to to count the number of inversions by using of course we could use uh insertion sort, just counting a number of steps. But this will give us uh a running time which is proportional to the number of inversions that we are counting, which may be quadratic. So we said okay
+[002:00] Uh to have a better uh worst case running time, what we can do is to use a variant uh of merge sort in which every time we move from the bottom to the top of the of the
+[002:17] three. What we can do is to count the number of inversions involving numbers coming from left and numbers coming from right. And uh it was easy to see that every time an element
+[002:31] is the the current minimum element is coming from right, what we have to do is to add the number of remaining elements on the left.
+[002:44] Okay? This is something we observed last lecture. Okay?
+[002:54] Uh
+[002:56] So this was this was a possible solution which takes uh time proportional to n log n. Now we are we are going to see a solution
+[003:09] which uh is uh based on uh
+[003:14] on uh sign width.
+[003:36] Do you have any idea what we could do? Let's say we have an array A with
+[003:44] Three?
+[003:45] Uh two
+[003:47] One, six,
+[003:50] Five
+[003:51] four, which is the example above.
+[003:57] And uh here we are.
+[004:11] Yeah, we are positions are one, two, three, four, five and six.
+[004:21] And we want to count the number of inversions. What uh what's a possible uh
+[004:27] possible approach based on uh family.
+[004:31] Any idea?
+[004:41] Okay, let's say we want to process the array from left to right.
+[004:48] Okay.
+[004:50] Uh
+[004:52] What uh would you like uh to do? Okay, let's say we reach uh particular element
+[005:00] This one.
+[005:02] What do w you would like to know?
+[005:10] How many elements to its left are greater. That's what uh what we want to compute.
+[005:20] How can we?
+[005:23] This be done.
+[005:51] Sum up on the ends that are greater than this previous year.
+[006:01] Okay, we we keep uh track of uh an array F.
+[006:07] with the frequency of every value in between one and six.
+[006:14] Okay. So
+[006:17] So this is the
+[006:20] Frequency on right.
+[006:24] And we okay, let me increase the size of the array seven and eight just to make uh oh.
+[006:33] Just to make uh clear that uh
+[006:38] Uh
+[006:40] let's say three oh three and two. I want to make sh sure that it's clear that the frequency is the frequency of the value in the array, not the positions. Okay, otherwise we have six and six. So we have one, two, three, four, five and six.
+[007:07] And we have uh this uh array here.
+[007:12] with frequencies.
+[007:14] Okay.
+[007:16] Initially we don't know anything.
+[007:20] Then we start scanning the array from left to right.
+[007:24] And uh we update uh the value, the frequency of the current value. So for example, first first element is three, is one, so we change this, adding one, then two.
+[007:39] Okay.
+[007:42] Yeah?
+[007:44] We want to change the frequency and adding one now and keep doing these, okay, update the frequencies.
+[007:51] While we are processing a value,
+[007:56] Okay? I want to ask myself how many elements.
+[008:01] are on the
+[008:04] Left?
+[008:06] of me and are greater than me.
+[008:11] Okay? That's the query I would like to answer.
+[008:14] But the fact that on the left on me is guaranteed by the fact that we are updating the frequencies while we are moving from left to right.
+[008:23] So only the elements which are on my left has been updated so far.
+[008:33] So this constraint is easy to be checked because I'm just updating only frequencies of elements on my left. And the other constraint is how many elements are greater uh smaller than me, no, greater than me. What's the check?
+[008:52] Greater than me on my left.
+[008:55] Okay?
+[008:57] Yeah.
+[008:58] How can I uh
+[009:01] What are the elements that are bigger than me on my left?
+[009:07] I'm cool.
+[009:10] All the elements which are on my left have been updated.
+[009:14] Okay, face contra constraint is matched. The second constraint is how many elements are greater than me. And the elements that are greater than me are the frequencies
+[009:28] Which are on my light in the array F.
+[009:34] Okay.
+[009:36] D1 plus D1 plus D1 plus D1.
+[009:40] Yeah.
+[009:42] Okay. This one plus this one plus this one plus this one is the range sum that I can compute in uh logarithmic time. And every new element
+[009:55] Suffix sample in
+[010:03] Say again? So we need uh one.
+[010:07] So on the finishing array we compute the suffix sum suffix sum, exactly. Which is a range sum up to the second position. Up to? The second position, since you are elected at the value. Yeah. So we start from position number two plus one till the end. That's the range sum I want to compute.
+[010:32] So
+[010:34] So it's a range.
+[010:38] Some
+[010:40] Hey
+[010:42] I
+[010:46] And
+[010:50] A i plus one, sorry, because I don't want to count uh uh my value.
+[010:57] Then
+[011:01] And this is count is the C is the final result. So maybe better to write.
+[011:09] Result plus equal to this one.
+[011:15] Okay? And then uh the other operation is uh uh add
+[011:22] A I
+[011:25] One, I want to increase the counter.
+[011:29] Okay. And then I do this for I in
+[011:35] Range.
+[011:37] Uh
+[011:39] Len A okay. If you want, this is the code.
+[011:46] Yeah?
+[011:48] Is this convincing?
+[011:55] Do you see any requirement?
+[011:58] So so what's the what's the running time? The running time is the s the time for the range sum, the time for the add,
+[012:07] Which is the same, it's a logarithmic.
+[012:11] times the number of iterations, so n times the logarithm given by the Fermi.
+[012:18] Okay? This is the c the cross of this loop.
+[012:24] Okay.
+[012:25] Do you see any other
+[012:29] Cost which may become uh dominant.
+[012:40] Yeah.
+[012:41] So the the running time is
+[012:47] Mark's
+[012:49] Element in A.
+[012:54] Why is that? Because we need to initialize the ref
+[012:59] Uh n times log of max
+[013:08] In a
+[013:14] Okay.
+[013:16] If
+[013:17] Mark's
+[013:20] A
+[013:22] is in
+[013:24] Uh
+[013:27] Enough?
+[013:32] Then the running time is n log n.
+[013:37] time.
+[013:39] Okay?
+[013:42] If instead the max of A is too big,
+[013:47] Then uh
+[014:07] Yeah.
+[014:08] spoil. We can spoil because we are uh up to do this. So what wha why do we have this this max A? We have this max A because the elements are too
+[014:23] And uh and f has a position for each uh possible value. So if the maximum is too big, uh the array f is too large. Okay? Is there any c any fix uh we can uh we can do?
+[014:45] Say again now.
+[014:49] What do you mean by motto?
+[014:55] Some
+[015:05] Uh yeah, so
+[015:08] So uh
+[015:10] This is somehow a problem which is similar to what something we have already discussed.
+[015:19] You can use direct access map, uh uh ac direct access table.
+[015:24] Okay? You can use it only when
+[015:28] However, only when the maximum element you have to store is bounded and the the the the size uh is small. So if the
+[015:39] Uh if the table is small, you can use direct arches table. If not, you have to switch to HMA.
+[015:47] That's something we already discussed and the suggestion was always check if, rather than using a a Nash map, it's better to use a direct attaches map.
+[015:59] Actuus map or Actus table, whatever you want to put it. Okay?
+[016:06] Boot.
+[016:08] Uh this uh is a similar case, okay, because we are using the cable
+[016:15] which is uh uh which requires uh a a an element
+[016:22] from one to the maximum.
+[016:24] While instead we are using uh just uh n of them.
+[016:29] 'Kay.
+[016:31] So problem is similar. If the Maximile is too big, you have to use something else.
+[016:39] You are suggesting to use uh a map.
+[016:43] Okay? But the map is solving only a part of the problem. So it is c correct that if you have an array and you have to collect the frequencies of the elements in that array, Hmap is the right solution whenever you can say anything about the maximum value.
+[017:08] Here it's not enough to remember the frequencies or compute the frequencies, but we have we want to have uh the frequencies in a range.
+[017:20] computed uh efficient.
+[017:23] Because it is correct that we are using this. This is the array, but this array has been indexed with fan with three.
+[017:33] Fourth, Rain Sam and A.
+[017:37] So you can't use just a map to remember the frequencies because you are not short enough. You want to cumulative frequencies to be computed efficiently.
+[017:52] So just storing the value into map into a map and updating the frequencies is not enough.
+[018:01] In this case, what we can do is to use a map to map your value into a position.
+[018:11] And then uh
+[018:14] Since you have n possible values at most,
+[018:18] You use uh the family tree together with the frequencies in a range that goes from one to n.
+[018:26] Right?
+[018:28] Yeah.
+[018:30] What is the request, the requirement for this mapping?
+[018:42] Yeah. Okay, let's uh let's do an example, okay? So you have uh the array which is one.
+[018:48] One hundred and fifty
+[018:53] One million.
+[018:55] One hundred and fifty five, six and eight. This is our array.
+[019:01] I want to compute the number of inversions with uh
+[019:05] which assign with three.
+[019:08] Okay. If I'm using the family tree without doing any remap, then the size of the family tree is one million.
+[019:18] I'm paying one million just to initialize everything.
+[019:23] Then I pay for six elements in the in the loop.
+[019:28] Okay?
+[019:30] Is this clear to everybody?
+[019:32] Okay, so we can do this. The problem is the maximum, one medium, which is too big.
+[019:38] Okay, what's uh a possible approach?
+[019:42] Possible approach consists in doing a remapping in which I'm going to remap the values, possible values, one, one hundred and fifty and so on.
+[019:53] each of them into a distinct number from one to six.
+[019:59] Is this?
+[020:01] Here? One possible approach would be to do the following. I use a hash map for the mapping in and and the and the counter. The counter is initially one.
+[020:13] Okay. Then I go to the first value.
+[020:17] Check if the index map if it is been uh already seen in the past or not. It's not, so do a mapping one map to one.
+[020:29] Then I go to one hundred and fifty. The next possible slot is two.
+[020:35] Check if one hundred and fifty has been already seen and no, assign one hundred and fifty to two.
+[020:43] Then I do the same for one million, which is assigned the value number three or identifier, whatever you want.
+[020:52] Then this one is four, then this one is five and the last one is six. Is this mapping?
+[021:02] Okay?
+[021:08] Yes or no?
+[021:10] So this is uh one, this is two, this is three, this is four
+[021:18] Five and six.
+[021:22] Okay? Is this okay or not?
+[021:27] Well the problem for this is that we are not preserving the relative order of the values.
+[021:33] Which means then that when uh when you have to compute the this the range sum,
+[021:41] It's no longer true that uh all the values in the
+[021:45] Range are the ones that are greater than your value.
+[021:55] Yes or no?
+[021:57] Okay, we have uh one, one hundred and fifty, one million, one hundred and fifty two. If I want to know how many elements are greater than one million, I cannot go from four till the end.
+[022:12] Because it's not true that they are bigger than one million.
+[022:16] Okay, so the order uh the order uh must be preserved. Okay? So the assignment that goes from left to right uh using an edge map uh it's not uh correct.
+[022:32] It's c not correct in this case, okay. There are many cases in which this makes uh a lot of sense. But not not in this case. How do we do a re remapping uh
+[022:46] In this case
+[022:54] Sort.
+[022:55] And then replace each value with its own rank in the sorting.
+[023:02] So one uh six eight one hundred and fifty one hundred and fifty five and one million
+[023:17] One million. The ranks are one, two, three, uh four, five, and six.
+[023:27] Okay.
+[023:30] Is this committing?
+[023:33] So first we sort and then we
+[023:45] What do you mean?
+[023:47] Like in this case, sorting for solving
+[023:52] However.
+[023:55] skips. So this skips or so in this case the type this algorithm is good
+[024:09] Uh
+[024:13] Yeah.
+[024:15] Yeah, even with uh repeated number, matchort works properly.
+[024:22] Just need to fix it.
+[024:24] some way, but it works.
+[024:27] Because you can uh because when when when you have to deal with uh uh
+[024:33] Repetitions. See i if there are repetitions in your array when you are merging the two subarrays, sooner or later the two equal values will be compared. In that case, it's enough to exclude the equal value.
+[024:49] And uh that's uh
+[024:52] That's uh okay.
+[024:55] So mal short is not a problem with is no uh no problem with uh uh repeated uh duplicated values uh in their value.
+[025:09] So probably your question is when is this worth using if if to
+[025:17] So
+[025:20] I need uh sort first uh and then uh
+[025:25] U I can use the the the five week tree.
+[025:29] Why in that?
+[025:30] If I sort, I can obtain the same result with the modified version of Mer sort. That was your question probably, right?
+[025:39] Okay, so this is useless because Merge Sort is already able to solve it. So there is no advantage of sorting first and then using the fermenter.
+[025:52] Yeah, partially correct.
+[025:58] I will argue it more.
+[026:20] I I think uh like having like the starting source of plus final research uh like uh i it would still step uh what what kind of uh strategy? Like uh instead of I I I use the C<unk> marking C<unk> is kind of uh answering uh your question by yourself.
+[026:42] many things that I got.
+[026:46] Yeah. Yeah.
+[026:52] Yeah.
+[026:54] Uh okay, doing uh the remapping with uh hash maps uh may be very expensive in practice, especially if you're using uh C.
+[027:13] Yeah. So like the the best reference does sort by the yeah. Usually sorting uh is much better than uh hash maps uh in this case because uh of locality, deterministic algorithm and so on. And I think the Rust doesn't have uh the this problem.
+[027:34] Hash maps uh in Rust are much faster. It's uh pathologically slow in uh C.
+[027:43] Uh anyway uh if you have to found i if you are it it happens a lot, okay, during this remapping not only in competitions but also in real life.
+[027:55] If you need to do this, the only option you have to understand what strategy is the best is to benchmark what you what you
+[028:05] you are doing. You have usually two or three options.
+[028:12] You have to test all of them.
+[028:15] uh to know which one uh is the best in your case for your programming language and so on.
+[028:21] Uh F maps are usually very problematic and uh there are
+[028:27] way ways to to solve uh their uh their problems.
+[028:33] Uh
+[028:35] I think there are several different variants of uh
+[028:38] Hash maps.
+[028:42] Makes them uh uh faster.
+[028:45] So usually uh need to to benchmark.
+[028:49] Uh regarding your uh
+[028:52] Your question, let me
+[028:55] Okay. Is is is the question clear to everybody?
+[029:00] So the point is, let me just uh go over the problem uh once again. Okay, we have a solution based on NASA.
+[029:11] You have to implement your own version of the merge to modify the merge function in order to uh to add the number of inversions made by the values while you are doing the merging step.
+[029:29] Hello.
+[029:31] Then we say, Okay, but we love family tree a lot, let's use family trees. And we can do this. We have a family tree built on an array of frequencies f that we are going to update. Every time we we scan the array from left to right, every time we find the value we increase the corresponding frequency and ask ourselves how many ends are bigger than us that we have already seen. This is a range sum from
+[030:00] The n the position immediately after our current value tilde.
+[030:07] Is this convenient for everybody? Okay. The problem uh
+[030:14] The problems arrive when we observe that initializing the family tree and the space used by the family tree is proportional to the maximum element we have in our.
+[030:28] Here to everybody? Okay. Because six is here, because six is the greatest element in the array.
+[030:36] If you have a super huge super large big value in your array, this is going to become very large, even if we still have at the most six distinct elements in the array. So is this clear to everybody?
+[030:57] Okay. So a possible approach consists in remarking the values
+[031:04] to a smaller range.
+[031:07] A range that goes from one to six and with a tested value with the corresponding rank.
+[031:15] This problem and many others are such that if we do sorting and then remap in this way, the answer does not change.
+[031:28] Okay? Because the answer is about the relative order of the elements.
+[031:33] And the uh the his length length doesn't change the relative order of the
+[031:40] Every time the problem asks a question about relative order or a question which is insensitive to uh to to the ranking, then you can use this approach. This approach requires you to sort the element first and then assign the ranking the the ranking
+[032:06] And then scan from left to right and replace each value with a link.
+[032:13] This is clear to everybody.
+[032:16] Okay.
+[032:18] Apart from the problem that may uh come up because of technical uh issues in practice, like HMAPs are uh slower and blah blah blah. Uh
+[032:34] can choose for example
+[032:37] Use a national that is you, for example. This number is equal to four, or you can do by researcher, as you were suggesting. This is a technical issue that arising practice, depending also on the programming language. Apart from this, the question is
+[032:58] Is this approach which sorts and then use favourite word in practice?
+[033:09] Why? It may not work because we already had a solution at the beginning which is using an optimal sorting algorithm like merge sort. So if I need to sort then to use the family tree, maybe it's better to use the merge sort, which is sorting and solving the problem. That was your question.
+[033:35] Good.
+[033:36] Okay, so there there are two possible answers for this. Asymptotically better if it is asymptotically worse
+[033:46] and if it if it is worth in practice.
+[033:52] Okay, to be worth uh in practice, well uh uh an argument may be yes, but nobody is uh using merge sort in practice to sort uh arrays. Because usually we use quick sort, uh which is uh absentically worth but uh in practice better than merge sort. So one argument may be okay, yes, you have to re-implement uh merge sort.
+[034:21] Once you have merge sort, uh this may be slower than uh a super optimized uh quick sort followed by a fermit.
+[034:31] So in practice, we don't know.
+[034:34] What about the asymptotic complexity of the two approaches?
+[034:40] Which one is the best?
+[034:43] is the best one.
+[034:45] Well, this depends uh on the size of the values in our array.
+[034:54] Because if the arrays are uh if the values are like unbounded,
+[035:00] Then
+[035:02] A synthetic the asynthotic best uh approach would be to use a comparison based uh sorting algorithm for this step.
+[035:12] Synthetically best sorting algorithm for this step is Mel Short.
+[035:18] We have two solutions that needs to start doing merge, and one of the two is going to use family tree as well. So the second one is
+[035:30] not better, or we can say words than the pr the first one. So if you want a synthetic best solution, the first one based on Mercer beats the second one.
+[035:44] Okay.
+[035:46] or it's it's not better than it's not worse than the second one. Okay?
+[035:53] How do I pay?
+[035:55] The assumption was unbounded values.
+[036:02] 'Kay.
+[036:04] What if the values are not unbounded, but actually they are bounded with respect to the number of values we have in our array? So for example, what if max A uh is
+[036:24] Something like this.
+[036:33] Something like this means that this is
+[036:42] This is a constant.
+[036:44] And uh
+[036:56] There are repetitions, but repetitions are not uh an issue.
+[037:11] Okay, is is this real what it means? It means that uh for example you are uh
+[037:17] Mm.
+[037:19] one thousand value in values in your in your array and uh the maximum value is like one thousand to to the s second or to the third, okay? Like one million or one billion or something like that.
+[037:35] Okay.
+[037:37] Why I say exactly this? Because this is the bound of Radxo.
+[037:45] Radic soil varies in this range.
+[037:49] Allows you to sort the radio in
+[037:55] Liata.
+[038:00] Okay?
+[038:02] So is the second solution better than the first one in this case?
+[038:08] No.
+[038:09] Because we have softly takes linear time, but then we have got the family which takes and look at time.
+[038:22] Uh yeah. So asymptotically the first solution uh
+[038:28] He's already
+[038:30] more than satisfactory. And again is what uh also the second one is uh requiring, no matter what the values uh are.
+[038:43] Okay.
+[038:47] The fact that there are two different solutions that are solving the same problem within the same running time is not a big issue.
+[039:00] two ways to solve the same problem.
+[039:03] Okay. Uh why am spending too much time on this? Well, because these uh
+[039:12] Remapping a trick is worth in many other problems in which there is no so easy solution based on the sorting algorithm.
+[039:22] Okay, so
+[039:24] Even if in this case it not works at least uh in theory, uh but it may be in practice uh then
+[039:34] Yeah, the solution the approach re uh do re remapping and then use the fan we tree may be used uh in other problems in which
+[039:48] This I think I do it. Uh it's not.
+[039:52] uh does not exist. Okay?
+[039:57] So from now on we will assume that this is a step you have to do at the beginning in order to solve a problem if needed. If the values in the problem are too large, the first step you have to do is to remap the values into a smaller range.
+[040:23] Okay, let's uh move on.
+[040:28] Uh with uh the next uh
+[040:35] Uh next problem.
+[040:38] In this problem we are given uh segments.
+[040:43] So we are given
+[040:49] and segments.
+[040:55] For each segment uh we know the beginning and the end of the segment.
+[041:11] Okay.
+[041:14] They go.
+[041:20] is to report
+[041:24] For each segment
+[041:31] The number.
+[041:38] of segments
+[041:43] Kid contains
+[041:48] Contained means fully contained.
+[041:52] Okay.
+[041:57] For example, if we have something like this,
+[042:17] And we focus uh on this one now.
+[042:23] These are the ones that are contained in the in the grey segment.
+[042:31] But uh this not uh this is not uh contained, okay? Because it must be fully contained.
+[042:39] Complete the context.
+[042:42] Okay.
+[042:44] Our target running time
+[042:53] Uh is in n log n time.
+[042:59] Okay. Since we are talking about fine weight three.
+[043:03] And given this running time,
+[043:06] Uh well the two things combined means that we have to do something, some query, arrange some query and potentially add for each uh segment in our in our uh uh gr set of segments.
+[043:25] Okay. Uh
+[043:29] The first step is uh remap
+[043:34] The segments
+[043:39] Extra incha.
+[043:42] if needed.
+[043:45] Okay.
+[043:47] If it is needed, then we do the remapping we discussed before.
+[043:54] Okay, now we can build a fabric with an entry for each possible beginning of for each possible end.
+[044:07] What do we have to do?
+[044:10] Let's uh stop for five minutes, you think about a possible solution, then we discuss uh your uh your ideas to each
+[044:20] Yeah.
+[044:46] So I go there.
+[044:52] Start points and one for hand points.
+[044:55] Okay.
+[044:57] Yes. And uh so first thing you notice is that segments that start after the end of our quality segment.
+[045:06] They are only.
+[045:10] So like uh segments that are like uh start after the end and the segment that end after the start are not harder. Okay so what what we what we we need is a segment that start after the start and before the end. This is very good.
+[045:36] Uh no
+[045:39] He said cross the bounds.
+[045:43] sub inclusion exclusion we can remove
+[045:47] So and it's uh
+[045:50] After the end. Okay, let me let me just uh use an example so we can uh better clarify what uh what you mean uh.
+[046:05] Okay, let's say we have these segments. I want to be
+[046:09] precise on this because I want exactly the same
+[046:20] Okay. This is the set of segments. So we can number the extremes from one to two n.
+[046:28] Okay, just do r the remapping. So this is one
+[046:32] Two.
+[046:33] Three, four, five, six.
+[046:38] Seven, eight, nine, ten, eleven, and twelve.
+[046:47] So you are suggesting to use uh a family tree, two family trees.
+[046:55] Okay, so one, two, three, four, uh five, six, seven, eight, nine,
+[047:06] Ten, eleven, twelve. This is our big
+[047:13] Big for our standards. Hooray!
+[047:19] This is the first
+[047:21] So I wish three.
+[047:35] I was wrong.
+[047:41] No.
+[047:43] Um
+[047:53] And uh element eleven and twelve are sharing uh
+[047:57] Uh shorter sp
+[048:01] Okay. So
+[048:05] This is the first one, let me copy it twice.
+[048:14] Then
+[048:20] Yeah, yeah, they are because we are remapping. So
+[048:26] We just replace each endpoint with the uh corresponding uh rank.
+[048:51] Okay, we won't forget all the segments are completely contained to and send. Okay. Uh in this case we start by saying that all the we so so let me complete the example. You want to this is the for start, this is for end. You want to add the one in position to corresp correspond that corresponds to an end and a start.
+[049:17] Yes. Okay, so let's do it. One.
+[049:21] Uh one
+[049:23] One zero.
+[049:26] Zero. One
+[049:29] One zero
+[049:32] One, zero, zero, zero.
+[049:36] And the other one uh is the negate of the first one.
+[049:42] Since it is okay zero zero zero one one zero zero
+[049:49] One zero one one one. Okay.
+[049:56] Mm-hmm.
+[050:00] Take care.
+[050:07] Okay. And this is not a fight.
+[050:15] Seven that are going outside. So now we find a way to exclude. Okay, so let me so we we would we are interested in segments that start from
+[050:33] From uh two
+[050:38] Till uh ten.
+[050:42] Which are one, two, three, four and five.
+[050:47] Okay, I'll find because of myself, this one, this one, and this one and this one.
+[050:56] Yeah.
+[050:59] Okay, then
+[051:12] So do the certain and then after.
+[051:16] Yes. And so now we need to exclude these. Yeah. How can you do this? I was thinking about
+[051:30] Uh
+[051:32] after the end of
+[051:34] Yeah.
+[051:40] So from uh
+[051:43] Time included.
+[051:50] Okay, then it excluded?
+[051:57] And this is what this are only the second uh
+[052:06] Over the frost is the
+[052:11] The problem is that there are many cases which make a lot of problems to us. For example, not renumbering, but a segment that is like this.
+[052:27] Stop wow.
+[052:29] Starts after me and ends after me.
+[052:34] is uh included uh in this counting.
+[052:39] Okay. And something which starts before me and ends after me.
+[052:46] is uh another problem.
+[052:59] Peace.
+[053:01] Excluded because they are these are the ones that start after me and that ends after me. So it's enough to remove
+[053:14] all the elements which are not or all the ones which are after me, but these are not included in my cell phone.
+[053:22] So what uh what you do?
+[053:25] Cool.
+[053:26] Some of these ones are removed from you.
+[053:29] Okay. These are still good.
+[053:32] The problem are the ones that start.
+[053:37] Be for me.
+[053:39] And answer after me.
+[053:52] Say you again.
+[054:05] This is uh wrong.
+[054:07] Yes. Every everything let's say we have a segment.
+[054:12] with many segments starting within it.
+[054:17] And many segments ending within that target segment, but no but no segment completely contained. The answer is no.
+[054:29] Okay, are we all at the same page?
+[054:34] Yes or no?
+[054:36] Okay uh
+[054:40] What uh what uh this uh idea is? I'm using family piece.
+[054:48] Two, mark the beginning
+[054:52] and mark the ends of the segments.
+[054:58] 'Kay.
+[054:59] And uh
+[055:01] Uh for every target segment uh uh for example this one I add how many segments starts within our segment.
+[055:13] Yeah?
+[055:15] And the
+[055:19] This is an overestimation of the real value.
+[055:24] Uh
+[055:25] and uh I'm finding some way to fix uh this overestimation. At the current point we have no solution. I suspect there is no possibility for this to be
+[055:41] We made the correct.
+[055:43] because the problem are big segments which start before and ends after. So essentially the problem is that there is no longer any correlation between one year and one year. Which we don't know if it is because of something that starts before, because of something that starts within
+[056:08] or before of something that starts after. And so these ones may not be related to anyone here.
+[056:18] Put the corresponding one there, so we cannot easily
+[056:24] modify the the overestimation.
+[056:28] Notice that even if the answer was, sorry, the question was,
+[056:35] How many segments do you intersect with me?
+[056:40] This is not enough.
+[056:45] Because i i is it uh clear the question what the question is? The question is uh a little bit easier. How many segments do you intersect with me?
+[056:57] Okay? This is not enough because this is double counting.
+[057:02] the one that are fully contained in myself.
+[057:17] Yeah, the second time.
+[057:26] And
+[057:29] which are the ones uh that are not uh so and I'm taking N minus the ones that are not uh intersecting, I think this is okay. Okay.
+[057:43] Yeah.
+[057:47] I was referring to the the use of uh V squeeze and occur.
+[057:56] Yeah.
+[057:59] Yes, if you consider the one that starts after me and the one that ends before me, these are the ones that are not intersecting with me, and so the remaining ones are of course intersecting with me.
+[058:13] Yeah, this is correct.
+[058:15] Okay, let's come back to the so this question is uh easier, okay? Let's come back to uh to the original question. Indeed, uh for that question, the fermentary is not needed, okay?
+[058:30] A simple static prefix number would be more than enough.
+[058:36] Just um
+[058:38] Yeah, I'm not to understand the point, but what if instead of the uh familiar tree for the ends, we we store it in a similar way, but we also like as a pair of the starting position. So if in a range we have two uh the starting points inside the range, then we have to look for the two uh points in the end range inside that range whose starting position is is uh in the group.
+[059:11] Just tell me again once again, okay. Uh we you want to con to to give uh a mean uh a meaningful uh name name uh to the ones in the family tree?
+[059:28] No, tell me again on your solution. Like instead of the
+[059:35] It's taken for
+[059:43] We know.
+[059:45] Okay, so so th that's exactly what I said. You want to give uh a meaningful name uh to the ones here. So here you put uh three. Three because this one corresponds to this one.
+[059:59] Okay.
+[060:01] Okay, then
+[060:03] Uh then we know just from that if it is inside the range, so if it needs to be counted. So you are suggesting to say okay.
+[060:13] Three. What about five?
+[060:18] One.
+[060:24] Then eight, what about eight, six?
+[060:30] Okay.
+[060:32] And so
+[060:34] Okay, now now the question is: are are we all uh the same uh page, yes or no?
+[060:40] Okay, the problem is that the ones are not related to each other. So he's suggesting to relate the one in the second family tree to the corresponding one in the previous uh family tree. Now that we have this relationship, let's see if we can solve uh the query, the original query. Okay, so uh let's conclude the ten is connected with two
+[061:07] Eleven is connected to seven.
+[061:12] And uh
+[061:14] Mm.
+[061:16] Twelve is connected with nine.
+[061:20] And that's all.
+[061:22] This is what uh is suggesting to add.
+[061:27] Okay.
+[061:28] Okay, let's see.
+[061:30] Uh what's the question now?
+[061:33] Fantastic queries a little.
+[061:36] I mean you can count the number at once.
+[061:40] Yes.
+[061:43] Let's count the number ones. I don't know, I mean we are solving the problem together, I don't have any any idea.
+[061:49] on what we have learned.
+[061:51] Fine.
+[061:53] And five uh is an o an overestimation. Why? First of all, two is already is also included.
+[062:03] Counting myself.
+[062:05] Part four will be in overestimation as well.
+[062:09] Order that is another destination because
+[062:13] Three is okay.
+[062:17] Ah, sixteen.
+[062:20] Is it correct?
+[062:23] Seven is not okay. Nine is not okay.
+[062:29] Okay? Among these four uh ones only two are okay. Why? Because the ending corresponding ending position of the circuit is smaller than uh what?
+[062:42] Smaller than the
+[062:47] Then ten my request.
+[062:51] Are you with me or not?
+[062:54] I'm just uh interpreting what you are saying. I cannot uh do it.
+[062:59] Is this okay? Okay. Yes? Yes? Okay.
+[063:04] So
+[063:06] So now we are not doing ones with these positions, so request release.
+[063:13] Among these four ones, one, big, this one, this one, this one, and this one.
+[063:21] No.
+[063:26] Tha we
+[063:29] So we we we don't want to narbate the end with the beginning, but actually we want to label the the start with the corresponding end, maybe.
+[063:41] Yes or no?
+[063:47] Or or we can do this but to change the query. Because the query now is from this to this my
+[063:59] Interval.
+[064:07] which starts after dawn.
+[064:12] Does it make sense?
+[064:16] Yeah.
+[064:17] That's the answer, right?
+[064:24] Yeah, I think you're you are
+[064:28] you you it's clear that it's uh in both directions it works. It also suggests us that we need just one or two because uh
+[064:36] It's more than more than uh
+[064:41] Okay, so
+[064:44] Your word suggesting to do the following. Let's give a meaningful let's copy this down.
+[065:01] Okay, let's uh
+[065:06] Observe that I can keep uh the family tree of the beginning or the family tree of the ends.
+[065:14] Okay? Now.
+[065:17] Everyone is doubled with the position of the other extreme.
+[065:24] We reached this conclusion altogether because we said, okay, your approach doesn't work because you are not relating
+[065:33] Beginning and end. And he he was suggesting, okay, if there is no relation, let's put the relation ship. Okay. One is mapped to
+[065:45] Five.
+[065:47] Corresponding end
+[065:49] of the segment.
+[065:51] Then two is mapped to ten.
+[065:57] Okay.
+[065:58] Then three is mapped to four.
+[066:02] Six is mapped to eight, seven to eleven,
+[066:09] Uh nine two.
+[066:13] Twelve.
+[066:15] Okay? So we have these uh additional numbers.
+[066:20] Where do we store these numbers?
+[066:22] Don't know.
+[066:24] At the moment we have this point.
+[066:28] Okay.
+[066:29] Uh then you are giving me a segment.
+[066:37] This one now?
+[066:41] This one not
+[066:43] Till ten.
+[066:46] And you have to tell me how many fully included intervals do we have.
+[066:54] Okay. How can I answer these uh questions?
+[067:03] The number of ones which are leveled with a value.
+[067:10] Which is uh
+[067:14] smaller than my end point.
+[067:19] More than that in case of uh in case of uh
+[067:24] If we are sure that there is no same end point or starting point of any segment that we can
+[067:33] Fix then smaller than ten. So this one is excluded because it's myself, this one is included because it's ending before, this one included as well, this one is not included, this one is excluded. Okay, we have the idea.
+[067:57] Do we all agree on this? No? What's okay? You said no, but you meant yes. Okay. Okay. So.
+[068:09] We have the intuition. Now we have to make it uh work. Because uh the problem is that I don't have any data structure that allows me to do this query.
+[068:23] I I can't list uh the positions and ask what are the values within that uh that range which are uh
+[068:36] smaller than a certain target value.
+[068:42] Okay.
+[068:43] Are you with me?
+[068:45] So one way to store these positions would be to list one after the other. So five, ten, four, eight, eleven, twelve. Then I could use the number of ones here to rename or
+[068:58] This range to their positions in the list.
+[069:06] Yes or no?
+[069:08] Let me say it again. Okay. It would be possible to do the following. I thought an array
+[069:17] In which five is in the first position, ten is in the second, four is in the third, eight is in the fourth
+[069:29] fifth and sixth. So just compact them and then I can use range sums here to map the range here to the subrange in the compacted arrays of positions.
+[069:47] Do you agree with this?
+[069:51] Guess what the range corresponds to?
+[069:54] One man, one man.
+[069:56] Do you
+[069:59] Two, three, four, five, six, six position in the bed.
+[070:05] Yes? If not, it's not important to to to understand because now we can check uh later on, okay. We are not uh using it uh in any way.
+[070:16] Okay?
+[070:19] Let's come back to the to the previous uh part. Okay, together we reach this situation. Now there is uh T here and uh I know that uh we can uh solve the key just by asking ourselves how many positions are in this range smaller than uh ten, which is our extra. Okay, the problem is that there is no data structure.
+[070:46] that efficiently solves this.
+[070:50] What can we do?
+[070:53] Well, there is another very important thing we are not exploiting.
+[070:58] We are free to process the po the the segments in any order we want.
+[071:10] We are we were thinking all the solutions we are thinking about answering the query for each segment independently of the other.
+[071:22] While instead uh we were we can process the the segments in any order we want.
+[071:34] Very good action.
+[071:36] What's a a better way to process uh what's a good way to process the segments?
+[071:50] What we are able to do? We are not able to say, okay, how many numbers here are smaller than me?
+[071:59] This is something we cannot do.
+[072:02] There is no data structure able to do this.
+[072:07] Okay, what we are very good at.
+[072:12] Keep an image count on the number of ones.
+[072:16] What's another operation we are very good at after?
+[072:20] Remove him once from any position.
+[072:25] Another thing we were not exploiting. We were using the family tree without fairy tree it, because we were not using uh the fairy tree capabilities in any way.
+[072:38] Okay. We have the family tree, able to remove once. We are able to process the intervals in any order we want.
+[072:50] Let's use these two things.
+[072:56] What's a possible way to use the two things?
+[073:05] Same time now.
+[073:11] Let's uh think about a pulse okay.
+[073:16] Okay, let's uh let's imagine uh you can uh you we have the s in this situation, okay. We have no data structure to tell you what are the
+[073:29] the the the values which are smaller than ten.
+[073:38] Give you secretion.
+[073:40] I'm only able to count the numbers here.
+[073:45] So how many ones have you?
+[073:48] If you are writing uh your letter to Santa Claus.
+[073:56] What would be your request to solve
+[074:02] These questions are made as more than ten.
+[074:08] Yeah.
+[074:10] In this uh in this uh range of zeros and ones.
+[074:18] I would ask Santa Claus to remove the ones corresponding to positions that are greater than ten.
+[074:26] Would you do the same?
+[074:29] Eat with some bottle.
+[074:32] Put remove these two parts.
+[074:37] Setting them to zero.
+[074:42] Then they also would be how many ones are here?
+[074:46] One is because of me and the other because of segments that are starting within the range and, thanks to Santa Claus, I'm sure are ending before ten.
+[075:04] Do you agree on this?
+[075:06] Okay, let's implement uh Santa Claus.
+[075:11] How can we implement Santa Claus?
+[075:17] Apart from the red dress.
+[075:21] What do we want? We want a rather easy question
+[075:28] So
+[075:29] How many ones are here?
+[075:33] The moment in which the two ones has been already removed by some magic creature.
+[075:41] Do we agree on this?
+[075:43] Okay, and we are free to choose the order in which the segments are processed.
+[075:50] Do we? Okay. What's a great order?
+[075:57] Process the post the the the posting, sorry.
+[076:01] Prepare myself for today's exam. Uh we process the ending point in reverse order, so the segments in decreasing ending point.
+[076:17] Why?
+[076:19] Well, because when we reach the segment that has ten as an ending point,
+[076:27] The segments A, twelve and eleven as an ending point has been already processed.
+[076:36] Do you agree on this?
+[076:38] So twelve, eleven, ten, eleven.
+[076:45] Okay.
+[076:47] Are you with me? Are you with me? Yes or no?
+[076:53] Okay. The 1211 has been already processed. What does it mean?
+[077:00] It means then that
+[077:02] Just before moving from twelve to eleven,
+[077:08] Twelve is responsible for removing its corresponding one from the family tree.
+[077:17] Do we agree?
+[077:19] Yes or no? So the solution would be like this, but since eleven and twelve have been already crossed, twelve and eleven are going to remove themselves from the temple tree. So when it's my turn, I'm ending in position ten, I just ask myself how many ones a year, and I'm sure that this one and this one has been already removed by something that starts after me
+[077:48] While counting it, but ends after me.
+[077:55] Yes or no?
+[077:58] Okay. So this is uh
+[078:02] Uh the solution.
+[078:05] Is the solution clear?
+[078:08] No, let's start from the beginning.
+[078:12] Uh
+[078:14] Let's start from the beginning. Okay.
+[078:17] We need just one fanway tree. Okay, so let's move uh the fanway tree closer to
+[078:29] closer to the segments.
+[078:33] Let's remove uh these uh fake segments we introduced uh before and this one because there there were he was using these uh segments for for your uh for your solution.
+[078:49] Okay, let's forget about um
+[078:51] This one
+[078:53] And let's consider
+[078:57] One segment after the other in the order I was suggesting. So we start in decreasing.
+[079:05] decreasing order of ending point.
+[079:09] Okay.
+[079:14] Okay.
+[079:17] Cool.
+[079:18] No.
+[079:20] What how many
+[079:22] How many segments do intersect with the first
+[079:31] Segregate nine quality.
+[079:37] So sorry, not in secret. Fully contained email.
+[079:41] Well
+[079:42] The query that I have to do is from nine to twelve.
+[079:48] How many ones are here? So range some.
+[079:53] One is considering also itself.
+[079:57] So the answer is one minus one zero.
+[080:01] Okay.
+[080:03] Before leaving, this segment is removing its one in the family.
+[080:13] Why? Because if there is another segment
+[080:18] That starts
+[080:21] After so sir, for example, what will be this one problematic for? For example, for this one?
+[080:30] which is going to ask how many months of per
+[080:34] Here, in the end you will see this one, which is for a segment that ends after the other one.
+[080:42] Why we are sure it's after, because otherwise it will be processed before. Okay?
+[080:55] So just remove the one.
+[080:59] Now, what's the next uh segment we are we are considering?
+[081:05] From seven to eleven.
+[081:08] Okay, this is exactly an example for which the one would be would have been problematic.
+[081:17] Okay. How many seconds do we do fra fully containing seven? Eleven. How many ones are here? One. It's because of me. So zero.
+[081:30] Notice that without removing the one, the answer of the the arranged sum would there be two, which is incorrect.
+[081:41] Are you with me?
+[081:43] That's why before leaving we remove the zero, the the one.
+[081:48] Or you can do before
+[081:51] There is some and then there is no need in minus one.
+[081:58] Okay.
+[082:00] Okay, let's remove the zero. There's the one and set it to zero. What's the next one? The next one is our favorite segment that goes from this to this.
+[082:14] How many segments are fully contained?
+[082:20] The range sum tells us three.
+[082:23] Minus one is is two.
+[082:26] And two is the correct answer.
+[082:29] Why two and off and not four? Because the two segments that end that starts after two but ends uh uh but ends after ten has been already removed because of our ordering of processing.
+[082:49] Yes?
+[082:51] Are you with me?
+[082:53] Okay, so that's the solution.
+[082:56] that we derived almost together.
+[083:14] Ah okay. The goal is to report for each segment the number of segments it contains.
+[083:25] Arbitrary means or line.
+[083:29] No,
+[083:36] Okay.
+[083:43] Okay. And you have to play for the second.
+[083:50] Well, because they aren't.
+[083:53] Yeah, yeah, you can. Okay, we are querying okay, so there are three possible problems. This one.
+[084:04] The one that asks you to implement a data structure that given any segment returns the number of uh segments fully contained in that one, which is much harder. And that's uh yours, in which you already know at the beginning what are the queries. So that's the online
+[084:26] That's the offline version of my second problem.
+[084:39] For each of them return. Okay, that's easy.
+[084:43] Easy. It's the same problem that we are solving with a little twist.
+[084:53] Okay, so just to
+[084:56] Three pro possible problems. This one.
+[085:00] You already know the segments and for each segment among the set you have
+[085:06] Report the number of fully contained. Then there is the version in which you have to build the data structure, and I give you a segment.
+[085:16] And then you have to tell me how many of that segments of segments overlaps. This is uh much harder.
+[085:27] Then there is the third version he was mentioning, in which you have segments, then a set of queries. Each query is a segment and you have to tell how many
+[085:42] Segments do overlap.
+[085:45] But it's offline, so you can reorder the queries in any way you wish.
+[085:53] As we already discussed uh one of the previous lectures, the offline version may be easier than the in the online version.
+[086:04] And this is one of the cases in which it's easier.
+[086:09] Why? Well, because uh it's enough to merge the two sets
+[086:20] Somehow
+[086:21] and build the family tree only on the first sector.
+[086:27] So the left is a good thing.
+[086:30] Uh I'm thinking about the solution while you are des saying this, so I'm not sure.
+[086:36] that uh uh explain. Okay, we need the chemistry on this set of segments.
+[086:45] Okay? Then we process the target queries in order of uh decreasing ending points.
+[086:56] 'Kay.
+[086:58] And we are today decreasing an important checkments as well in the workday.
+[087:04] So I distinguish the standing point in between. The ones that are in the original set and the ones that are queries.
+[087:13] For the period I do not modifi modify the fermentary.
+[087:18] While for the ponds I don't query for how many overlaps do we have, but I modify the fairy tree.
+[087:27] only. If it is not clear, please the recording
+[087:32] After you better clarify the original data structure and the original solution, and everything will be clear, hopefully. If not, just write me a message. I will try to explain what I meant. Okay?
+[087:50] Yeah.
+[087:51] Uh
+[087:55] So ice plants?
+[087:58] Is the solution clear enough?
+[088:03] Yes or no? Okay. I realized that I'm going much uh and much slower this year than the previous ones.
+[088:17] Like I'm doubling the the the
+[088:21] the time or so. The reason for this is that I am spending much more time in deriving the solutions all together.
+[088:31] While in the previous year I was giving five minutes and then I was presenting my solution. Uh I think this one is better. So this approach uh slower approach is better.
+[088:43] Uh so I don't care about what how much
+[088:48] Topics we are covering adult care.
+[088:51] I'm free to decide what area I want.
+[088:54] Uh but if you don't like this approach in which we are going slowly step by step toward the solution, feel free to send me a message, tell me after the lecture or uh send me an anonymous mail, uh whatever. Okay? You can do whatever you want. Uh I prefer this one uh because it's uh
+[089:20] I think better, especially in a time in which uh
+[089:27] It's easy to to get uh a solution almost all f for free and uh but see it's it's mo much more uh
+[089:36] Interesting to derive together the solutions at a slower pace. That's what I think.
+[089:47] So if you don't agree, let me know.
+[089:51] Yeah.
+[089:53] Yes. Uh so we need another lecture about uh this kind of stuff.
+[090:00] Uh because uh there are s many important problems left.
+[090:05] Uh I think last year's uh uh I I needed two lectures. This year I need I will need uh three.
+[090:13] Who cares?
+[090:15] Okay. Um yeah. So
+[090:20] Go to eat something that is an exam today, you must be ready. You don't have an angle.
+[090:28] S some of you have.
+[090:31] Okay, see you.
+[090:33] This room, no, downstairs. C room C. Okay, downstairs.
+[090:38] See you downstairs at four o'clock, have a nice lunch.
+[090:43] Uh okay.
+[090:46] you and my own body from the other.

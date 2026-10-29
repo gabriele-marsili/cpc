@@ -1,0 +1,965 @@
+# Automatic transcript (sherpa-onnx, parakeet-tdt-0.6b) of L_13.MP4, lecture of 28/10/2026. NOT revised: terms are often garbled (e.g. "family/fan with three" = Fenwick tree, "segmented" = segment tree).
+[000:00] So for any K in I J
+[000:06] I want to modify position k
+[000:09] By adding V.
+[000:14] 'Kay.
+[000:19] Yeah.
+[000:21] So we want to modify a range.
+[000:24] For example,
+[000:29] Uh let's say the array A has uh positions uh
+[000:41] This set of positions.
+[000:44] Uh let's say one, two, three, four, five.
+[000:56] Let's say nine positions, I don't care too much. Initially, everything is zero.
+[001:04] Then update
+[001:08] Two.
+[001:10] Six, ten is changing all the positions in the range by adding ten.
+[001:30] Then
+[001:32] We have update.
+[001:36] Uh zero four five you want to change all the positions by adding five.
+[001:47] all the positions in the range of codes.
+[001:50] Okay. Then axis uh
+[001:55] Two is uh
+[001:58] Fifty.
+[002:07] Okay, what's uh what's uh the trivial solution?
+[002:33] Okay. Store
+[002:36] A
+[002:39] And
+[002:42] update by scanning.
+[002:47] Let's see.
+[002:50] Yeah?
+[002:51] So you go over the range and you update the position.
+[002:54] What's the cost? Well, access
+[002:59] I
+[003:01] Yeah.
+[003:04] Uh constant time.
+[003:07] Isn't it?
+[003:09] constant time because you just need to access the the given position. While what about update ijv?
+[003:27] Well, that's the bad uh the bad news. The time is proportional to the size of the range.
+[003:38] Yeah.
+[003:41] you have to scan all the positions in there.
+[003:45] So if the ranges you want to update are large, then this solution is terribly slow. Our target is to
+[004:02] Boat.
+[004:05] uh operation in uh logarithmic time uh
+[004:15] Any idea?
+[004:22] This lecture is about family things.
+[004:27] How
+[004:30] data brainer.
+[004:33] date subsequent to
+[004:40] So we have uh
+[004:46] So we have the uh
+[004:49] So, what do you want to do?
+[004:52] uh store a vector
+[004:56] A or something else.
+[005:09] There?
+[005:13] sounds
+[005:20] Access from the lobby.
+[005:24] What do you think what do you mean uh Samsung?
+[005:27] the graphics on okay so
+[005:32] So we want to store the prefix sum of A
+[005:44] Uh what does it mean? So in this case uh would be
+[005:49] P
+[005:52] Uh the sum are five, twenty,
+[005:57] Uh thirty five
+[006:01] Uh fifty, sixty, seventy, seventy, seventy, seventy.
+[006:10] Okay, so if you ask me the axis uh well, I need to do the
+[006:15] difference between two consecutive values. This is what you want to do.
+[006:33] So you want to use the fan with tree to obtain B or what?
+[006:40] Okay, so you want to obtain a P.
+[006:44] From the family tree.
+[006:46] So if I ask you to update uh a range, what do you have to do?
+[007:02] Most
+[007:03] So I I okay let's say we are in this situation, okay?
+[007:11] Uh if
+[007:14] The fang with tree must return the prefix sum, it means that it's indexing A.
+[007:21] Okay, so okay, now update.
+[007:26] Uh three
+[007:29] Six by one. What do you need to do?
+[007:43] Yeah.
+[007:53] Spine volume.
+[007:55] like increasing the Yeah, but uh the running time is not improving. Actually it's worse than the solution before, right? Because to update the posi o so you ask her to to update all the positions in the range.
+[008:10] But you are storing A in a fan with three.
+[008:13] Which means that you are paying log n for the first, log n for the second, and blah, blah, blah. So the running time uh would be the size of the range times log n, which is worse than our starting point.
+[008:29] We could support updating a value in login by also
+[008:35] updating the numbers that were uh in the range that contained that uh our number in the range. Okay, so maybe we can do the same. So with update three six what you ask would you like to do?
+[008:55] Problem is this one.
+[008:58] You want to store an array. Initially everything every element is zero. You want to access uh be able to access the the height element in the array and you want to update a range within the array by adding the value v to all the elements in the subrange.
+[009:16] We want to do both operation in logarithmic time. The trivial solution, of course, is going over
+[009:24] The range element by element is adding uh V, which takes uh time proportional to the size of the
+[009:35] Okay. Uh
+[009:38] And he's adjusting.
+[009:44] Maybe um
+[009:46] So we update an element.
+[009:52] uh we have data elements uh uh and uh we need to
+[010:00] We have been arranged elements, right? Yeah. Okay, so I would as we said before like we could use a difference array again and build
+[010:13] So the update is just plus v minus v like a plus v to the first element on the range and minus v to the element after the end of the range. Yeah, indeed we are using a trick that we already used in the past. We used it with plus one minus one. Do you remember? We add the plus one at the beginning of a range to propagate
+[010:38] through prefix sums, that one right? And then a minus one was added to cancel out this propagation because plus one, minus one cancel each other. Here is the same with V.
+[010:53] So essentially what we want to do, so the main idea
+[011:06] is to
+[011:08] uh is to uh use uh
+[011:13] Uh an arrivy
+[011:15] So we store V not A.
+[011:19] Such that
+[011:23] For any i the element in position i is equal to the prefix sums in V up to position uh i okay yeah so I
+[011:41] I store V such that the perfect sum is equal to P.
+[011:45] Your approach was in the right direction, but you were doing the opposite. You were storing A to get the perfect sums.
+[011:55] Probably the intuition was right, you were not able to
+[011:58] Let to to
+[012:00] to watch it from the right direction.
+[012:03] Um
+[012:09] So
+[012:10] For example
+[012:19] So let's say
+[012:22] A is equal to zero initially, so all the elements are equal to zero. And I want to
+[012:34] To do
+[012:38] Update uh which one? Two six ten.
+[012:45] six, ten. Instead of storing A, which is uh expensive uh from to update, what I want to do is use the fact that prefix sums are able to propagate a value on the right.
+[013:02] So
+[013:04] And uh
+[013:06] Every time you add an element at a certain position, you pay log n, but you propagate it for any po any number of positions you want.
+[013:17] Is this uh
+[013:19] Clear?
+[013:20] Okay, so
+[013:23] What we do is to stead store V
+[013:30] Instead of storing A, we store B.
+[013:32] For the update uh
+[013:36] uh two six I change the element in position
+[013:41] Uh two by adding ten.
+[013:44] and I change the element in position six plus one.
+[013:48] seven by adding minus ten.
+[013:51] Okay, this plus ten, so this is B.
+[013:55] This plus ten
+[013:57] if you consider the prefix sums that you you get uh almost for free with the family tree, then the prefix sums are such that
+[014:19] These are the prefix sums.
+[014:25] Well, this turn is propagated to the right
+[014:33] Ten, ten, ten.
+[014:37] Ten till the end.
+[014:40] Right?
+[014:43] Ten, ten, ten.
+[014:49] This is the effect of adding ten and then computing the pervasums.
+[014:54] If you add minus ten position seven, you are propagating minus ten till the end.
+[015:04] This new minus ten cancel out the effect of the previous ten, so you get uh zero in these positions.
+[015:14] This is exactly what we would like to have with update.
+[015:19] This is P this P is equal to the ten you would like to obtain.
+[015:25] Okay? But to obtain the same effect on A directly, you would have to add this ten to all these positions.
+[015:41] Cool.
+[015:47] Okay.
+[015:49] Questions?
+[015:51] Is this clear?
+[015:54] Okay. Now
+[015:58] Let's move uh to the next uh
+[016:01] Uh to the next uh problem.
+[016:07] Which is uh
+[016:10] Apparently
+[016:12] The same.
+[016:18] but uh is actually very different.
+[016:22] and much are there.
+[016:25] Uh not much are there.
+[016:29] Okay, dynamic prefix sums is what uh we have uh already seen. And fine week three indeed is uh a solution for the dynamic prefix sums.
+[016:40] What this problem is asking for is we are given an array.
+[016:48] And we want to support two operations.
+[016:51] We want to support the
+[016:54] Some
+[016:57] I
+[016:59] Right?
+[017:01] And uh
+[017:02] add or update if you want.
+[017:06] Okay, the add operation is taking a position i and the value v, and you want to change.
+[017:15] The element in position.
+[017:17] Aye.
+[017:19] In the ver in this version of the problem with range updates, you no longer have this operation add.
+[017:29] which is actually generalized
+[017:34] With the operation we are seeing.
+[017:38] Uh before.
+[017:42] Okay.
+[017:43] So for any
+[017:45] For any K in I
+[017:49] J
+[017:51] A K plus equals D.
+[017:57] Okay.
+[017:59] What's the difference between this and the previous one?
+[018:05] Apparently they are very, very similar. So they only
+[018:09] Extra operation we want is range of thick.
+[018:12] 'Kay.
+[018:15] But before
+[018:17] We were asked
+[018:20] So
+[018:22] Uh given a position uh return uh the element uh
+[018:27] E position I, while now we are also asked to return the sum
+[018:36] up to a certain position.
+[018:40] I uh okay.
+[018:44] Okay.
+[018:48] Which one of the two is more difficult?
+[018:53] Yeah, how wha how can you
+[018:56] prove that this is uh much uh it's harder.
+[019:06] solved the other problem.
+[019:08] This was uh like we have to compute all okay, this is uh a secret set, yeah. But let's uh forget uh this operation, okay? The access one.
+[019:20] So if clearly if you are answering more queries, it's harder. Let's but let's compare. At the end what we are going to solve is a sup a super check.
+[019:34] But imagine you have these two problems. The one before, in which you're given an array, you want to support range update and access. This problem is range update and sum. Which one? So range sum, range, update and sum, range, update, and access. Which one is more difficult?
+[020:01] Exactly. Sum of i minus sum of I minus.
+[020:06] Exactly. Okay, this is uh a a proof that the the other one
+[020:13] is uh no not harder than this one.
+[020:18] Um
+[020:21] Did you see that OpenAI solved another problem?
+[020:28] Yeah, the etiquette
+[020:33] Something crazy.
+[020:36] Indeed, some of the courses in our university have to change the programme because of this.
+[020:43] Algorithm design, for example, is to remove a part of the programme just because of it.
+[020:51] The
+[020:53] The the c this conjecture is saying that uh Sat
+[020:58] Was saying that salt cannot be solved in less than
+[021:04] So digression, but it's very important news. Okay. Uh the SAC cannot be solved, that was the conjecture, in less than this amount of time.
+[021:16] This is uh
+[021:20] uh small O, which means asymptotically smaller than
+[021:26] Okay, so essentially it says that you have to to pay there is an algorithm that takes uh two N for T you do you remember what the problem is?
+[021:36] Two hundred means just uh try everything.
+[021:40] And uh the conjecture was saying, Okay, try everything, it's the best you can hope for.
+[021:45] But
+[021:46] Uh this conjecture was disproved.
+[021:49] And uh they alg they are pro OpenAI and other assignments.
+[021:56] are proposing takes something like n log log n divided by square root of log n.
+[022:07] That's the bottom.
+[022:09] Better? No. It's I mean, it's better, but it's uh practically useless.
+[022:15] The problem was that an entire part area of theoretical computer science was basing many theorems on this conjecture.
+[022:28] There were uh
+[022:30] Save it all.
+[022:32] Uh
+[022:33] Lower bounds that were
+[022:36] Starting with
+[022:37] Let's assume uh that this conjecture is true.
+[022:40] Then
+[022:42] Blah, blah, blah.
+[022:45] And uh
+[022:49] And they were using the conjecture to prove lower bounds for other problems.
+[022:54] Very important problems like edit distance, saying okay cannot be computed in less than quadratic time if the conjecture is true.
+[023:04] And uh yeah. The strange thing is that uh uh
+[023:08] almost everybody were thinking that this is actually true.
+[023:15] Um
+[023:17] And uh
+[023:18] It's done by AI uh Open AI together with uh three very famous uh computer scientists.
+[023:26] One of them uh is uh Ryan Williams.
+[023:31] uh which uh is married with uh
+[023:35] Another uh famous uh scientist.
+[023:39] Uh
+[023:41] Banisa Uyi, so.
+[023:44] And she
+[023:45] Started the big area based on this conjecture.
+[023:51] So you can imagine how the the the house is now, okay?
+[023:59] Okay.
+[024:03] Uh why we move to this, I don't know.
+[024:06] Yeah, it's
+[024:09] uh many, many big news.
+[024:13] This is something I mean
+[024:14] Believable here a couple of years ago.
+[024:19] Um
+[024:22] I was saying
+[024:24] Uh I was saying yeah, uh we were following following uh uh the the digression was because of uh
+[024:31] relationship with between problems is usually uh described by proving that uh you can reduce one to the other. That's why I came up.
+[024:41] NPR the problem. Yeah, so indeed we can solve access by doing
+[024:53] Some up to position i and some i plus one and minus sum up to position i. So if you have a solution for this problem, you have also a solution for the other problem, which means that this one cannot be easier than the other one. Okay?
+[025:13] Okay.
+[025:15] So
+[025:18] Uh let's see why this is uh difficult.
+[025:28] Okay, so what with an example, okay, so one, two, three, four, five, six, seven, eight, nine, and ten, for example.
+[025:40] Everything is zero.
+[025:45] And uh you ask me to do range up day.
+[025:54] They
+[025:56] Four, six, ten.
+[026:00] What we are asking me asking for is to modify the array A.
+[026:06] by adding plus ten, plus ten
+[026:11] Plus ten
+[026:13] That's what you are asking me to do. But what you want with
+[026:20] Some
+[026:22] up to position s six is not ten
+[026:28] Which is easy.
+[026:31] Okay. But uh it's uh
+[026:34] Seventy.
+[026:36] Okay.
+[026:37] And why thirty is harder? Reporting thirty is harder than reporting ten.
+[026:44] Because thirty, the value thirty, depends on the position at which the position I'm querying for is within the range
+[026:55] That I updated.
+[026:59] Okay?
+[027:00] Because uh I it's uh thirty not because of six.
+[027:06] Not because of Sikh's ear.
+[027:09] But because of four here.
+[027:13] Do you mean what I you understand what I mean? So if this was uh three
+[027:20] Then the answer forty six, which is another position, is actually not three thirty, but forty.
+[027:29] Okay, so that's the the problem. The answer depends on the beginning of the range I'm taking.
+[027:37] Count? That's the difficulty.
+[027:41] While, in the other case for access, the value that I have to report in position six, ten,
+[027:49] Depends only on the fact that six was or wasn't in one of the ranges I up one or more ranges I updated before.
+[028:01] So the answer before was depending only on the fact that six belongs to these to these segments. While the answer here depends uh on two things.
+[028:15] The fact that 6 belongs to the range I just updated and on the beginning of the range I'm
+[028:25] If I change this, I'm changing the answer.
+[028:29] That's what made the problem uh more peaceful.
+[028:34] Okay?
+[028:40] It's uh
+[028:45] It's more difficult
+[028:48] But actually
+[028:51] The running time is still flogged.
+[028:57] So we can still solve the problem in the same time.
+[029:02] The hardness
+[029:04] is paid in terms of space.
+[029:09] because we are doubling the space required by the data structure.
+[029:18] Okay. Any idea?
+[029:33] Uh how? For example if you have the uh like uh it's a when we have data range is uh six uh plus t type six plus t type six plus t times six. Yeah. You take the six out and then you have one plus two plus three plus four. Okay, so one sign is fixed and the other is an arithmetic uh progression. I mean like you so say say again, so you here you have uh
+[029:59] One ta
+[030:02] You have one times V.
+[030:07] Then you have two times D. Three times D.
+[030:12] And so.
+[030:21] You group the V, then the rating sum of this segment will be one V plus two V plus three V plus V.
+[030:31] Okay. Okay. So maybe we could group the V and uh have uh V times uh one plus two plus three plus four plus five plus our length.
+[030:43] Okay.
+[030:45] The second part is just the length times ninth plus one divided by two. Okay, well let's forget about the other part, okay? Let's consider only this part. So your intuition is that you want to
+[031:01] Consider
+[031:03] The uh
+[031:07] You want to
+[031:09] So the important part here is D.
+[031:13] which is uh equal to all the positions we are updating.
+[031:18] And uh uh
+[031:21] The overall amount of the sum depends on the distance of this from the beginning of the range.
+[031:33] Okay.
+[031:35] How? By multiplying this distance times the value.
+[031:42] The problem is that this is uh true for the first one, second one, third one, and so on.
+[031:51] And uh uh
+[031:53] The value three may be six.
+[031:59] For the same position.
+[032:02] because of the larger range.
+[032:09] This could be a problematic apparent, right?
+[032:13] And what's the easiest case?
+[032:16] The easiest case uh so is is it clear that uh what we we we we we are saying?
+[032:23] Okay, so these three.
+[032:26] Uh
+[032:27] which is the factor that I'm using to multiply V.
+[032:31] Depends on the current range that I have.
+[032:35] If you change the ranger, so another ranger.
+[032:38] you you change uh V
+[032:41] Now is V prime.
+[032:44] But this this V' is shared with the other position, so apparently it's not a big issue. What's the real big issue is that if the new range is starting one position before,
+[032:57] Now the factor is changed because now it's four rather than three.
+[033:05] Is this clear to everybody?
+[033:09] Okay.
+[033:10] So what's the easi so the problem is the beginning.
+[033:14] If you change the beginning, you are changing the function.
+[033:18] What's the easiest possible case?
+[033:22] The easiest possible case is when uh the beginning is uh one.
+[033:27] Right.
+[033:29] Then in this case the multiplier will be I the current position.
+[033:36] So I times V, I times V prime and so on.
+[033:41] Okay.
+[033:42] I times V second and so on.
+[033:47] Okay, let's assume uh this is the case.
+[033:53] What will be the answer?
+[033:56] Boom.
+[033:58] Well the answer for this position
+[034:01] Okay, is is it clear what I'm what I'm writing? Because I mean I'm jumping here and there
+[034:07] the the you know you understand what the spirit is, okay?
+[034:11] Brainstorm together.
+[034:13] Not to be precise.
+[034:16] I give up about the being per cent.
+[034:19] Uh there are notes. The notes are uh very well written in the Prayer Cloud ida.
+[034:26] That weird to now. Okay, so what will be the solution? Let's say.
+[034:34] Uh instead of the problem uh before, we have always this beginning, uh same beginning for every range.
+[034:43] Then what the answer would be?
+[034:47] I, my position.
+[034:51] times V plus
+[034:54] My position times V prime plus my position times V second.
+[035:01] That's the answer.
+[035:04] If you group I V plus V prime plus V second, that's the answer.
+[035:15] Imagine we are in this uh pretty good scenario.
+[035:19] What do you need to do?
+[035:21] to solve the problem.
+[035:42] I is fixed for each element, it doesn't change in this way. Yeah, so we have to use FMV3. Use the
+[035:51] Uh
+[035:53] To support
+[035:57] Uh range
+[036:01] Update
+[036:03] and axis.
+[036:07] Okay. Why? Well, because if you ask me to change uh uh a range uh by adding V, I add V to every position of A. So I use the family tree to get uh V plus V prime plus V second. This can be done because this is a value in a in an array.
+[036:28] You understand what I mean?
+[036:30] Okay.
+[036:32] How can I get to times s times i? Well, just access the array.
+[036:38] times i because i is my position.
+[036:42] Okay?
+[036:43] So in this uh simplified version of the problem sum of I is equal to
+[036:55] Uh I times fenguitry number one times uh axis uh sorry two access I.
+[037:08] If you ask me to solve uh range up date
+[037:15] Um
+[037:18] I jumped into the v
+[037:21] Then this is fan width three.
+[037:25] One
+[037:28] Uh time uh range
+[037:32] Update
+[037:36] Uh
+[037:38] I J V.
+[037:43] Okay?
+[037:47] This family tree is not a family tree solving our problem. So the range update is the range update of declared problem before.
+[037:58] Okay, the one that was moving uh uh the value till the end and then minus B.
+[038:05] Because what I am interested in in this case is to understand how many positions so for each position what are the V the value values B that I modified for that position.
+[038:21] Okay.
+[038:22] And uh so you update uh
+[038:25] This a position sorry, a range that contains this position by V, I add V to the corresponding entry in the array.
+[038:34] And I do this with a range of port.
+[038:38] Is this clear?
+[038:39] If not, let me show you an example.
+[038:43] Ma b it's better to have an example.
+[038:46] So let's uh take uh
+[038:49] Uh one, two, three, four, five, six, seven, eight, maybe.
+[038:59] This is uh
+[039:02] Our array
+[039:12] 'Kay.
+[039:13] This is A one two three four five six seven eight
+[039:23] Um
+[039:27] This is the array of the Fengui 3 one.
+[039:32] Okay, which is uh
+[039:37] An array with the same positions.
+[039:48] Yeah?
+[039:50] Initially everything is zero.
+[040:01] You asked me to do a range update.
+[040:10] From two to seven of the value.
+[040:16] Ten.
+[040:17] Okay? This is the range update of this problem.
+[040:22] I want to add
+[040:26] 10 to every position of A.
+[040:31] So this is uh
+[040:33] Plus ten, plus ten, plus ten, plus ten, plus ten.
+[040:42] Okay?
+[040:44] If you ask me some
+[040:47] I want uh
+[040:49] This plus this plus this plus this plus this.
+[040:54] Then
+[040:57] Okay.
+[040:59] So this corresponds to the previous case in which the
+[041:03] Is ten
+[041:06] Okay.
+[041:08] Now you ask me for another range.
+[041:17] Date another range.
+[041:20] I don't know. Four, seven sorry, before it was seven, so I need to update. This was one as well. Uh four, seven, five.
+[041:31] Okay.
+[041:33] This means that I want to modify the array by adding five, five, five.
+[041:40] Okay.
+[041:41] This corresponds to having v prim in position six v prime equal to five.
+[041:50] Okay?
+[041:52] What I want to remember for five so far.
+[041:56] Uh
+[041:58] Ten plus five.
+[042:01] Okay.
+[042:03] So
+[042:07] Uh
+[042:08] Essentially I'm remembering this value here.
+[042:13] Okay?
+[042:16] Is this convincing? Okay, how do I remember these values here? Using the family tree as we have done before.
+[042:26] Which was uh plus ten uh no.
+[042:32] Plus ten at the beginning of the range, first case, minus ten, minus ten at the end.
+[042:43] Sorry, minus ten at the end plus one the range. Then plus five
+[042:52] Plus five
+[042:55] Uh minus five.
+[043:00] Okay?
+[043:02] Okay. I store the family tree for this.
+[043:06] Some gives me A.
+[043:13] Okay. This is what uh I'm doing uh with these two operations. This one and this one. And w are working on these two two arrays. So on only one array array is stored, of course, this one.
+[043:28] Okay, with the phone.
+[043:31] Is this convincing?
+[043:33] Okay.
+[043:35] My came.
+[043:37] Is that
+[043:38] Uh for the sum.
+[043:41] of the problem that we are trying to solve.
+[043:44] I return what I get from this array, fifteen.
+[043:49] Times deposition.
+[043:53] Why I'm doing this? Because this is correct, this will be correct if all the ranges will start from position one
+[044:04] It's not the case, indeed the the answer is corre incorrect.
+[044:08] But at least this is the correct solution every time the range starts from so if all the ranges start from the first position.
+[044:19] Okay?
+[044:20] It's a starting point, it's not a the sol defined solution.
+[044:25] This is incorrect.
+[044:28] Why?
+[044:30] Well, it's is incorrect because uh six would report six time uh fifteen
+[044:39] Yes. Which is uh equal to thirty f
+[044:44] Sixty ninety
+[044:47] While the correct answer is what? Ten plus ten.
+[044:55] Uh so this is different than ten plus ten twenty plus fifteen thirty five plus fifteen uh fi
+[045:08] plus fifteen fifty
+[045:11] plus fifteen sixty five.
+[045:17] Sixty five.
+[045:19] Okay? It's correct because uh we are the difference uh is uh
+[045:27] Uh twenty-five
+[045:33] And indeed is fifteen year five five twenty-five.
+[045:42] Okay? You see why I'm counting this? Because these are these are this is the the error, okay? Because I'm uh assuming that all of them are fifteen. While it's not this.
+[045:56] Okay?
+[045:59] Good.
+[046:02] So far it's only an approximation.
+[046:06] of the characters.
+[046:08] Let's uh try to
+[046:12] Modify
+[046:13] The approximation in order to get a correct uh answer.
+[046:21] Okay.
+[046:28] Okay, let's uh
+[046:33] Let's consider only one range update.
+[046:38] Range
+[046:40] Update
+[046:44] is uh
+[046:46] I
+[046:48] JV. Okay? The approach we have seen so far is correct.
+[046:58] only if i is equal to one.
+[047:06] Okay.
+[047:10] But and what we would like to do is to correct what the uh result is giving us.
+[047:20] Okay. Let's uh use again the
+[047:27] Previous example.
+[047:32] Okay.
+[047:34] Here we are.
+[047:38] Let's uh assume uh we only have this uh query.
+[047:47] For the moment.
+[047:50] Okay, this is the only query we have, so this is this is actually ten, ten.
+[048:04] Um
+[048:08] What's the answer we are reporting?
+[048:15] For some
+[048:18] Six.
+[048:24] Okay, for some sixty we access the element in position six is ten. Six times ten. Six times ten equal to sixty.
+[048:36] Is it correct? No. The error is uh ten.
+[048:46] What about sum up to position five?
+[048:51] Well, the answer we report is fifty. What's there?
+[048:58] What's the answer for position four forty? What's the error?
+[049:03] four ten. Why? Well, because the error
+[049:09] does not depend on the position. It depends on how many positions in the prefix is in the prefix uh are not modified.
+[049:21] So it depends only on the starting position of the range I updated.
+[049:26] Do I read on this?
+[049:31] Good news, right?
+[049:32] because the error does not depend on the position.
+[049:38] We are quitting.
+[049:39] Depends only on the position.
+[049:42] uh on the range update I have done.
+[049:46] Okay.
+[049:47] So if I uh
+[049:51] If I remain for every disposition,
+[049:56] The errors we have done so far
+[050:03] Okay, this is uh these are the alerts.
+[050:06] Okay.
+[050:21] Okay.
+[050:23] The errors are
+[050:27] Perposition.
+[050:30] Okay? Our per position the value is the same uh for every position.
+[050:36] Okay.
+[050:38] So what do you need to do to remember the errors?
+[050:43] Well, you need another range update on this array that we call error.
+[050:52] Because I update by adding ten, ten, ten, ten.
+[050:59] Do you agree?
+[051:02] So the error I made for any of these positions is ten.
+[051:12] Then, what I do? I compute the sum using this one. Multiplying by the position, I get an approximation.
+[051:21] Then I absent the position ten, I get the error, I subtract the error, I get the correct answer.
+[051:29] Okay.
+[051:31] Is this correct for every position? Well, every position in the range is okay. What about a position outside the range?
+[051:41] Let's see.
+[051:43] Oh
+[051:50] Uh
+[051:53] Let's see.
+[051:58] Okay, some uh
+[052:00] For position eight.
+[052:05] The answer we are reporting is uh eight times ten equal to eight.
+[052:13] Eighty.
+[052:16] Okay.
+[052:20] Mm-hmm.
+[052:23] Uh 80. Is this correct?
+[052:26] No, was there a
+[052:32] Then
+[052:33] Right?
+[052:35] Okay.
+[052:39] Is it uh ten always always ten?
+[052:47] Say again? Why are we multiplying eight by ten? Oh yeah, sure, sure. My mistake.
+[053:08] Thanks.
+[053:09] You found another bugger.
+[053:13] one lecture that I go or not?
+[053:15] No. So you are not the bug uh feature bug fine. No.
+[053:19] Okay, zero, zero, right, sorry. Uh what's uh the error?
+[053:27] Was there a
+[053:30] No, because the the answer expected answer sum up to eight which is ten plus ten plus ten plus ten plus ten plus ten plus ten. So the correct answer would be
+[053:44] Seventy.
+[053:47] Uh sixty, yeah.
+[053:50] I I was trusting you.
+[053:54] Uh
+[053:56] Sixty. Yeah, yes.
+[053:59] Sixty.
+[054:01] Uh we don't have, but uh if there was a position nine
+[054:08] Position nine here.
+[054:11] What would be the answer?
+[054:14] Zero. What's the error?
+[054:16] Sixty.
+[054:19] Okay.
+[054:20] This is a coincidence.
+[054:22] No. Every position after the range
+[054:28] Does it receive this past ten?
+[054:31] Which means that you get zero.
+[054:35] If you multiply by the position, you get zero. But actually, the answer is incorrect. There is an error. What's the error?
+[054:45] Well, the error is equal to the value you were up the value you were adding times the size of the range.
+[055:00] Does d does this depends on eight, position eight?
+[055:06] Well, for every position after seven, the error is always the size of the range times the value of v.
+[055:14] Okay?
+[055:16] Nice.
+[055:18] Okay. So
+[055:21] So it was not enough uh to change uh by adding the error plus ten, but we you we also have to add the error uh sixty. Okay, this is uh V.
+[055:36] Right?
+[055:40] This uh sorry, this is uh V times uh
+[055:45] I um maybe minus one, no. I minus one.
+[055:52] Okay.
+[055:53] because it's the number of cells in the prefix. That's what we said before. Nice. This is what? Is J minus I plus one times V.
+[056:11] Do you agree?
+[056:13] Sixty.
+[056:15] Okay.
+[056:16] What about uh sum of position uh uh position uh one?
+[056:31] Is we have zero here, it's zero times one.
+[056:37] zero. Is it correct?
+[056:41] Yes.
+[056:43] No error here.
+[056:49] Good.
+[056:52] Notice that uh we already noticed that.
+[056:56] We have two errors, two corrections uh to our answers.
+[057:02] These two corrections do not depend on the position at which we have to to correct, but only depends on the query range update that we are performing.
+[057:17] Because it's V times I minus one and V times J minus I plus one. So V times the sides of the range, V times the position the first position of the range minus one.
+[057:33] This is nice because what we have to do is to change this array error
+[057:41] That we want to access and we want to change it with one range update for plus ten.
+[057:48] One range update from here.
+[057:51] till the end of sixty
+[057:56] Okay.
+[057:57] Is this convincing?
+[057:59] Okay. That's the solution.
+[058:03] What happened if now I I'm doing another range update?
+[058:12] Okay, range.
+[058:15] Let me check i if i i if everything is okay because
+[058:19] Um okay. What I change uh also respect with respect to the previous years.
+[058:26] uh was not only the fact that I'm sketching the solution more and let you brainstorm uh more together, but I also changed to uh to look at the my notes before doing the lecture.
+[058:42] This is something that
+[058:43] professor should always do. Indeed, I'm doing for every course.
+[058:48] In this course, if I'm I am checking the notes before doing the lecture, I know the solution too well and I'm super fast in presenting it.
+[059:00] So now I'm reconstructing the solution with you, and that's why we have more mistakes and more error.
+[059:06] but I need to check if everything is okay.
+[059:09] Unless there is some uh bug finder that uh helps
+[059:14] Okay. Um
+[059:20] I I changed this because uh
+[059:23] 10 class years that I'm teaching the course, I feel boring doing the same stuff. Not because the previous year was not okay, the course. So the course was always.
+[059:33] Okay, but uh
+[059:36] boring to do always the same.
+[059:39] Um
+[059:42] Okay, what about uh what about uh this seems to be correct. What about if I'm doing another range uh
+[059:49] update let's say
+[059:53] Three
+[059:54] Four by five.
+[060:00] Well okay.
+[060:01] I need to change the first array A
+[060:05] By adding
+[060:08] Plus five
+[060:11] Plus five.
+[060:14] Notice that I'm doing the update of A by adding five to all the positions in the range, but this is done with the family tree with two updates in the family tree only.
+[060:27] regardless the size of the rig.
+[060:30] Okay. Now if I ask you sum up to position ten,
+[060:39] Uh sorry, sum up to position six.
+[060:43] What the first one is giving me
+[060:47] Is what?
+[060:51] Then
+[060:53] because the first family tree is giving me this value here.
+[060:59] Not updated, so it's 10.
+[061:03] Ten times six uh is sixty.
+[061:07] Yeah?
+[061:08] Minus uh what?
+[061:12] Minus uh the error, but yeah, the error ten.
+[061:16] is fifty.
+[061:18] Is it correct or not?
+[061:21] It's not correct. What is missing?
+[061:25] is missing the contribution plus five plus five.
+[061:29] Which is the error here for the second update, because it's two, the size of the range, times five, ten.
+[061:37] Indeed, the correct answer here is ten times six minus the error I have here.
+[061:47] And the error earlier needs to be updated with the second range update because we need to add the size of the range, which is uh uh
+[062:01] Thanks for that.
+[062:10] Not the range of faith, but the error on the right must give you the minus. This one? Yeah, like sixty, sixty. Yeah, yeah, yeah, it's minus, yeah, yeah. We have uh sorry, this is uh uh it depends on what you want you do, okay? The operation you do later. If you add the error, this is uh plus, this is minus. If you subtract, as we have done before,
+[062:36] Uh this is plus and this is minus. Yeah, that was a a bug in the description, yeah. Depends on what you do with error. If you do the result minus uh the error, this is what you have to do.
+[062:53] Good point.
+[062:56] Okay, so what the second range update will ask to do for there is plus
+[063:06] Uh
+[063:09] Five plus five isn't it?
+[063:14] Uh minus uh
+[063:16] Minus uh ten.
+[063:22] Okay.
+[063:24] Yeah, maybe use using the minus in the error is somehow
+[063:28] Misleading. No?
+[063:32] Maybe it's better to do plus value. Anyway, nothing changes too much. Okay? So let's check if sum of ten is okay.
+[063:43] Then what we are doing is ten times six, sixty.
+[063:51] Minus zero.
+[063:53] 60. Indeed, the traffic sum after this top date in position C 6 is 60.
+[064:03] Works.
+[064:04] Are you with me?
+[064:06] Yeah? Okay. What about uh a value within the range?
+[064:11] Well, it's uh uh it's uh fifteen, right?
+[064:17] Fifteen times four, which is easier is sixty.
+[064:24] Okay.
+[064:27] Sixty five.
+[064:29] Yeah.
+[064:30] Miles fifteen. It's uh forty-five. Is it uh correct?
+[064:37] Yes or no?
+[064:41] Plus ten, plus ten plus ten plus five.
+[064:46] Uh thirty five. Is it correct or not?
+[064:50] I think we missed supposedly three and four and you said four and five.
+[064:56] added plus five for three and four. Say again now? In the in A add A should you not be adding plus five for three and four.
+[065:07] No, that's
+[065:09] good catch. And changing the wrong uh the wrong numbers.
+[065:18] Yeah.
+[065:19] The range was three, four.
+[065:27] Okay now seems to be correct.
+[065:29] Okay. Thanks. Many bug finders.
+[065:35] Okay.
+[065:37] Is it uh clear to everybody?
+[065:41] Yeah?
+[065:43] Yes or no?
+[065:45] It's a very convincing yes or it's uh
+[065:48] Yeah.
+[065:50] Okay, there are notes anyway very no very long notes. If you are not uh convinced
+[066:00] What's the problem of this solution is that we need uh two family trees, so we are doubling the sp the space, but the time is the same, so it's okay in both cases.
+[066:11] Okay.
+[066:13] Yeah.
+[066:16] No questions?
+[066:20] Okay, we have um
+[066:23] Twenty-five minutes.
+[066:25] To
+[066:29] To introduce
+[066:33] The next topic.
+[066:41] She's uh segmented.
+[066:45] Something very popular.
+[066:49] Uh we
+[066:52] It's a data structure that solves dynamic prefix sums.
+[066:59] Solves dynamic preference exams with range update and solves many other problems with range queries on an array.
+[067:12] No more.
+[067:16] Okay, what the data structure is, while I'm searching my notes.
+[067:25] The data structure is a
+[067:29] A binary three?
+[067:32] with leaves correspo leaves corresponding to the elements of our array. And then we merge two consecutive leaves into an ode, the parent of the two leaves.
+[067:47] Then the parent of the parent, so we merge two nodes into a parent and so on, till we reach the root.
+[067:55] Hi, that's the fine we do.
+[067:58] Uh sorry, the segment tree.
+[068:01] Super powerful data structure because this structure is able to solve many, many problems.
+[068:13] Okay, actually the idea
+[068:17] So the structure is what I described.
+[068:20] The idea is pretty easy.
+[068:23] Once uh you have a problem
+[068:27] And you want to try to solve the problem with segment tree.
+[068:32] You always have to use a standard
+[068:36] Uh algorithm for the query.
+[068:40] and you have to put some value in the node.
+[068:44] Oh, the same way.
+[068:45] The value you're putting in the node is the answer in the subtree.
+[068:53] The rotor does that not.
+[068:56] Always use uh the same algorithm for for answering the query, for updating the segment tree. And the idea main idea is okay, you you have a node, this node corresponds to a range of values, I put here the answer.
+[069:15] for that lecture.
+[069:17] Okay? Then it's the responsibility of the searching algorithm to look at only nodes which together
+[069:25] uh helps uh in finding the answer.
+[069:29] of a given range.
+[069:33] Okay, so that's the idea.
+[069:41] Segment three.
+[069:45] Segment three four dynamic sums.
+[069:52] Uh the length graphic sums.
+[070:01] Is the solution we are presenting better than what we already have? No.
+[070:08] Actually is worse because it's using
+[070:11] Two times the space.
+[070:14] The point is that this data sh structure can be modified, updated changed in what is storing and adapted to many other problems that's the virtue of this data structure.
+[070:33] Okay, what are the queries? So we have already discussed this. Is ADV and uh range sum
+[070:44] I
+[070:46] J
+[070:47] Okay, let me clarify this point.
+[070:50] Okay. We actually presented the problem of computing
+[070:55] Uh add and sum.
+[071:00] And the sum was the prefix sum up to position I.
+[071:05] Then we also said there is this range update in which you want uh sorry, this range sum in which I want the sum over a range.
+[071:16] Let's forget about this query.
+[071:19] in the description of the problem because this query can be solved with two sums.
+[071:26] Some till the end of the range, some at the position immediately before the beginning of the range.
+[071:37] We presented the solution for sum with family because it's better
+[071:42] it's easier to present the solution with Family Tree for that operation.
+[071:48] With segment three is said, it's better to present the solution for range sum.
+[071:54] Nothing changed because with sum you can solve range sum, with range sum you can solve sum.
+[072:03] nothing is changed. The only uh difference is that uh uh
+[072:10] Sum is better for family tree, range sum is better for segmentary. Not for running time, for presenting it. Okay?
+[072:25] Okay. What's the uh what's the
+[072:31] The answer of this is the sum for every position from i to j of all the values in the array for that elements.
+[072:43] Okay, now let's consider an example.
+[072:47] Uh we have uh the array A which contains three
+[072:54] One.
+[072:56] Minus two, four
+[072:59] Six, thirteen,
+[073:06] Two and zero. Okay? This is our array. Positions.
+[073:13] R
+[073:15] Uh
+[073:19] Don't remember why I started from zero, so let's no, it's better to start from zero, of course. Zero, one, two, three, four, five, six, and seven. Okay, so eight positions starting from zero. We will say later on uh if this is actually needed or not.
+[073:37] Okay, so we have this array and our goal is to build a tree binary tree on top of this array.
+[073:47] We merge uh two two we merge two leaves leaves together.
+[073:55] to make a node.
+[073:59] Okay, like this.
+[074:02] In the node which corresponds to a range
+[074:07] From zero to one, huh?
+[074:09] we put the answer of that range.
+[074:14] Four.
+[074:15] Okay. We replicate this
+[074:23] No, please.
+[074:35] For every
+[074:39] For every
+[074:40] Leaf we have.
+[074:43] uh in our uh in our check uh in in our array.
+[074:47] Okay, of course the ranges are changing as well as the answers.
+[074:54] This range corresponds to 2-3, this range corresponds to 4-5, this range corresponds to 6, 7.
+[075:05] Okay? And the answer is of course different.
+[075:11] Uh nineteen two.
+[075:14] Okay.
+[075:16] Now we merge uh two
+[075:20] No, the
+[075:22] in this level to form uh a new
+[075:26] bigger range.
+[075:28] The range is of course the union of the two ranges.
+[075:33] The answer is of course the answer within the range.
+[075:39] Let's do the same here.
+[075:44] It's four, seven, and the answer is twenty one. Then finally we get
+[075:59] The root
+[076:03] Which corresponds?
+[076:05] To the Wool array, and the answer is the sum of all the values in the Wool array.
+[076:14] Here uh the the tree is perfect binary tree because the array has a size which is uh a power of two. If this is not the case, well uh there is uh a part of the tree which is uh uh incomplete.
+[076:36] How to divide, how to split is something that matters in practice while you are implementing. And there are, if you search, many tutorials that are explaining how to implement it in practice. I always forget about it, so just search the net for. I don't remember if it is better to split in the middle or to take the first uh largest power of two.
+[077:03] and then uh consider the rest. Uh there are uh tricks to move uh easier with uh within the the trick. You can just search and try to understand what's the best the better approach.
+[077:18] My question now is how much time does it take to build uh the tree? Assume uh it's a power of two. Okay? The array is a power of two.
+[077:31] besides which is power. What's the the the running time for building the tree?
+[077:40] But you have to
+[077:42] The other three.
+[077:44] Such depth.
+[077:47] uh the root corresponds to the whole range, this corresponds to the first part, this corresponds to the second part uh, then three then four parts, and so on. Is it better to start from the root or start from from the leaves?
+[078:04] From the leaves. Why?
+[078:11] Yeah, yes, because uh what you can do is to consider the first two positions and you get this second two positions and you get this.
+[078:21] So on. Then, when you have to these two, you can
+[078:26] Merge them and the answer is will be the sum of the two, and so on. If you build from top,
+[078:37] Then the running time would be terrible because you have to do many scans. What's the running time?
+[078:48] if I start from the root.
+[078:51] Quadratic?
+[078:53] No?
+[078:56] Linear? Okay. If I start from the leaves, it's linear.
+[079:03] Because uh because uh I have uh n nodes and leaves to to touch.
+[079:12] Then I get n divided by two notes. For each note I pay constant time to get the answer.
+[079:19] Here I have n divided by four.
+[079:22] And I compute the answer in constant time for each of them.
+[079:26] So it's uh n n divided by two plus n divided by four plus n divided by eight blah blah blah, which is two n.
+[079:34] less than twelve. So it's a linear
+[079:39] What about uh what about uh the case in which I start from the root?
+[079:47] compute the route I have to scan all the ruler right.
+[079:51] True V the to scan the
+[079:54] big part of the computer
+[079:58] scan another big part of the array.
+[080:01] And look at why?
+[080:05] And we have log n exactly. It's the same argument we use for merchot. We have uh log n levels, each of them costs uh n, so it's n log n.
+[080:20] Okay.
+[080:23] Good.
+[080:24] So
+[080:27] What about add operation?
+[080:38] Logan, why?
+[080:41] dating the the path from the wood.
+[080:45] Yeah, exactly. If I have uh add uh like uh four by value three, so
+[080:53] Plus three. I'm starting from the leaf corresponding to position four.
+[080:59] I update it by adding three, I add three here, I add three here, I add three here. So if I have a pointer to the parent, then I can move the three.
+[081:10] uh from the three up what if I have no pointer to the parent
+[081:23] Yeah, how?
+[081:33] Exactly. Yeah. So you can traverse top down without any problem. It's conceptually easier to move up, so bottom up, but
+[081:46] In practice, it's better to move top-down because of uh you are uh saving uh one uh one point.
+[081:54] You don't don't no need no need for the pointer uh to the part.
+[082:07] Is water? Is air.
+[082:11] No, no, no, you have to store the that's the point, good point. We have to store A and the three.
+[082:20] Okay. For the tree potentially you could so if it's a complete tree, you can store just a an array which uh has a shape of a tree.
+[082:30] But you need to store all the values which are part of the data structure. So it's using two at least two times more space than
+[082:40] Then finally.
+[082:53] Because it's not clever enough to move top down for the construction, because you are not reusing the work you have done before.
+[083:13] The cost of building the tree. Okay.
+[083:16] Bottom up. Bottom up, yeah.
+[083:26] After meeting the first time and I compute the
+[083:31] So what's the no what's not clear? Why is there
+[083:40] Uh okay. Fact the fact that it's the same who cares. But uh it's two N because you have uh you pay N
+[083:52] For the leaves. Then you pay n divided by two for the parents of the leaf.
+[084:01] you have n divided by four for the parents of the parents and so on.
+[084:08] At the end uh it's n plus n divided by two, plus n divided by four plus n. Which is also the space you are using. So it's never the case that for uh for any algorithm you have you are paying more space than time.
+[084:27] Easy argument because if you are spay paying space S, you need to fill that space and you pay S time.
+[084:36] Uh yeah. So in this case uh linear in the size of the data structure is 2n.
+[084:48] Uh yes. What about uh rain sum?
+[085:06] To access to the three, no.
+[085:09] Because uh it's only one access to the tree if the range is fully covered by a node.
+[085:19] fully covered in the sense that the range is equal to the range of an option.
+[085:25] So y if you are so lucky that your range is uh uh is exactly the range within a node, then uh just access that note.
+[085:36] But if it is uh like this one
+[085:46] Okay, what's the point? What do do we have to do?
+[085:54] The to five
+[086:00] So range some to five, which is this one.
+[086:34] Where do we start from, uh the root or the leaves?
+[086:50] Um
+[086:53] Yeah, potentially it's possible, but uh it's better to look uh the other way round.
+[086:59] Um
+[087:01] What you will do, okay, is you start from this leaf, potentially this leaf, right?
+[087:07] Yeah.
+[087:08] Then you move up and you add this node.
+[087:13] the palate of the tulips.
+[087:17] Okay, then what you have to do.
+[087:21] Stop or not?
+[087:29] I I add two and nineteen together, right? I get twenty-one.
+[087:35] Do I need to move up or I stop to move?
+[087:39] You stop here, why?
+[087:43] Okay, yeah, because the the range that I'm I'm I'm queering on is uh completely covered by the the the the the composition of the two ranges of the two leaves. Okay, yeah.
+[088:06] But uh what if uh the range includes uh one as well?
+[088:10] The range is this one.
+[088:21] Yeah we should also
+[088:25] So your algorithm is starting from the two leaves and move up. We have to repeat this, okay? Because we cannot change the strategy depending on what we see in the feature in the picture. We have to
+[088:38] We we need a str a a a strategy and then for always follow this strategy. So what you were say so your strategy is move up.
+[088:54] Indexes that are out of the range if we go upwards.
+[089:01] Let's see what okay, we we understood uh what's our goal, okay. We have a range and we have to find the the pieces of this range such that uh all the pieces cover the whole range.
+[089:15] And uh we start from here.
+[089:18] The notes that are covering our range are this one, this one, and this, this one, this one, and this this leaf by itself.
+[089:31] This one, this one and this one.
+[089:34] We move up.
+[089:36] Okay.
+[089:38] If we move up once again, uh this part is outside, so I stop.
+[089:43] Stop the
+[089:45] But what about uh this node? Because uh if I move here, I look uh down and there is nothing. If I follow the strategy be before, I should stop.
+[089:57] But I no I don't can I can't stop. I have to move here. When I'm here I have to move down. Why I'm moving down? Okay, I'm moving down because there is a segment of the range still not covered on my right
+[090:20] And on my left it's I'm outside.
+[090:27] Okay.
+[090:29] If you want to call this gone.
+[090:34] Uh yeah.
+[090:36] What's the what's the bent slaves? Start from the root?
+[090:40] Okay. Let's start from the root. We start from the root and what we have.
+[090:45] The range two five compared to the range zero seven.
+[090:52] Two five is completely contained in zero seven.
+[090:57] Which means uh
+[090:58] Uh this answer is not uh uh useful for us because it's talking about something bigger than us.
+[091:07] So a node contains an answer which is not interesting f for us if the corresponding range is outside our range. So our range is this one and the answer is for this.
+[091:19] Okay, don't we don't want this. Or if our range is this one and the other one contains it.
+[091:28] This is a super answer, not usable for us.
+[091:32] This is our related answer, so you're not useful as well. Okay. Here we are in a case in which the range is fully cont our range is fully contained in the range of the node.
+[091:45] So what?
+[091:50] In which direction?
+[092:00] Both directions. Both directions. Yeah.
+[092:04] Yeah, why? The voltage is fully contained in zero scale.
+[092:09] Can we do?
+[092:11] Move left and right and see what happened.
+[092:14] Okay, algorithms that move both left and right on trees are dangerous, very dangerous.
+[092:32] Yeah, should we move one? Yeah, exactly. Exactly. We fi we compute the point in the middle and check the point in the middle if it is like this, splitting our interval by two parts, or it's like this. If it is like this, or like this. If it is like this, I move left only. If it is like this, I move right only. Okay, this is correct, but as often happen with recursion, it's better to.
+[092:58] Do nothing, go left and right and check whether the interval I'm considering is outside like this.
+[093:11] Okay? So if it was like this
+[093:16] If it is like this and I'm moving this this way, here my range is this one and the range of the room is this one. So I'm outside, I stop. Okay? So it is correct, but it's always better to go anyway what time is it?
+[093:36] Uh okay.
+[093:38] Just let me say when you move in a tree both directions, pay attention because it may be a dramatic situation. Now we have to move both directions.
+[093:52] We move here and we move here. What about the range? Well, the range is 2,5 and here is 0.3.
+[094:02] Uh let's rescale the range.
+[094:05] because uh the range uh this one can in this part is only two three, right? So two three versus zero three fully contained. It's one case uh of your uh idea in here now, because uh the middle point uh is uh here and my range is here.
+[094:29] Could be okay to stop, but we let's move both directions anyway.
+[094:34] Now we have our range which is on the right of this. So we stop here. This is a node which is not useful because the range, so the answer is for a range which is unrelated outside. Stop.
+[094:51] Move here, the range is fully contained, the range of the node is fully contained in the range of the query. So the answer is useful. Indeed, this interval
+[095:05] is uh
+[095:06] a a sub interval of the query interval.
+[095:11] So we take the answer and we can stop.
+[095:16] Let's do the same. On the other side, we each define movie and move here.
+[095:21] ER is outside, here is completely context two and nineteen twenty one is the answer.
+[095:29] It's working and pretty easy.
+[095:32] with respect to the previous one that
+[095:35] Jump and then go down. Okay, we start from the root, go down. If the interval is fully contained, I go both directions. If the ranges are like this, I stop. If the range is completely contained in the query range, I get the answer and stop.
+[095:52] Unfortunately, in this example we are touching one, two, three, four, five, six, seven notes
+[096:00] and our array consists in eight positions.
+[096:05] The question for the weekend is: is this algorithm linear?
+[096:11] seven, eight, or it's better than this.
+[096:19] See you.
+[096:23] You can think in this I'm going to fish my octopuses this little
+[096:30] Uh

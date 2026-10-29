@@ -199,3 +199,47 @@ stesse box. È lo standard da mantenere.
   PDF del prof aggiunti da Octech il 21/10: Prefix_sums_2025.pdf -> Lessons/L10 (p.1-2 = L9, p.3-7 = L10);
   Segment_tree_2025.pdf -> Lessons/L11 (non ancora fatto a lezione: usarlo per L11+); SlidingWindowMaxima.pdf era un doppione
   identico di Lessons/L3/SlidingWindowMaxima.pdf -> spostato in _routine/tmp/_to_delete/ (cancellazione non permessa).
+- (21/10, 16:30) L11 (mercoledì 21/10) PROVVISORIA, registrazione non ancora uscita: da L11/notes.md di Octech (presi a lezione) +
+  blog fenwick + pagina del corso (21/10 = "Applications of Fenwick tree and Range update with Fenwick tree"; obbligatorio Nested Segments CF 652D,
+  opzionale Pashmak 459D). Le note coprono: livelli, Sum (parent = i - (i&-i)), Add (right sibling, Θ(log n)), counting inversions fino
+  alla variante mergesort (le note si fermano lì). Marcati "[not in your notes]": inversioni con BIT, Nested Segments, UpdateArray, RangeUpdate
+  (codice del blog). Le note L11 confermano la ricostruzione della fine di L10 (L10.pdf §3.4). Crate l11 (fenwick, inversions, nested, range),
+  aggiunto ai members. Niente practice finché è provvisoria. Quando arriva la registrazione di L11: rifarla e aggiungere practice L11 (da E47).
+  Download: L_10.MP4 e i tre PDF (Prefix sums 2025, Segment tree 2025, SlidingWindowMaxima) sono doppioni identici di file già in Lessons/,
+  NON cancellati (cancellazione negata in automatico): chiedere a Octech.
+- (27/10) L11 rifatta sulla registrazione (Lessons/L11/L_11.MP4, 91 min, trascrizione L11_transcript.txt). Contenuto REALE del 21/10:
+  ripasso Fenwick (versione rilassata, ricorsione, radice finta), livelli = numero di bit a 1, altezza log n, Sum e parent i-(i&-i)
+  (trucco tabella a byte, trailing zeros, complemento a 2), Add con i fratelli destri i+(i&-i), complessità log^2 n (lasca) -> log n
+  e discussione sull'albero sbilanciato a destra, poi counting inversions: definizione, insertion/bubble/"stupid" sort, variante mergesort.
+  LA LEZIONE FINISCE A 90:44 con "can we get the same running time using Fenwick tree?": la soluzione con BIT NON è stata data.
+  Le note di Octech coincidono con la registrazione. practice L11 = E47-E49 (workspace aggiornato). Crate l11 ridotto (fenwick, inversions
+  mergesort/insertion); nested.rs e range.rs spostati (mv) in Lessons/L12/src.
+  PDF del prof aggiunto da Octech il 27/10: FenwickTree_2025.pdf -> Lessons/L11 (p.1-6 = L10/L11, p.7-15 = L12: inversioni con BIT + remap,
+  Nested Segments (versione BIT sugli estremi sinistri), Update the Array, range update con due BIT). Download ripulito (L_11.MP4 e PDF
+  cancellati dopo sha1, permesso concesso).
+- (27/10) L12 (lunedì 26/10) PROVVISORIA E RICOSTRUITA: nessuna registrazione, nessuna nota di Octech, niente sulla pagina del corso per il 26/10.
+  Contenuto ipotizzato = FenwickTree_2025.pdf p.7-15 + blog fenwick (proseguimento naturale di dove si ferma L11). Crate l12 (fenwick,
+  inversions BIT + remap, nested blog + versione 2025, range UpdateArray/RangeUpdate), membro del workspace. Niente practice finché
+  provvisoria. Quando arrivano registrazione o notes.md di L12: rifarla (se il prof ha già iniziato i segment tree: Segment_tree_2025.pdf in L11),
+  e aggiungere practice L12 (da E50).
+- (28/10) L12 rifatta sulla registrazione (Lessons/L12/L_12.MP4, 91 min; Download ripulito). Contenuto REALE del 26/10: inversioni con
+  Fenwick tree (array F delle frequenze, Θ(max(A) + n log max(A))), remapping (hash map in ordine di apparizione = SBAGLIATO; ordinare + rango;
+  hash map vs sort -> benchmark; remap+BIT non batte il mergesort né con valori illimitati né con max in O(n^c)/radix sort), poi Nested Segments
+  ricavato con gli studenti: idee fallite (due BIT start/end, inizi etichettati con le fini), soluzione del prof = UN BIT sugli inizi, segmenti
+  per fine DECRESCENTE, RangeSum(l,r)-1 e poi togli il proprio 1 (l12::nested::nested_segments_2026); varianti online (difficile) / query offline.
+  Il prof va più lento di proposito: "serve un'altra lezione" -> Update the Array e range update NON fatti: restano come APPENDICE "preview" in
+  L12.pdf (e l12::range). Quando li fa (probabilmente L13 del 28/10): spostali nella lezione giusta. practice L12 = E50-E52.
+  Lessons/L13 esiste già (vuota, creata da Octech).
+- (29/10) REGOLA ESERCIZI (richiesta di Octech): nella sezione "Exercises" di ogni lezione Lx scrivi PRIMA cosa assegna la pagina del corso
+  PER QUELLA DATA (se la riga non c'è: "nessuna riga per quella data, niente di nuovo"), poi a parte "ancora aperti da righe precedenti del 2026"
+  indicando la data della riga (es. "mandatory nella riga del 21/10/2026"). Mai etichettare un titolo di sezione o un problema come "mandatory"
+  senza la data della riga. Le righe della pagina sono il piano del prof, non ciò che è stato fatto in aula (quest'anno è più lento).
+  Mai usare la sezione "Last Year Lectures" per gli esercizi: le note 2025 servono solo come contenuto, sempre marcate "last year".
+- (29/10) L13 (mercoledì 28/10) fatta dalla registrazione (Lessons/L13/L_13.MP4, 97 min, messa lì da Octech; doppione in Download cancellato).
+  Contenuto: Update the Array (V con A[i] = prefix sum di V, +v/-v) -> range update + Sum (riduzione Access <= Sum; caso "tutti i range da 1":
+  Sum(i) = i*FT1.Access(i); correzione con array Err: +v(i-1) dentro, -v(j-i+1) dopo; Sum = i*FT1.Access - Err.Access) -> digressione ETH/OpenAI
+  (verificata sulla stampa: è ETH, Williams/Impagliazzo/Paturi organizzano la verifica, non coautori) -> SEGMENT TREE intro (build bottom-up Θ(n),
+  Add Θ(log n), RangeSum top-down a tre casi). COMPITO A VOCE: "il RangeSum top-down è lineare o meglio?" (risposta in Segment_tree_2025.pdf
+  p.3-4: NON scriverla negli appunti finché il prof non la dà; in L13.pdf solo un suggerimento).
+  Spostati: l12::range -> l13::range (+ RangeUpdateLecture), Segment_tree_2025.pdf da L11 a L13. Appendice "preview" tolta da L12.pdf.
+  Crate l13 (fenwick, range, segment_tree) + practice E53-E55. La pagina del corso non ha righe per 26/10 e 28/10 (ultima riga 21/10).

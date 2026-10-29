@@ -1,6 +1,6 @@
 {
  "generated": {
-  "Cargo.toml": "a40679f3c5577f18bad308721f37f55e54741a21",
+  "Cargo.toml": "40f173cf0879df39faef3611cb57a52e274f4cfc",
   "HandsOn/HO1/Cargo.toml": "00d2ee90cdb5c4c088a4748ff7b7112400047067",
   "HandsOn/HO1/README.md": "8d1446bc47f690d216f87d9e7afaaeab7b186f43",
   "HandsOn/HO1/draft/EMAIL.txt": "e48d098b0a84f0f633036093b82c09f4c895da6b",
@@ -28,6 +28,74 @@
   "Lessons/L10/practice/src/util.rs": "bad3c7910add4964b7175bce31979af1fe025738",
   "Lessons/L10/src/fenwick.rs": "b7a4e59f2872c652d303e9ae7b17ae5b7bf20675",
   "Lessons/L10/src/lib.rs": "3286dd201f90c5d2e32edbab669e9b89a430f901",
+  "Lessons/L11/Cargo.toml": "f7ca9ce362a43d5a5ea02c03f51d70e2ee3ea3cc",
+  "Lessons/L11/L11.pdf": "637711ad014199d392fb3cd89f8bf06dadbf9ab9",
+  "Lessons/L11/L11.tex": "452fa521f05fd11e988431530465709a30623ab3",
+  "Lessons/L11/L11_transcript.txt": "a2f8c0e17afc831c2a14d35233a292bd8ab0c594",
+  "Lessons/L11/board/l11_add_code.jpg": "b914b3e748d3a082bf81059e142916db7abd91d2",
+  "Lessons/L11/board/l11_bytetable.jpg": "d9e6b5efbe38e2918d4ded025b2c6af4f41019f4",
+  "Lessons/L11/board/l11_mergesort.jpg": "5351c385d2f146aa7c4a298820cb8a701c7b52b6",
+  "Lessons/L11/board/l11_parent.jpg": "cd323a617b09b7298a8ebf3f121dc1210d1ff119",
+  "Lessons/L11/board/l11_relaxed.jpg": "4c095c8332ce88a7dd90acc51e16439c250f1ac4",
+  "Lessons/L11/board/l11_right_siblings.jpg": "f8e9ce8bfdd6cebebd40aca85b106f0d435409d3",
+  "Lessons/L11/board/l11_sum_code.jpg": "d1c502a45dc5a761a7126b5c5cc9a5859ad362c8",
+  "Lessons/L11/board/l11_tree_sum7.jpg": "12072bd2ca52d94bf42ad04ff8bfdce5becb3ebf",
+  "Lessons/L11/board/l11_twos_complement.jpg": "668e6fe298921443bbcf464c7ae986d234805c64",
+  "Lessons/L11/claude_notes.md": "cb0523fbb8214e436612b7f2cbf6be096f9d5f98",
+  "Lessons/L11/practice/Cargo.toml": "db50586e52e17aae5dfb6100b4a4951fbfc9b74d",
+  "Lessons/L11/practice/README.md": "ca11f1f33dcc8966c716595172f1ab487e7ec6c3",
+  "Lessons/L11/practice/soluzioni/lib.rs": "9e4098190867f115966137bb16ea40c928c5c9e8",
+  "Lessons/L11/practice/src/lib.rs": "6919926b2bbadfb4f2fa3566603fcf993fcada11",
+  "Lessons/L11/practice/src/util.rs": "bad3c7910add4964b7175bce31979af1fe025738",
+  "Lessons/L11/src/fenwick.rs": "d77f9135d4cf29101b017b11dd942d5f9ad252e5",
+  "Lessons/L11/src/inversions.rs": "de1238eebc7f5e9ac593a58d2453aa6ea7ca7fa1",
+  "Lessons/L11/src/lib.rs": "e61567da753e0fd5bb37d86dd6c804e5e48c5dc4",
+  "Lessons/L11/src/nested.rs": "12597a886f6fe1851430cd026dcad925525f7535",
+  "Lessons/L11/src/range.rs": "ea0f0c7d23cd1fe9220e3cd5d51ae828ee5bfd08",
+  "Lessons/L12/Cargo.toml": "77f95933d8f0ee717ed9f981ea4964a2c06bafff",
+  "Lessons/L12/L12.pdf": "49769407c7a115b897aeb0f4ed0ef36a46532151",
+  "Lessons/L12/L12.tex": "d6fcf39fd0cfea91c2875ae385c15b0237887394",
+  "Lessons/L12/L12_transcript.txt": "b5c4e17d7f7a2b64c7634bc95e65715a98a3c9e6",
+  "Lessons/L12/board/l12_fenwick_inversions.jpg": "10ebc0d8c72326e02ba6c444d9a7c09be3eb9972",
+  "Lessons/L12/board/l12_labels.jpg": "434c7426ea2fff8357f2a6072afdec864246b4ce",
+  "Lessons/L12/board/l12_nested_solution.jpg": "92ff041372ef0b6f4fe57de53a3affbb24527b7b",
+  "Lessons/L12/board/l12_nested_statement.jpg": "51f183b6e5a73954cfcc1b581c0b2d0a6d7c34e0",
+  "Lessons/L12/board/l12_remap.jpg": "be1ac655aedff86e24d1484ed4bc49e316165330",
+  "Lessons/L12/board/l12_two_fenwick.jpg": "4f874c10766741b65ae394ee17ff283e22d76a6f",
+  "Lessons/L12/claude_notes.md": "5e853bc2f8649e22197d178c5fc283b14ff78d79",
+  "Lessons/L12/practice/Cargo.toml": "fa28f7a91d2eba6c5f4cb927826f75eb40ead666",
+  "Lessons/L12/practice/README.md": "20f826daf8ed9e4c66575f7dda77b852b45df322",
+  "Lessons/L12/practice/soluzioni/lib.rs": "2aaa07b1c719ca9b54e0be9c9659ab6524013b63",
+  "Lessons/L12/practice/src/lib.rs": "3a600f6e87d624dedb3b1015d20e416cc1956899",
+  "Lessons/L12/practice/src/util.rs": "bad3c7910add4964b7175bce31979af1fe025738",
+  "Lessons/L12/src/fenwick.rs": "a5ec8f17460dd03a3e2b3835ce66aa162327c3d0",
+  "Lessons/L12/src/inversions.rs": "578f87ffd5648fb43a9770f58c13e254ddf8f45b",
+  "Lessons/L12/src/lib.rs": "4dbbdfa83a96c165effb43a73d7392bc6defa030",
+  "Lessons/L12/src/nested.rs": "dd260348eff13e36b7fb3117ac017b9d5e103acf",
+  "Lessons/L12/src/range.rs": "ea0f0c7d23cd1fe9220e3cd5d51ae828ee5bfd08",
+  "Lessons/L13/Cargo.toml": "802043953aa31e011683f0de6638ec1e73f8521e",
+  "Lessons/L13/L13.pdf": "deadcda8f0cfc9f074a6c3483af5a7ebf359156c",
+  "Lessons/L13/L13.tex": "f6d4f7da701a27d6b9b2e0531551889b144d6aec",
+  "Lessons/L13/L13_transcript.txt": "afaa8bb98c9dffa67b978bd196533601fa7b26d5",
+  "Lessons/L13/board/l13_error_array.jpg": "cf517a67b826778c12b6c51e8d5f59001ac90843",
+  "Lessons/L13/board/l13_idea_V.jpg": "22dede3798c5831b988d0548a121b5101189d3fd",
+  "Lessons/L13/board/l13_multipliers.jpg": "41e28e2298d6268586953d4ea7cf04bb5b4ec40d",
+  "Lessons/L13/board/l13_range_sum_problem.jpg": "0fb2ca897947ef40c74f943e2b90bfca2aa7894e",
+  "Lessons/L13/board/l13_segtree.jpg": "e2b8e81c8669be7ace73a8c60e8da3d1da381802",
+  "Lessons/L13/board/l13_seth.jpg": "0fea27ed5c77d3d863baef169378472c753d7770",
+  "Lessons/L13/board/l13_trivial.jpg": "ca619a399808826b2ea11d553a4765ef1ea5b75b",
+  "Lessons/L13/board/l13_update_statement.jpg": "1cc248020ae75bd7464a78f1c9743b7860285bf4",
+  "Lessons/L13/board/l13_wrong_attempt.jpg": "8f53f0502fe5b9f5496b4afe0fe8b9f38faf5872",
+  "Lessons/L13/claude_notes.md": "bf997631f8e462bf89e4061c823c883de7c42170",
+  "Lessons/L13/practice/Cargo.toml": "790ba9ce8ed1808e4d0058e09f7d9928121cb82f",
+  "Lessons/L13/practice/README.md": "f6369fa2c353d3dcc2c7088218fac5ff772f66cf",
+  "Lessons/L13/practice/soluzioni/lib.rs": "b317ca9588424883b6c73dbcef237245df3ee0d0",
+  "Lessons/L13/practice/src/lib.rs": "6d16ee461df673a35c61b99e9110caf3a478c519",
+  "Lessons/L13/practice/src/util.rs": "bad3c7910add4964b7175bce31979af1fe025738",
+  "Lessons/L13/src/fenwick.rs": "64e0df8bea788a604887d2b23570906d9e0e2e0b",
+  "Lessons/L13/src/lib.rs": "fe37052ddfb7434cb750ca39a6d71fe88e55f970",
+  "Lessons/L13/src/range.rs": "44b107328f749b5a011910f5acb13e31eb7be71d",
+  "Lessons/L13/src/segment_tree.rs": "4bd3e47078224d63d6b95cea1aa1fa077d6db88f",
   "Lessons/L3/L3.pdf": "c695b0f9b4aeb301a79c0648bd65d23efd2e276e",
   "Lessons/L3/L3.tex": "404a6c12f209f9577b7b8827fa52f14a46b82a93",
   "Lessons/L3/claude_notes.md": "1d2ab4cef12bceeca41bb50548da433c83c73181",
@@ -89,7 +157,7 @@
   "Lessons/L9/src/lib.rs": "6457f21086f998ef979551c21518c789f0391aa8",
   "Lessons/L9/src/prefix_sums.rs": "c1cd80c015eed69d579889eb7f96d91487df1ea2"
  },
- "last_run": "2026-10-21 12:31",
+ "last_run": "2026-10-29 09:18",
  "seen": {
   "Lessons/L10/Cargo.toml": {
    "mtime": 1792416710,
@@ -115,13 +183,85 @@
    "mtime": 1792585883,
    "size": 7676
   },
-  "Lessons/L11/Segment_tree_2025.pdf": {
+  "Lessons/L11/Cargo.toml": {
+   "mtime": 1792593130,
+   "size": 89
+  },
+  "Lessons/L11/FenwickTree_2025.pdf": {
+   "mtime": 1793120396,
+   "size": 3327361
+  },
+  "Lessons/L11/L_11.MP4": {
+   "mtime": 1793120396,
+   "size": 496538111
+  },
+  "Lessons/L11/notes.md": {
+   "mtime": 1792591730,
+   "size": 2560
+  },
+  "Lessons/L11/src/fenwick.rs": {
+   "mtime": 1792593131,
+   "size": 3055
+  },
+  "Lessons/L11/src/inversions.rs": {
+   "mtime": 1793121536,
+   "size": 3352
+  },
+  "Lessons/L11/src/lib.rs": {
+   "mtime": 1793121537,
+   "size": 1090
+  },
+  "Lessons/L12/Cargo.toml": {
+   "mtime": 1793121537,
+   "size": 89
+  },
+  "Lessons/L12/L_12.MP4": {
+   "mtime": 1793202892,
+   "size": 406350866
+  },
+  "Lessons/L12/src/fenwick.rs": {
+   "mtime": 1793121539,
+   "size": 3110
+  },
+  "Lessons/L12/src/inversions.rs": {
+   "mtime": 1793203948,
+   "size": 4890
+  },
+  "Lessons/L12/src/lib.rs": {
+   "mtime": 1793265489,
+   "size": 1129
+  },
+  "Lessons/L12/src/nested.rs": {
+   "mtime": 1793203949,
+   "size": 7494
+  },
+  "Lessons/L13/Cargo.toml": {
+   "mtime": 1793265489,
+   "size": 89
+  },
+  "Lessons/L13/L_13.MP4": {
+   "mtime": 1793264186,
+   "size": 519947708
+  },
+  "Lessons/L13/Segment_tree_2025.pdf": {
    "mtime": 1792584758,
    "size": 3953284
   },
-  "Lessons/L11/notes.md": {
-   "mtime": 1792584508,
-   "size": 0
+  "Lessons/L13/src/fenwick.rs": {
+   "mtime": 1793265505,
+   "size": 3110
+  },
+  "Lessons/L13/src/lib.rs": {
+   "mtime": 1793265505,
+   "size": 1008
+  },
+  "Lessons/L13/src/range.rs": {
+   "mtime": 1793265505,
+   "size": 8622
+  },
+  "Lessons/L13/src/segment_tree.rs": {
+   "mtime": 1793265506,
+   "size": 5097
   },
   "Lessons/L2/Cargo.toml": {
    "mtime": 1789983210,
