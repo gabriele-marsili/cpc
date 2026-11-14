@@ -44,3 +44,6 @@ Claude ha corretto `src/lib.rs`: righe 161/187 `j < self.n`, 172 `hi <= j`, 188 
 e un sesto bug (riga 324 `0..n` invece di `0..=n`, P2 saltava k = n). `cargo fmt` applicato.
 Esito: unit 15/15, testset 2/2 (P1 e P2), clippy `-D warnings` pulito, fmt ok. Questo va dichiarato in *Use of AI*.
 Report: ancora solo `versione_6nov/report_GENERATO.tex`; riferimenti di riga tutti da aggiornare, Use of AI da rendere vera.
+
+## 14/11/2026: CONSEGNATO
+Email inviata da Octech (Outlook, account unipi) a rossano.venturini@gmail.com con lo zip main.rs + lib.rs + PDF. HO2 chiuso.

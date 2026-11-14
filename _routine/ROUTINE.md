@@ -269,3 +269,4 @@ stesse box. È lo standard da mantenere.
 - (14/11) HO2: handoff in HandsOn/HO2/_GENERATO_DA_CLAUDE/HANDOFF_GENERATO.md (stato, bug segnalati, passi mancanti, limiti). Leggerlo prima di
   lavorare sull'HO2. Versione 6/11 spostata in _GENERATO_DA_CLAUDE/versione_6nov/. src/lib.rs del 14/11 = versione 6/11 rinominata:
   P1 3/11, unit test non compilano. Bug segnalati, non corretti. Report da scrivere (report/ vuota).
+- (14/11) HO2 CONSEGNATO (email inviata da Octech). Codice corretto e report scritti da Claude su richiesta, dichiarato in Use of AI. Chiuso.
