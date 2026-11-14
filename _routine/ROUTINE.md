@@ -243,3 +243,29 @@ stesse box. È lo standard da mantenere.
   p.3-4: NON scriverla negli appunti finché il prof non la dà; in L13.pdf solo un suggerimento).
   Spostati: l12::range -> l13::range (+ RangeUpdateLecture), Segment_tree_2025.pdf da L11 a L13. Appendice "preview" tolta da L12.pdf.
   Crate l13 (fenwick, range, segment_tree) + practice E53-E55. La pagina del corso non ha righe per 26/10 e 28/10 (ultima riga 21/10).
+- (04/11) L14 (lunedì 02/11) PROVVISORIA, registrazione non ancora uscita (in Download solo IMG_88xx.MOV del 02-03/11: video brevi del telefono,
+  non lezioni, non toccati). Da L14/notes.md di Octech + Segment_tree_2025.pdf p.3-9 (in Lessons/L13): risposta alla domanda di L13 (RangeSum
+  visita O(log n) nodi), RMQ dinamico (argmin), RMQ con occorrenze (min, count), Search(s) su valori non negativi (Θ(log n) vs BS Θ(log² n)),
+  #occs (le note si fermano all'enunciato; soluzione hash map per nodo dalle note 2025, marcata "[not in your notes]"). Crate l14 (range_sum,
+  rmq, rmq_occ, search, occs) aggiunto ai members; niente practice finché provvisoria. Pagina del corso: ancora nessuna riga dopo il 21/10,
+  niente Hands-On 2 nel 2026. Quando arriva la registrazione di L14: rifarla e aggiungere practice L14 (da E56). Note 2025 p.10-19 (Successor,
+  fractional cascading, triplette, lazy propagation, persistent) non ancora fatte a lezione. L15 (04/11): nessun materiale al momento.
+- (06/11) Hands-On 2 uscito (https://pages.di.unipi.it/rossano/blog/2024/handson2/, Segment Tree: Min and Max + Is There).
+  Scaffold in HandsOn/HO2 (crate handson2, aggiunto ai members): src/main.rs e src/lib.rs SOLO intestazione (niente soluzione),
+  report/ vuoto, testsets/p1 e p2 dal sito. Generato in HandsOn/HO2/_GENERATO_DA_CLAUDE/: LEGGIMI.md (consegna + istruzioni)
+  e testset_GENERATO.rs (runner [[test]] che lancia `handson2 <problema>` su stdin). P1 indici da 1, P2 da 0.
+  Stesse regole di HO1: lo risolve A MANO, non toccare src/ né report/, non pubblicarlo.
+- (11/11) L14 rifatta sulla registrazione (Lessons/L14/L_14.MP4, 90 min, messa lì da Octech; trascrizione L14_transcript.txt). Contenuto REALE del 02/11:
+  ripasso ST + visita RangeSum, costo O(log n) nodi (casi di overlap, un solo "split", poi due cammini con fratelli facili: 4 log n, 2 log n col trucco),
+  RMQ dinamico (argmin; sotto-intervalli disgiunti: cruciale per la somma, non per il min; Add(2,+7)), RMQ con occorrenze (Add(4,13)), Search(s)
+  Θ(log n) vs binary search for the answer Θ(log² n) ("il segment tree va nella checklist"), solo ENUNCIATO di #occs (compito a voce: provarci).
+  Il prof ha detto: "See you on Wednesday. Next week, no lecture" (conferenza): NESSUNA LEZIONE nella settimana 09-13/11.
+  practice L14 = E56-E58 (workspace aggiornato). La pagina del corso ora ha righe 26/10 Segment Trees (opz. Nested segments con ST), 28/10 Applications,
+  02/11 Lazy Propagation (opz. Circular RMQ CF 52C), 04/11 Persistency + Hands-On 2 (scadenza 22/11/2026).
+- (11/11) L15 (mercoledì 04/11) PROVVISORIA E RICOSTRUITA su richiesta di Octech: nessuna registrazione, L15/notes.md è solo un promemoria. Contenuto
+  ipotizzato = Segment_tree_2025.pdf p.9-19 (#occs con hash map, Successor con BST + fractional cascading, triplette con Fenwick, lazy propagation,
+  persistent ST: tentativi 1-3). Crate l15 (occs, successor, triplets, lazy, persistent) nei members. Niente practice finché provvisoria.
+  Quando arriva la registrazione L15: rifarla e aggiungere practice L15 (da E59); se alcuni argomenti non sono stati fatti, spostarli nella lezione giusta.
+- (14/11) HO2: handoff in HandsOn/HO2/_GENERATO_DA_CLAUDE/HANDOFF_GENERATO.md (stato, bug segnalati, passi mancanti, limiti). Leggerlo prima di
+  lavorare sull'HO2. Versione 6/11 spostata in _GENERATO_DA_CLAUDE/versione_6nov/. src/lib.rs del 14/11 = versione 6/11 rinominata:
+  P1 3/11, unit test non compilano. Bug segnalati, non corretti. Report da scrivere (report/ vuota).

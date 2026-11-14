@@ -1,6 +1,6 @@
 {
  "generated": {
-  "Cargo.toml": "40f173cf0879df39faef3611cb57a52e274f4cfc",
+  "Cargo.toml": "c372b55e470b63961d5a3498ded64cede28d928b",
   "HandsOn/HO1/Cargo.toml": "00d2ee90cdb5c4c088a4748ff7b7112400047067",
   "HandsOn/HO1/README.md": "8d1446bc47f690d216f87d9e7afaaeab7b186f43",
   "HandsOn/HO1/draft/EMAIL.txt": "e48d098b0a84f0f633036093b82c09f4c895da6b",
@@ -96,6 +96,43 @@
   "Lessons/L13/src/lib.rs": "fe37052ddfb7434cb750ca39a6d71fe88e55f970",
   "Lessons/L13/src/range.rs": "44b107328f749b5a011910f5acb13e31eb7be71d",
   "Lessons/L13/src/segment_tree.rs": "4bd3e47078224d63d6b95cea1aa1fa077d6db88f",
+  "Lessons/L14/Cargo.toml": "4372cbfef0ca16d995594df483d538bf29274ebe",
+  "Lessons/L14/L14.pdf": "034b5263a87dfb72b690a007c478d0da8cac7532",
+  "Lessons/L14/L14.tex": "8a6054ecadcd2d6d3dbbc13188160c3c2d254514",
+  "Lessons/L14/L14_transcript.txt": "daf03f8ad5a29c377f6a46c66ff61ea2272660d5",
+  "Lessons/L14/board/l14_easy_cases.jpg": "a153acd2f3055969a35654237882cf5f400b9e12",
+  "Lessons/L14/board/l14_occs_statement.jpg": "3538779f4367800101201c9b4221c88c311fac7d",
+  "Lessons/L14/board/l14_overlap_cases.jpg": "3475c3430759380f33938d21ced2f7d73f1b332c",
+  "Lessons/L14/board/l14_rmq_add.jpg": "b79a7d69378de4f8c13310c0df24409eaca45cbe",
+  "Lessons/L14/board/l14_rmq_occ_add.jpg": "e8fd082df7295ca9783f9e0d6bc413d75eabb765",
+  "Lessons/L14/board/l14_rmq_tree.jpg": "15e723cc65f66efb5cc624effae35a12b727fe3b",
+  "Lessons/L14/board/l14_rs_visit.jpg": "e4916d82a9f862eb09025022faca5e6d220de498",
+  "Lessons/L14/board/l14_search_statement.jpg": "edb06871cbe77b971847d3da5724062f9d8ea654",
+  "Lessons/L14/board/l14_search_visit.jpg": "6fee091f4aad0dff6c79c45d6e092018afb4b969",
+  "Lessons/L14/board/l14_special_pos.jpg": "9da159c78c3c208f1c88619214ecd77658e2fa3c",
+  "Lessons/L14/claude_notes.md": "706319746299a58b4fccc888d8b0397fa3db68fe",
+  "Lessons/L14/figs/l14_visited.pdf": "808794298aefbf0e3fcf936294cb1667d317cc06",
+  "Lessons/L14/figs/make_figs.py": "8a0da4b9b924c07c208ff68248e3b50befda8ed0",
+  "Lessons/L14/practice/README.md": "926381ab87d1efb934dcc260145631a1c105bb08",
+  "Lessons/L14/practice/soluzioni/lib.rs": "f28f57da6ddadb075b0ec0d5e26a2a2bb611c6e0",
+  "Lessons/L14/practice/src/lib.rs": "13a1116c4a680a883b9d4f3ff1989118bd38f3c5",
+  "Lessons/L14/practice/src/util.rs": "bad3c7910add4964b7175bce31979af1fe025738",
+  "Lessons/L14/src/lib.rs": "404a5c8081f16e06399b2e187c575192851358fc",
+  "Lessons/L14/src/occs.rs": "aa628a0d13213768492a4bccafca1119d3b8eb1a",
+  "Lessons/L14/src/range_sum.rs": "fbc838cc3ed63dc36738d13dee8720370c0676b8",
+  "Lessons/L14/src/rmq.rs": "4e822df4ae677f47c447665dbafe53079c30f26f",
+  "Lessons/L14/src/rmq_occ.rs": "d88f8f7be9d849cbde82bb08a05e4aec7b5b7750",
+  "Lessons/L14/src/search.rs": "1916faa143636c473ce9478e283c61e98e8b17dc",
+  "Lessons/L15/Cargo.toml": "a262bdac5914316a587909a71c8ac3d941c48719",
+  "Lessons/L15/L15.pdf": "37ddaf1b9e8877c442c28192c77a8efff76b3449",
+  "Lessons/L15/L15.tex": "bfdc16482b5b97bc9c987b38ef45d31f5c0b2820",
+  "Lessons/L15/claude_notes.md": "b053eed9aa395937cb44db1f1dbf3ba5ee3168ce",
+  "Lessons/L15/src/lazy.rs": "84743b032bf88d68a90b878da80378447be94ac4",
+  "Lessons/L15/src/lib.rs": "788cb8dbc00473755f2c3fe10e32128849f14aa8",
+  "Lessons/L15/src/occs.rs": "c516f0ffba5f19fe3fdc266eacb4f244e02444ac",
+  "Lessons/L15/src/persistent.rs": "00eb81e5785009e905fbe6a995275733ae8cc259",
+  "Lessons/L15/src/successor.rs": "949821385c2ff8085f36e978b9a4038e0ab5056a",
+  "Lessons/L15/src/triplets.rs": "01097d138b77d44848788b50734553636eca769b",
   "Lessons/L3/L3.pdf": "c695b0f9b4aeb301a79c0648bd65d23efd2e276e",
   "Lessons/L3/L3.tex": "404a6c12f209f9577b7b8827fa52f14a46b82a93",
   "Lessons/L3/claude_notes.md": "1d2ab4cef12bceeca41bb50548da433c83c73181",
@@ -157,7 +194,7 @@
   "Lessons/L9/src/lib.rs": "6457f21086f998ef979551c21518c789f0391aa8",
   "Lessons/L9/src/prefix_sums.rs": "c1cd80c015eed69d579889eb7f96d91487df1ea2"
  },
- "last_run": "2026-10-29 09:18",
+ "last_run": "2026-11-11 15:43",
  "seen": {
   "Lessons/L10/Cargo.toml": {
    "mtime": 1792416710,
@@ -262,6 +299,74 @@
   "Lessons/L13/src/segment_tree.rs": {
    "mtime": 1793265506,
    "size": 5097
+  },
+  "Lessons/L14/Cargo.toml": {
+   "mtime": 1793806227,
+   "size": 89
+  },
+  "Lessons/L14/L_14.MP4": {
+   "mtime": 1793956989,
+   "size": 621212579
+  },
+  "Lessons/L14/notes.md": {
+   "mtime": 1793619779,
+   "size": 3468
+  },
+  "Lessons/L14/src/lib.rs": {
+   "mtime": 1794411793,
+   "size": 1547
+  },
+  "Lessons/L14/src/occs.rs": {
+   "mtime": 1793806230,
+   "size": 4820
+  },
+  "Lessons/L14/src/range_sum.rs": {
+   "mtime": 1794411793,
+   "size": 6062
+  },
+  "Lessons/L14/src/rmq.rs": {
+   "mtime": 1794411794,
+   "size": 5283
+  },
+  "Lessons/L14/src/rmq_occ.rs": {
+   "mtime": 1794411794,
+   "size": 4929
+  },
+  "Lessons/L14/src/search.rs": {
+   "mtime": 1794411795,
+   "size": 5523
+  },
+  "Lessons/L15/Cargo.toml": {
+   "mtime": 1794411795,
+   "size": 89
+  },
+  "Lessons/L15/notes.md": {
+   "mtime": 1793956984,
+   "size": 52
+  },
+  "Lessons/L15/src/lazy.rs": {
+   "mtime": 1794411797,
+   "size": 4885
+  },
+  "Lessons/L15/src/lib.rs": {
+   "mtime": 1794411798,
+   "size": 1404
+  },
+  "Lessons/L15/src/occs.rs": {
+   "mtime": 1794411798,
+   "size": 3893
+  },
+  "Lessons/L15/src/persistent.rs": {
+   "mtime": 1794411798,
+   "size": 5122
+  },
+  "Lessons/L15/src/successor.rs": {
+   "mtime": 1794411799,
+   "size": 3995
+  },
+  "Lessons/L15/src/triplets.rs": {
+   "mtime": 1794411799,
+   "size": 3241
   },
   "Lessons/L2/Cargo.toml": {
    "mtime": 1789983210,

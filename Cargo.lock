@@ -7,6 +7,34 @@ name = "handson1"
 version = "0.1.0"
 
 [[package]]
+name = "handson2"
+version = "0.1.0"
+
+[[package]]
+name = "l10"
+version = "0.1.0"
+
+[[package]]
+name = "l11"
+version = "0.1.0"
+
+[[package]]
+name = "l12"
+version = "0.1.0"
+
+[[package]]
+name = "l13"
+version = "0.1.0"
+
+[[package]]
+name = "l14"
+version = "0.1.0"
+
+[[package]]
+name = "l15"
+version = "0.1.0"
+
+[[package]]
 name = "l2"
 version = "0.1.0"
 
@@ -40,6 +68,26 @@ version = "0.1.0"
 
 [[package]]
 name = "practice_l1"
+version = "0.1.0"
+
+[[package]]
+name = "practice_l10"
+version = "0.1.0"
+
+[[package]]
+name = "practice_l11"
+version = "0.1.0"
+
+[[package]]
+name = "practice_l12"
+version = "0.1.0"
+
+[[package]]
+name = "practice_l13"
+version = "0.1.0"
+
+[[package]]
+name = "practice_l14"
 version = "0.1.0"
 
 [[package]]

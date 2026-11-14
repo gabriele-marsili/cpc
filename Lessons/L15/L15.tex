@@ -1,0 +1,191 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\setmonofont{DejaVu Sans Mono}[Scale=0.82]
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx,xcolor,listings,booktabs,enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usepackage{needspace}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{accent}{HTML}{2B6CB0}
+\definecolor{warn}{HTML}{C53030}
+\newtcolorbox{keybox}[1][]{colback=accent!5,colframe=accent,boxrule=0.6pt,arc=2pt,left=6pt,right=6pt,top=4pt,bottom=4pt,#1}
+\newtcolorbox{warnbox}{colback=warn!5,colframe=warn,boxrule=0.6pt,arc=2pt,left=6pt,right=6pt}
+
+\lstdefinelanguage{Rust}{
+  keywords={fn,let,mut,if,else,for,in,while,return,use,pub,struct,impl,loop,break,Some,None,as,match,const,Self,self},
+  morekeywords=[2]{usize,i32,i64,u64,f64,bool,Vec,VecDeque,BTreeSet,BTreeMap,BinaryHeap,Option,str},
+  sensitive=true, morecomment=[l]{//}, morestring=[b]"}
+\lstset{language=Rust,basicstyle=\ttfamily,keywordstyle=\color{accent}\bfseries,
+  keywordstyle=[2]\color{teal},commentstyle=\color{gray}\itshape,stringstyle=\color{warn},
+  frame=single,rulecolor=\color{gray!40},backgroundcolor=\color{gray!4},
+  numbers=left,numberstyle=\tiny\color{gray},xleftmargin=1.5em,breaklines=true,
+  columns=fullflexible,keepspaces=true,showstringspaces=false}
+
+\newtheorem*{invariant}{Invariant}
+\theoremstyle{definition}\newtheorem*{definition}{Definition}
+
+\usepackage{soul}
+\definecolor{hlY}{HTML}{FFF3A0}\definecolor{hlG}{HTML}{C8F2C2}\definecolor{hlP}{HTML}{E6D2F7}\definecolor{hlB}{HTML}{CFE3FF}
+\newcommand{\hly}[1]{{\sethlcolor{hlY}\hl{#1}}}
+\newcommand{\hlg}[1]{{\sethlcolor{hlG}\hl{#1}}}
+\newcommand{\hlp}[1]{{\sethlcolor{hlP}\hl{#1}}}
+\newcommand{\hlb}[1]{{\sethlcolor{hlB}\hl{#1}}}
+\newcommand{\img}[3]{\begin{center}\begin{minipage}{\linewidth}\centering\fcolorbox{gray!50}{white}{\includegraphics[width=#1]{board/#2}}\\[-2pt]{\footnotesize\textcolor{gray}{#3}}\end{minipage}\end{center}}
+\newcommand{\extra}{\textsuperscript{\textcolor{warn}{[extra]}}}
+% pages of the prof's 2025 notes on the segment tree (Lessons/L13/Segment_tree_2025.pdf)
+\newcommand{\stnote}[2]{\begin{center}\fcolorbox{gray!50}{white}{\includegraphics[page=#1,width=#2,trim=20 20 20 20,clip]{../L13/Segment_tree_2025.pdf}}\\[-2pt]
+  {\footnotesize\textcolor{gray}{Prof.'s notes of \textbf{last year} (2025), \texttt{Segment\_tree\_2025.pdf} p.\,#1}}\end{center}}
+\newcommand{\stnotes}[2]{\begin{center}\begin{minipage}{0.49\textwidth}\centering\fcolorbox{gray!50}{white}{\includegraphics[page=#1,width=0.95\linewidth,trim=20 20 20 20,clip]{../L13/Segment_tree_2025.pdf}}\end{minipage}\hfill
+  \begin{minipage}{0.49\textwidth}\centering\fcolorbox{gray!50}{white}{\includegraphics[page=#2,width=0.95\linewidth,trim=20 20 20 20,clip]{../L13/Segment_tree_2025.pdf}}\end{minipage}\\[2pt]
+  {\footnotesize\textcolor{gray}{Prof.'s notes of \textbf{last year} (2025), \texttt{Segment\_tree\_2025.pdf} p.\,#1 and p.\,#2}}\end{center}}
+\title{\textbf{CPC --- Lecture 15} \textcolor{warn}{(provisional reconstruction)}\\[2pt]\large Segment tree, end: \#occs $\cdot$ Successor $\cdot$ triplets $\cdot$ lazy propagation $\cdot$ persistent segment tree}
+\author{Competitive Programming and Contests --- Wednesday 04/11/2026}
+\date{}
+
+\begin{document}\sloppy
+\maketitle
+\vspace{-1.5em}
+\begin{warnbox}
+\textbf{Provisional reconstruction: no recording, no notes of yours} (your \texttt{Lessons/L15/notes.md} only says to recover it when the recording is out).
+\textbf{Nothing here is known to have been said on 04/11.} The content is \emph{guessed} from:
+(1) where L14 stopped --- the statement of \#occs and ``next lecture we conclude our discussion of segment tree by presenting many other problems, starting from this one; just storing the answer, which is a number,
+is no longer enough'' (\texttt{L14\_transcript.txt}, 88:00--89:55);
+(2) the prof's \textbf{2025} notes \texttt{Lessons/L13/Segment\_tree\_2025.pdf} p.\,9--19, which continue exactly from there, in that order;
+(3) the course page: rows of 02/11/2026 ``Lazy Propagation'' and 04/11/2026 ``Persistency'' (the rows are the prof's plan; this year he is slower: on 02/11 he did not reach lazy propagation).
+\textbf{Probably the lecture covered the first sections and maybe not all of them.} When the recording comes out, this lecture will be redone on it.
+\end{warnbox}
+\begin{keybox}
+\textbf{Sources.} \texttt{Segment\_tree\_2025.pdf} p.\,9--19 (prof, \textbf{last year}: every page shown here is from 2025); \texttt{Lessons/L14/L14\_transcript.txt} (end); course page (checked 11/11/2026).
+Explanations around the pages are mine, written to make the 2025 pages readable: treat them as \extra.
+
+\smallskip
+\noindent Code: \texttt{Lessons/L15/src} (\texttt{cargo test -p l15}), all \extra{}. No practice exercises while the lecture is provisional.
+
+\smallskip
+\noindent\textbf{Highlights:} \hly{general / to remember} \quad \hlg{good: works, efficient, correct} \quad \hlp{bad: pitfalls, wrong ideas, costs} \quad \hlb{definitions and key results}
+\end{keybox}
+
+\begin{keybox}[colback=gray!4,colframe=gray!60]
+\textbf{Where we are.} L14 (02/11): the cost of \textsf{RangeSum} ($O(\log n)$ nodes), dynamic RMQ, RMQ with occurrences, \textsf{Search}$(s)$, and the \emph{statement} of \#occs (homework: try to solve it).
+The common thread: \hly{golden rule --- every node stores the answer for its range}. The new twist expected for L15: \hlb{the answer in a node is no longer a number but a whole data structure}
+(hash map, BST), and then \hlb{updates on ranges} (lazy propagation) and \hlb{queries on the past} (persistency).
+After L15: \hlp{no lecture in the week of 09/11} (prof at a conference). Hands-On 2 deadline \textbf{22/11/2026}.
+\end{keybox}
+
+\tableofcontents
+
+%==========================================================
+\section{\#occs$(i,j,x)$: a hash map in every node}
+%==========================================================
+\textbf{Problem} (stated at the end of L14). $A[0,n-1]$ of integers; \textsf{Add}$(i,v)$; \hlb{\mbox{$\#\textsf{occs}(i,j,x)$} = number of occurrences of $x$ in $A[i..j]$}.
+
+\noindent\textbf{2025 solution.} \hlb{Every node stores a hash map value $\to$ number of occurrences in its range} (node $[4,7]$ of $A=[3,1,0,4,6,13,2,0]$: $6\to1$, $13\to1$, $2\to1$, $0\to1$).
+Query: the usual visit; in each total-overlap node look up $x$ and \hly{sum the counters}. Example: $\#\textsf{occs}(1,7,0)=2$.
+\begin{itemize}[nosep]
+\item \hlg{query time \mbox{$\Theta(\log n)$} w.h.p.}: $O(\log n)$ nodes, $O(1)$ expected per lookup;
+\item \hlp{space \mbox{$O(n\log n)$}}: each position appears in the map of every ancestor (one per level); \hly{a more space-efficient solution: wavelet trees}.
+\end{itemize}
+This is the L14 remark made concrete: \hly{the cost of a query = number of touched nodes $\times$ cost per node}.
+\stnote{9}{0.55\textwidth}
+\noindent\extra{} \textsf{Add} is not on the page: on each node of the leaf--root path decrement the old value's counter and increment the new one's, $\Theta(\log n)$ expected.
+\texttt{l15::occs::OccsTree} (same as \texttt{l14::occs}), tested on the example, on the space ($n(\log n+1)$ entries with distinct values) and against a scan.
+
+%==========================================================
+\section{Successor$(i,j,x)$: a BST in every node}
+%==========================================================
+\textbf{Problem.} \textsf{Add}$(i,v)$ and \hlb{\mbox{$\textsf{Successor}(i,j,x)$}: the successor of $x$ among the values of $A[i..j]$}.
+
+\noindent\textbf{2025 solution.} \hlb{Every node stores a BST of the values of its range} (successor in $\Theta(\log n)$ inside one node).
+\hly{Compute the successor in every total-overlap node and combine by taking the min}.
+\begin{itemize}[nosep]
+\item \hlp{query \mbox{$\Theta(\log^2 n)$}}: $O(\log n)$ nodes $\times$ $\Theta(\log n)$ per BST search; space $\Theta(n\log n)$.
+\item \hlg{the query can be improved to \mbox{$\Theta(\log n)$} with \emph{fractional cascading}} (only named on the page, boxed in red; no details).
+\end{itemize}
+\stnotes{10}{11}
+\noindent\extra{} On the page the example $\textsf{Successor}(1,5,5)$ is left unfinished (the value 6 at position 4 is circled): the answer is 6.
+I take ``successor'' as the smallest value $\ge x$ (the page does not say $\ge$ or $>$).
+\texttt{l15::successor::SuccTree} (a \texttt{BTreeMap} value$\to$count per node, as a multiset), tested against a scan. \textsf{Add} costs $\Theta(\log^2 n)$ here (one BST update per level).
+\extra{} Fractional cascading, in one line: link each element of a node's sorted list to its position in the children's lists, so that after one binary search at the top
+each lower node is reached in $O(1)$ instead of a new $O(\log n)$ search (standard technique; static version).
+
+%==========================================================
+\section{Triplets: counting $i<j<k$ with $A[i]<A[j]<A[k]$}
+%==========================================================
+\textbf{Problem.} Given $A[0,n-1]$, \hlb{count the triplets $i<j<k$ with $A[i]<A[j]<A[k]$}. Example $A=[1,2,3,4,1]$: result 4 ($123$, $124$, $234$, $134$).
+
+\noindent\textbf{2025 solution.}
+\begin{itemize}[nosep]
+\item \hlp{\mbox{$\Theta(n^3)$}}: check every possible triplet.
+\item \hly{Fix the middle element $j$}: ``how many triplets with that $j$?'' With $k=\#\{i<j: A[i]<A[j]\}$ and $k'=\#\{k>j: A[j]<A[k]\}$ the answer for $j$ is \hlb{$k\cdot k'$}
+      (example: $j$ at the 3: $k=2$, $k'=1$, $k\cdot k'=2$). Counting by scanning: $\Theta(n^2)$.
+\item \hlg{\mbox{$\Theta(n\log n)$}}: compute all the $k$ with \hly{a Fenwick tree of frequencies scanning from left to right} --- exactly the inversion-counting trick of L12 ---, and all the $k'$ scanning from right to left.
+\end{itemize}
+\stnotes{12}{13}
+\noindent\extra{} Values remapped to their ranks first (as in L12), so the Fenwick tree has size $\le n$; ``strictly smaller'' = prefix sum up to rank$-1$, ``strictly larger'' = seen $-$ prefix up to rank.
+\texttt{l15::triplets::count\_triplets} ($\Theta(n\log n)$) and \texttt{count\_triplets\_quadratic}, both tested against the $\Theta(n^3)$ brute force.
+\hly{Note}: this problem uses a Fenwick tree, not a segment tree --- the same counting structure, with the simpler tool.
+
+%==========================================================
+\section{Range update with lazy propagation}
+%==========================================================
+\textbf{Problem.} $A[1,n]$; \hlb{\mbox{$\textsf{RangeUpdate}(i,j,v)$}: add $v$ to every $A[k]$, $k\in[i,j]$}, and \textsf{Sum}$(i)$ (= \textsf{RangeSum}$(0,i)$).
+\hly{Range update was solved in L13 with two Fenwick trees}; the segment tree does it with a technique that works for many other operations.
+
+\noindent\textbf{2025 solution: lazy propagation.} Besides the segment tree $ST$, keep a \hlb{lazy tree} of pending updates. RangeUpdate does the usual visit:
+\begin{itemize}[nosep]
+\item \hlb{partial overlap}: \hly{apply the change to the node in $ST$} (for sums: $+v\cdot|\text{overlap}|$) and continue;
+\item \hlb{total overlap}: apply it to the node and \hly{remember the update in the lazy tree}, unless it is a leaf --- \hlg{do not go down};
+\item \hlb{no overlap}: do nothing.
+\end{itemize}
+Example: $\textsf{RangeUpdate}(0,4,20)$ on $A=[3,1,-2,4,6,13,2,0]$: root $27+100$, node $[0,3]$ (total overlap) $6+80$ and $+20$ in the lazy tree, $[4,7]$ $21+20$, $[4,5]$ $19+20$, leaf 4 $6+20$.
+\hlb{Running time: \mbox{$\Theta(\log n)$}} --- the same visit as \textsf{RangeSum}. $\textsf{Sum}(3)=\textsf{RangeSum}(0,3)$ also $\Theta(\log n)$.
+\stnotes{14}{15}
+\noindent\extra{} What the pages leave implicit: \hly{when a later visit goes below a node with a pending update, the update is first pushed to its two children} (applied to their values and stored in their lazy entries).
+\texttt{l15::lazy::LazyTree}, tested on the example (root 127, pending $+20$ on $[0,3]$) and against a plain array.
+\extra{} Course page, row of \textbf{02/11/2026}: optional \emph{Circular RMQ} (CF 52C) is exactly a lazy-propagation exercise (range add + range min on a circular array).
+
+%==========================================================
+\section{Persistent segment tree}
+%==========================================================
+\textbf{Idea.} The data structure goes through versions: \hly{operations that change the DS move the timestamp by 1}; \hlb{operations that query the DS may specify any valid timestamp}.
+\textbf{Problem} (\emph{persistent range sum}): \textsf{Add}$(i,v)$ and \hlb{\mbox{$\textsf{RangeSum}(i,j,t)=\sum_{k=i}^{j}A[k]$ at time $t$}}.
+\begin{enumerate}[nosep]
+\item \textbf{Attempt \#1: a copy of the ST after each update.} \hlg{RangeSum $\Theta(\log n)$}, but \hlp{space $\Theta(n\cdot t)$ after $t$ updates and \textsf{Add} $\Theta(n)$}.
+\item \textbf{Attempt \#2.} Exploit: \hly{an update changes just $\Theta(\log n)$ nodes}. Every node keeps the list of its (value, timestamp) pairs.
+      \hlg{\textsf{Add} $\Theta(\log n)$, space $\Theta(n+t\log n)$}; RangeSum$(i,j,t)$ searches for the \hly{predecessor of $t$} in the list of every total-overlap node: \hlp{$\Theta(\log n\cdot\log t)$}.
+\item \textbf{Attempt \#3.} Exploit: \hlb{the $\Theta(\log n)$ changed nodes are on a root-to-leaf path}. Copy only that path (the new nodes point to the old, unchanged children)
+      and keep \hly{an array of roots indexed by timestamp}. \hlg{RangeSum $\Theta(\log n)$, \textsf{Add} $\Theta(\log n)$, space $\Theta(n+t\log n)$ after $t$ updates.}
+\end{enumerate}
+\stnotes{16}{17}
+\stnotes{18}{19}
+\noindent\extra{} \texttt{l15::persistent::PersistentTree} (attempt \#3, nodes in a \texttt{Vec} arena with indices as pointers: the idiomatic Rust way to share subtrees),
+tested on the example of p.\,19 ($\textsf{Add}(3,10)$, then $\textsf{Add}(7,2)$: 4 new nodes per update) and against attempt \#1 (a full copy per version).
+
+%==========================================================
+\section{Exercises and deadlines (course page)}\label{sec:ex}
+%==========================================================
+\begin{keybox}
+\textbf{Row of 04/11/2026} (``Segment Trees: Persistency''): \hlb{no notes and no exercises}; the same date has a separate row for \textbf{Hands-On 2},
+\url{https://pages.di.unipi.it/rossano/blog/2024/handson2}, \hlp{deadline 22/11/2026} (scaffold in \texttt{HandsOn/HO2}).
+
+\smallskip
+\textbf{Still open, from earlier rows of this year's table} (2026):
+\begin{itemize}[nosep]
+\item \emph{Circular RMQ}, \url{http://codeforces.com/problemset/problem/52/C}: optional in the row of 02/11/2026.
+\item \textbf{Update the Array}, \url{http://www.spoj.com/problems/UPDATEIT/}: mandatory in the row of \textbf{19/10/2026}.
+\item \textbf{Nested Segments}, \url{http://codeforces.com/problemset/problem/652/D}: mandatory in the row of \textbf{21/10/2026}; with segment trees: optional, row of 26/10/2026.
+\item \emph{Pashmak and Parmida's problem}, \url{http://codeforces.com/problemset/problem/459/D}: optional, row of 21/10/2026.
+\end{itemize}
+No rows after 04/11/2026 on the page (checked 11/11/2026).
+\end{keybox}
+
+%==========================================================
+\section{Next time}
+%==========================================================
+No lecture in the week of 09/11 (said at the end of L14). The 2025 notes on segment trees end at p.\,19; what comes after L15 is not on the course page yet.
+
+\end{document}

@@ -1,0 +1,128 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\usepackage{enumitem}
+\usepackage{xcolor,listings}
+\lstset{basicstyle=\ttfamily\small,frame=single,rulecolor=\color{gray!50},columns=fullflexible,keepspaces=true,breaklines=true}
+\usepackage[hidelinks]{hyperref}
+\setlist{nosep}
+\setlength{\parskip}{4pt}
+
+\title{Competitive Programming and Contests\\Hands-On 2 -- Report}
+\author{Gabriele Marsili}
+\date{November 2026}
+
+\begin{document}\sloppy
+\maketitle
+
+The solutions are in \texttt{lib.rs} (\texttt{solve\_p1}, \texttt{solve\_p2} and the two segment trees),
+together with the parsing of the input and the tests. \texttt{main.rs} only reads the input and prints the
+answers, one per line. The package is named \texttt{handson2}, the name \texttt{main.rs} imports from:
+\begin{lstlisting}
+cargo run --release -- 1 < testsets/p1/input0.txt     # Problem 1
+cargo run --release -- 2 testsets/p2/input0.txt       # Problem 2, input from a file
+\end{lstlisting}
+The input can be given on stdin, as the path of a file, or directly as command-line arguments. In the
+following, $n$ is the size of the array (or the number of segments) and $m$ the number of queries.
+
+\section*{Problem 1 -- Min and Max}
+
+\textbf{Indices.} In the statement and in the test set the queries are 1-based, so \texttt{solve\_p1}
+(line 226) converts them to 0-based before calling the tree.
+
+\textbf{Data structure.} A segment tree (\texttt{SegmentTree}, line 112) stored in an array: the root is at
+index 1 and the children of node $k$ are $2k$ and $2k+1$. Node $k$ covers a range $A[lo..hi]$ and stores the
+maximum of that range. The array has $4n$ entries, which is enough for any $n$. The tree is built bottom-up
+in $O(n)$.
+
+\textbf{Max$(i,j)$.} The standard recursive visit: a node outside $[i,j]$ returns $-\infty$ (\texttt{i64::MIN}),
+a node fully inside returns its value, and a node that partially overlaps asks both children and returns the
+larger result. At most four nodes per level are visited, so the query costs $O(\log n)$.
+
+\textbf{Update$(i,j,T)$.} Updating every position separately costs $O((j-i+1)\log n)$, i.e.\ $O(n \log n)$
+per query in the worst case. To reach $O(\log n)$ I used lazy propagation. The key observation is that
+taking the minimum with $T$ commutes with the maximum:
+\[ \max_{p \in [lo,hi]} \min(A[p], T) = \min\Big(\max_{p \in [lo,hi]} A[p],\ T\Big). \]
+So when the range of a node is fully inside $[i,j]$, its new value is simply $\min(t[k], T)$ and the
+recursion can stop there. The children, which are not updated, are told later: \texttt{lazy[k]} stores the
+pending value $T$ (\texttt{apply}, line 157). Two pending updates on the same node combine into a single one,
+because $\min(\min(x, T_1), T_2) = \min(x, \min(T_1, T_2))$, so one value per node is enough.
+
+Before a query or an update goes below a node, \texttt{push} (line 167) applies the pending value to the two
+children and clears it. This is why \texttt{max} also takes \texttt{\&mut self}. A leaf is always either fully
+inside or fully outside a range, so \texttt{push} is never called on a leaf. After the recursive calls, the
+update recomputes the node as the maximum of its children (line 181).
+
+\textbf{Observation:} if $t[k] \le T$, every value in the range is already at most $T$ and nothing changes,
+so the update stops at that node without recording anything.
+
+\textbf{Complexity:}
+\begin{itemize}
+\item $O(n)$ to build the tree, $O(\log n)$ per update and per query: $O((n+m)\log n)$ in total;
+\item $O(n)$ space ($4n$ values and $4n$ pending updates).
+\end{itemize}
+
+\section*{Problem 2 -- Is There}
+
+Positions and queries are 0-based. Let $\mathit{cover}[p]$ be the number of segments containing position $p$.
+The query IsThere$(i,j,k)$ asks whether $\mathit{cover}[p] = k$ for some $p \in [i,j]$.
+
+\textbf{Step 1: coverage.} The segments never change, so $\mathit{cover}$ is computed once with a difference
+array (line 309): for each segment $\langle l, r\rangle$ I add $1$ at $l$ and $-1$ at $r+1$, and the prefix
+sums give $\mathit{cover}[p]$. This costs $O(n)$. While computing it, I group the positions by their
+coverage: \texttt{positions\_with[k]} is the list of positions $p$ with $\mathit{cover}[p] = k$ (line 318).
+Since there are $n$ segments, $0 \le \mathit{cover}[p] \le n$.
+
+\textbf{Step 2: queries offline, grouped by $k$.} A maximum or a sum over $\mathit{cover}$ does not answer
+the question ``is the value $k$ present in the range'', so I answer the queries offline. I group the queries
+by $k$ and use a segment tree over the positions (\texttt{CountTree}, line 241) that stores, for each node, how
+many positions of its range are \emph{active}, with point update and range sum. Then, for each $k = 0,
+\dots, n$ (line 330):
+\begin{enumerate}
+\item activate the positions in \texttt{positions\_with[k]};
+\item for each query with this $k$, the answer is 1 if and only if the number of active positions in
+$[i,j]$ is greater than 0;
+\item deactivate the same positions, so the tree is empty again for the next $k$.
+\end{enumerate}
+Values of $k$ without queries are skipped. A query with $k > n$ is answered 0 directly, since no position is
+covered by more than $n$ segments. The answers are stored by query index, so they are printed in the input
+order.
+
+\textbf{Complexity:}
+\begin{itemize}
+\item every position is activated and deactivated at most once ($O(n\log n)$), every query is one range sum
+($O(m \log n)$), and grouping is $O(n+m)$: $O((n+m)\log n)$ in total;
+\item $O(n+m)$ space: the coverage, the two groupings and the tree with $4n$ nodes.
+\end{itemize}
+
+\section*{Tests}
+
+All the tests pass, the code is formatted with \texttt{cargo fmt} and \texttt{cargo clippy} gives no warnings.
+\begin{itemize}
+\item Official test set: a separate test runner (not part of the submission) compares the output of the binary with every
+\texttt{outputK.txt}: 11/11 files for Problem 1 and 8/8 for Problem 2.
+\item Unit tests in \texttt{lib.rs}: the examples of the statement for both problems; an update that covers
+the whole array followed by a query on a single position (the pending value stored at the root must reach the
+leaf); queries with $k > n$.
+\item Randomized tests: both solutions are compared with brute-force versions on 3\,000 random inputs each
+(small $n$, so that every branch of the recursion is exercised).
+\item Parsing: the statement examples, input on a single line, truncated input, non-numeric tokens.
+\item Performance: with $n = m = 200\,000$ the release build answers in 0.28 s (Problem 1, half of the
+queries are updates on the whole array) and 0.13 s (Problem 2). The same input for Problem 1 took more than
+60 seconds with one point update per position.
+\end{itemize}
+
+\section*{Sources}
+\begin{itemize}
+\item The statement of the Hands-On: \url{https://pages.di.unipi.it/rossano/blog/2024/handson2/}.
+\item The lectures of the course on segment trees and lazy propagation.
+\item CP-Algorithms, ``Segment Tree'', in particular the sections on range updates and lazy propagation:
+\url{https://cp-algorithms.com/data_structures/segment_tree.html}.
+\end{itemize}
+
+\section*{Use of AI}
+I used Claude Code to write the input parsing and the tests, to help me with lazy propagation and with the
+solution of Problem 2, to review my code, and to translate into English and format this report.
+
+\end{document}

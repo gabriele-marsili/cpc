@@ -1,0 +1,813 @@
+# Automatic transcript (sherpa-onnx, parakeet-tdt-0.6b) of L_14.MP4, lecture of 02/11/2026. NOT revised: terms are often garbled (e.g. "segment three/segmentary" = segment tree, "fan wee three/family three" = Fenwick tree, "rmq"/"Argo" = RMQ/argmin, "Logan/login" = log n).
+[000:00] Uh we discussed about uh segment three last time.
+[000:06] It's uh the important data structure, the main idea of the of the data structure.
+[000:18] Of the data structures to group consecutive numbers of our array.
+[000:27] into an order
+[000:31] Okay.
+[000:32] Each pair is associated with the node, then each pair of nodes has a common parent, then each uh pair of grandparents have have a common uh parent and so on. Okay, so we group in this way.
+[000:52] Uh if uh the brain is a part is a language about then uh we have
+[000:58] Perfect tree binary uh on top of our node. And then uh we apply the approach that segment tree always follows. And the idea is for every node you have uh a a query to solve okay over a range, just store the answer of the query in the node.
+[001:24] the answer which corresponds to the underlying uh segment.
+[001:30] So, in this case, we have the sum, this is the sum, the sum, the sum of the second, and the loop corresponds to the sum of the whole array. Okay, so the approach is always the same. Build the structure of the tree, which is fixed and depends only on the length of the array, and then in every node you put the answer, which depends on the query. So, the structure of the node is independent on the
+[002:01] Query you want to solve, while the answer you have to put here, of course, depends on the problem. Okay?
+[002:12] So we have two two operations. One is a range query, in this case range sum, and the other operation is modify the element of the array.
+[002:22] one after the other. So the add operation is adding some value to one position of our array. To do this, for example, to do plus three here, we go up go up
+[002:37] Change all the elements which are in the in the
+[002:46] on the part. Okay, so clearly add
+[002:56] Thanks.
+[003:00] Uh login time.
+[003:03] Because log n is the height of our tree.
+[003:09] Right?
+[003:12] Good.
+[003:14] Now the question is.
+[003:17] What's uh the uh algorithm to solve uh range uh
+[003:25] uh rain sums.
+[003:28] Okay.
+[003:29] So and that's what we want to investigate uh now.
+[003:35] Okay, we already partially discussed the algorithm of course, but let's uh recap what we have seen last time.
+[003:43] Okay, so let's say I have uh a ranger.
+[003:47] Like this one now?
+[003:50] Okay, so my range uh is uh this one now.
+[003:55] Okay.
+[003:57] Uh we always start from the root.
+[004:03] And we keep in mind that uh the range that our our query is uh covering.
+[004:13] Okay, the range in this case is from position two to position five, both included.
+[004:23] Okay, now we compare.
+[004:26] This one?
+[004:28] with uh our uh query. Okay?
+[004:34] And there are two possibilities.
+[004:37] Uh the query.
+[004:40] A ranger is uh
+[004:43] Uh
+[004:45] is none of the black pink.
+[004:48] Uh this is the query and this is the node.
+[004:51] or it's partially overlapping.
+[004:57] in the sense that our query is within the range of the node. Or it's a total overlap. It's a total overlap whenever the query range over completely cover
+[005:12] The range of the node and vice versa, so they are the same range. Okay? So no overlap.
+[005:21] Partial overlap, total overlap.
+[005:25] Okay?
+[005:28] So in case of no overlap,
+[005:32] Then the query is so diagram stops because the the
+[005:41] Arranger.
+[005:43] Of the the sub-array covered by the node uh has nothing to do with the query.
+[005:51] with total overlap with sorry sorry with partial overlap
+[005:57] This is the period and this is the range.
+[005:59] Uh the range is too large and we have to refine it.
+[006:04] Okay? To refine it we have to to move both left and right in the subtleties.
+[006:12] Okay.
+[006:14] So in this case the there is of course a partial overlap, right? Two five
+[006:22] Zero seven
+[006:25] Okay, see so we move both left and right.
+[006:32] Okay, so let's continue first our recursion on the left.
+[006:39] Okay, the query range in this case is two, three.
+[006:46] Why two three if we started with two five? Well, it should it should be because we are considering only the part of the of the ray query that uh is contained within uh the sub the sub three sub range. Okay? So uh so it's because uh these know these uh
+[007:12] right stream is larger than sorry smaller than the largest stream of our query. So the lar the right stream of our sub-query ends with position 3.
+[007:31] Similarly, here the left extreme is small it's larger than our query left stream, so the left extreme of the query in this subarray, in this subtree, will become four five. Okay.
+[007:52] Was this convincing?
+[007:54] Okay, so we just uh uh rescale uh our uh query
+[008:01] Uh interval.
+[008:04] to match the one of the software.
+[008:08] Okay, we continue uh of course we continue uh uh left.
+[008:15] What's the kind of uh uh overlaps do we have? So let me recall that.
+[008:26] We have partial overlap.
+[008:29] This is the node, but then we have no overlap and we have total overlap.
+[008:38] For uh
+[008:41] For the
+[008:45] Say these are our node intervals.
+[008:50] Okay. The query intervals increase your partial overlap is within
+[008:56] the node ranger.
+[008:58] If there is no overlap, then we are in such a situation. There is no overlap between the two intervals. Total overlap means uh that the situation is like this. The two intervals are the same. Okay? So in case of partial overlap, what we have to do is to move both left and right.
+[009:26] In case of no overlap, we stop.
+[009:30] The recursion and we continue with other branches of the recursion. In case of
+[009:40] uh total overlap, we still stop the recursion, but we also get a result. The result uh is something, so it's the the answer of our target query within this interval.
+[009:58] Then it's uh duty of the algorithm to combine properly combine results coming from different uh sub intervals. Okay?
+[010:11] Is this convincing? Okay. So here we have so we this is this was partial overlap, right? Here we have uh what?
+[010:25] No overlap, total overlap or partial overlap.
+[010:29] Partial development.
+[010:32] So we move uh both left and right.
+[010:38] Okay?
+[010:44] So here uh the node range uh goes from zero to one while the query range uh goes to three from t three to four, from two to f to three, sorry.
+[010:58] Okay. 0, 1, 2, 3. There is clearly no overlap.
+[011:04] Right? So no overlap and we come back with no result.
+[011:11] On the right, on the other hand, the node
+[011:16] interval is two three, the query interval is two three, there is a total overlap
+[011:25] And we come back with a result which is two.
+[011:29] Okay.
+[011:31] We don't see no results from the left no wha uh sorry uh no results from the on the left. Two on the right. We need to combine the two and uh the two is of course uh
+[011:45] They answer two.
+[011:47] Okay. Are you with me?
+[011:51] Okay, now we reach the root once again and we continue our recursion on the right.
+[012:00] 'Kay.
+[012:01] So we go here, node twenty one.
+[012:07] This one, huh?
+[012:10] Uh query interval four seven.
+[012:16] Qui sorry, node interval four seven, query interval four five
+[012:23] There is what?
+[012:27] Total overlap, partial overlap.
+[012:32] This one against this one.
+[012:36] Maybe I said something wrong, but yeah.
+[012:38] If we consider the two then partial.
+[012:44] Okay, so we go uh left left with uh uh query interval four five
+[012:58] Yeah?
+[013:01] Uh node nineteen.
+[013:08] Old nineteen, huh?
+[013:11] What's the result then?
+[013:14] There is total overlap.
+[013:17] We return ninety.
+[013:20] Then we keep moving right.
+[013:25] Oh
+[013:28] The
+[013:32] colour, red, all the nodes we touched.
+[013:36] Okay.
+[013:39] What do we have here?
+[013:42] No overlap.
+[013:44] We come back with no result. Here we come back with the combination of the two sides. It's nineteen. The final result uh is the combination of the two, which is twenty one. And indeed is the result of the sum in this subarray
+[014:06] Okay, that's the algorithm.
+[014:09] Do you agree? This is something we already discussed last time. We also concluded last week last week
+[014:21] uh lecture with the question what's the running time of this algorithm?
+[014:27] Right?
+[014:30] So
+[014:31] Was there any time of this hybrid?
+[014:34] Well uh it's always dangerous uh to have a recursive algorithm that goes both le both left and right.
+[014:43] The the problem with this uh algorithm
+[014:47] is that they may uh traverse the wolf tree.
+[014:52] Okay.
+[014:54] if for every node we move both left and right, we are um
+[014:59] We are traversing the wood tree.
+[015:03] Indeed, in this small example, it seems that we are touching all the internal no not seems. We are touching all the internal nodes.
+[015:13] Okay.
+[015:16] Of course it may be because uh there the example is very small.
+[015:22] So
+[015:23] Is it because the alg the the example is very small, or is it because uh the algorithm is not uh efficient?
+[015:35] What do you think?
+[015:45] Yes, of course uh here you could anticipate uh no overlap but uh we are doing uh essentially the work done here is transferred to the work uh to some work done here.
+[016:02] Because you have to split the interval in the middle and check if
+[016:07] Uh the query interbodies uh
+[016:10] No overlap with the left and right note. So essentially uh of course you can uh transfer the check here, but this this this is just uh a trick to avoid one recursive step, but uh it's not uh changing the fact that you are doing some work for every internal note of the three.
+[016:35] So the question is, is the algorithm uh inefficient or the example too small and it's not able to enlighten what are the efficient effects of our algorithm?
+[016:58] They I think there's no
+[017:04] So so in the worst case, do we need to traverse the wood tree? Always or we are traversing the wood tree just because it's a small tree and you can appreciate the difference, for example, between
+[017:22] eight log n and n.
+[017:27] So if the smo the example is smaller, in complexity there is no difference between a super-efficient algorithm and a trivial one, just because the constant factor in front of the trivi the the m more efficient algorithm is so big that you need, I don't know, n equal to thirty-two to see some difference.
+[017:52] Okay.
+[017:54] What do you think?
+[018:09] Mm yeah, good good point. So if we double somehow the number of internal nodes so we we add an extra level, let's say, so we double the number of uh elements in our array, this algorithm actually would have pruned uh many, many more elements. And this argument can be potentially done uh many times. Uh the size of the array is going to grow.
+[018:35] while the number of touch and nodes may be smaller.
+[018:44] Maybe. Okay? So this is somehow the intuition, okay?
+[018:50] Okay.
+[018:52] Um
+[018:56] Yeah.
+[018:58] Okay, so the the the difference uh maybe just the fact that uh we have uh a constant factor multiplying uh log n
+[019:10] which cancel out the improvement uh in efficiency for two small values of n. Okay? So scanning everything is more efficient or efficient as some constants time time time log n if the constant is big enough and then is small enough.
+[019:38] Okay.
+[019:41] It may be the case. So what's the so the question that we should ask ourselves is what's
+[019:54] The time complexity
+[020:02] Of
+[020:05] Uh range sum.
+[020:08] Or a storm the brief.
+[020:11] which is actually more general.
+[020:15] Uh how many
+[020:21] Nones.
+[020:23] Do we process?
+[020:26] Um
+[020:30] Why the second one uh the sh second question is more general. Well, because if we know how many nodes we are touching with our range algorithm, then we multiply this number with the cost of processing each node and we get the uh cost of the the algorithm.
+[020:53] In case of rich stand
+[020:56] For every node we touch, we spend constant time. So the algorithm will run in time proportional to the number of nodes we touch.
+[021:06] There may be, and indeed there are, uh solutions of problems that uh requires uh uh segment three to be solved, in which processing each node doesn't take uh doesn't take constant time.
+[021:21] Okay. In this case we have to compute how much time does it take each node and multiply uh the cost.
+[021:32] uh with the cost of uh processing each node.
+[021:36] Okay. So let's uh let's uh discuss uh briefly uh a bit more about what are the possible cases uh we have. So we said we have
+[021:52] uh partial uh overlap
+[021:57] in which we have our node
+[022:02] We have uh a splitting point in the middle.
+[022:07] And we have our
+[022:09] Weirdie.
+[022:12] Okay, the query may may may be split in two parts by the the element in the middle, or the query may be on the left or the right. Okay?
+[022:26] Then we have
+[022:29] We have uh
+[022:32] No overlap.
+[022:40] And we have total
+[022:46] Total overlap. In case you know, overlap, of course, is something like this.
+[022:54] In case of
+[022:57] Total overlap is something like
+[023:01] like this.
+[023:04] 'Kay.
+[023:10] Okay.
+[023:20] So
+[023:23] Um as we we said at the beginning, partial overlap is the complicated case.
+[023:33] Because we have a recard algorithm that is potentially moving every for every node left and right.
+[023:41] while the no overlap and total overlap are the k easy cases.
+[023:49] Because it's when uh you uh you stop the rehearsion. Okay?
+[024:00] Do you agree?
+[024:02] Okay.
+[024:04] So let's uh elaborate more what are the possibilities for partial overlap.
+[024:12] Let's uh
+[024:15] Partial overlap is the harder case. So let's refine our uh
+[024:24] Discussion about
+[024:27] about partial overlap.
+[024:30] 'Kay.
+[024:31] So we have a partial overlap in this case, but here we also have partial overlap in in other two cases.
+[024:42] The other case uh is when uh the query is uh
+[024:49] Completely.
+[024:52] contained on the left and completely
+[024:56] completely contained on the right.
+[025:00] Okay?
+[025:03] So
+[025:21] Mm-hmm.
+[025:27] Uh
+[025:29] Okay.
+[025:31] So
+[025:33] Three
+[025:34] possible cases for o for partial event.
+[025:38] Okay.
+[025:40] So let's uh
+[025:43] Say our thing again. Okay, so we have partial overlap. This is the problematic case because we go both left and right in the recursion. These are the two stopping conditions for our recursion. So sooner or later the recursion will end up in a normal which there is no other lap
+[026:03] Both cases we come back. So this is the final uh the final cases for our share. So those are not problematic. The only problematic case is partial overlap, because we move both left and right. Okay. Uh partial overlap moves always both left and right.
+[026:24] Okay? But there are three possible cases.
+[026:30] This one and this one.
+[026:33] are the easy cases.
+[026:36] Okay.
+[026:44] why these are easy cases.
+[026:52] Uh yes, because uh in one of the two cases that we will obtain recursively. So, doesn't matter if it is this one or this one, no.
+[027:06] We go down both left and right, one of the two branches stops immediately.
+[027:13] Okay.
+[027:15] Okay, because
+[027:20] one of the
+[027:24] Pink.
+[027:27] Brain
+[027:30] She is stopped.
+[027:33] immediately.
+[027:39] This is the case uh you were saying uh uh that actually it's uh
+[027:45] not interesting because you can
+[027:49] immediately stop at the the node.
+[027:54] without doing the recursive code.
+[027:57] This is what you were saying. If I knew one of these two cases, actually going both left and right is not true. You could stop before.
+[028:12] immediately without moving uh
+[028:15] Left or right. So if there were only these cases,
+[028:22] then the algorithm would run in logarithmic time. Because we have a node, we go both left and right, it's true, but one of the two sides uh stops immediately, and only the other one goes down both left and right.
+[028:40] Okay.
+[028:43] But one of the two sides stops immediately and we go both left and right.
+[028:49] go down and blah blah blah. Sooner or later both uh branches will stop and the algorithm comes back. So this is not a problem because the size uh the the height of the tree is uh logarithmic, so
+[029:08] we would touch this many.
+[029:11] Nodes and no.
+[029:14] Okay? Is this clear to everybody? So, we started with three cases.
+[029:20] The last two are not problematic. The only problematic is partial overlap. We analyze better the possibilities for partial overlap. We have three of them.
+[029:32] And two the last two are easy cases which are not problematic. So we are left with only one problematic final case, which is partial overlap
+[029:50] in which the point in the middle is splitting the query interval into
+[030:00] to sub-intervals.
+[030:03] Okay? And and go both left and right and both left and right have a non-trivial case.
+[030:12] do not stop immediately, but actually has to do some work.
+[030:17] Okay.
+[030:19] Do you agree with me?
+[030:23] Yes or no? Okay, so we go both uh
+[030:30] Left
+[030:33] and write.
+[030:36] My question now is
+[030:38] If both left and right are generic cases, we are in trouble.
+[030:47] because each of these generic case may
+[030:51] Uh
+[030:53] Throw another cart single in which we have again two partial overlaps in which we have again two general cases, partial overlap, two general cases, and so on. We are covering the word tree in this way.
+[031:12] But i is it the case? So after this partial overlap
+[031:18] I
+[031:20] We may have love.
+[031:23] Again, two special cas two general cases of spar of partial overlap, or we have something special to exploit.
+[031:34] Fight.
+[031:38] Always a total overlap. Let's see. Uh we have uh this interval
+[031:48] Right?
+[031:50] And this query interval potentially. Okay?
+[031:58] The point in the middle is one and it's not a total level.
+[032:15] So it's uh
+[032:26] So it's not a general case because
+[032:30] What's the property of uh
+[032:33] of the internets.
+[032:36] What's the property of the queeny interval?
+[032:50] This is the query interval, for example, right?
+[032:54] It's not actually reflecting what we have above.
+[032:58] is a bit shorter than this one, but it's to show you two different examples.
+[033:04] Okay, this one is giving us a partial overlap.
+[033:10] This which the first case. This one uh is giving uh uh one of the easy cases.
+[033:38] Sooner or later or immediately.
+[033:45] Okay, what's the problem out here?
+[033:48] Problematically. Bashole.
+[033:52] in which generate general case, let's say harder case, this one, this one, which generate two partial overlaps.
+[034:04] Both general creases, hard one.
+[034:07] Then partial overlaps again general case they are this one.
+[034:13] This is problematic, because every recursive coal will be uh gone till the leaves, potentially, covering the water.
+[034:25] But here what's the special special property of this partial overlap and this partial overlap?
+[034:46] At least one is total overlap, no, because the other case uh it's not total overlap.
+[034:58] Okay. Okay, I I I think more or less you you get uh all together the grasp the intuition.
+[035:07] Let me add the bit. Okay? The special property, since the in this uh in this case uh we have the line that splits the query n interval in two parts, it means that the the middle point uh intersects the query interval, okay, in the middle.
+[035:27] Right?
+[035:29] Which means, since there is this uh point in the middle that the intersect appear here, and this midpoint is this one.
+[035:39] And this one not.
+[035:42] This means that equity extremes
+[035:47] are the same of the so the right period extreme equals the right extrem here.
+[035:57] The left P stream is equal to the left stream here. Why? Because there are
+[036:05] This point here.
+[036:08] Okay?
+[036:10] So because of uh
+[036:12] This point here, this one are the same, and this one
+[036:20] are the same just because they are both the same in which we split. So the hard case for the partial overlap is the case in which there is a point that is splitting the query into sub intervals.
+[036:41] But after that
+[036:44] After that,
+[036:46] The two parts were larger.
+[036:50] if there are more, are very particular cases in which the right extreme is the same or the left extreme is the same.
+[037:04] What this what does this imply?
+[037:07] Well this imply that
+[037:09] Here we have either a total overlap or
+[037:16] Or here we have no overlap.
+[037:21] There are two cases.
+[037:23] Total lover or no verato.
+[037:27] Since there is no since this is not a no-overlap, implies that this is a total overlap.
+[037:35] Why? Well, we know that the starting point the ending point here is the same as this one. So what chain may change is the length of the interval. If the length of the interval is smaller than the point in the middle, this is no alright. If it is longer, this is a total error.
+[037:58] Okay? Here is the same. We have either this one is no overlap or this one is total overlapped.
+[038:07] This one is fixed at the beginning and this one may grow. If it is longer than the bottom, or if in the middle is uh uh total development.
+[038:20] And we go records on this side or this side.
+[038:25] If it is short, this is no overlap. So we stop and here we are, the partial overlap and we go down. Okay? So in both these so these are very special cases of partial overlap.
+[038:54] Uh so these are two very special cases of partial overlap.
+[038:59] Can you imagine what's the structure of the tree?
+[039:11] Well, this is an odd.
+[039:13] with partial overlap.
+[039:15] Okay.
+[039:18] Yes?
+[039:19] Okay.
+[039:20] with some node here.
+[039:24] Okay.
+[039:28] Then what?
+[039:32] So before me
+[039:36] All the all the partial overlap I had.
+[039:41] were such that the query node is like this, uh and the query is either on one side or the other side, so there was no splitting in the middle.
+[039:54] because we have just one splitting in the middle in the whole search.
+[040:00] Okay.
+[040:02] Okay.
+[040:03] Uh so after that uh we have a node here
+[040:09] We have uh
+[040:11] Another node here total overlap. We have a node here with partial overlap.
+[040:20] Potentially we have another overlap here, but still the
+[040:26] Write stream of the query is fixed.
+[040:30] Okay. Because here we have total of a draft.
+[040:35] That's this one now.
+[040:37] We have partial the lap here, this one, but the right extreme is the same. Okay?
+[040:48] Okay, so we we continue like this, total overlap
+[040:54] Total overlap and finally, after a bit, we have a node with total overlap and we stop.
+[041:03] Okay?
+[041:05] So we have a node and then a chain.
+[041:09] in which we have a node, go down and the other side nothing.
+[041:14] Go down nothing. Go down nothing, okay?
+[041:19] And the same in this part here.
+[041:24] In this case we have no overlap.
+[041:27] Partial overlap, then we may have total overlap, no overlap, and so on. Okay?
+[041:37] Yeah?
+[041:38] In both cases we have uh
+[041:41] Carmen Path that starts from the root.
+[041:45] Then we we reach a node in which the selector splits.
+[041:51] And then easy cases till we reach something, maybe a leaf or a node, and we stop the recursion.
+[042:00] Both these and this have logarithmic.
+[042:07] Lengthen at most.
+[042:10] we cannot we go down till we reach a leaf and leaf and the height of the tree is logging, so that's it.
+[042:20] Okay.
+[042:23] So the worst case.
+[042:25] is when this node is the root
+[042:31] And this normal.
+[042:33] This one are both lifts.
+[042:37] Okay. In that case, we pay log n, log n in total two log n.
+[042:46] And for each of these nodes we touch another node either on left or right. So the total number of nodes we touch overall is four login. If you use the trick you were mentioning never go left or right if not needed
+[043:05] Uh the number of nodes will be two log n.
+[043:09] So we are just saving a factor of two.
+[043:13] in the number of nodes we touch, but we are not saving work at all because we need to check if we we would need to go there or not.
+[043:25] Why?
+[043:27] For logen. Okay, it's for logenia because it is clear that above there are just one node and another node on the
+[043:38] No the note uh on the left, I think it's not uh
+[043:41] Continue or node on here, a node on the right, and so on. Okay? Till a node which is the one that splits the query interval for the first time. Okay. This is uh uh two logen up to that node at most.
+[044:03] 'Kay.
+[044:05] Because uh one node and one node is excluded, but you have to move them. Okay.
+[044:20] It's a street thing more internal.
+[044:22] In order to the left is nothing to do, because you talk a lot
+[044:29] It means that they come back. And the other one which is partial.
+[044:34] Okay. So we have this part in which we have a note that uh as two children one uh is easy and the other is harder.
+[044:44] One e one easy one hundred, one easy one hundred, and so on. Okay, so this same one on the other side, one easy one hundred.
+[044:54] The the worst case is when the first mode is at the root.
+[045:02] And then we immediately split and we reach, in both cases, the list. Okay, how many nodes do we have? The path length is log n and for every node in this path we have the other the other sibling which is uh easy. So we have two log n, two log n.
+[045:26] Okay.
+[045:28] Yeah.
+[045:31] Yeah?
+[045:32] I said for uh log n, but it may be log n, okay, may be very complicated.
+[045:40] Okay, it's not uh always the case that we
+[045:44] The always the same side side is the easy one. Maybe very complicated, okay? Depends on the on the on on the interval.
+[045:56] Can you
+[045:58] Can you
+[046:00] Tell me a case in which the part
+[046:07] is very long.
+[046:10] But the interval
+[046:12] The query interval is very small.
+[046:21] Which one?
+[046:24] Okay, just a leaf, it's okay, no I mean uh uh the two parts.
+[046:36] Exactly. Okay. When uh when uh we have uh
+[046:42] Alright.
+[046:45] This is the point in the middle, so this is the splitting point at the root.
+[046:51] And our query so so we have a leaf here and a leaf here.
+[046:56] Uh my interval is this one. The interval is the shortest possible with more than one element, so just two elements.
+[047:07] The path is the longest one.
+[047:10] Because uh it's like uh move here, then d then here and here.
+[047:15] then ear and ear, then ear and ear and so on, okay? So so we we move
+[047:23] To this leaf, and on the other side, the same.
+[047:31] the same approach. Okay?
+[047:36] Is this convincing?
+[047:41] Uh good. Okay, so let's uh
+[047:45] So that's the algorithm for segmentary, okay? So.
+[047:52] Yeah.
+[047:54] A three, binary three on top of our array.
+[047:58] Uh both the rule for segment trees is store the answer of uh your query in a node. So each node is storing an answer uh
+[048:14] The update starts from the from the from the leaf and go up in the root, modifying the nodes.
+[048:26] The wheel algorithm starts from the root and move down. Every time there is a partial overlap, both move both left and right.
+[048:37] Every time there is no velocity.
+[048:41] stop every time there is a total overlap retard the answer. It's uh uh the node that receives the answer to combine the answer coming from the children to get the answer for its uh sub-interval.
+[049:01] Okay.
+[049:03] The tree can be built uh bottom up in linear time.
+[049:09] Okay.
+[049:12] What's the running time? It's logarithmic for both the queries.
+[049:17] Or more precisely, each query takes time proportional to
+[049:23] Uh
+[049:25] Each query consider log n nodes.
+[049:30] Uh and the cost, the overall cost of the algorithm is the cost of
+[049:37] processing and all the time slogan.
+[049:41] Okay.
+[049:42] Uh
+[049:45] Okay, so let's uh move uh
+[049:48] to another problem.
+[049:51] which is called the dynamic
+[049:55] Uh range
+[050:00] Meaning
+[050:03] Where it is.
+[050:08] Okay, what's the what's the goal?
+[050:10] Now on. We know the structure, we know the idea behind the segment tree, and what we have to do is to solve problems by applying this approach.
+[050:21] Okay?
+[050:23] There are problems which are easy and there are problems which are there. Okay? Uh we start with this uh uh easy problem. In this problem we have uh add I V
+[050:40] And we have a query which is called rmq.
+[050:46] Which seems to be an exotic query, but actually it's very, very useful in practice.
+[050:53] For many problems.
+[050:56] What here it returns is the argument, so the position of the minimum element in the range from I to J.
+[051:09] So this is uh position
+[051:13] of the mean.
+[051:17] In
+[051:19] A i
+[051:21] J
+[051:28] Okay.
+[051:31] This convincing
+[051:37] Okay, let's see.
+[051:43] Well the structure of the segment tree doesn't change, so we can copy it.
+[051:57] Okay, so easy.
+[052:00] Easy part is to copy the structure of the three.
+[052:11] Let's say we have the same argue.
+[052:15] Let's remove the numbers within the node.
+[052:24] What uh we do we need to store uh in the segment?
+[052:32] What's here?
+[052:37] Okay, what's the golden rule in segment list? For every node, store the answer of the query within the uh subarray covered by the node.
+[052:49] The road covers three one miles sorry one the minimum. Here
+[052:58] Minus two, minus two
+[053:02] Uh six, zero, zero, minus two, zero, minus two.
+[053:10] Okay.
+[053:12] So
+[053:19] One
+[053:31] Okay.
+[053:33] Is this uh convincing?
+[053:36] Okay. If I ask you to return the minimum within this interval,
+[053:44] Well we have just one algorithm to for doing the range, which moves on over the three. The final uh the final uh the algorithm is splitting the query uh the query range into sub ranges.
+[054:05] Okay? All of them cover the query interval.
+[054:12] They are not overlapping.
+[054:15] Right?
+[054:17] So
+[054:19] Uh
+[054:21] the fluids to run the algorithm.
+[054:24] Starts from here, here, partial up, no veil up.
+[054:29] Total El Auto, so we take this number.
+[054:33] Uh partial and lattime, total and lattice this number, minus two and six.
+[054:41] We take the minimum of the two, that's what we do the minimum to combine the results, and the minimum is minus two. We call that.
+[054:49] Okay.
+[054:52] Notice that this interval is split into
+[054:59] So
+[055:01] sub intervals
+[055:04] This is always the case. So the algorithm is always splitting the interval into subintervals. How many sub intervals do we have?
+[055:16] In general, how many?
+[055:20] From one
+[055:22] Because in the e easy
+[055:26] KZ.
+[055:29] We may have just one interval, up to.
+[055:36] What's the maximum number of sub intervals?
+[055:39] We may split our uh
+[055:41] Pinterva.
+[055:48] The number of positions in the array, if it is the case, uh the algorithm cannot be log n, right?
+[056:04] So log end.
+[056:08] Yeah?
+[056:12] Uh okay.
+[056:17] So the other property is that these sun intervals are never of a line.
+[056:25] Because uh overlapping would mean uh that uh that would mean that uh we are in a node and there we are selecting this node and s some other node in each subtree. But uh this is not possible because if we we use this node there is a not total overlap, which means that we stop and we don't go down recursively. So this node can be never reached.
+[056:50] Okay, for the sum, the fact that these sub intervals are not overlapping is crucial. Because what we are doing is take the the results for all these sub sub segments and uh combine them in case of sum by summing them. If there was some overlap, it means that we are doing some double counting, which is not. Uh
+[057:16] Would give an incorrect answer. Why for the meaning actually this property is not so useful?
+[057:24] Because even if there is some overlaps.
+[057:28] Uh the mean is always correct.
+[057:32] Okay?
+[057:34] Do you agree with this?
+[057:36] This something this is something that uh is going to be useful uh when uh we will uh
+[057:44] uh discuss uh other solutions for the range minimum queries.
+[057:51] Okay. Uh dumb dumb uh
+[057:55] Okay.
+[057:57] What about uh
+[058:00] What about uh add
+[058:05] In position to the value six. So I want to.
+[058:10] add in this position plus
+[058:15] Six
+[058:18] Okay, what do we do?
+[058:24] Actually, actually let me do plus seven.
+[058:35] These become surf five.
+[058:38] So we start from here and this becomes five.
+[058:43] Then what?
+[058:50] Okay, so we go here.
+[058:53] And we say we ask what's the mean on the left, what's the mean on the right? Let's combine the two with the mean. Mean between five and four is four. So the we change this by four.
+[059:08] Notice that we can do this is plus seven and this is here, so plus seven here as well, because it is correct. What what was the right approach is to uh where it is not take the new minimum on the left, take the new minimum, the old minimum on the right, take the mean of the two.
+[059:43] We do not continue if instead of uh okay, yeah, yeah, yeah, yes, yes, yes. There there is uh the possibility of early stopping.
+[059:53] As soon as you understood that what you are increasing is no longer the minimum
+[060:00] the position you are increasing is no longer the minimum of the parent you can stop because for sure nothing is going to to change. But this is a a heuristic that is not going to improve the overall running time uh in
+[060:18] The worst case.
+[060:20] Okay?
+[060:22] Yes. So let's solve another problem which is range minimum queries.
+[060:30] With uh
+[060:35] Occurrences.
+[060:38] So we have two operations: add as usual,
+[060:45] and the query
+[060:49] From I to J
+[060:53] And this query has to report.
+[060:58] The minimum value.
+[061:07] The minimum value in the range
+[061:16] With uh
+[061:19] It's number.
+[061:24] of occurrences
+[061:29] In
+[061:30] A i
+[061:32] J.
+[061:37] Any idea?
+[062:09] We also store the counter.
+[062:13] Changing the meaning of
+[062:17] Charma, if they are the same, we also counter-contrast.
+[062:22] Okay, so let's uh
+[062:25] For the payment.
+[062:26] Um
+[062:33] I change the the size. In this example I change the
+[062:39] They try to make it more interesting, of course.
+[062:46] Uh three zero zero four
+[062:51] zero thirteen two zero yeah.
+[062:56] Okay, so the minimum is zero and the number of occurrences is one. So this is uh value
+[063:04] And this is number of ox. Notice
+[063:13] Yeah, yeah, yeah, sure, sure, sure. Here you have to return the position, so you have to store the pair uh minimum value and position, or just the position is enough, you use the position to access, yeah, sure.
+[063:26] So indeed
+[063:30] Indeed. Uh this would be mean in the Sabbath.
+[063:36] But actually most of the applications are using argamine, so the position.
+[063:43] Can or they mean?
+[063:45] That's why I was using uh Argo that in the example it's easier for us humans to to see the mean.
+[063:54] Okay.
+[063:56] So what about here? So number of uh so the value, number of occurrences for each node. Why? Well, because we are simply applying the uh main rule or the Gordon rule of segment rings.
+[064:12] If your problem can be solved, then
+[064:16] It's a good idea to store the answer for your problem within this uptree.
+[064:22] Here is the answer here, because the problem asks you to return the mean and its number of occurrences.
+[064:29] Okay? Clearly, since the query is going to split our our
+[064:36] range into sub intervals, then if each sub interval is returning the minimum value within the interval and the number of occurrences of that value in the interval,
+[064:52] You sum up the number of occurrences of the mean values.
+[064:57] in uh the ranges.
+[064:59] If a range has a different value than the minimum
+[065:05] its number of of currencies can be discounted.
+[065:08] And since the pro the the value is different than the overall minimum, it's greater than the overall minimum, which means that the overall minimum is not present in this subarray.
+[065:23] 'Kay.
+[065:24] So it works.
+[065:28] So zero one
+[065:32] zero two
+[065:34] zero one zero one zero two
+[065:39] Zero four
+[065:41] What's the number of occurrences of zero?
+[065:45] The minimum is the number of operators of that minimum element within the range. Start from the root, reach here, reach here. The algorithm is independent on the problem you are solving, depends only on the range and the structure of the tree. So, as before, we end up here and here with the total overlap.
+[066:10] Take uh Z one and Z one.
+[066:13] B both are the same, we sum up the number of occurrences. If the answer, for example, was uh zero one thirteen one, then we return just a min and the number of occurrences is one. For example, if I ask you to add
+[066:35] I position four.
+[066:38] Uh f fourteen.
+[066:42] Four thirteen, no?
+[066:45] Thirteen, let's say.
+[066:48] Then this becomes thirteen.
+[066:53] This becomes thirteen two.
+[066:58] Okay.
+[067:00] So this becomes zero one.
+[067:05] Let me r use red.
+[067:09] Okay. This becomes thirteen. This becomes thirteen two. Why two? Because thirteen on the left, thirteen on the right, we sum up the two occurrences. This one is no longer zero two, but it's zero one.
+[067:28] This one is no longer zero four, but it's zero three.
+[067:33] Okay.
+[067:34] Of course we are updating movie up and we touch only log n nodes.
+[067:42] Okay? Now, with the same quality, we end up in the same notes. Okay? There are two different answers for the minimum. We take the smallest minimum, zero, and we take the occurrences of that smaller answer.
+[067:58] Just one. So the answer in this case is 0, 1, not 0, 0.
+[068:02] Uh not zero two.
+[068:05] Is this uh clear to everybody?
+[068:18] Okay.
+[068:21] Questions?
+[068:34] Okay.
+[068:37] Well, the the approach with uh fairway tree uh sorry semi-tree, especially if uh if the problem uh is uh easier, i is one of the easiest problem uh for this approach is actually very almost trivial, okay? Draw the the the segue tree and uh replace uh the content of each note with the answer within the
+[069:05] So so segment three is using more space than family three, but actually it's much more general, okay. Many problems can be solved easily just by applying and applying and reapplying the same uh the same uh approach store the answer within each node. Okay, for other problems it's the same.
+[069:30] Store the answer within each node. But storing the answer may be much more complicated.
+[069:37] Okay.
+[069:41] But the approach is more or less the same. Okay.
+[069:46] So we are going to see are there problems are there problems uh later on. But uh now let's uh exploit let's apparently come back to the original problem and let's see uh uh another operation that can be solved with uh fan wee three.
+[070:11] Okay, so let's assume we have an array uh with uh
+[070:18] Uh known
+[070:20] Mega
+[070:25] integers.
+[070:29] Okay.
+[070:31] So only zero and positive numbers.
+[070:34] We have two
+[070:36] The standard two operations
+[070:39] At the
+[070:42] V. We also have a range.
+[070:46] Sum ij and the other operation that we want is search
+[070:55] S
+[070:58] Such and the result of this operation is report.
+[071:06] The position
+[071:10] I
+[071:12] Of the shortest
+[071:19] Practice
+[071:22] of A
+[071:25] Or if you prefer
+[071:28] Rather than this one, no?
+[071:31] which is still correct.
+[071:34] The the
+[071:45] The smallest.
+[071:53] Position.
+[071:55] Aye.
+[071:59] such that
+[072:02] sum of the first
+[072:07] Are you elements?
+[072:14] is smaller than or equal to our tar uh sorry, not smaller than.
+[072:22] Uh
+[072:24] larger than or equal to s.
+[072:27] What does it mean? It means that I'm looking for the smallest position i such that the prefix sum up to that position i is greater than or equal to s. Okay? Since the numbers are positive or non-negative,
+[072:44] The sum prefix sum is always increasing. And we are looking for the first position such that that that prefix sum is at least s. Okay? So it's s or or more, it's smaller than s, it's always greater than s from that position on.
+[073:05] Okay? We are looking for the smallest position such that the graphic sum is at least s
+[073:13] Okay?
+[073:14] Uh here the positions are uh sorry starting from zero as before
+[073:21] 'Kay.
+[073:25] So for example
+[073:27] If A is equal to three, one, zero, four,
+[073:35] Six, thirteen, two and zero. Positions are zero, one, two, three, four, five, six and seven.
+[073:48] Search.
+[073:52] Twenty-two.
+[073:55] Twenty two.
+[073:56] is equal to what?
+[073:59] Twelve. Up to here the the prefix sum is three. Prefixum four. Prefix sum four. Eight fourteen.
+[074:14] Twenty-seven
+[074:17] Twenty nine, twenty nine.
+[074:20] So what's the position such that the prefix sum is at least twenty two is uh this one, okay? Because this is uh of the side fourteen.
+[074:34] 14 twenty seven. Twenty-seven is the first time the perfect sum is greater than or equal to twenty-two, so the position is fine.
+[074:46] So the position is
+[074:49] Five this one.
+[074:51] Okay.
+[074:53] Is this uh convincing?
+[074:59] Woo.
+[075:20] Okay, let's use uh the previous uh segment tree.
+[075:27] Can we use these directly?
+[075:35] Yes or no?
+[075:38] And can I use this one?
+[075:41] No, why?
+[075:47] Minus uh one. Uh minus two C yes.
+[075:51] So this is not uh okay.
+[075:54] Let's change it with uh
+[075:57] Zero?
+[075:59] So here the sum is four.
+[076:01] Uh here the sum is eight, here the sum is uh
+[076:08] Uh twenty
+[076:11] Nine.
+[076:13] Okay.
+[076:15] So the previous example was not okay because of the negative number minus two, which is not
+[076:25] No negative courts.
+[076:27] Okay, question. What can we do?
+[076:31] to find uh
+[076:32] Yeah.
+[076:34] position search of twenty two, for example.
+[076:45] Any idea from the audio?
+[076:48] Where do we start from? Of course uh the one the average that goes on if my live in this way is too expensive.
+[076:57] So what can we do?
+[076:59] Where do would you like to start from?
+[077:13] Okay.
+[077:22] Okay. So
+[077:27] Okay, so you're suggesting to do the following. Start from the root.
+[077:32] First go left. Then compare twenty two.
+[077:38] Fwenty two.
+[077:40] Virtues eight.
+[077:44] Right?
+[077:46] Uh twenty two is bigger, so it cannot be uh the the case that the constitution is within uh this range.
+[077:56] Okay. Then what you do. So it's not on the first part, uh, must be in the second one.
+[078:04] And you go down and do what?
+[078:12] Hey.
+[078:18] We are searching for twenty two.
+[078:21] So
+[078:23] Mm mm.
+[078:27] So here we are searching for twenty two.
+[078:32] Yeah, we searched for water.
+[078:38] Twenty-two minus eight. Why minus eight? Well, because eight has been already
+[078:47] So they need the first part, okay?
+[078:51] Which is twenty two minus eight is uh fourteen.
+[078:57] So we compare fourteen with twenty one. Twenty one is bigger, so it means that we have to go
+[079:05] Yeah.
+[079:09] First.
+[079:11] Okay, we compare four what's what's the number we were comparing with? Uh fourteen with nineteen. So we search for four
+[079:25] We compare uh nineteen versus fourteen. There may be out two outcomes here, okay? If this one is smaller than fourteen, we go up and down, we continue in this part, searching for uh the original result minus the value of this one.
+[079:53] If it is not smaller, but it's bigger, like this one, we have to go down in this sub-tree. Okay? We go down in this sub-tree searching for what?
+[080:05] Fourteen or something different?
+[080:13] Fourteen.
+[080:16] Right?
+[080:19] Okay, we compare fourteen so fourteen no, actually six this node uh versus fourteen.
+[080:32] Six is more.
+[080:35] Which means that uh the answer is not here.
+[080:39] We come back to the previous node.
+[080:42] And go down on the other part by searching for what?
+[080:49] Fourteen
+[080:51] Minus six.
+[080:53] Okay. So we subtract something only when we go right.
+[080:59] We compare now uh eight with thirteen. Thirteen is greater, which means uh that
+[081:10] Here we compare thirteen with
+[081:14] Eight the 13th is 33, which means that the answer is down in this subtree. But this is a leaf, so the answer is here.
+[081:24] Can if
+[081:27] This one so the the when we reach a leaf there are only two possibilities. This number is greater than what you are looking for, which means the perfect sum of this position is greater than what you you originally were searching for, or it's the same in this case that
+[081:48] Pretty sound, this position is exactly what you are looking for. Okay?
+[081:58] Okay. But uh you
+[082:01] Uh
+[082:03] You were not actually so this algorithm is okay, what's the running time?
+[082:26] Okay, no.
+[082:32] Do you agree that he's Lorgano?
+[082:36] Okay, it's like we go in every node and go potentially both left and right. But when
+[082:45] I initially we go left. If we come back we go right.
+[082:50] Okay? But never happens that we go both left and right and down, which may be problematic. So every time we go both left and right is because ri left was particularly cheap. Just one step. Okay so the algorithm is going
+[083:07] Correct we go both left and right but uh when we go left because we go right uh when we go right it was because uh when we go left uh it was super cheap. So it's log n. Okay log n.
+[083:32] Logan. Okay.
+[083:34] Segment three must go directly in your checklist.
+[083:40] Okay.
+[083:42] But you you didn't uh use uh your checklist.
+[083:46] When I ask you for this problem. Because you remember what's in your checklist, use standard data structure. Okay. Then.
+[083:56] What's the second item in the checklist?
+[084:00] Binary search for the answer.
+[084:03] Can we apply bioresearch for the answer here?
+[084:09] Well
+[084:11] Perfect chances are increasing.
+[084:14] They searched for twenty two
+[084:20] can be a predicate. Is the prefix sum up to me uh uh greater than or uh smaller than my target perfect sum? If it is smaller, we have to go left, if uh right if it is uh greater I have to move uh left. So it's a predicate uh you can do by message for the answer. What's uh the cost
+[084:45] Of by searching for the answer. Well, you are searching for an answer that goes from zero to any number.
+[084:56] So log n steps to bind and search for the answer.
+[085:01] Right?
+[085:03] Okay, what's what's the cost of uh each uh step? So you have login steps, how many wh what's the cost of each step?
+[085:16] Well, for each step you have to ask for the prefix sum up to the target position.
+[085:26] Right?
+[085:28] Press exam, out of the target position costs log n. So log n times log n. So it's log square n.
+[085:36] Which is a logan factor more than what we get.
+[085:41] Okay? So
+[085:43] Solving the problem with binary search for the answer was possible. The solution you get is uh log n square, which is reasonably good, but uh it's not as good as a specific solution which is looking for properties of the segment tree. Indeed, if you think about it, the binary search for the answer is particularly ineffect inefficient, right?
+[086:11] No, you start from the roof split so you you are I don't know.
+[086:15] This target position.
+[086:18] Go here, split, go down, reach this uh leaf somewhere here, and get the the ant the the ants at the position touching log end notes. And you say, Okay.
+[086:33] My action, my W position is in this part here. You go in the element or the middle and then you start again from the root, go down and recompute many things once again.
+[086:49] while the approach goes
+[086:53] check the property of the segmentary is more direct uh to the to the problem, right? Indeed, you start here, looking at this node here, you know immediately that there is no need to go up to this point.
+[087:09] For computing dance but actually immediately move
+[087:14] uh on the left and on the right and so on.
+[087:18] Okay?
+[087:20] So the checklist
+[087:23] Most of the time.
+[087:24] He's giving you some help, but he's not.
+[087:28] Always uh the final final solution.
+[087:34] Courts, in many cases, you have to look at the problem and find uh more
+[087:41] more uh appropriate and uh
+[087:46] uh more more appropriate solutions.
+[087:49] Okay, let me conclude with uh
+[087:52] Just the statement of the last uh of the next problem.
+[087:59] Yes, I will do it.
+[088:02] Uh we are given an array.
+[088:08] Once again.
+[088:12] of integers
+[088:18] The question is
+[088:22] Port Add.
+[088:28] And uh
+[088:30] Compute the number of occurrences of
+[088:36] a value x in the range. So you want to report
+[088:46] There
+[088:48] Number of
+[088:50] Occurrences
+[088:52] of x in
+[088:58] Disabled right.
+[089:00] Okay, reporting the number of occurrences of the minimum value
+[089:05] is easy.
+[089:06] That's uh it's something that we already saw.
+[089:10] What about reparting the number of occurrences of an arbitrary value?
+[089:15] X.
+[089:18] Okay. So let's stop here. You may
+[089:23] Try to find the solution if you have time. And then in the next lecture, we conclude our discussion of segment three by presenting many other problems.
+[089:38] Starting from this one, which is one of the
+[089:43] Probably in the next level, okay? Just storing the answer, which is a number, is no longer enough. You need to store
+[089:55] More.
+[089:56] Okay. So
+[089:59] Thanks a lot. See you on Wednesday. Next week, no lecture.
+[090:07] I will uh uh give you the hands on by the the end of this week so you can work uh
+[090:16] on the and so on next week while I'm
+[090:21] The conference.
+[090:28] Okay, and so

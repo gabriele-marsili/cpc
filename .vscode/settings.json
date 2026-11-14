@@ -1,0 +1,15 @@
+{
+    // Errori live per il workspace CPC: i settings utente spengono checkOnSave
+    // ovunque (RAM di OctechCode). Qui i crate sono piccoli e senza dipendenze,
+    // quindi `cargo check` sul solo pacchetto del file salvato costa poco.
+    "rust-analyzer.checkOnSave": true,
+    // Il server dentro l'estensione (2026-11) non risolve la std di rustc 1.89
+    // installata qui: `println!`, `vec!`, `format!` risultavano "unresolved
+    // macro". Quello della toolchain ha la stessa versione di rustc e la legge.
+    "rust-analyzer.server.path": "/Users/piccoletto/.cargo/bin/rust-analyzer",
+    "rust-analyzer.check.command": "check",
+    "rust-analyzer.check.workspace": false,
+    "rust-analyzer.check.allTargets": false,
+    // errori calcolati da rust-analyzer mentre scrivi, senza aspettare il salvataggio
+    "rust-analyzer.diagnostics.experimental.enable": true
+}

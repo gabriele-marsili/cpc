@@ -1,0 +1,12 @@
+[package]
+name = "handson2"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+
+# Runner del test set ufficiale (generato da Claude, NON fa parte della consegna).
+# Lancia il binario (src/main.rs) su ogni testsets/pX/inputK.txt e confronta con outputK.txt.
+[[test]]
+name = "testset"
+path = "_GENERATO_DA_CLAUDE/testset_GENERATO.rs"
