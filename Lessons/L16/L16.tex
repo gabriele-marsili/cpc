@@ -1,0 +1,229 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\setmonofont{DejaVu Sans Mono}[Scale=0.82]
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx,xcolor,listings,booktabs,enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usepackage{needspace}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{accent}{HTML}{2B6CB0}
+\definecolor{warn}{HTML}{C53030}
+\newtcolorbox{keybox}[1][]{colback=accent!5,colframe=accent,boxrule=0.6pt,arc=2pt,left=6pt,right=6pt,top=4pt,bottom=4pt,#1}
+\newtcolorbox{warnbox}{colback=warn!5,colframe=warn,boxrule=0.6pt,arc=2pt,left=6pt,right=6pt}
+
+\lstdefinelanguage{Rust}{
+  keywords={fn,let,mut,if,else,for,in,while,return,use,pub,struct,impl,loop,break,Some,None,as,match,const,Self,self},
+  morekeywords=[2]{usize,i32,i64,u64,f64,bool,Vec,VecDeque,BTreeSet,BTreeMap,BinaryHeap,Option,str},
+  sensitive=true, morecomment=[l]{//}, morestring=[b]"}
+\lstset{language=Rust,basicstyle=\ttfamily,keywordstyle=\color{accent}\bfseries,
+  keywordstyle=[2]\color{teal},commentstyle=\color{gray}\itshape,stringstyle=\color{warn},
+  frame=single,rulecolor=\color{gray!40},backgroundcolor=\color{gray!4},
+  numbers=left,numberstyle=\tiny\color{gray},xleftmargin=1.5em,breaklines=true,
+  columns=fullflexible,keepspaces=true,showstringspaces=false}
+
+\newtheorem*{invariant}{Invariant}
+\theoremstyle{definition}\newtheorem*{definition}{Definition}
+
+\usepackage{soul}
+\definecolor{hlY}{HTML}{FFF3A0}\definecolor{hlG}{HTML}{C8F2C2}\definecolor{hlP}{HTML}{E6D2F7}\definecolor{hlB}{HTML}{CFE3FF}
+\newcommand{\hly}[1]{{\sethlcolor{hlY}\hl{#1}}}
+\newcommand{\hlg}[1]{{\sethlcolor{hlG}\hl{#1}}}
+\newcommand{\hlp}[1]{{\sethlcolor{hlP}\hl{#1}}}
+\newcommand{\hlb}[1]{{\sethlcolor{hlB}\hl{#1}}}
+\newcommand{\img}[3]{\begin{center}\begin{minipage}{\linewidth}\centering\fcolorbox{gray!50}{white}{\includegraphics[width=#1]{board/#2}}\\[-2pt]{\footnotesize\textcolor{gray}{#3}}\end{minipage}\end{center}}
+\newcommand{\extra}{\textsuperscript{\textcolor{warn}{[extra]}}}
+\newcommand{\board}[3]{\img{#1}{#2}{Board, #3 (recording \texttt{L\_16.MP4})}}
+\lstdefinestyle{py}{language=Python,keywordstyle=\color{accent}\bfseries,morekeywords={True,False,None}}
+\title{\textbf{CPC --- Lecture 16}\\[2pt]\large Static Range Minimum Query: full table $\cdot$ \textbf{sparse table} $\cdot$ blocks of $\log n$ $\cdot$ towards $O(1)$/$\Theta(n)$: trees in $2n$ bits}
+\author{Competitive Programming and Contests --- Wednesday 18/11/2026 (recording \texttt{L\_16.MP4}, 58 min)}
+\date{}
+
+\begin{document}\sloppy
+\maketitle
+\vspace{-1.5em}
+\begin{keybox}
+\textbf{Sources.} Recording \texttt{L\_16.MP4} (file metadata: recorded \textbf{18/11/2026}; 58 min) and its automatic transcript \texttt{L16\_transcript.txt} (not revised);
+the prof's board (iPad, \texttt{board/l16\_*.jpg}): typed pages with headings and the code, filled in by hand during the lecture. \hly{He says he is ``interpreting also what Claude wrote''}: the pages were prepared with Claude.
+\hlp{There are no notes of the prof on RMQ on the blog} (checked 19/11/2026) and the course page has \hlp{no row for 16/11 or 18/11/2026}. You have no \texttt{notes.md} for this lecture.
+Everything marked \extra{} is mine.
+
+\smallskip
+\noindent Code: \texttt{Lessons/L16/prof/sparse\_table.py} = \textbf{the prof's code, verbatim from the board} (runnable: \texttt{python3 prof/sparse\_table.py} checks the example and all ranges);
+\texttt{Lessons/L16/src} (\texttt{cargo test -p l16}): the four solutions in Rust. Exercises: \texttt{Lessons/L16/practice}, E65--E68 (\texttt{cargo test -p practice\_l16}).
+
+\smallskip
+\noindent\textbf{Highlights:} \hly{general / to remember} \quad \hlg{good: works, efficient, correct} \quad \hlp{bad: pitfalls, wrong ideas, costs} \quad \hlb{definitions and key results}
+\end{keybox}
+
+\begin{keybox}[colback=gray!4,colframe=gray!60]
+\textbf{Where we are.} L15 (recorded 16/11) ended with Mo's algorithm. This lecture starts a new topic: \textbf{RMQ on a static array}. In L14 we solved the \emph{dynamic} RMQ with a segment tree,
+$\Theta(\log n)$ per operation and $\Theta(n)$ space; now there are no updates and \hlb{the target is $O(1)$ time per query with $\Theta(n)$ space}.
+\hlp{The recording is short (58 min) and cut at both ends}: it starts with ``Solution \#1'' already on the screen (the statement of the problem is just above it, only ``$\Theta(n)$ space'' is visible) and
+it ends mid-sentence (``while you think about this, I\ldots'', 58:19) in the digression on trees. \textbf{Solution \#4 ($O(1)$, $\Theta(n)$) is only started}: its last visible heading is ``Cartesian tree''.
+\end{keybox}
+
+\tableofcontents
+
+%==========================================================
+\section{The problem}
+%==========================================================
+\begin{definition}[Static RMQ]
+Given a \hlb{static} array $A[0..n-1]$, answer queries \hlb{$\textsf{RMQ}(i,j)$ = (the position of) the minimum of $A[i..j]$}, both ends included. \textbf{Target: $O(1)$ time per query, $\Theta(n)$ space.}
+\end{definition}
+\noindent The board pages fix the plan: four solutions, each with its time per query and space.
+\begin{center}
+\begin{tabular}{llll}\toprule
+ & time per query & space & idea \\\midrule
+\#1 & $O(1)$ & \hlp{$\Theta(n^2)$} & tabulate all the answers \\
+\#2 sparse table & $O(1)$ & $\Theta(n\log n)$ & only ranges of length $2^k$ \\
+\#3 & $\Theta(\log n)$ & $\Theta(n)$ & blocks of $\log n$ + \#2 on their minima \\
+\#4 (intuition) & \hlg{$O(1)$} & \hlg{$\Theta(n)$} & \#3 + in-block queries (Cartesian tree) \\\bottomrule
+\end{tabular}
+\end{center}
+
+%==========================================================
+\section{Solution \#1: tabulate everything --- $O(1)$, $\Theta(n^2)$ (0:00--8:20)}
+%==========================================================
+``Go to your checklist'': \hly{the first thing to measure when designing a data structure is \emph{how many distinct questions} there are}; if they are few, \hlg{tabulate all the answers}.
+Here the questions are the ranges, $\Theta(n^2)$: ``not a small number, but it matches the space we allow'' in this first solution. Table $T[i][j]=\textsf{RMQ}(i,j)$.
+\board{0.42\textwidth}{l16_sol1_table.jpg}{3:00--8:00: the table $T$, cell $(i,j)$ = \textsf{RMQ}$(i,j)$}
+\textbf{How fast can we build it?} \hly{``It is impossible to use less time than space''}, so $\Theta(n^2)$ is the minimum; but filling each cell by a scan costs linear time per cell: \hlp{$\Theta(n^3)$}.
+\begin{itemize}[nosep]
+\item A student: compute a cell from a neighbouring cell plus the next element. The prof: \hlg{work row-wise}: fix the start $i$ and move the end $j$ one step at a time, updating the answer:
+      \hlb{$T[i][j]=\min(T[i][j-1],A[j])$, $\Theta(n^2)$ overall} --- ``the strategy that brought sliding window maxima from $n^3$ to $n^2$''.
+\item Another student proposed Mo's algorithm: ``maybe, but probably you reach the same solution\ldots{} it's too much''.
+\end{itemize}
+\noindent\textbf{The property to remember} (7:00). To compute the min of a range (black) we can take \emph{any} cell ending in $j$ and \emph{any} cell starting in $i$ that together cover it,
+\hlb{even if they overlap}: \hlb{$\min(i,j)=\min\{\min(i',j),\ \min(i,j')\}$ for $i\le i'\le j'+1$, $j'\le j$}. \extra{} This works because \hlb{min is idempotent} ($\min(x,x)=x$): \hlp{it fails for the sum}, where overlapping parts would be counted twice.
+\noindent\extra{} \texttt{l16::full\_table::FullTable} (row-wise build), tested against the brute force.
+
+%==========================================================
+\section{Solution \#2: the sparse table --- $O(1)$, $\Theta(n\log n)$ (8:20--31:40)}
+%==========================================================
+``Space drops from $n^2$ to $n\log n$: still not linear, but a great improvement.'' \hly{$n\log n$ space means: for every position we cannot store $n$ answers, but we can store $\log n$ of them.}
+A student's idea, accepted: \hlb{for every $i$ store the answers of the ranges starting in $i$ whose length is a power of two}, $1,2,4,8,\ldots$:
+\begin{center}\hlb{\mbox{$T[i][k]=\textsf{RMQ}(i,\ i+2^k-1)$}}\end{center}
+``It is called \emph{sparse table} because we take the big table of before and we \emph{sparsify} it by using powers of two only.''
+\board{0.62\textwidth}{l16_sparse_idea.jpg}{12:20: the property, and ``for any $i$ store the answer for \textsf{RMQ}$(i,2^k)$''}
+
+\subsection{The query: two ranges of length $2^k$}
+Is it always possible to cover any range with two tabulated subranges? \hlb{Let $\ell$ be the largest power of two $\le j-i+1$}, $\ell=2^k$. Then \hlb{$\ell\ge$ half of the length} (``fix the point in the middle'':
+the range $[i,i+\ell-1]$ ends exactly in the middle if the length is a power of two, slightly after it otherwise). The second range has \hly{the same length, backwards from $j$}: it starts at $i'=j-\ell+1$
+(the prof says ``$i'=j-\ell$'' on the board; with both ends included it is $j-\ell+1$, as in the code). \hlb{Both are tabulated, in the same column $k$}; the answer is the min of the two.
+\board{0.62\textwidth}{l16_sparse_cover.jpg}{15:00--16:20: $\ell$ from $i$ forward (red) and from $j$ backward (blue)}
+\begin{center}\hlb{\mbox{$\textsf{RMQ}(i,j)=\min\{T[i][k],\ T[j-2^k+1][k]\}$, \ $k=\lfloor\log_2(j-i+1)\rfloor$}}\end{center}
+
+\subsection{The code and the example (16:40--26:30)}
+\textbf{The prof's code} (verbatim from the board; it stores \emph{positions}, \hly{ties go to the left element because of \texttt{<=}}):
+\lstinputlisting[style=py,firstline=8,lastline=23]{prof/sparse_table.py}
+\begin{itemize}[nosep]
+\item \texttt{build}: column $k$ from column $k-1$: \hlb{$T[i][k]$ = the better of $T[i][k-1]$ and $T[i+2^{k-1}][k-1]$} (the two halves). Rows are ragged: \hly{row $i$ stops when the range leaves the array} (the grey cells).
+      \hlg{$\Theta(n\log n)$ time and space}.
+\item \texttt{rmq}: \texttt{bit\_length()-1} = position of the most significant bit = $\lfloor\log_2\rfloor$.
+\end{itemize}
+\textbf{Example} $A=[5,2,7,3,8,1,6,4]$. \hlp{The table header says ``position of the minimum'' but the prof filled it with the \emph{values}} (``let's use the min, just not to become crazy'').
+Row 0: $5,2,2,1$; row 1: $2,2,2$ and a $1$ in the grey cell: ``you can either store it or not: if you skip the cases where the end point is after the end of the array you save essentially nothing''.
+\textbf{\textsf{RMQ}$(0,6)$}: length 7, $\ell=4$, \hlb{$k=2$}; $T[0][2]=\min(5,2,7,3)=2$ and $T[6-4+1][2]=T[3][2]=\min(3,8,1,6)=1$; \hlb{answer 1}.
+\hlp{On the board he first wrote $T[0][3]$ and $T[3][6]$ (wrong indices), then corrected them to $T[0][2]$, $T[3][2]$} after the class pointed it out.
+\board{0.62\textwidth}{l16_sparse_example.jpg}{31:20: the filled example (values, not positions)}
+\hly{``Doing this running example, that I never did before, is explaining things to me: I explained this solution for many years and I never realized that the column is always the same.''}
+A student summarized: \hly{$k$ is the power of two covering at least half of the range and it dictates the column; the rows are the left end $i$ and the left end of the range of length $2^k$ ending in $j$}.
+
+\subsection{Computing $k$ in $O(1)$ (26:40--29:40)}
+A student: ``isn't computing the logarithm logarithmic?'' \hlg{No: the position of the most significant bit is computed by the CPU in constant time} (\extra{} in Rust \texttt{leading\_zeros}).
+Without that instruction, \hly{tabulate}: split the 32 bits in 4 bytes, a table with the 256 answers for one byte, a loop of 4 iterations. He recommends the \hly{bit tricks in Knuth's book} (``maybe volume 4, I don't remember'') --- one of them, based on \emph{de Bruijn sequences}, computes the most significant bit.
+\extra{} \texttt{l16::msb}: the three ways (CPU, 256-table, de Bruijn) tested against each other; practice E66.
+
+\subsection{And updates? (29:50--31:30)}
+A student asked about changing a value. \hlp{Too many entries contain it: ``not all of them, but the vast majority''}; it cannot be done efficiently.
+Another student: if the new value is not a minimum anywhere you change nothing (e.g.\ increasing the 7); the prof: ``maybe if you only increase numbers you can amortize on something, I don't know; if you modify any number, probably linear --- just a guess''.
+\hly{The sparse table is for static arrays}; for updates, the segment tree (L14).
+
+\noindent\extra{} \texttt{l16::sparse::SparseTable} is the prof's code line by line in Rust, tested on his table and against the brute force on all ranges.
+\hlp{Rust pitfall: \mbox{\texttt{j - (1 << k) + 1}} on \texttt{usize} underflows when $i=0$ and $j+1=2^k$} (Python does not care); write \texttt{j + 1 - (1 << k)}. My first translation panicked on exactly this.
+
+%==========================================================
+\section{Solution \#3: blocks of size $\log n$ --- $\Theta(\log n)$, $\Theta(n)$ (31:40--39:00)}
+%==========================================================
+``Trade space for time: we improve space, but the query gets worse.'' \hlp{``Observe that this solution is essentially useless: the segment tree already does as well''} (maybe faster in practice) --- but it is the step towards \#4.
+\begin{itemize}[nosep]
+\item The hint: \hly{we can cut the range in three parts in any way we want}, the answer is the min of the three. If the two border parts are guaranteed to be short (at most $\log n$) we can scan them, and the big middle part is answered in $O(1)$.
+\item \hlb{Split $A$ into groups of size $\log n$; for each group store its minimum: array $A'$ with $|A'|=n/\log n$}. Build the sparse table of \#2 on $A'$:
+      \hlg{$\frac{n}{\log n}\cdot\log n=\Theta(n)$ space} --- ``the logs cancel out''.
+\item \hlp{The sparse table on $A'$ is correct only for ranges aligned to the blocks.} So: \hlb{middle part (whole blocks) in $O(1)$, prefix and suffix (inside the two border blocks) scanned in $O(\log n)$}.
+\end{itemize}
+\board{0.62\textwidth}{l16_blocks.jpg}{38:40: the three parts (blue prefix, red aligned middle, blue suffix) and $|A'|=n/\log n$}
+``Pretty easy to implement in practice, almost trivial.''
+\extra{} If $i$ and $j$ are in the same block, or in adjacent blocks, there is no middle part: just scan (at most $2\log n$ elements).
+\extra{} \texttt{l16::blocks::BlockRmqFast} (blocks of $\lfloor\log_2 n\rfloor+1$), tested against the brute force and for space $\le 3n$ words; practice E67.
+
+%==========================================================
+\section{Solution \#4: just the intuition --- $O(1)$, $\Theta(n)$ (39:00--58:19)}
+%==========================================================
+``Finally better than the segment tree.'' \hly{``The real solution is a little bit more complicated, full of details we don't care about''}, so only the intuition; ``it is interesting because it reveals something else, very useful in anything''.
+The board says: \hlb{``Using the previous solution, it is enough to solve''} [the queries \emph{inside a block}] --- \#3 already does the middle part in $O(1)$, only the prefix and suffix scans must become $O(1)$.
+The last heading on the board is \hlb{``Cartesian tree''}, but before it the prof starts from something else: \textbf{how many bits does the shape of a tree need?} \hlp{The recording ends inside this digression}: the link with RMQ is not made.
+
+\subsection{Storing the shape of a tree (40:00--47:30)}
+The tree is empty: \hly{no values, just the structure}, and we want to be able to get the tree back (for the moment, forget about navigating it).
+\begin{itemize}[nosep]
+\item \hlp{With pointers} (or ``homemade pointers'': an array where each node stores the indices of its children): \hlp{$n\log n$ bits}.
+\item A student: \hlp{children of $i$ at $2i$ and $2i+1$ (heap layout)}. \hlp{Works only if all levels are full but the last one}: ``doubling and doubling plus one doesn't work'' for a generic shape.
+      The prof's example: a long chain next to a bushy tree with the same number of nodes. \extra{} Completing a chain of $n$ nodes would need $2^n-1$ slots.
+\item Another student had an idea close to one of the real representations (``you use bits and you can represent any tree''); ``there are at least three representations''.
+\end{itemize}
+\board{0.62\textwidth}{l16_trees_bp.jpg}{58:00: the chain and the tree, ``$n\log n$ bits'', the parentheses (black) and the decoded tree (red), then ``Cartesian tree''}
+
+\subsection{Balanced parentheses: $2n$ bits (47:30--55:00)}
+\hlb{Visit the tree from the root; emit ``('' when you enter a node and ``)'' when you leave it} (``pre-order and post-order: we do something when we enter and when we leave'').
+For the tree on the board see the red sequence in the image above (the transcript of the dictation is not reliable enough to copy it). \hlb{2 bits per node: $2n$ bits.}
+\begin{itemize}[nosep]
+\item \textbf{Decoding} (50:00): read left to right; \hlb{``('' = there is a (new) child, go down; ``)'' = go back up}.
+\item \hlp{Left and right are lost}: for a node with a single child ``I don't know if it is left or right'' --- \hlp{the code describes an ordered (not binary) tree}; to say left/right you need extra bits.
+      (In the red reconstruction he drew the single child on the left: ``just an assumption''.) \extra{} \texttt{l16::bp} test \texttt{single\_child\_left\_or\_right\_is\_lost}.
+\item \textbf{Optimal} (52:40): the number of trees with $n$ nodes is about $2^{2n}$, so \hlb{about $2n$ bits are needed}. A student: not every sequence is balanced --- true, ``it reduces the number but not enough to matter from a compression point of view; the lower bound is something like $2n-\log n$''.
+      \extra{} Exactly: Catalan $C_n=\frac{1}{n+1}\binom{2n}{n}\approx 4^n/n^{3/2}$, so $\log_2 C_n=2n-\tfrac32\log_2 n+O(1)$ (checked in \texttt{bp::tests::catalan\_lower\_bound}).
+\item \hlg{With this binary representation you can still navigate the tree}: \hly{with \emph{rank} and \emph{select} on the bit vector} (``and other tricks'') you can ask, for a node id, its children, its parent, the size of its subtree,
+      even \hlb{the lowest common ancestor of two nodes, in constant time}, without decompressing. ``Some of these operations are practical, some are not.'' (Not explained.)
+\end{itemize}
+
+\subsection{Level by level, degrees in unary (56:40--58:19)}
+The representation the student had in mind: \hlb{visit the tree level by level and write the number of children of every node in unary}; knowing the degrees and that we go level by level, the tree can be rebuilt
+(root: 2 children $\to$ two slots; then the degree of the first child, of the second, \ldots{} then the next level). The prof's unary convention is unclear in the recording (``two with two bits, zero, one'').
+\begin{warnbox}
+\textbf{Question left by the prof (58:13):} ``How many bits do we need in this degree-based representation?'' --- the recording ends here. $\to$ practice \textbf{E68} (answer in \texttt{practice/soluzioni}; I do not write it here).
+\end{warnbox}
+
+\subsection{Where this is going \extra}
+\hlp{Not said in the recording} --- the standard route, to check against the next lecture. The \emph{Cartesian tree} of $A$ has the (leftmost) minimum at the root and, recursively, the Cartesian trees of the two sides as subtrees:
+\hlb{$\textsf{RMQ}(i,j)=\textsf{LCA}(i,j)$}. The answers of all in-block queries depend only on the \emph{shape} of the block's Cartesian tree, and a shape fits in $2b$ bits (balanced parentheses):
+with blocks of $b=\frac14\log n$ there are at most $4^b=\sqrt n$ shapes, so all in-block answers can be tabulated in $o(n)$ space. \extra{} \texttt{l16::cartesian} builds the tree with a stack in $\Theta(n)$ and checks RMQ $=$ LCA on random arrays.
+
+%==========================================================
+\section{Exercises and deadlines}\label{sec:ex}
+%==========================================================
+\begin{keybox}
+\textbf{Course page (checked 19/11/2026): no row for 16/11/2026 nor for 18/11/2026}: nothing new assigned for this lecture. The last rows are 04/11/2026 (Persistency, Hands-On 2).
+\textbf{Hands-On 2}: deadline 22/11/2026 (you already delivered it on 14/11).
+
+\smallskip
+\textbf{Spoken question (18/11)}: bits of the level-by-level unary representation $\to$ practice E68. Still open from L15 (spoken, 16/11): Powerful Array with Mo (practice E63).
+
+\smallskip
+\textbf{Still open, from earlier rows of this year's table} (2026): \emph{Circular RMQ} (CF 52C), optional in the row of 02/11/2026; \emph{Nested Segments with segment trees}, optional in the row of 26/10/2026;
+\textbf{Update the Array} (SPOJ UPDATEIT), mandatory in the row of \textbf{19/10/2026}; \textbf{Nested Segments} (CF 652D), mandatory in the row of \textbf{21/10/2026}; \emph{Pashmak and Parmida's problem} (CF 459D), optional in the row of 21/10/2026.
+
+\smallskip
+\textbf{Practice L16}: E65 generic sparse table (min/max/gcd), E66 msb with the 256-table, E67 Solution \#3, E68 the prof's question.
+\end{keybox}
+
+%==========================================================
+\section{Next time}
+%==========================================================
+Not said in the recording (it is cut). \extra{} Expected: the end of Solution \#4 --- Cartesian tree, its shape in $2n$ bits, and how they give $O(1)$ queries inside the blocks.
+
+\end{document}

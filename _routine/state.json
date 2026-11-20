@@ -1,6 +1,6 @@
 {
  "generated": {
-  "Cargo.toml": "c372b55e470b63961d5a3498ded64cede28d928b",
+  "Cargo.toml": "5d958ca968d4a8e307b6ca9ab565b7c87beff061",
   "HandsOn/HO1/Cargo.toml": "00d2ee90cdb5c4c088a4748ff7b7112400047067",
   "HandsOn/HO1/README.md": "8d1446bc47f690d216f87d9e7afaaeab7b186f43",
   "HandsOn/HO1/draft/EMAIL.txt": "e48d098b0a84f0f633036093b82c09f4c895da6b",
@@ -97,8 +97,8 @@
   "Lessons/L13/src/range.rs": "44b107328f749b5a011910f5acb13e31eb7be71d",
   "Lessons/L13/src/segment_tree.rs": "4bd3e47078224d63d6b95cea1aa1fa077d6db88f",
   "Lessons/L14/Cargo.toml": "4372cbfef0ca16d995594df483d538bf29274ebe",
-  "Lessons/L14/L14.pdf": "034b5263a87dfb72b690a007c478d0da8cac7532",
-  "Lessons/L14/L14.tex": "8a6054ecadcd2d6d3dbbc13188160c3c2d254514",
+  "Lessons/L14/L14.pdf": "2f2be5d7fbb0a3e5538d8b2295cbfa5a6a1685ba",
+  "Lessons/L14/L14.tex": "e7611717a99b9a152845b06c8d55f14f4f918ef1",
   "Lessons/L14/L14_transcript.txt": "daf03f8ad5a29c377f6a46c66ff61ea2272660d5",
   "Lessons/L14/board/l14_easy_cases.jpg": "a153acd2f3055969a35654237882cf5f400b9e12",
   "Lessons/L14/board/l14_occs_statement.jpg": "3538779f4367800101201c9b4221c88c311fac7d",
@@ -110,29 +110,99 @@
   "Lessons/L14/board/l14_search_statement.jpg": "edb06871cbe77b971847d3da5724062f9d8ea654",
   "Lessons/L14/board/l14_search_visit.jpg": "6fee091f4aad0dff6c79c45d6e092018afb4b969",
   "Lessons/L14/board/l14_special_pos.jpg": "9da159c78c3c208f1c88619214ecd77658e2fa3c",
-  "Lessons/L14/claude_notes.md": "706319746299a58b4fccc888d8b0397fa3db68fe",
+  "Lessons/L14/claude_notes.md": "1c02d4d771f3920571629dea11b820443079b4dc",
   "Lessons/L14/figs/l14_visited.pdf": "808794298aefbf0e3fcf936294cb1667d317cc06",
   "Lessons/L14/figs/make_figs.py": "8a0da4b9b924c07c208ff68248e3b50befda8ed0",
+  "Lessons/L14/figs_prof/st_complexity.pdf": "14d3ec1deb049571bc06517830299ca175cdcc17",
+  "Lessons/L14/figs_prof/st_complexity.png": "5715eca3a22e8b8e238f9e0c88d6d0dfa19d89d2",
+  "Lessons/L14/figs_prof/st_po_anchor.pdf": "0966c1f76b39df13fa508474be3916c24fd21065",
+  "Lessons/L14/figs_prof/st_po_anchor.png": "564c0d25041dd7bb3aaac764bc61bdce689ae249",
+  "Lessons/L14/figs_prof/st_search.pdf": "00792a7c37d337e2ad7403f34e62a361b2289d28",
+  "Lessons/L14/figs_prof/st_search.png": "a35f3562a6cbb67e211079d847fccfc5a57dd553",
   "Lessons/L14/practice/README.md": "926381ab87d1efb934dcc260145631a1c105bb08",
   "Lessons/L14/practice/soluzioni/lib.rs": "f28f57da6ddadb075b0ec0d5e26a2a2bb611c6e0",
   "Lessons/L14/practice/src/lib.rs": "13a1116c4a680a883b9d4f3ff1989118bd38f3c5",
   "Lessons/L14/practice/src/util.rs": "bad3c7910add4964b7175bce31979af1fe025738",
-  "Lessons/L14/src/lib.rs": "404a5c8081f16e06399b2e187c575192851358fc",
+  "Lessons/L14/src/lib.rs": "a5432a65c0176d82c5d6f1c492e5517d0a8fdccd",
   "Lessons/L14/src/occs.rs": "aa628a0d13213768492a4bccafca1119d3b8eb1a",
+  "Lessons/L14/src/prof_blog.rs": "7e4c26e036943f1efe88c07865a546206e37016b",
   "Lessons/L14/src/range_sum.rs": "fbc838cc3ed63dc36738d13dee8720370c0676b8",
-  "Lessons/L14/src/rmq.rs": "4e822df4ae677f47c447665dbafe53079c30f26f",
-  "Lessons/L14/src/rmq_occ.rs": "d88f8f7be9d849cbde82bb08a05e4aec7b5b7750",
-  "Lessons/L14/src/search.rs": "1916faa143636c473ce9478e283c61e98e8b17dc",
+  "Lessons/L14/src/rmq.rs": "62c0cc6e29b60f1815232d43dd039e990408082e",
+  "Lessons/L14/src/rmq_occ.rs": "b7c88427a92c78fb97e002b57683bb11ed399d78",
+  "Lessons/L14/src/search.rs": "1f9eba7ee20ee794ac4fe37f67fa1d597353b4b8",
   "Lessons/L15/Cargo.toml": "a262bdac5914316a587909a71c8ac3d941c48719",
-  "Lessons/L15/L15.pdf": "37ddaf1b9e8877c442c28192c77a8efff76b3449",
-  "Lessons/L15/L15.tex": "bfdc16482b5b97bc9c987b38ef45d31f5c0b2820",
-  "Lessons/L15/claude_notes.md": "b053eed9aa395937cb44db1f1dbf3ba5ee3168ce",
-  "Lessons/L15/src/lazy.rs": "84743b032bf88d68a90b878da80378447be94ac4",
-  "Lessons/L15/src/lib.rs": "788cb8dbc00473755f2c3fe10e32128849f14aa8",
-  "Lessons/L15/src/occs.rs": "c516f0ffba5f19fe3fdc266eacb4f244e02444ac",
-  "Lessons/L15/src/persistent.rs": "00eb81e5785009e905fbe6a995275733ae8cc259",
-  "Lessons/L15/src/successor.rs": "949821385c2ff8085f36e978b9a4038e0ab5056a",
-  "Lessons/L15/src/triplets.rs": "01097d138b77d44848788b50734553636eca769b",
+  "Lessons/L15/L15.pdf": "c04ddac293255da39914a7d27e08c9d4bbfd8609",
+  "Lessons/L15/L15.tex": "8edf703ae71bf02a4e61f1bd2c3e39da1c529a6c",
+  "Lessons/L15/L15_transcript.txt": "76f9deafb703c73268d3ed6f0ced7ad217ce74df",
+  "Lessons/L15/board/l15_attempt1.jpg": "226cc19edae6ea5513c6eaa40e7a6c0445c1b3cf",
+  "Lessons/L15/board/l15_attempt2.jpg": "1cd470e2149860287845cfe52f1d258f5dab6bc7",
+  "Lessons/L15/board/l15_attempt3.jpg": "6ea2861d9c4c8423f61236636615c93431855d7b",
+  "Lessons/L15/board/l15_attempt3_cost.jpg": "a636f458044322d17746f473dd5c384d3daeec73",
+  "Lessons/L15/board/l15_mo_bad_scratch.jpg": "d27643000f48b01fedc093c912f5fcbd9ebcd40c",
+  "Lessons/L15/board/l15_mo_example.jpg": "175ea5f1f23a188a7d0b6434a413df4a2fab4ed0",
+  "Lessons/L15/board/l15_mo_groups.jpg": "e3a11eb878ce555ea992223d5aea2f479b62900d",
+  "Lessons/L15/board/l15_mo_order.jpg": "b03f1e0d895e918c7414fffb175b430054d7eac1",
+  "Lessons/L15/board/l15_mo_powerful.jpg": "0e9b7abcb927a3cc23afd4a1761c4fc334c27416",
+  "Lessons/L15/board/l15_mo_solve.jpg": "a65d76d97ba0a3702cc5a05b422f4f7ab70d00fa",
+  "Lessons/L15/board/l15_mo_sorted.jpg": "314af509f56f0609e805170974cb4d270bb3638b",
+  "Lessons/L15/board/l15_mo_three_trivial.jpg": "96eb8f6597307d7edfdafa86a1b7014f09b8a6b7",
+  "Lessons/L15/board/l15_persistent_def.jpg": "3c200294479494478781655a3ea61375414e070b",
+  "Lessons/L15/claude_notes.md": "80d0ad35705f588380eff6174df55d105d4b2a17",
+  "Lessons/L15/figs_prof/st_lazy_query.pdf": "97761a7bfdfe6f6ee4e4f5ccbc58d3ca4f4b4457",
+  "Lessons/L15/figs_prof/st_lazy_query.png": "d17353a5329eb24b4ea70800044e2baf7ae6e0c0",
+  "Lessons/L15/figs_prof/st_lazy_update.pdf": "7e010056e9556d74025448f7421286d4fafa0abc",
+  "Lessons/L15/figs_prof/st_lazy_update.png": "9a693cd04ea8ec0802191ee2e64d2376bbcb5857",
+  "Lessons/L15/figs_prof/st_merge.pdf": "b2a0ff8e53d7942af11b3addca8d3cfd38dfcd95",
+  "Lessons/L15/figs_prof/st_merge.png": "3d9a60a1ea25d11792afc8328dc185ba38ba57d3",
+  "Lessons/L15/figs_prof/st_persistent_counts.pdf": "d2ae69d945c550d12af1526aca527628bc609c8c",
+  "Lessons/L15/figs_prof/st_persistent_counts.png": "da5119b7b7c25bc29ce82bfeff211f6394d48bbb",
+  "Lessons/L15/figs_prof/st_persistent_lists.pdf": "e8dd2630b0e31bb2a33b08dfeacf5569f543af72",
+  "Lessons/L15/figs_prof/st_persistent_lists.png": "6473f0f2d1d762de1b5dbc42d3c131e53e1f61cf",
+  "Lessons/L15/figs_prof/st_persistent_paths.pdf": "27655de0fdbf257ee3986fc8ba8b8624dbf5ebf8",
+  "Lessons/L15/figs_prof/st_persistent_paths.png": "9fd7d55fbaad85cfa01d1cb1cc59b7fbb16d54f6",
+  "Lessons/L15/figs_prof/st_triplets_lr.pdf": "6e02e4da2d004bd4bb9871747b566c17837e8741",
+  "Lessons/L15/figs_prof/st_triplets_lr.png": "7bdcbd6931e0afe57a3e6a07d77794ccf08e95bf",
+  "Lessons/L15/figs_prof/st_triplets_ps.pdf": "a63bc85d5fdd15f17db83f7bf70dbfcc8754fc1f",
+  "Lessons/L15/figs_prof/st_triplets_ps.png": "113f0e975d5d6806c73b3d0b2e412e5cc5fec024",
+  "Lessons/L15/practice/Cargo.toml": "e5e9b8458536974d72fdf0b7f809990918d72ec2",
+  "Lessons/L15/practice/README.md": "4c033ce433988701dd0940cb760c8327eb1cae76",
+  "Lessons/L15/practice/soluzioni/lib.rs": "e5070eff46f8a9a325396556f05fc311965649cc",
+  "Lessons/L15/practice/src/lib.rs": "bd826e05a831819eb178a0c0414bf3aad353b491",
+  "Lessons/L15/practice/src/util.rs": "bad3c7910add4964b7175bce31979af1fe025738",
+  "Lessons/L15/src/lazy.rs": "c78be79a99de787dae18001f3a77134f2c619142",
+  "Lessons/L15/src/lib.rs": "4900f4d26b05b3ec2885eb91b3bf0812754b31b4",
+  "Lessons/L15/src/mo.rs": "40d68287e9a691abf655a8536484c246125a5f68",
+  "Lessons/L15/src/occs.rs": "46d43bd64e001e169e696ee77e0bc9e0c3e3c8a6",
+  "Lessons/L15/src/past.rs": "773a399a7fdf5062464348c582353fa616581640",
+  "Lessons/L15/src/persistent.rs": "e376e213ef7869404059798b3fa6ac545379b32a",
+  "Lessons/L15/src/prof_blog.rs": "06b1fdc24220e12ebe03fbffcaa3927a6ee9af45",
+  "Lessons/L15/src/successor.rs": "a21f5715c6c29c218f29443fef9540dd983086ad",
+  "Lessons/L15/src/triplets.rs": "ece7461ce4faf3f9c324b65fc5afa4deb1ff00c9",
+  "Lessons/L16/Cargo.toml": "14957ee8fd116e8f364abd96fa2255913aab20c4",
+  "Lessons/L16/L16.pdf": "30f8499641ad0e002e3b63cc017cd5e53512f7ed",
+  "Lessons/L16/L16.tex": "78c50bfa3a4ea24512de00d0592e72828b7fda88",
+  "Lessons/L16/L16_transcript.txt": "dc9699b96eeb6e514a3144573b11aa0d36c14cee",
+  "Lessons/L16/board/l16_blocks.jpg": "f1cc6904594b6a2ae9b15cc5461d50b62d12b04a",
+  "Lessons/L16/board/l16_sol1_table.jpg": "47bb399a20ad900417208058e4f3a341c649b5cb",
+  "Lessons/L16/board/l16_sparse_code.jpg": "f42d7f750a3270f5d3c3dbeda69b3d222a3c5a56",
+  "Lessons/L16/board/l16_sparse_cover.jpg": "2f83ec11920b660422b0704a8e1708aef81662d9",
+  "Lessons/L16/board/l16_sparse_example.jpg": "a79631f82e8d9f3fafd914b87742947c1324fa44",
+  "Lessons/L16/board/l16_sparse_idea.jpg": "8799acdfbefc93b79e4db25d3ace91a677b28d26",
+  "Lessons/L16/board/l16_trees_bp.jpg": "6085ae59b1135111a9d2bf117b44ebcce06ab060",
+  "Lessons/L16/claude_notes.md": "909d11bd0de837b41c80e8ced01de27f6422acc5",
+  "Lessons/L16/practice/Cargo.toml": "9442b4a8c6aa98c43b399cde548b69b9a9500fbd",
+  "Lessons/L16/practice/README.md": "5b641db5d8f32b5f120476d400cbd4f8bb70ace7",
+  "Lessons/L16/practice/soluzioni/lib.rs": "c945b10d5f5253c414dea188ad7178cae51b3060",
+  "Lessons/L16/practice/src/lib.rs": "3fa0177af3e90542fdc935b63809d7648f38c27f",
+  "Lessons/L16/practice/src/util.rs": "8e2dea9c46fa07a5831bfad4126ae08d5d8430b7",
+  "Lessons/L16/prof/sparse_table.py": "a9cf2f7f48d4c8d96e1827451eadfdff8bfb27ca",
+  "Lessons/L16/src/blocks.rs": "129828bfab1f1b896406dc815c167b0bafc0a6d1",
+  "Lessons/L16/src/bp.rs": "0e5ef6daf938031bd915a3d53eab6afa2f5bd888",
+  "Lessons/L16/src/cartesian.rs": "a7ee4e1bb8494d1dccd29c5279ab0ef63c06df2b",
+  "Lessons/L16/src/full_table.rs": "b3905bdf01458208830015a164aaf42f7574f33a",
+  "Lessons/L16/src/lib.rs": "349c4e5de71b703aef2e2be372277dd7bde38fb1",
+  "Lessons/L16/src/msb.rs": "cbcf7fa3f77786cd9627fa1f6fe11213bc0f3feb",
+  "Lessons/L16/src/sparse.rs": "b2ee80c00f901e15906d897201c1ebdec7493e12",
   "Lessons/L3/L3.pdf": "c695b0f9b4aeb301a79c0648bd65d23efd2e276e",
   "Lessons/L3/L3.tex": "404a6c12f209f9577b7b8827fa52f14a46b82a93",
   "Lessons/L3/claude_notes.md": "1d2ab4cef12bceeca41bb50548da433c83c73181",
@@ -194,8 +264,12 @@
   "Lessons/L9/src/lib.rs": "6457f21086f998ef979551c21518c789f0391aa8",
   "Lessons/L9/src/prefix_sums.rs": "c1cd80c015eed69d579889eb7f96d91487df1ea2"
  },
- "last_run": "2026-11-11 15:43",
+ "last_run": "2026-11-19 15:24",
  "seen": {
+  "DOWNLOADS/L_16.MP4": {
+   "mtime": 1795100756,
+   "size": 217196872
+  },
   "Lessons/L10/Cargo.toml": {
    "mtime": 1792416710,
    "size": 89
@@ -308,65 +382,213 @@
    "mtime": 1793956989,
    "size": 621212579
   },
+  "Lessons/L14/figs_prof/st_complexity.pdf": {
+   "mtime": 1794743103,
+   "size": 39637
+  },
+  "Lessons/L14/figs_prof/st_complexity.png": {
+   "mtime": 1794743104,
+   "size": 53994
+  },
+  "Lessons/L14/figs_prof/st_po_anchor.pdf": {
+   "mtime": 1794743105,
+   "size": 20663
+  },
+  "Lessons/L14/figs_prof/st_po_anchor.png": {
+   "mtime": 1794743106,
+   "size": 42599
+  },
+  "Lessons/L14/figs_prof/st_search.pdf": {
+   "mtime": 1794743107,
+   "size": 22947
+  },
+  "Lessons/L14/figs_prof/st_search.png": {
+   "mtime": 1794743108,
+   "size": 56502
+  },
   "Lessons/L14/notes.md": {
    "mtime": 1793619779,
    "size": 3468
   },
   "Lessons/L14/src/lib.rs": {
-   "mtime": 1794411793,
-   "size": 1547
+   "mtime": 1794743108,
+   "size": 1690
   },
   "Lessons/L14/src/occs.rs": {
-   "mtime": 1793806230,
+   "mtime": 1794743109,
    "size": 4820
   },
+  "Lessons/L14/src/prof_blog.rs": {
+   "mtime": 1794743109,
+   "size": 5850
+  },
   "Lessons/L14/src/range_sum.rs": {
-   "mtime": 1794411793,
+   "mtime": 1794743110,
    "size": 6062
   },
   "Lessons/L14/src/rmq.rs": {
-   "mtime": 1794411794,
-   "size": 5283
+   "mtime": 1794743110,
+   "size": 5785
   },
   "Lessons/L14/src/rmq_occ.rs": {
-   "mtime": 1794411794,
-   "size": 4929
+   "mtime": 1794743111,
+   "size": 5246
   },
   "Lessons/L14/src/search.rs": {
-   "mtime": 1794411795,
-   "size": 5523
+   "mtime": 1794743112,
+   "size": 5684
   },
   "Lessons/L15/Cargo.toml": {
-   "mtime": 1794411795,
+   "mtime": 1794743112,
    "size": 89
+  },
+  "Lessons/L15/L_15.MP4": {
+   "mtime": 1794901198,
+   "size": 708524191
+  },
+  "Lessons/L15/figs_prof/st_lazy_query.pdf": {
+   "mtime": 1794743115,
+   "size": 51759
+  },
+  "Lessons/L15/figs_prof/st_lazy_query.png": {
+   "mtime": 1794743115,
+   "size": 60152
+  },
+  "Lessons/L15/figs_prof/st_lazy_update.pdf": {
+   "mtime": 1794743116,
+   "size": 49772
+  },
+  "Lessons/L15/figs_prof/st_lazy_update.png": {
+   "mtime": 1794743117,
+   "size": 60119
+  },
+  "Lessons/L15/figs_prof/st_merge.pdf": {
+   "mtime": 1794743118,
+   "size": 26133
+  },
+  "Lessons/L15/figs_prof/st_merge.png": {
+   "mtime": 1794743119,
+   "size": 49297
+  },
+  "Lessons/L15/figs_prof/st_persistent_counts.pdf": {
+   "mtime": 1794743119,
+   "size": 12298
+  },
+  "Lessons/L15/figs_prof/st_persistent_counts.png": {
+   "mtime": 1794743120,
+   "size": 32067
+  },
+  "Lessons/L15/figs_prof/st_persistent_lists.pdf": {
+   "mtime": 1794743120,
+   "size": 38899
+  },
+  "Lessons/L15/figs_prof/st_persistent_lists.png": {
+   "mtime": 1794743121,
+   "size": 55632
+  },
+  "Lessons/L15/figs_prof/st_persistent_paths.pdf": {
+   "mtime": 1794743121,
+   "size": 32391
+  },
+  "Lessons/L15/figs_prof/st_persistent_paths.png": {
+   "mtime": 1794743122,
+   "size": 69286
+  },
+  "Lessons/L15/figs_prof/st_triplets_lr.pdf": {
+   "mtime": 1794743123,
+   "size": 14830
+  },
+  "Lessons/L15/figs_prof/st_triplets_lr.png": {
+   "mtime": 1794743123,
+   "size": 39892
+  },
+  "Lessons/L15/figs_prof/st_triplets_ps.pdf": {
+   "mtime": 1794743124,
+   "size": 8807
+  },
+  "Lessons/L15/figs_prof/st_triplets_ps.png": {
+   "mtime": 1794743124,
+   "size": 26053
   },
   "Lessons/L15/notes.md": {
    "mtime": 1793956984,
    "size": 52
   },
   "Lessons/L15/src/lazy.rs": {
-   "mtime": 1794411797,
-   "size": 4885
+   "mtime": 1794743126,
+   "size": 5234
   },
   "Lessons/L15/src/lib.rs": {
-   "mtime": 1794411798,
-   "size": 1404
+   "mtime": 1794905529,
+   "size": 1785
+  },
+  "Lessons/L15/src/mo.rs": {
+   "mtime": 1794905529,
+   "size": 6122
   },
   "Lessons/L15/src/occs.rs": {
-   "mtime": 1794411798,
-   "size": 3893
+   "mtime": 1794743127,
+   "size": 4192
+  },
+  "Lessons/L15/src/past.rs": {
+   "mtime": 1794743127,
+   "size": 4927
   },
   "Lessons/L15/src/persistent.rs": {
-   "mtime": 1794411798,
-   "size": 5122
+   "mtime": 1794905530,
+   "size": 5953
+  },
+  "Lessons/L15/src/prof_blog.rs": {
+   "mtime": 1794743128,
+   "size": 10628
   },
   "Lessons/L15/src/successor.rs": {
-   "mtime": 1794411799,
-   "size": 3995
+   "mtime": 1794743128,
+   "size": 4232
   },
   "Lessons/L15/src/triplets.rs": {
-   "mtime": 1794411799,
-   "size": 3241
+   "mtime": 1794743129,
+   "size": 5067
+  },
+  "Lessons/L16/Cargo.toml": {
+   "mtime": 1795101830,
+   "size": 89
+  },
+  "Lessons/L16/L_16.MP4": {
+   "mtime": 1795100836,
+   "size": 217196872
+  },
+  "Lessons/L16/prof/sparse_table.py": {
+   "mtime": 1795101836,
+   "size": 1906
+  },
+  "Lessons/L16/src/blocks.rs": {
+   "mtime": 1795101838,
+   "size": 3911
+  },
+  "Lessons/L16/src/bp.rs": {
+   "mtime": 1795101839,
+   "size": 5557
+  },
+  "Lessons/L16/src/cartesian.rs": {
+   "mtime": 1795101839,
+   "size": 3962
+  },
+  "Lessons/L16/src/full_table.rs": {
+   "mtime": 1795101839,
+   "size": 1965
+  },
+  "Lessons/L16/src/lib.rs": {
+   "mtime": 1795101840,
+   "size": 2376
+  },
+  "Lessons/L16/src/msb.rs": {
+   "mtime": 1795101840,
+   "size": 2248
+  },
+  "Lessons/L16/src/sparse.rs": {
+   "mtime": 1795101840,
+   "size": 3822
   },
   "Lessons/L2/Cargo.toml": {
    "mtime": 1789983210,

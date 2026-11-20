@@ -1,4 +1,4 @@
-//! Persistent segment tree (2025 notes p.16-19). Operations that change the DS move the timestamp by 1;
+//! Persistent segment tree (recorded lecture of 16/11, 0:00-39:00; 2025 notes p.16-19; 2026 notes). Operations that change the DS move the timestamp by 1;
 //! queries may specify any valid timestamp: Add(i, v) and RangeSum(i, j, t) = sum of A[i..=j] at time t.
 //! - Attempt #1: a copy of the ST after each update: RangeSum Θ(log n), but space Θ(n·t) and Add Θ(n).
 //! - Attempt #2: only Θ(log n) nodes change per update: every node keeps a list of (value, timestamp);
@@ -102,6 +102,19 @@ mod tests {
         assert_eq!(t.range_sum(0, 3, 1), 16); // [0,3]: 6 -> 16 at time 1
         assert_eq!(t.range_sum(4, 7, 1), 21); // unchanged until time 2
         assert_eq!(t.range_sum(4, 7, 2), 23);
+    }
+
+    #[test]
+    fn lecture_board_example() {
+        // board of the recorded lecture (16/11, 27:00-36:00): A = [3, 1, -2, 4, 6, 13, 2, 0],
+        // Add(3, 10) at t = 1 (red path: 14, 12, 16, 37), Add(7, 20) at t = 2 (green path: 20, 22, 41, 57;
+        // the prof first wrote 47 for the root, a student corrected it to 57)
+        let mut t = PersistentTree::new(&[3, 1, -2, 4, 6, 13, 2, 0]);
+        t.add(3, 10);
+        t.add(7, 20);
+        assert_eq!((t.range_sum(0, 7, 0), t.range_sum(0, 7, 1), t.range_sum(0, 7, 2)), (27, 37, 57));
+        assert_eq!((t.range_sum(0, 3, 1), t.range_sum(2, 3, 1), t.range_sum(3, 3, 1)), (16, 12, 14));
+        assert_eq!((t.range_sum(4, 7, 1), t.range_sum(4, 7, 2), t.range_sum(6, 7, 2), t.range_sum(7, 7, 2)), (21, 41, 22, 20));
     }
 
     #[test]

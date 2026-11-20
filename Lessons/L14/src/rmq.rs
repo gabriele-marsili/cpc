@@ -126,6 +126,17 @@ mod tests {
     }
 
     #[test]
+    fn notes_2026_example() {
+        // prof's 2026 notes (blog "Segment Tree"): A = [5, 1, 3, 1, 4, 7, 2, 1]; root = min 1 at position 1;
+        // rmq(2, 7): [2,3] (1 at 3) and [4,7] (1 at 7) -> tie broken to the left -> 3
+        let mut st = RmqTree::new(&[5, 1, 3, 1, 4, 7, 2, 1]);
+        assert_eq!(st.node(1), (1, 1));
+        assert_eq!(st.rmq(2, 7), 3);
+        st.add(1, 4); // the minimum of the whole array is now at position 3
+        assert_eq!(st.node(1), (3, 1));
+    }
+
+    #[test]
     fn random_vs_naive() {
         let mut rng = Rng(0xA076_1D64_78BD_642F);
         for _ in 0..300 {

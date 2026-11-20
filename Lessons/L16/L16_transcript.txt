@@ -1,0 +1,595 @@
+# Trascrizione AUTOMATICA (sherpa-onnx, parakeet-tdt-0.6b-v2) di L_16.MP4 (18/11/2026, 58 min), NON rivista: nomi e termini possono essere storpiati (es. 'mean' = min).
+[000:00] And nobody say nothing.
+[000:04] Right.
+[000:08] I have uh recordings of I don't know, ten years or something, so
+[000:15] So he had my voice when I was young, so
+[000:21] I'm not sure.
+[000:22] Uh can you design this uh data structure?
+[000:28] Solution number one, custom space and linear
+[000:33] A linear
+[000:35] Quality time? No.
+[000:38] Constant time and quadratic space.
+[000:42] Did it?
+[000:46] You already know?
+[000:48] No, don't trade.
+[000:51] Okay, go to your checklist.
+[000:54] And uh
+[000:55] One of the basic principles you should have learned is when you I have to develop uh a data structure for a particular problem, the first thing I have to measure is how many possible questions, possible distinct questions, do I have.
+[001:16] If the number of possible questions is smaller, then
+[001:21] uh I can just uh tabulate uh all the possible answers.
+[001:27] In this case, the possible questions are uh
+[001:31] the possible ranges. We have
+[001:35] It's not a small number, but it matches the space constraints we have, so.
+[001:43] we can just uh tabulate everything.
+[001:45] And get uh the
+[001:49] Super big table.
+[001:51] with all their answers.
+[001:54] Store it.
+[001:57] Uh
+[002:01] table to find my notes.
+[002:11] Yeah we are.
+[002:15] There are two things I'm doing. Probably both are the reason why I'm not able to find anything, I switch the the the the screen off and so on. I'm uh doing two lectures uh a day, one after the other, this main rea one of the reasons, and the other one is that I'm spending too much time uh bibe coding with uh Claude a lot of time.
+[002:42] by coding everything.
+[002:46] Even the deal.
+[002:49] Please cook me. I can't access the tool. I need to cook something.
+[002:55] Um yeah. Okay, what does it mean so? Uh it means that uh for every possible uh starting point and point uh in uh your uh uh ranges
+[003:11] You can
+[003:13] Uh store the answer. So here is this the answer uh containing uh uh
+[003:20] The
+[003:23] answer for this.
+[003:27] Precisely the answer for
+[003:30] How much time does it take to build this one?
+[003:36] A squared?
+[003:37] What's the minimum possible running time?
+[003:42] Never use
+[003:44] more can it's impossible to use less space than time.
+[003:49] The the minimum possible is n squared. Can you do this in uh n squared time?
+[004:00] It's not I mean it's it's true that we have n squared cells.
+[004:07] But it's not uh
+[004:10] Easy to say, I mean, it's not a trivial statement, we can fill each of these entries in.
+[004:20] Constant time because if you do it trivially, you go this one.
+[004:26] Answer this one. Scan computer mean.
+[004:32] takes linear time for each entry, which is cubic.
+[004:46] Uh one possibility is to compute this one, uh this one looking at this one plus the l the next hand. Yes. Yes. This is one approach.
+[004:57] Can you do something uh different?
+[005:05] Uh the approach uh is to do this uh row wise.
+[005:10] So you do rewise means that you focus, you have one beginning and you move the ending point.
+[005:18] one after the other and uh you update the answer there. If you remember is the strategy that allows us to move uh sliding window maxima from n square n cube to n square. Yeah.
+[005:33] Any other approach?
+[005:39] But this is perfectly fine. Just uh just uh let you reason about uh uh another
+[005:55] still don't like the kind
+[006:01] With Mohs algorithm where we move the pointers uh in a specific way to
+[006:14] Mm yes. Maybe there is a motion that uh like allows you.
+[006:33] Yeah.
+[006:35] Maybe, but uh probably you
+[006:39] you reach uh the same uh solution, which is uh just uh
+[006:44] If you do Mosa algorithm actually it's uh yeah, it's too much.
+[006:52] Well, the just the the observation I would like to let you see is that you can use uh any cell
+[007:01] Here?
+[007:05] And any cell uh
+[007:07] Here
+[007:09] and combine the two.
+[007:13] Because mean is like this. So if you have uh to compute the mean of this,
+[007:22] And you have uh the answer of this.
+[007:29] And the answer of these, even if they are overlapping,
+[007:34] You can compute the answer for black by taking the mean of red and whi and green.
+[007:46] Okay, so any cell that ends in J
+[007:51] And any cell that starts in
+[007:54] I is a good one.
+[007:57] two good pairs to combine the two.
+[008:02] proving nothing, but uh just the property that we are
+[008:07] Great.
+[008:09] Just the property that uh we are going to
+[008:13] Hope there is nothing there was nothing private.
+[008:17] Cardinal unit.
+[008:19] Helmy in case.
+[008:22] Okay, next uh next solution. The next solution uh improves uh the space of the previous one.
+[008:35] Space drops from
+[008:39] from uh n squared to n log n.
+[008:44] Still not a linear, but a great improvement.
+[008:51] Any idea?
+[008:54] Well, it has to do with the property I just described you.
+[009:04] If I have uh the answer
+[009:08] For a segment.
+[009:10] And I have the answer of another
+[009:16] Segment.
+[009:18] If they overlap or if they are one after the other.
+[009:24] Then the answer of the union is the mean of the two.
+[009:34] So how can we exploit this property?
+[009:44] So in general the property is
+[009:52] Minna.
+[009:54] I
+[009:55] J is equal to the mean
+[010:00] In between.
+[010:02] Uh
+[010:04] Mean.
+[010:06] Yeah.
+[010:08] I prime
+[010:10] J
+[010:13] And mean
+[010:15] I J prime. Okay, with J prime uh
+[010:20] Smaller than
+[010:23] Then J and I prime greater uh greater than uh
+[010:30] First the minimum for each single
+[010:35] or be
+[010:38] of dimension two and
+[010:40] and so on that are one after the other.
+[010:45] Okay.
+[010:49] We can use the larger possible segments and combine them. Okay, let's reason about n log n. So n log n means that for every position
+[011:04] I cannot store n other positions, but I can store uh log n of them.
+[011:14] For every position log n of that.
+[011:17] Your idea fits the space, because for every position you are storing the uh segments starting in that position whose length is the power of two. So one, two, four, eight and so on.
+[011:35] Yeah, we are in the space.
+[011:38] So uh for every eye
+[011:44] So
+[011:46] The answer
+[011:52] Four na.
+[011:55] Uh mean i two to the k
+[012:01] Uh yeah.
+[012:04] Range mean.
+[012:13] Okay, this solution is called sparse array because we take the big table before and we sparse it. We sparify it by using power tools only.
+[012:28] Okay, question. Now that we have these positions.
+[012:36] Is it always possible to find a position
+[012:43] Two positions.
+[012:45] That guarantees uh so.
+[012:48] Given any range.
+[012:50] Is it possible to find two subranges covering the range?
+[012:59] This is the solution.
+[013:01] Yeah, we store uh
+[013:03] Uh L M Q
+[013:07] I
+[013:08] Two k. Yeah, that's what we have to sparse if I
+[013:12] Yes.
+[013:14] Basically
+[013:18] Please one. Okay, suppose it's a number.
+[013:24] Suppose it's a number what? Like in like suppose it's an in like the length of this range is an integer, right? Okay. And we take uh now we we tabulated the all the ranges with the length which is a power of two. Okay. We go in the in the row.
+[013:42] Suppose it's a row, okay for example a row with length uh one, two, four, eight, sixteen, okay. And we know that there are two ranges with length uh with the power of two that is less than our new range length, our query. Okay, okay, and there are gonna be two starting positions with entirely power like mid of two ranges with no range. Okay, I think uh yeah.
+[014:08] Yeah, you are right. I think a good point to see this is to fix the point in the middle, which is maybe here. The point in the middle.
+[014:20] Half of the size of the range.
+[014:23] Since uh it is uh the length divided by two,
+[014:28] This means that there is a length a value which is equal to this or
+[014:37] Greater than this, but smaller than the wool end.
+[014:41] Okay.
+[014:46] That's it.
+[014:47] Okay.
+[014:48] It's exactly in the middle when when the length is exactly the power of two.
+[014:53] If it is not the power of two, it's slightly after the point in the metal. Okay?
+[015:02] So we consider this as the interval. So this is the first interval.
+[015:12] What about the second one?
+[015:18] Well, we use the same length
+[015:22] Backwards.
+[015:23] So we use the exactly the same length.
+[015:27] to get this position here.
+[015:30] which is the position I prime. So let's say this is the length L. I prime is equal to J minus I prime. No, minus, sorry, minus L.
+[015:50] So I prime is a position, all the positions are tabulated, L is a power of two, we are pot tabulating uh uh for every position every power of two, so both I with length L and I prime with length L are tabulated. We take the two and we take the minimum of the two.
+[016:12] Yeah.
+[016:18] Is this clear to everybody?
+[016:21] Okay.
+[016:23] So let's move on.
+[016:33] Don't know what
+[016:35] What's close was packing here?
+[016:40] Okay. Ah here is the code. Wow.
+[016:45] Do do you do you need uh an example?
+[016:50] Why not? Okay.
+[016:53] Uh position position of the minimum of A I plus two K minus one.
+[017:03] Okay, so k is equal to zero is uh i is equal to one, so we are here, we are tabulating, right? For every position i all the power of two, starting from uh uh one or zero, depends on what you are considering.
+[017:24] Yeah, so here the segment of length one
+[017:27] only five. The answer is five.
+[017:31] Actually the answer is the argument of the mean. Okay, let's use the mean uh just to don't become uh crazy. Okay, k is equal to one. So the subarray is phi two. Phi two the mean uh is two.
+[017:46] Right?
+[017:48] Then five, two, seven, three, the answer is two. Then five, two, seven, three, eight, one, six, and four, the answer is one.
+[017:59] Okay.
+[018:01] The next one, position one, we start from two. So the answer is two. Two.
+[018:10] Then back finders, are you here?
+[018:14] May I good. Ah, you you were not in the le at the lecture last time and you get uh no, uh f actually four other students were doing uh your role during the class. So you can stay home uh without any problem. We have a refreshments.
+[018:32] Uh two one.
+[018:36] Uh
+[018:38] Actually one is not needed because you can uh skip cases in which you are ending after.
+[018:50] can consider or not doesn't yeah, nothing changes in term of space. But if you skip the cases in which the end point s is after the end of the array, then your matrix uh is a little bit
+[019:11] Just a bit, okay.
+[019:13] saving essentially nothing.
+[019:15] Okay? You see what I mean? In this case the ending point will be here and we can either store one here or nothing.
+[019:27] Okay, and then we keep doing this. Do we want to go on now?
+[019:33] Yes or no?
+[019:35] Just uh uh answer this one now.
+[019:38] Okay?
+[019:40] It's uh from zero to six, from zero to six.
+[019:45] The length is six.
+[019:49] The power of two, the meat the meat element, is three.
+[019:54] The power of two is four,
+[019:57] So we we take uh the answer from
+[020:02] Uh
+[020:04] Zero to four.
+[020:09] Uh zero to four
+[020:16] Actually zero three because we have zero base the indexing.
+[020:20] And uh and the other one uh is uh six minus uh four.
+[020:28] Right? Which is two.
+[020:31] Uh one, two, three, four and five, no, three because of zero based indexing.
+[020:38] Uh three, six. The interval has length four in
+[020:44] Okay, let's uh reconstruct these two entries three uh
+[020:55] Zero.
+[021:00] I need to finish my tokens.
+[021:03] So I will wake up late in the morning. Okay, zero zero
+[021:11] Uh three is uh
+[021:14] Is what?
+[021:16] Two, right?
+[021:19] Yeah, because it's this entry here probably of the next one.
+[021:24] Any help from the audience?
+[021:27] one of the two hertz. The one which corresponds to length four, so this one.
+[021:34] Anyway, two. And the other one is three six, which is this row and the and this column, which is uh this entry here, which is uh
+[021:48] Uh one.
+[021:52] The mean of the two, so this is one, the mean of the two is one.
+[021:58] To to confuse the or you get it.
+[022:03] Yes or no?
+[022:05] Let me redo it, okay.
+[022:09] Because I'm interpreting also what Claude wrote while I'm doing so. So he intended to tell me that.
+[022:19] with this. K is equal to what?
+[022:22] K is equal to the power
+[022:26] That we are using for the length of the range.
+[022:30] For the length of the range, which is six, we are using four, which is two to the two. So k is equal to two.
+[022:40] Armed with K, we know what's the column we have to use. We have to use this column.
+[022:49] Now, which rows do we need to use? Since we start from the beginning always, the row in the in the first case is the one corresponding to the to this zero.
+[023:04] So column zero, row
+[023:07] Column zero, row.
+[023:09] Two. So no. Column two row zero. Thank you.
+[023:16] And the result is two.
+[023:19] Now we know the column in the other case, which is two, the same. What's the row?
+[023:29] There always, huh?
+[023:34] This
+[023:36] minus four positions.
+[023:39] Three.
+[023:41] So it's six minus four plus one.
+[023:45] So the row is three and the column is the same. So we take one.
+[023:54] Now we have the answer of two sub ranges that may overlap.
+[024:01] So the answer, final answer, is the mean of the two. The mean of the two is one. So that's the result.
+[024:10] Is this convincing?
+[024:21] Because of this?
+[024:33] To index the answer.
+[024:36] Three six because of uh no, no, no, no, yeah, yeah, sure.
+[024:43] Uh yeah.
+[024:49] Yes. So k is the power of two that covers at least half of the value and it also dictates which column we are
+[024:57] Yes, exactly.
+[024:59] Then
+[025:05] By the left left extreme.
+[025:09] and not the right right extreme, because right extreme is not guaranteed to be covered, because it's the ending should be the ending point. But it's it's covered always like the right extreme of another position.
+[025:29] Which is the ex the right extreme six minus the power of two plus one.
+[025:37] Because that position is at distance a power of two from the end.
+[025:47] is is the it's the largest overlap in the segment
+[025:51] whose length is a power of two. That ends in position six.
+[025:55] Exactly.
+[025:58] Uh doing this running example that I never done before uh is uh explaining me things. Okay, I I explained this solution many years. I never realized uh that the column is always the same.
+[026:13] I just realized now, okay? Because you can convince yourself that this exists, but never check the columns. Is this like
+[026:25] Yes.
+[026:27] Yes.
+[026:28] Exactly.
+[026:39] Yes.
+[026:44] Okay, like a range query that can be
+[026:49] line at this point. If they like uh like we we can get the query offline or online, but like the array doesn't change, so there is just a query. And uh to understand how big is the range the the actually the query may be online so there is no I mean but
+[027:12] How long?
+[027:17] Yeah, so
+[027:19] Do what? I had to find the the biggest k such that two to the k is more than the the rate.
+[027:29] Don't don't get it. Like for example if uh like the the range length uh is fifteen. No? We w we would uh need to search in the column with k equal uh to yeah. Yeah but to to find that uh it's isn't it uh like logarithmic? It's your uh computing the logarithm uh no no no, it's uh the most difficult.
+[027:57] Cost of that.
+[028:00] Computing the exact logarithm of a real number uh something
+[028:07] Yeah.
+[028:08] logged in base two of a number it's a bit easier.
+[028:12] Just consider the most difficult we
+[028:15] And that's the logic. Like a with some beat operation.
+[028:20] like to scan just the beats or then just the value the
+[028:25] Finding the mean the most position of the most significant bit is done uh by CPU's constant time the CPU like yeah. If you if you don't uh have uh this
+[028:41] I don't remember what uh the solution, but uh one that tabulates, for example, is pretty easy and constant time.
+[028:49] You have thirty-two bits, you split in eight bits uh block of eight bits and you have a table with uh two hundred and fifty six uh answers and you do a loop of four times. This is an approach, but there is uh if I remember correctly, there is uh a part of uh glute books
+[029:12] maybe volume four, I don't remember. Full of big tricks. And one of the big tricks was to compute the mean the most significant bit, position of the most significant. And one is based on the De Brouen sequences, which I don't know if you know what they mean.
+[029:32] Anyway.
+[029:35] S trick
+[029:37] In the book, I strongly courage you to take a look.
+[029:49] Like what will the
+[029:55] One of the values in the array. Updating one of the values to update the value.
+[030:04] You need the
+[030:06] to uh change the
+[030:11] Too many is too many entries.
+[030:14] I think all of them.
+[030:16] So it cannot be done.
+[030:19] Because uh if you have to update a mean
+[030:23] Everywhere in every range that contains it. It's not all of them, but I mean the vast majority of them.
+[030:35] slogan.
+[030:36] update the number that isn't uh in the table, then you probably spend nothing. Yes. Like if you unless it's a new mean. Yeah, if you increase the seven, you do nothing.
+[030:48] you were changed.
+[030:53] Maybe if you increase numbers you can get uh something good.
+[031:01] Uh because if if you all increase.
+[031:05] Uh you can do something.
+[031:09] Don't uh
+[031:11] Don't know, but you can probably amortize on something.
+[031:16] If instead uh you just uh modify any number, I think you have uh
+[031:25] Trispe linear linear.
+[031:31] Time I mean, just a guess, I don't uh
+[031:37] Okay.
+[031:39] So
+[031:42] Yeah, so.
+[031:45] Uh constant time
+[031:49] constant time and logar space.
+[031:52] Let's see another solution now, which we can get almost for free.
+[032:01] to uh to trade uh space for time. So we we improve space, but we are we have words uh words running time.
+[032:14] Observe that this solution, so takes logarithmic query time and linear space, is essentially useless. We already have the segment tree able to do better than this. Maybe in practice is better, but uh asymptotically it's the same of segmentry. Not particularly uh good
+[032:39] Any idea for achieving this?
+[033:06] Okay, let me let me
+[033:11] give you a hint. Okay, so let's say we have
+[033:18] Pretty easy for me to give you questions and look at you like, hmm, how can you achieve this or that?
+[033:30] For me it's easy because I already know the solution, okay?
+[033:34] Because I
+[033:37] So if I have a range, let's say this one.
+[033:43] What can I do? For sure, I can trans transform these
+[033:51] thing to
+[033:53] Uh some these
+[033:59] So I can cut
+[034:02] The original range in three.
+[034:06] in any way way I want.
+[034:09] So that the answer of
+[034:13] The wool can be obtained by computing the mean of the three.
+[034:19] in any way I want.
+[034:24] So what log n times guarantees me?
+[034:31] Well, it guarantees me so it allows me to do
+[034:35] That I can compute
+[034:38] This
+[034:40] And is uh
+[034:44] trivially by scanning the ranges if these are smaller, are guaranteed to be smaller.
+[034:52] So I can get the answer for the element for the segment in the mid or in constant time.
+[034:58] because it's the biggest one.
+[035:00] And then uh the beginning and the end uh in uh
+[035:04] a logarithmic time if they are
+[035:07] upload the 8-pig sites.
+[035:12] How can uh use this uh property?
+[035:16] get uh to get to the answer
+[035:22] In a space.
+[035:24] Tie it forward.
+[035:28] Keep it.
+[035:31] Range of sizes again.
+[035:34] Uh you took the segment of size again and uh combine them
+[035:42] Okay. And then you if you have uh uh
+[035:48] Some elements that don't fully complete the segment, you just kind of and that's uh yeah. Yeah, I think I agree. Yeah. So like this.
+[036:02] Maybe. What uh what can be done is uh to group uh
+[036:12] Split the array into groups.
+[036:14] Each of sites login.
+[036:17] For each group you store the answer.
+[036:20] Which is the mean?
+[036:23] And then you have an array E'.
+[036:26] And the sides of
+[036:30] A prime is n divided by log n.
+[036:38] Yeah.
+[036:41] Okay, now I can build the previous data structure on top of A'.
+[036:47] Okay? How much space I'm using I'm using.
+[036:51] Login for each element.
+[036:53] How many elements do we have? We have n divided by log n elements.
+[036:58] So all the log n'c can cancel out and we have n. So the previous solution on top of a prime is giving us
+[037:09] linear space.
+[037:12] Then the
+[037:15] Answer is correct only if or only when the ranges uh aligns with the blocks.
+[037:27] So you take the range, you split it into in three parts. The middle part aligns two ranges, two blocks sorry, and the other two are inside the block.
+[037:41] So what we do is to
+[037:43] Stunned.
+[037:45] the blocks to get the answer. Okay?
+[037:49] I don't know if it is faster in practice, but of course this solution is pretty easy to implement in practice, almost trivial. Okay, so what uh what we do is to I have uh a range like this
+[038:08] Let's say
+[038:11] I split it into three parts. The one that aligns to the block.
+[038:21] the one in the prefix and in the suffix. Prefix and suffix is scanned and uh the part in the middle is given
+[038:34] in uh constant time by the data structure.
+[038:38] Great.
+[038:43] was already there.
+[038:47] Great. Okay.
+[038:53] Uh yeah, so the that's the answer.
+[039:01] Now.
+[039:03] Let's reach our target.
+[039:07] Linear space constant time.
+[039:10] Finally, better than than the uh segment three.
+[039:18] Save space but uh smaller smaller uh running time.
+[039:27] Okay, and just give you giving you the intuition, okay? The real solution uh is uh
+[039:34] a little bit more complicated, full of details that we don't care about.
+[039:40] Okay.
+[039:42] But actually it's quite uh interesting because it reveals uh something else uh which is uh
+[039:49] Very useful uh
+[039:51] in uh anything.
+[039:54] Let me start with something else.
+[039:59] Let's say
+[040:03] Let's say we have a three.
+[040:08] Let's say it's a binary tree.
+[040:17] Santiago.
+[040:19] Santa, like this.
+[040:32] Okay.
+[040:35] How many bits do we need to represent a bio3?
+[040:47] Well, with pointers, homemade pointers.
+[040:52] For example, you need uh
+[040:55] Uh let's say and
+[040:59] Uh log and bits.
+[041:02] With point.
+[041:04] Can we do better?
+[041:12] vector what do you mean? So the binary thing has a vector.
+[041:17] Yeah, that's what I meant uh with homemade contacts. You have an array, you store uh the
+[041:26] For each node you store the the ID if you have, or otherwise you store in position corresponding to the node left and right pointers, which are indexes in the array itself.
+[041:40] This is what you are referring to.
+[041:45] child is like twice the position uh
+[041:49] Try this.
+[041:57] If it is a perfectly complete tree, it works.
+[042:02] Like uh eps.
+[042:05] But if it's not a h i it's not a complete tree, it doesn't work. Like in this case, it doesn't work.
+[042:12] Because uh you to get what you said uh you need all else to be full but the last one.
+[042:20] Otherwise the doubling uh plus one uh doubling doubling plus one doesn't work.
+[042:28] segment it's not like a
+[042:35] still navigate to make it
+[042:37] Forest and it's okay.
+[042:41] Say again? Like in a segment, for example. Yes.
+[042:46] Maybe you c you can fill it up to
+[042:54] Yeah, yeah, yeah, yeah. If you if you have so we are you are saying exactly the same thing. So if it is not comple if it is complete, uh it's easy. If it is not complete uh let's make it complete. Yeah, but uh also like you can
+[043:15] What do you mean? Okay, even if uh it's not complete.
+[043:19] the property of two K two times index and two times index. Yeah, it works if it is not completely complete, but it must be all all levels must be full but the last one.
+[043:34] Otherwise it doesn't work.
+[043:39] So it's not true for every three. Let's imagine a
+[043:45] Che like this.
+[043:50] How can you index this?
+[043:53] Differently with respect to the so let's say we have these are the same number of nodes.
+[044:01] Maybe they have. Okay, you can't index both with the same approach because it depends on the shape. Okay, no, I was thinking like the shape was fixed and the none.
+[044:13] No, no, no, no, no. Any shape you want, any tree, any binary tree.
+[044:24] Anybody?
+[044:26] We can ride.
+[044:30] How many bits? Of course, n log n is possible.
+[044:34] Is this the best?
+[044:37] or we can do something but.
+[044:46] Not easy at all, okay? So I'm just um
+[044:49] Perfectly normal at uh
+[044:53] Yeah, this will be short.
+[044:57] It's not easy.
+[045:00] Before yeah. Until you know. That's what.
+[045:04] Once you know the solution.
+[045:14] But we need some sort of
+[045:17] Congressional development.
+[045:19] No, no, no values. There are no values, okay? Just a structure.
+[045:24] No values is stored.
+[045:26] I mean, you can store the values, but if you store the values, you have to pay the values.
+[045:31] The tree is empty. You want to store just the structure and still able to traverse the tree from the root down to the leaves in some way. But forget about traversing the tree. For the moment, it's enough to represent the tree and
+[045:50] have uh the compression algorithm that gives you the three back.
+[045:58] Yeah? What do you mean?
+[046:03] package of the
+[046:06] It's like
+[046:08] Hey and I'm just guessing you all could indicate.
+[046:11] Yeah, yeah.
+[046:16] Mm.
+[046:18] Yes, this could work.
+[046:22] There is a representation indeed doing something similar to what you are saying, but actually the one there are at least three representations.
+[046:32] One is closer to yours in the sense that yes, you have to use bits and you can represent any tree.
+[046:43] Indeed, as you see in this case, you can represent any train, it doesn't m matter to be binary or not.
+[046:49] But uh essentially yes, for every node you say uh do I have uh r left or right or better. How many children do I have?
+[047:02] Possibilities are zero, one or or or two.
+[047:06] You code this, then you go down and code everything. We come back to this later.
+[047:15] six o'clock roughly. We stay here and we discuss about binary trees and trees in general. So let me tell the possible possible eight possible representation. Then there is another one that we can discuss next actually.
+[047:32] Okay, the representation is like this. So you start visiting the three.
+[047:39] Ina
+[047:41] Uh
+[047:44] Pare order.
+[047:48] In order that actually
+[047:50] Say, but we visited the tree. So we start from the root.
+[047:56] And every time we enter an order, we emit a open parenthesis.
+[048:06] 'Kay.
+[048:08] So it's actually
+[048:09] Pre-order and post-order because we have something to do and also when we left.
+[048:15] So enit en oper parenthesis. So
+[048:20] Open.
+[048:23] Now we go left.
+[048:26] New node.
+[048:28] Open parentheses.
+[048:31] Okay, so
+[048:33] Open, open.
+[048:36] Open, open.
+[048:39] This is one, two, three, and four at this one open as well.
+[048:44] Okay.
+[048:47] Now, try to go left, there is nothing. Try to go right, there is nothing. Close the parentheses because we are lining the result of that note. Close.
+[048:57] Then so close, close.
+[049:02] Then open
+[049:05] Open and close.
+[049:08] Close.
+[049:11] Open.
+[049:13] Open.
+[049:15] Close.
+[049:17] Close.
+[049:18] Close.
+[049:21] This is the representation of the tree.
+[049:23] and takes uh uh okay open and close uh actually zero and one so
+[049:29] How many bits?
+[049:32] Well, two bits per node, because every time you enter a node
+[049:36] every time we cl we close the door.
+[049:42] Okay, can we come back to the original three?
+[049:46] And the answer is yes.
+[049:48] Because uh now
+[049:51] Let's uh
+[049:53] Uh let's uh
+[049:56] Start from the
+[049:59] uh the first open parenthesis, which means uh
+[050:04] Which means uh
+[050:07] Open
+[050:09] Right.
+[050:11] Then it's not close, means that there is a children. Uh there is a child.
+[050:17] There is a child uh an older.
+[050:22] Open means uh
+[050:24] We have to continue going down.
+[050:27] No duh?
+[050:30] Then open means there is a child.
+[050:34] Then close.
+[050:36] I'm okay, I'm here, okay?
+[050:39] Uh close, which means uh come back. When closed you go up. Then close you ga go up once again. Open means there is another child.
+[050:54] Close means that uh this child is a leaf.
+[050:59] and come back.
+[051:01] Close come back to the root.
+[051:04] Open, child of the root. Open, child of the child of the root.
+[051:11] Notice that now we are missing left and right.
+[051:17] Okay, we don't know if it is left or right.
+[051:20] Do you see? So this is an or unordered tree. There is no first uh s left and right, there is no numbering on the notes.
+[051:31] Okay.
+[051:33] Do you see uh now that uh that uh
+[051:36] Uh
+[051:38] This one is the second children of the root.
+[051:42] And there are two.
+[051:44] But the child of this one this
+[051:47] I don't know if it is left or right. I d I know that it's just a child. If there are two I know it's left. But if there is just one, I don't know if it is left or right.
+[052:01] I put here this here because uh it's uh
+[052:07] I assume it's left, but uh just an assumption. I don't know exactly from the left description.
+[052:13] If I want to say left or right, I have to add the extra bits.
+[052:20] Uh yeah, yeah, we had
+[052:22] And uh
+[052:25] Then
+[052:27] Uh I'm uh here because of this, then close, close, and I reach the road.
+[052:39] Yes, yes, you can always remove the last lines. But uh in the worst case you are not uh gaining uh
+[052:48] Okay, this is uh also the best you can hope for. If you count how many trees of n nodes are there, it's uh
+[052:59] It's uh
+[053:01] Almost uh uh to n squared. Um
+[053:08] No, it's a logarithm of uh two N bits.
+[053:14] Yeah, something like a twen or something like this.
+[053:17] And uh so no sorry two to the to the two M. These are the many the number of uh nodes uh the number of trees with uh n nodes. Okay, indeed the logarithm of this uh is two l.
+[053:35] This is just to say that's optimal.
+[053:48] It's a three. Exactly.
+[053:50] But it has to be balanced, like it's just to it has to be balanced. And so there are
+[053:57] Yes, but uh the fact that they are balanced uh is not uh improving the bound too much.
+[054:05] Yeah. There is a strict turkina tolerant.
+[054:07] Yes.
+[054:09] Yes, good point. So any sequence of parentheses of sites n we have this many this many sequences. But uh the ones that identify a three are only the one that are balanced.
+[054:27] But the fact that our balance is reducing this number, which indeed is less than this, but not enough to make the logarithm of that number interesting from my compression point of view. I think it's something like two the lower bound is something like two n minus log n or something like this. It's uh
+[054:57] Yeah, probably something like this, but uh not worth uh to be considered from from a compression point of view. So essentially asymptotically it's better the best you can.
+[055:07] The interesting part that I now conclude is the fact that with this banana bi uh
+[055:16] binary representation of the tree.
+[055:20] you can still navigate in trick.
+[055:24] Of course, you can start from the root and you obtain the wood.
+[055:30] But there are succeeded instructions.
+[055:33] Essentially, that support on a binary vector, rank and select, which can be done, which can be implemented.
+[055:42] uh on top of the of the three.
+[055:45] and with other tricks allows you stool
+[055:49] uh navi really navigate the three without the compressing.
+[055:55] What does it mean? It means that you can uh give me the id of any order.
+[056:00] like this one, and I can tell you what's uh what are the children of the node, what's the parent of the node,
+[056:08] What's the size of the subtree?
+[056:11] And so.
+[056:13] all the opera most of the operations that you can do on it.
+[056:18] And also very sophisticated operation. Like given two notes, what was the l lowest common ancestor of the two.
+[056:30] Edging can be done in constant time.
+[056:33] Some of these operations are practical, some are not.
+[056:37] There are other representations. One of them was the one you were mentioning.
+[056:44] in which uh you spend uh two M bits
+[056:47] Well
+[056:48] But uh you represent, for example, the tree level by level.
+[056:53] Here you say, Okay, how many shiny drinks do do I have?
+[056:59] You represent this in unary.
+[057:02] Information retrieval, you know what unit is. If you're not
+[057:11] Okay? So Unary says two with two bits, zero, one.
+[057:19] I have to attend information legal courts.
+[057:23] Uh so D Da Do one.
+[057:26] 'Kay.
+[057:27] And this you usually say for all the nodes.
+[057:30] Knowing the degree
+[057:33] And the fact that you are going level by level
+[057:36] you are able to reconstruct the tree because now you you know it's the root.
+[057:41] Throw the loop.
+[057:43] How many should there? Two.
+[057:46] pots for the two children.
+[057:49] The next representation will be the degree of the first children.
+[057:54] first child. The second is going to be the degree of the second child.
+[058:00] Then you know that there are no more nodes at that level. You go one level down.
+[058:06] And so.
+[058:09] Uh how many beasts do we need?
+[058:13] In this degree based the representation.
+[058:19] While you think about this, I ski and st start

@@ -11,9 +11,11 @@
 //! board's "golden rule" — every node stores the answer of the query for its range — with the three
 //! cases of L13 (no / total / partial overlap) for queries. `occs` implements the 2025 notes' solution
 //! of #occs, NOT yet given in class (2026).
-//! Layout of every tree: node 1 = root, children 2k and 2k+1, array of 4n nodes, positions 0-based.
+//! `prof_blog`: the prof's code from his 2026 notes (blog "Segment Tree", 14/11/2026), copied verbatim, with tests.
+//! Layout of every tree (mine): node 1 = root, children 2k and 2k+1, array of 4n nodes, positions 0-based.
 
 pub mod occs;
+pub mod prof_blog;
 pub mod range_sum;
 pub mod rmq;
 pub mod rmq_occ;

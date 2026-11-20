@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Head -->
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <!-- Metadata, OpenGraph and Schema.org -->
+
+  <!-- Website verification -->
+  
+    <meta name="google-site-verification" content="E0vDQCYLRDz-hSNBg2blH7KJpNUSxElnYzNlfGC_xjo">
+  
+  
+    <meta name="msvalidate.01" content="AB84189524C3D3ACAE3EA77DC5F97F11">
+  
+  <!--
+    Avoid warning on Google Chrome Error with Permissions-Policy header:
+    Origin trial controlled feature not enabled: 'interest-cohort'.
+    see https://stackoverflow.com/a/75119417
+  -->
+  <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
+
+
+
+
+<!-- Standard metadata -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>
+  
+  
+    
+      Tiny but Mighty: Super-Short, Super-Clever Algorithms | Rossano Venturini
+    
+  
+</title>
+<meta name="author" content="Rossano Venturini">
+<meta name="description" content="Six small problems with surprising solutions. The riddle of the 100 prisoners, a duplicate found in constant space, Floyd's cycle finding, the majority element, the Misra-Gries heavy hitters, and dominoes on a chessboard. Each one is followed on a running example, with proofs, complexities and Rust code.">
+
+  <meta name="keywords" content="algorithm, data-structures, rust, efficiency">
+
+
+
+
+
+
+
+
+
+
+<!-- Security: Content Security Policy -->
+<!-- Permissive CSP suitable for academic websites. Allows external images, videos, and common embed services. -->
+<!-- To customize for your needs, see: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;">
+<style>
+  :root {
+    --max-content-width: 1200px;
+  }
+</style>
+
+<!-- Tailwind-first core styles -->
+<link rel="stylesheet" href="/rossano/assets/css/tailwind.css?50c64c15cbb9fd1ce6056fdb8bcb4b62">
+
+
+  <!-- Optional Bootstrap compatibility layer -->
+  <link rel="stylesheet" href="/rossano/assets/css/bootstrap-compat.css?aa8aa1241f76708eaa8c8fad88fe7955">
+
+
+
+
+
+
+<!-- Icons -->
+
+  
+<!-- Font Awesome -->
+<link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous">
+
+<!-- Academicons -->
+<link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous">
+
+<!-- Scholar Icons -->
+<link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous">
+
+
+
+<link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,500,600|IBM+Plex+Mono:400,500,600|Material+Icons&amp;display=swap">
+
+<!-- Code Syntax Highlighting -->
+<link defer rel="stylesheet" href="/rossano/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light">
+
+<!-- Styles -->
+
+
+
+
+  <link rel="shortcut icon" href="/rossano/assets/img/favicon.png?b452557977d37aff0c6ba8be4df8c272">
+
+<link rel="stylesheet" href="/rossano/assets/css/main.css?f0b101217084a90093badfe99ff9a7d1">
+
+<link rel="canonical" href="https://pages.di.unipi.it/rossano/blog/2026/pearls/">
+
+
+  <!-- Dark Mode -->
+  <script src="/rossano/assets/js/theme.js?7af685e2ba20b37fef545c97b8064050"></script>
+  <link defer rel="stylesheet" href="/rossano/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark">
+  <script>
+    initTheme();
+  </script>
+
+
+
+
+
+
+
+  <!-- Image Features -->
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  </head>
+
+  <!-- Body -->
+  <body class="fixed-top-nav sticky-bottom-footer">
+    <!-- Header -->
+    <header>
+  <!-- Nav Bar -->
+  <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation">
+    <div class="container">
+      
+        <a class="navbar-brand title font-weight-lighter" href="/rossano/">
+          Rossano Venturini
+        </a>
+      
+      <!-- Navbar Toggle -->
+      <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar top-bar"></span>
+        <span class="icon-bar middle-bar"></span>
+        <span class="icon-bar bottom-bar"></span>
+      </button>
+
+      <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav">
+        <ul class="navbar-nav navbar-menu-list flex-nowrap">
+          
+
+          <!-- About -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/rossano/">About
+              
+            </a>
+          </li>
+
+          <!-- Other pages -->
+          
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+              
+                
+                <li class="nav-item active">
+                  <a class="nav-link" href="/rossano/blog/">Blog
+                    
+                      <span class="sr-only">(current)</span>
+                    
+                  </a>
+                </li>
+              
+            
+          
+            
+              
+                
+                <li class="nav-item ">
+                  <a class="nav-link" href="/rossano/publications/">Publications
+                    
+                  </a>
+                </li>
+              
+            
+          
+            
+              
+                
+                
+                <li class="nav-item dropdown ">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-nav-dropdown-toggle="true" aria-haspopup="true" aria-expanded="false">Teaching
+                    
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    
+                      
+                        <a class="dropdown-item " href="/rossano/competitive/">Competitive Programming and Contests</a>
+                      
+                    
+                      
+                        <div class="dropdown-divider"></div>
+                      
+                    
+                      
+                        <a class="dropdown-item " href="/rossano/courses/">Teaching activity</a>
+                      
+                    
+                  </div>
+                </li>
+              
+            
+          
+          
+            <!-- Search -->
+            <li class="nav-item">
+              <button id="search-toggle" type="button" title="Search" aria-label="Open search">
+                <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span>
+              </button>
+            </li>
+          
+          
+            <!-- Toogle theme mode -->
+            <li class="toggle-container">
+              <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme">
+                <i class="fa-half-sun-moon" id="light-toggle-system"></i>
+                <i class="fa-solid fa-moon" id="light-toggle-dark"></i>
+                <i class="fa-solid fa-sun" id="light-toggle-light"></i>
+              </button>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+    <!-- Scrolling Progress Bar -->
+    <progress id="progress" value="0">
+      <div class="progress-container">
+        <span class="progress-bar"></span>
+      </div>
+    </progress>
+  
+</header>
+
+
+    <!-- Content -->
+    <div class="container mt-5" role="main">
+      
+        
+
+
+
+
+
+
+<div class="post">
+  <header class="post-header">
+    <h1 class="post-title">Tiny but Mighty: Super-Short, Super-Clever Algorithms</h1>
+    <p class="post-meta">
+      Created on November 14, 2026
+      
+      
+      
+      
+    </p>
+    <p class="post-tags">
+      
+        <a href="/rossano/blog/2026"> <i class="fa-solid fa-calendar fa-sm"></i> 2026 </a>
+      
+      
+          ·  
+        
+          
+            <a href="/rossano/blog/tag/rust"> <i class="fa-solid fa-hashtag fa-sm"></i> rust</a>
+          
+          
+             
+          
+        
+          
+            <a href="/rossano/blog/tag/algorithms"> <i class="fa-solid fa-hashtag fa-sm"></i> algorithms</a>
+          
+          
+        
+      
+
+      
+          ·  
+        
+          
+            <a href="/rossano/blog/category/notes"> <i class="fa-solid fa-tag fa-sm"></i> notes</a>
+          
+          
+        
+      
+    </p>
+  </header>
+
+  <article class="post-content">
+    
+    <div id="markdown-content">
+      <style>
+/* Figures 30% larger than drawn, except the two chessboard figures, but never wider than the text
+   column: a % max-width is not scaled by zoom. */
+.post article figure img[src*="/pearls/"]:not([src*="chess"]),
+.post article img.note-fig[src*="/pearls/"] {
+  zoom: 1.3; display: block; margin-left: auto; margin-right: auto; max-width: 100%;
+}
+</style>
+
+<p>These notes collect a few <em>pearls</em>: problems with a short statement and a solution that looks like magic the first time you see it. They have something in common. In several of them we look at an array of numbers as a set of arrows, from every position to the value stored there. Cycles in this picture save 100 imprisoned scientists, reveal a duplicated number, and are found by two pointers running at different speeds. The last problems are about counting: we find the element that occurs in more than half of an array, and then the elements that occur often, in constant space or almost.</p>
+
+<h4 id="the-100-prisoners-problem">The 100 Prisoners Problem</h4>
+
+<div class="problem">
+
+  <p><strong>The 100 Prisoners Problem</strong></p>
+
+  <p><em>The director of a prison offers a last chance of freedom to \(100\) scientists held there. He assigns to each scientist a distinct number in \(\{1, \ldots, 100\}.\)</em></p>
+
+  <p><em>In a room there is a cabinet with \(100\) drawers. The director puts the numbers \(1, \ldots, 100\) in the drawers in random order, one number per drawer, every arrangement being equally likely.</em></p>
+
+  <p><em>One at a time, each scientist enters the room alone and can open up to \(50\) drawers. He wins if he finds his own number. Then the drawers are closed again and the room is left as it was.</em></p>
+
+  <p><em>The scientists are freed only if all of them win. They cannot communicate once the game starts, but they may agree on a strategy before.</em></p>
+
+</div>
+
+<h5 id="a-trivial-strategy">A trivial strategy</h5>
+<p>Each scientist opens \(50\) drawers chosen uniformly at random. A scientist wins with probability \(50/100 = 1/2.\) The scientists choose independently, so</p>
+
+\[P(\text{all win}) = \frac{1}{2^{100}} \approx 7.9 \cdot 10^{-31},\]
+
+<p>that is, \(30\) zeros after the decimal point before the first nonzero digit. Hopeless. Yet there is a strategy with which they all win with probability about \(0.3118.\) Before reading on, think about how this could be possible: every single scientist still opens only half of the drawers.</p>
+
+<h5 id="the-cycle-strategy">The cycle strategy</h5>
+<p>Two observations lead to the strategy.</p>
+
+<p>First, a scientist does not need to choose his \(50\) drawers beforehand. He can use an <em>adaptive</em> strategy: the next drawer to open may depend on the numbers found so far.</p>
+
+<p>Second, not only the scientists are numbered: the drawers can be numbered too, for example row-wise from left to right. So a number found in a drawer can be read as the name of another drawer.</p>
+
+<p>The strategy is as follows.</p>
+
+<ul>
+  <li>Scientist \(i\) opens drawer \(i,\) and finds a number \(d_i.\)</li>
+  <li>If \(d_i = i,\) he wins.</li>
+  <li>Otherwise, he opens drawer \(d_i,\) and continues in the same way, until he finds \(i\) or he has opened \(50\) drawers.</li>
+</ul>
+
+<p>Let us follow it on a smaller instance, which we use as the running example of this section: \(8\) scientists, \(8\) drawers, and each scientist may open up to \(4\) drawers, that is, half of them. The drawers \(1, 2, \ldots, 8\) contain the numbers \([7, 4, 6, 8, 2, 3, 5, 1],\) as in the figure below. An arrow goes from drawer \(d\) to the drawer whose number is inside \(d.\)</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/pearls/pr_drawers.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>Scientist \(1\) opens drawer \(1\) and finds \(7,\) then drawer \(7\) and finds \(5,\) and so on: he visits \(1 \to 7 \to 5 \to 2 \to 4 \to 8 \to 1.\) He finds his number in drawer \(8,\) but only at the \(6\)th drawer he opens, too late: he may open only \(4.\)</p>
+
+<p><strong>Observation.</strong> If we do not stop him after \(50\) drawers (here, \(4\)), the scientist is <em>guaranteed</em> to find his number.</p>
+
+<p>Why? Every drawer contains a different number, so every drawer is pointed to by exactly one arrow. Follow the arrows from drawer \(i.\) There are finitely many drawers, so sooner or later the scientist opens some drawer for the second time; let \(j\) be the <em>first</em> drawer that he opens twice. Suppose \(j \neq i.\) Then \(j\) is not the starting drawer, so both times it was reached through an arrow: from the drawer opened just before \(j\) the first time, and from the drawer opened just before \(j\) the second time. These two drawers are different, because no drawer had been opened twice before the second visit of \(j.\) So two different drawers contain the same number \(j,\) which is not possible. The figure below shows the shape that cannot exist.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/pearls/pr_rho.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>So the first drawer opened twice is drawer \(i\) itself, and the drawer opened just before it contains \(i.\) In other words, the drawers split into <em>cycles</em>: the arrows of a permutation always form disjoint cycles. Scientist \(i\) walks along the cycle of drawer \(i,\) and he finds his number at the last drawer of that cycle. He wins if and only if the length of his cycle is at most \(50.\)</p>
+
+<p>In our example the cycles are \((1, 7, 5, 2, 4, 8),\) of length \(6,\) and \((3, 6),\) of length \(2.\)</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/pearls/pr_cycles.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>Scientists \(3, 6\) win, and scientists \(1, 2, 4, 5, 7, 8\) lose. This is the key of the strategy: the scientists do not fail independently. If a cycle is longer than \(50,\) <em>every</em> scientist on that cycle fails; if no cycle is longer than \(50,\) <em>every</em> scientist wins. Thus</p>
+
+\[P(\text{all win}) = P(\text{a random permutation of } 100 \text{ elements has no cycle longer than } 50).\]
+
+<h5 id="counting-the-permutations-with-a-long-cycle">Counting the permutations with a long cycle</h5>
+<p>Let us count the permutations of \(100\) elements with a cycle of length \(\ell &gt; 50.\) Two cycles longer than \(50\) would need more than \(100\) elements, so such a permutation has <em>only one</em> long cycle. We can build it in three steps.</p>
+
+<ul>
+  <li>Choose the set \(S\) of the \(\ell\) elements of the cycle: \(\binom{100}{\ell}\) ways.</li>
+  <li>Arrange the elements of \(S\) in a cycle: \((\ell-1)!\) ways. Indeed, there are \(\ell!\) ways to list the elements of \(S\) in a sequence and to close the sequence into a cycle, but the \(\ell\) rotations of a sequence give the same cycle. The figure shows the \(4\) rotations of the cycle on \(S = \{1, 5, 10, 33\}.\)</li>
+  <li>Arrange the other \(100 - \ell\) elements as we like: \((100-\ell)!\) ways.</li>
+</ul>
+
+<p>Since the long cycle is unique, every permutation with a cycle of length \(\ell\) is built exactly once. (For \(\ell \leq 50\) this would not be true: a permutation with two cycles of length \(\ell\) would be built twice.)</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/pearls/pr_rotations.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>The number of permutations with a cycle of length \(\ell &gt; 50\) is</p>
+
+\[\binom{100}{\ell} \cdot (\ell-1)! \cdot (100-\ell)! = \frac{100!}{\ell!\,(100-\ell)!} \cdot (\ell-1)! \cdot (100-\ell)! = \frac{100!}{\ell}.\]
+
+<p>Since a permutation has at most one cycle longer than \(50,\) the events “there is a cycle of length \(\ell\)”, for \(\ell = 51, \ldots, 100,\) are disjoint, and we can sum. The number of permutations with a cycle longer than \(50\) is</p>
+
+\[\sum_{\ell=51}^{100} \frac{100!}{\ell} = 100! \left(\frac{1}{51} + \frac{1}{52} + \cdots + \frac{1}{100}\right) = 100! \, (H_{100} - H_{50}),\]
+
+<p>where \(H_n = 1 + 1/2 + \cdots + 1/n\) is the \(n\)th <em>harmonic number</em>. We divide by the \(100!\) permutations and get</p>
+
+\[P(\text{all win}) = 1 - (H_{100} - H_{50}) \approx 1 - 0.6882 = 0.3118.\]
+
+<p>The same count works for our running example, with \(8\) scientists and \(4\) drawers each. The permutations with a cycle longer than \(4\) are \(8064 + 6720 + 5760 + 5040 = 25584\) out of \(8! = 40320,\) so the scientists win with probability \(14736/40320 \approx 0.3655.\)</p>
+
+<p>Two remarks help to understand why the strategy works so well.</p>
+
+<ul>
+  <li>Each single scientist still wins with probability exactly \(1/2\) (for \(n\) even). The cycle containing a given element \(x\) has length \(\ell\) with probability \(1/n,\) for every \(\ell = 1, \ldots, n.\) Let us count as before, with \(x\) fixed in the cycle: we choose the other \(\ell - 1\) elements of the cycle, \(\binom{n-1}{\ell-1}\) ways, and the order in which they follow \(x\) along the cycle, \((\ell-1)!\) ways (no rotations to divide by, because we read the cycle starting from \(x\)), and we arrange the rest, \((n-\ell)!\) ways. In total \(\binom{n-1}{\ell-1}(\ell-1)!\,(n-\ell)! = (n-1)!\) permutations out of \(n!,\) a fraction \(1/n,\) whatever \(\ell\) is. So the length is at most \(n/2\) with probability \(1/2.\) The strategy does not make a scientist luckier; it makes the scientists win or lose <em>together</em>.</li>
+  <li>For \(2k\) scientists, each opening \(k\) drawers, the probability is \(1 - (H_{2k} - H_k).\) From \(k\) to \(k+1,\) \(H_{2k} - H_k\) grows by \(\frac{1}{2k+1} - \frac{1}{2k+2} &gt; 0,\) and it tends to \(\ln 2.\) So the probability decreases towards \(1 - \ln 2 \approx 0.3069\) and never drops below it, however many scientists there are.</li>
+</ul>
+
+<h4 id="finding-a-duplicate-in-an-array">Finding a Duplicate in an Array</h4>
+
+<div class="problem">
+
+  <p><strong>Finding a Duplicate</strong></p>
+
+  <p><em>We are given an array \(A[0, n]\) of \(n+1\) numbers in \(\{0, \ldots, n-1\}.\) By the pigeonhole principle, at least one element is duplicated. Find one duplicate \(e.\)</em></p>
+
+</div>
+
+<p>Here positions start from \(0,\) as in the code. Our running example is</p>
+
+\[A = [1, 3, 5, 6, 5, 2, 0, 4, 7],\]
+
+<p>with \(n = 8\) and duplicate \(e = 5.\)</p>
+
+<h5 id="two-easy-solutions">Two easy solutions</h5>
+<p><em>Solution 1.</em> Use a hash set \(H.\) Scan \(A\) from left to right and stop when the current element is already in \(H;\) otherwise insert it.</p>
+
+<p><em>Solution 2.</em> The values are in \(\{0, \ldots, n-1\},\) so a hash set is not needed: a <em>direct access table</em> \(B[0, n-1]\) of bits does the job. \(B[k] = 1\) means that we have already seen value \(k.\)</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">/// `a` has n+1 entries in {0, ..., n-1}. Direct access table: Θ(n) time, Θ(n) extra space.</span>
+<span class="cd">/// Requires n &gt;= 1 and every value in 0..n.</span>
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">duplicate_table</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">usize</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">usize</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="n">a</span><span class="nf">.len</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="nd">debug_assert!</span><span class="p">(</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">a</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.all</span><span class="p">(|</span><span class="o">&amp;</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">));</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">seen</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="kc">false</span><span class="p">;</span> <span class="n">n</span><span class="p">];</span>
+    <span class="k">for</span> <span class="o">&amp;</span><span class="n">x</span> <span class="k">in</span> <span class="n">a</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">seen</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">seen</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nd">unreachable!</span><span class="p">(</span><span class="s">"by the pigeonhole principle there is a duplicate"</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Both take \(O(n)\) time, \(\Theta(n)\) in the worst case (expected time for the hash set), but \(\Theta(n)\) extra space.</p>
+
+<p>Can we use only <em>constant</em> extra space? It seems impossible, because we believe we need to keep track of the elements we have seen so far.</p>
+
+<h5 id="thetalog-n-passes-over-a">\(\Theta(\log n)\) passes over \(A\)</h5>
+<p>We do not need to remember the elements. We can <em>reconstruct</em> \(e\) bit by bit, with \(\Theta(\log n)\) passes over \(A,\) each one reading \(A\) from left to right.</p>
+
+<p>Write the numbers in binary with the same number of bits, \(3\) in our example (with leading zeros), and look at the first, most significant, bit. The numbers whose first bit is \(0\) are \(0, 1, 2, 3:\) only \(4\) distinct values. If \(A\) contained more than \(4\) elements starting with bit \(0,\) by the pigeonhole principle one of them would be duplicated. The same holds for the \(4\) values starting with bit \(1.\) The \(9\) elements of \(A\) cannot fit in both halves without exceeding one of them.</p>
+
+<p>So in the first pass we count the elements whose first bit is \(0\) and those whose first bit is \(1:\) they are \(4\) and \(5.\) The second half holds \(5\) elements but only \(4\) values: a duplicate starts with \(1.\) In the second pass we look only at the numbers starting with \(1:\) \(3\) of them continue with \(0\) (values \(4, 5\)) and \(2\) with \(1\) (values \(6, 7\)). There are \(3\) elements for \(2\) values, so the second bit of a duplicate is \(0.\) In the third pass, among the numbers starting with \(10,\) \(1\) continues with \(0\) (value \(4\)) and \(2\) with \(1\) (value \(5\)): the duplicate is \(101_2 = 5.\) The figure shows the three passes; the elements outside the current range are grey, and the bit chosen at each pass is red.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/pearls/dup_passes.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>When \(n\) is not a power of \(2,\) the halves defined by the bits may contain values larger than \(n-1.\) It is simpler to describe the same algorithm as a binary search over the range of values. We keep a range \([lo, hi]\) of values with the invariant</p>
+
+<p><em>the number of elements of \(A\) in \([lo, hi]\) is larger than \(hi - lo + 1.\)</em></p>
+
+<p>At the beginning \([lo, hi] = [0, n-1],\) which holds all the \(n+1\) elements and \(n\) values. At every pass we split the range at \(mid = \lfloor (lo+hi)/2 \rfloor\) and count the elements in \([lo, mid].\) If they are more than \(mid - lo + 1,\) we continue on \([lo, mid].\) Otherwise the elements in \([mid+1, hi]\) are more than</p>
+
+\[\begin{aligned} &amp;(hi - lo + 1) - (mid - lo + 1) \\ &amp;\quad = hi - mid, \end{aligned}\]
+
+<p>the number of values in \([mid+1, hi],\) and we continue there. The invariant is preserved, and when the range contains a single value, that value occurs at least twice. When \(n\) is a power of \(2,\) this is exactly the bit-by-bit algorithm.</p>
+
+<p>Notice the rule: we compare the number of elements in a half with the number of <em>values</em> that half contains, not with the number of elements in the other half. When the two halves contain the same number of values, as when \(n\) is a power of \(2,\) the two rules agree: the half with more elements is the one that exceeds. When the halves are unbalanced, they do not. For instance, with \(n = 5\) and \(A = [0, 1, 2, 3, 4, 4],\) the values are in \([0, 4]:\) the first half \([0, 2]\) holds \(3\) elements for \(3\) values, and the second half \([3, 4]\) holds \(3\) elements for only \(2\) values, so we continue on \([3, 4];\) there, \([3, 3]\) holds \(1\) element and \([4, 4]\) holds \(2\) elements for a single value. In this last pass the half with more elements is also the one that exceeds, but in the first pass the two halves have the same number of elements and only the values tell them apart.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">/// Θ(log n) read-only, left-to-right passes over `a`; O(1) extra space.</span>
+<span class="cd">/// Invariant: more than hi - lo + 1 entries of `a` lie in [lo, hi],</span>
+<span class="cd">/// so [lo, hi] contains a duplicate.</span>
+<span class="cd">/// Requires n &gt;= 1 and every value in 0..n.</span>
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">duplicate_passes</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">usize</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">usize</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="n">a</span><span class="nf">.len</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="nd">debug_assert!</span><span class="p">(</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">a</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.all</span><span class="p">(|</span><span class="o">&amp;</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">));</span>
+    <span class="k">let</span> <span class="p">(</span><span class="k">mut</span> <span class="n">lo</span><span class="p">,</span> <span class="k">mut</span> <span class="n">hi</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">while</span> <span class="n">lo</span> <span class="o">&lt;</span> <span class="n">hi</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">lo</span> <span class="o">+</span> <span class="p">(</span><span class="n">hi</span> <span class="o">-</span> <span class="n">lo</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="k">let</span> <span class="n">count</span> <span class="o">=</span> <span class="n">a</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.filter</span><span class="p">(|</span><span class="o">&amp;&amp;</span><span class="n">x</span><span class="p">|</span> <span class="n">lo</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&amp;&amp;</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">mid</span><span class="p">)</span><span class="nf">.count</span><span class="p">();</span>
+        <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="n">mid</span> <span class="o">-</span> <span class="n">lo</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">{</span>
+            <span class="n">hi</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span> <span class="c1">// too many entries for the values in [lo, mid]</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">lo</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// then [mid + 1, hi] has too many</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">lo</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The range halves at every pass, so we do \(\lceil \log_2 n \rceil\) passes of \(\Theta(n)\) time each: \(\Theta(n \log n)\) time and \(O(1)\) extra space. The algorithm only reads \(A\) sequentially, from left to right, and it never writes. This makes it the solution of choice in constant space when we have <strong>no random access</strong> to \(A,\) for example when \(A\) is a stream that we can read again and again.</p>
+
+<h5 id="does-random-access-help">Does random access help?</h5>
+<p>Let us look at \(A\) as a set of arrows: from every position \(i\) to position \(A[i].\) Every position has exactly one outgoing arrow. A value \(v\) is duplicated exactly when position \(v\) has two (or more) incoming arrows. The figure shows the arrows of our example.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/pearls/dup_graph.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>Position \(n\) is special: no element of \(A\) has value \(n,\) so no arrow enters it. Let us start from position \(n\) and follow the arrows. As in the prisoners problem, sooner or later we reach a position for the second time. This time it cannot be the starting position, because nothing points to \(n.\) So the first position reached twice has two different incoming arrows: it is a duplicate. This is precisely the shape that could not exist for the scientists.</p>
+
+<p>If we may <em>destroy</em> \(A,\) we can mark the positions we have visited without extra space. When we leave position \(j,\) we write \(j\) into \(A[j].\) When we arrive at a position \(v\) with \(A[v] = v,\) we stop and return \(v.\) Why is \(v\) a duplicate?</p>
+
+<ul>
+  <li>If we had already visited \(v,\) then we entered \(v\) twice from two different positions, which both contained \(v.\)</li>
+  <li>Otherwise \(A[v] = v\) held from the beginning. Since we arrived at \(v\) from another position that contained \(v,\) again \(v\) occurs twice.</li>
+</ul>
+
+<p>On our example we start at position \(8\) and visit \(8 \to 7 \to 4 \to 5 \to 2 \to 5.\) When we come back to position \(5\) we find \(A[5] = 5,\) written when we left it, and we return \(e = 5.\) The numbers on the arcs are the order of the steps; the second row is \(A\) at the end.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/pearls/dup_destroy.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">/// Θ(n) time, O(1) extra space, but `a` is destroyed.</span>
+<span class="cd">/// We follow the arrows i -&gt; a[i] from position n, which no arrow enters.</span>
+<span class="cd">/// Leaving position j we write j into a[j]. If we arrive at a position v with</span>
+<span class="cd">/// a[v] == v, two different positions contain v, so v is a duplicate.</span>
+<span class="cd">/// Requires n &gt;= 1 and every value in 0..n.</span>
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">duplicate_destroy</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="p">[</span><span class="nb">usize</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">usize</span> <span class="p">{</span>
+    <span class="nd">debug_assert!</span><span class="p">(</span><span class="n">a</span><span class="nf">.len</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="o">&amp;&amp;</span> <span class="n">a</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.all</span><span class="p">(|</span><span class="o">&amp;</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">a</span><span class="nf">.len</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">j</span> <span class="o">=</span> <span class="n">a</span><span class="nf">.len</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// j = n</span>
+    <span class="k">loop</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="n">v</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+        <span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span> <span class="c1">// mark position j as visited</span>
+        <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">==</span> <span class="n">v</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">v</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We leave every position at most once, so this takes \(O(n)\) time (\(\Theta(n)\) in the worst case) and \(O(1)\) extra space, but it destroys \(A.\)</p>
+
+<p>Can we have both, \(\Theta(n)\) time and constant space, without writing into \(A\)? Look again at the walk from position \(n:\) a path, followed by a cycle. The duplicate is the position where the path enters the cycle. We need to <em>find the beginning of a cycle</em> in a read-only structure.</p>
+
+<h4 id="floyds-cycle-finding">Floyd’s Cycle Finding</h4>
+
+<div class="problem">
+
+  <p><strong>Beginning of a Cycle</strong></p>
+
+  <p><em>We are given a linked list that, after some nodes, enters a cycle. Find the beginning of the cycle in \(O(1)\) extra space. The list is read-only.</em></p>
+
+</div>
+
+<p>Let \(a\) be the number of nodes before the cycle (the length of the <em>tail</em>) and \(\ell\) the length of the cycle. In the list of the figure below, the nodes are numbered \(0, 1, \ldots, 10\) in the order of the list, \(a = 5\) and \(\ell = 6,\) and we must find node \(5.\) The red marks are explained below.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/pearls/floyd_rho.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>We use two pointers that start from the first node:</p>
+
+<ul>
+  <li>\(S,\) the <em>slow</em> pointer, moves just \(1\) step at a time;</li>
+  <li>\(F,\) the <em>fast</em> pointer, moves \(2\) steps at a time.</li>
+</ul>
+
+<p><em>Phase 1.</em> We move both pointers, at least once, until they are on the same node again. They meet in the cycle, which also certifies that a cycle exists. Indeed, \(F\) enters the cycle first and stays there. When \(S\) enters it too (if \(a \geq 1;\) the case \(a = 0\) is discussed below), \(F\) is at most \(\ell - 1\) nodes behind \(S\) along the cycle, and at every step it gets one node closer, so it reaches \(S\) within \(\ell - 1\) further steps, before \(S\) completes a loop.</p>
+
+<p><em>Phase 2.</em> We move \(F\) back to the first node and set its speed to \(1.\) We move both pointers until they meet again. Magic: they meet at the beginning of the cycle!</p>
+
+<p>The table shows the positions of the two pointers after each step on the list of the figure; the meeting points are in bold.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/pearls/tab_fl_floyd.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<h5 id="why-it-is-correct">Why it is correct</h5>
+<p>Suppose that, when they meet in Phase 1, \(S\) has moved by \(m\) steps. Then \(F\) has moved by \(2m\) steps. \(S\) has done \(a\) steps on the tail and \(b\) steps inside the cycle, so</p>
+
+\[m = a + b.\]
+
+<p>\(F\) is at the same node of the cycle. Inside the cycle it has done \(2m - a\) steps and \(S\) only \(b,\) and two walks along a cycle of length \(\ell\) from the same start end on the same node only if their lengths differ by a multiple of \(\ell.\) So \(F\) has done some full loops more, say \(k,\) and \(k \geq 1\) because \(2m - a &gt; b\) (as \(m \geq 1\)):</p>
+
+\[2m = a + b + k \cdot \ell.\]
+
+<p>Substituting the first equation into the second one, \(2a + 2b = a + b + k\ell,\) that is,</p>
+
+\[a = k\ell - b.\]
+
+<p>Now read this equation in Phase 2. \(F\) starts from the first node and, after \(a\) steps, it is at the beginning of the cycle. \(S\) starts from the meeting point, which is \(b\) steps after the beginning of the cycle, and after \(a = k\ell - b\) steps it is \(b + k\ell - b = k\ell\) steps after the beginning of the cycle, that is, at the beginning of the cycle again, after \(k\) full loops. So after exactly \(a\) steps they are on the same node, the beginning of the cycle. They cannot meet before, because before \(a\) steps \(F\) is still on the tail and \(S\) is in the cycle.</p>
+
+<p>In our list \(m = 6,\) \(a = 5,\) \(b = 1,\) \(\ell = 6\) and \(k = 1:\) indeed \(2 \cdot 6 = 5 + 1 + 1 \cdot 6\) and \(5 = 1 \cdot 6 - 1.\)</p>
+
+<p>As for the cost, we saw that \(S\) meets \(F\) before completing a loop of the cycle, so \(b &lt; \ell\) and Phase 1 takes \(m = a + b &lt; a + \ell\) steps; Phase 2 takes \(a\) steps. (If \(a = 0\) the pointers start inside the cycle together, and they meet again after exactly \(\ell\) steps, at the start: \(b = \ell,\) and Phase 2 takes no step.) The time is \(\Theta(a + \ell),\) linear in the number of nodes, and the extra space is two pointers.</p>
+
+<h5 id="back-to-the-duplicate">Back to the duplicate</h5>
+<p>The walk from position \(n\) of the previous section is a list: the next node of \(i\) is \(A[i],\) and we can compute it without writing anything. So we run Floyd’s algorithm from position \(n.\) The beginning of the cycle has two incoming arrows: one from the tail (the tail is not empty, because \(n\) is not on the cycle, as nothing points to \(n\)) and one from the cycle. So it is a duplicate.</p>
+
+<p>On our example, \(a = 3\) (positions \(8, 7, 4\)), \(\ell = 2\) (positions \(5, 2\)), the pointers meet at position \(2\) after \(m = 4\) steps, and Phase 2 ends at position \(5\) after \(3\) steps. Here \(b = 1\) and \(k = 2:\) \(F\) went around the short cycle twice.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/pearls/tab_dup_floyd.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">/// Floyd's cycle finding on the list x0, f(x0), f(f(x0)), ...</span>
+<span class="cd">/// Returns the first node of the cycle. O(1) extra space; f is only read.</span>
+<span class="k">pub</span> <span class="k">fn</span> <span class="n">floyd</span><span class="o">&lt;</span><span class="n">F</span><span class="p">:</span> <span class="nf">Fn</span><span class="p">(</span><span class="nb">usize</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">usize</span><span class="o">&gt;</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">F</span><span class="p">,</span> <span class="n">x0</span><span class="p">:</span> <span class="nb">usize</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">usize</span> <span class="p">{</span>
+    <span class="c1">// Phase 1: S moves one step at a time, F two steps. They meet in the cycle.</span>
+    <span class="k">let</span> <span class="p">(</span><span class="k">mut</span> <span class="n">slow</span><span class="p">,</span> <span class="k">mut</span> <span class="n">fast</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="nf">f</span><span class="p">(</span><span class="n">x0</span><span class="p">),</span> <span class="nf">f</span><span class="p">(</span><span class="nf">f</span><span class="p">(</span><span class="n">x0</span><span class="p">)));</span>
+    <span class="k">while</span> <span class="n">slow</span> <span class="o">!=</span> <span class="n">fast</span> <span class="p">{</span>
+        <span class="n">slow</span> <span class="o">=</span> <span class="nf">f</span><span class="p">(</span><span class="n">slow</span><span class="p">);</span>
+        <span class="n">fast</span> <span class="o">=</span> <span class="nf">f</span><span class="p">(</span><span class="nf">f</span><span class="p">(</span><span class="n">fast</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="c1">// Phase 2: F restarts from x0 at speed 1. They meet at the beginning of the cycle.</span>
+    <span class="n">fast</span> <span class="o">=</span> <span class="n">x0</span><span class="p">;</span>
+    <span class="k">while</span> <span class="n">slow</span> <span class="o">!=</span> <span class="n">fast</span> <span class="p">{</span>
+        <span class="n">slow</span> <span class="o">=</span> <span class="nf">f</span><span class="p">(</span><span class="n">slow</span><span class="p">);</span>
+        <span class="n">fast</span> <span class="o">=</span> <span class="nf">f</span><span class="p">(</span><span class="n">fast</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">slow</span>
+<span class="p">}</span>
+
+<span class="cd">/// Read-only duplicate: the cycle reached from position n starts at the duplicate.</span>
+<span class="cd">/// Requires n &gt;= 1 and every value in 0..n.</span>
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">duplicate_floyd</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">usize</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">usize</span> <span class="p">{</span>
+    <span class="nd">debug_assert!</span><span class="p">(</span><span class="n">a</span><span class="nf">.len</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="o">&amp;&amp;</span> <span class="n">a</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.all</span><span class="p">(|</span><span class="o">&amp;</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">a</span><span class="nf">.len</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="nf">floyd</span><span class="p">(|</span><span class="n">i</span><span class="p">|</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">a</span><span class="nf">.len</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This finds a duplicate in \(\Theta(n)\) time and \(O(1)\) extra space, without modifying \(A.\)</p>
+
+<h4 id="majority-element">Majority Element</h4>
+
+<div class="problem">
+
+  <p><strong>Majority Element</strong></p>
+
+  <p><em>We are given an array \(A[1, n].\) Find, if any, the element that occurs more than \(n/2\) times, that is, at least \(\lfloor n/2 \rfloor + 1\) times.</em></p>
+
+</div>
+
+<p>Such an element is called the <em>majority element</em>; there is at most one. Our running example is</p>
+
+\[A = [5, 3, 1, 1, 2, 3, 1, 1, 1],\]
+
+<p>where \(1\) occurs \(5\) times out of \(9,\) so it is the majority element.</p>
+
+<p>Two easy solutions:</p>
+
+<ul>
+  <li>
+<em>Sort</em> (a copy of) \(A;\) the majority element, if any, occupies the middle position. \(\Theta(n \log n)\) time and \(\Theta(n)\) space.</li>
+  <li>Count the occurrences of each element with a <em>HashMap</em>. \(\Theta(n)\) expected time and \(\Theta(n)\) space.</li>
+</ul>
+
+<p>Is \(\Theta(n)\) time and \(O(1)\) space possible?</p>
+
+<h5 id="boyer-moore-algorithm">Boyer-Moore algorithm</h5>
+<ul>
+  <li>Keep a candidate \(c\) and a counter. At the beginning \(c = A[1]\) and the counter is \(1.\)</li>
+  <li>Process the array from left to right. For each element \(A[i]:\)
+    <ul>
+      <li>if \(A[i] = c,\) increase the counter by \(1;\)</li>
+      <li>otherwise, decrease the counter by \(1,\) and if the counter becomes \(0,\) set \(c = A[i]\) and the counter to \(1.\)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>The figure shows the candidate and the counter after each element of our example.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/pearls/maj_trace.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>At the end \(c = 1,\) the majority element. Notice that the counter, \(3,\) is <em>not</em> the frequency of \(1,\) which is \(5.\)</p>
+
+<p><strong>Claim.</strong> If there is a majority element \(e,\) then at the end \(c = e.\)</p>
+
+<p>Why? Intuitively, we can use an occurrence of the majority element to “kill” another element: since \(e\) occurs more than all the other elements together, some occurrences of \(e\) survive. The algorithm does exactly this kind of killing: an element different from \(c\) kills one earlier occurrence of \(c\) that is still alive, and the two form a <em>pair of different values</em>. The elements still alive are the <em>leftover</em>; let \(L\) be their number. The following invariant holds after every step:</p>
+
+<p><em>the elements read so far can be split into pairs of different values plus \(L\) leftover elements, all equal to \(c,\) and the counter is \(L\) or \(L + 1.\)</em></p>
+
+<p>The counter is not always \(L\) because of our variant of the algorithm: when the counter would become \(0,\) the current element is taken as the new candidate with counter \(1,\) even if it has just been used in a pair. The figure shows the pairs formed on our example, and the counter and \(L\) after every element; keep it at hand while reading the cases below.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/pearls/maj_pairs.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>The invariant holds after the first element: no pairs, \(L = 1,\) leftover \(A[1] = c,\) counter \(1.\) Now suppose it holds before \(A[i].\)</p>
+
+<ul>
+  <li>\(A[i] = c:\) the new element joins the leftover. \(L\) and the counter both grow by \(1.\) This happens at elements 4, 8 and 9 of our example.</li>
+  <li>\(A[i] \neq c\) and counter \(\geq 2:\) then \(L \geq 1,\) because the counter is at most \(L + 1.\) \(A[i]\) forms a pair with a leftover element. \(L\) and the counter both decrease by \(1;\) the counter stays at least \(1,\) so \(c\) does not change. This happens at element 5.</li>
+  <li>\(A[i] \neq c,\) counter \(= 1\) and \(L = 1:\) \(A[i]\) forms a pair with the only leftover element, so now \(L = 0.\) The counter becomes \(0,\) so \(c = A[i]\) and the counter is \(1 = L + 1.\) This happens at elements 2 and 6 of our example.</li>
+  <li>\(A[i] \neq c,\) counter \(= 1\) and \(L = 0:\) there is nothing to pair with, so \(A[i]\) becomes the only leftover element, \(L = 1.\) The counter becomes \(0,\) so \(c = A[i]\) and the counter is \(1 = L.\) This happens at elements 3 and 7.</li>
+</ul>
+
+<p>In every case the leftover elements are all equal to the new \(c,\) and the counter is \(L\) or \(L + 1.\)</p>
+
+<p>Now, a pair contains two different values, so at most one occurrence of \(e.\) If all the occurrences of \(e\) were in pairs, each of them would be paired with a different element that is not \(e,\) and \(e\) would occur at most \(n/2\) times. So some occurrence of \(e\) is a leftover element, and all leftover elements are equal to \(c:\) thus \(c = e.\)</p>
+
+<p>If there is no majority element, \(c\) can be anything, even the rarest element: on \([1, 1, 2, 2, 3]\) the candidate ends as \(3\) (the values of \(c\) are \(1, 1, 1, 2, 3\) and those of the counter \(1, 2, 1, 1, 1\)). Therefore the problem says “if any”: a second pass counts the occurrences of \(c\) and checks that they are more than \(n/2.\) In total, \(\Theta(n)\) time and \(O(1)\) space.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">/// Boyer-Moore: if `a` has a majority element, it is the returned candidate.</span>
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">majority_candidate</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">u32</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">u32</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">first</span><span class="p">,</span> <span class="n">rest</span><span class="p">)</span> <span class="o">=</span> <span class="n">a</span><span class="nf">.split_first</span><span class="p">()</span><span class="o">?</span><span class="p">;</span>
+    <span class="k">let</span> <span class="p">(</span><span class="k">mut</span> <span class="n">c</span><span class="p">,</span> <span class="k">mut</span> <span class="n">counter</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">for</span> <span class="o">&amp;</span><span class="n">x</span> <span class="k">in</span> <span class="n">rest</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="n">c</span> <span class="p">{</span>
+            <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">counter</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="k">if</span> <span class="n">counter</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+                <span class="n">counter</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nf">Some</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="cd">/// The element occurring more than n/2 times, if any: a second pass checks the candidate.</span>
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">majority</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">u32</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">u32</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">c</span> <span class="o">=</span> <span class="nf">majority_candidate</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">freq</span> <span class="o">=</span> <span class="n">a</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.filter</span><span class="p">(|</span><span class="o">&amp;&amp;</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span> <span class="o">==</span> <span class="n">c</span><span class="p">)</span><span class="nf">.count</span><span class="p">();</span>
+    <span class="p">(</span><span class="n">freq</span> <span class="o">&gt;</span> <span class="n">a</span><span class="nf">.len</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="nf">.then_some</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h5 id="supporting-insertions-and-deletions">Supporting insertions and deletions</h5>
+<div class="problem">
+
+  <p><strong>Dynamic Majority Element</strong></p>
+
+  <p><em>We have a multiset \(M\) of numbers, initially empty, and we would like to support the following operations:</em></p>
+
+  <ul>
+    <li><em><code class="language-plaintext highlighter-rouge">insert(x)</code> inserts the number \(x\) into \(M;\)</em></li>
+    <li><em><code class="language-plaintext highlighter-rouge">delete(x)</code> deletes one occurrence of \(x\) from \(M;\)</em></li>
+    <li><em><code class="language-plaintext highlighter-rouge">majority()</code> returns the element of \(M\) that occurs more than \(\lvert M \rvert / 2\) times, if any.</em></li>
+  </ul>
+
+</div>
+
+<p>Boyer-Moore cannot delete. Its state is a single candidate and a counter, and when an element leaves we do not know which pairs it belonged to.</p>
+
+<p>A different idea works: look at the bits. If \(e\) is the majority element, then in every bit position the bit of \(e\) is the majority bit, because the occurrences of \(e\) alone are more than half of the elements. So we keep, for every bit position, how many elements have a \(0\) and how many have a \(1\) in that position. The majority element, if there is one, is the number whose bits are the majority bits.</p>
+
+<p>The left part of the figure shows our example, with \(3\) bits per element, the most significant bit first. The counts of zeros and ones give the bits \(0, 0, 1,\) that is, \(1.\) On the right we delete \(1\) five times and insert \(3:\) every operation changes one count per bit position. For each bit, the pair (zeros, ones) goes from \(A,\) to after the five deletions, to after the insertion, as follows: bit 2: \((8, 1) \to (3, 1) \to (4, 1);\) bit 1: \((6, 3) \to (1, 3) \to (1, 4);\) bit 0: \((1, 8) \to (1, 3) \to (1, 4).\) The new multiset is \([5, 3, 2, 3, 3],\) and the majority bits \(0, 1, 1\) give \(3,\) which indeed occurs \(3\) times out of \(5.\)</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/pearls/maj_bits.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>If \(u\) is the largest element, the numbers have \(\Theta(\log u)\) bits. Each insertion, deletion or query takes \(\Theta(\log u)\) time, and the space is \(\Theta(\log u)\) counters. In the code we keep only the number of ones and the size of the multiset: the number of zeros is their difference.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">/// A multiset of numbers in [0, 2^bits) with insertions and deletions.</span>
+<span class="cd">/// For every bit position b we count the elements whose bit b is 1;</span>
+<span class="cd">/// the zeros are len - ones[b]. Θ(log u) time per operation, Θ(log u) space.</span>
+<span class="k">pub</span> <span class="k">struct</span> <span class="n">BitMajority</span> <span class="p">{</span>
+    <span class="n">ones</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">usize</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">len</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">BitMajority</span> <span class="p">{</span>
+    <span class="cd">/// Numbers must be smaller than 2^bits, with bits &lt;= 32.</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">bits</span><span class="p">:</span> <span class="nb">usize</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="k">Self</span> <span class="p">{</span>
+        <span class="nd">assert!</span><span class="p">(</span><span class="n">bits</span> <span class="o">&lt;=</span> <span class="mi">32</span><span class="p">);</span>
+        <span class="n">BitMajority</span> <span class="p">{</span> <span class="n">ones</span><span class="p">:</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">0</span><span class="p">;</span> <span class="n">bits</span><span class="p">],</span> <span class="n">len</span><span class="p">:</span> <span class="mi">0</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">insert</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nd">debug_assert!</span><span class="p">(</span><span class="k">self</span><span class="py">.ones</span><span class="nf">.len</span><span class="p">()</span> <span class="o">==</span> <span class="mi">32</span> <span class="p">||</span> <span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="k">self</span><span class="py">.ones</span><span class="nf">.len</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="k">self</span><span class="py">.len</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">cnt</span><span class="p">)</span> <span class="k">in</span> <span class="k">self</span><span class="py">.ones</span><span class="nf">.iter_mut</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
+            <span class="o">*</span><span class="n">cnt</span> <span class="o">+=</span> <span class="p">((</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="k">as</span> <span class="nb">usize</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="cd">/// `x` must be in the multiset.</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">delete</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="py">.len</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">cnt</span><span class="p">)</span> <span class="k">in</span> <span class="k">self</span><span class="py">.ones</span><span class="nf">.iter_mut</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
+            <span class="o">*</span><span class="n">cnt</span> <span class="o">-=</span> <span class="p">((</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="k">as</span> <span class="nb">usize</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="cd">/// Bit b of the answer is the majority bit in position b.</span>
+    <span class="cd">/// It is the majority element if the multiset has one.</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">candidate</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">u32</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="k">mut</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cnt</span><span class="p">)</span> <span class="k">in</span> <span class="k">self</span><span class="py">.ones</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="n">cnt</span> <span class="o">&gt;</span> <span class="k">self</span><span class="py">.len</span> <span class="o">-</span> <span class="n">cnt</span> <span class="p">{</span>
+                <span class="n">c</span> <span class="p">|</span><span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">b</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">c</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>As for Boyer-Moore, the answer is correct only if a majority element exists. Otherwise the majority bits may give any number, even one that is not in the multiset.</p>
+
+<h4 id="misra-gries-heavy-hitters">Misra-Gries Heavy Hitters</h4>
+
+<div class="problem">
+
+  <p><strong>Heavy Hitters</strong></p>
+
+  <p><em>Given an array \(A[1, n]\) and an integer \(T,\) find the elements that occur more than \(n/T\) times, that is, at least \(\lfloor n/T \rfloor + 1\) times.</em></p>
+
+</div>
+
+<p>The majority element is the case \(T = 2.\) There are fewer than \(T\) such elements, because \(T\) of them would occupy more than \(n\) positions. These elements are called <em>heavy hitters</em>.</p>
+
+<p>Misra and Gries generalize the candidate of Boyer-Moore: we keep a set \(K\) of at most \(T\) candidates, each with a counter, in a hash map from element to counter. For each element \(e\) of \(A:\)</p>
+
+<ul>
+  <li>if \(e\) is in \(K,\) we increase its counter by \(1;\)</li>
+  <li>otherwise we insert \(e\) in \(K\) with counter \(1,\) and if now \(K\) has more than \(T\) elements, we decrease <em>every</em> counter in \(K\) by \(1\) and remove the elements whose counter becomes \(0.\) We call this a <em>round</em>. The new element, with counter \(1,\) is always removed.</li>
+</ul>
+
+<p>The figure follows the algorithm on the array of the previous section with \(T = 2\) counters (one more than the majority needs, as we will see); below every element, the content of \(K\) after processing it.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/pearls/mg_trace.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>There are \(2\) rounds, and at the end \(K\) contains only \(1,\) with counter \(3.\)</p>
+
+<p><strong>Why is it correct?</strong> A round decreases \(T+1\) counters, of \(T+1\) distinct elements, by \(1.\) Every element of \(A\) increases one counter by \(1,\) so the counters receive \(n\) units in total, and the rounds cannot remove more than \(n\) units. Hence there are at most \(n/(T+1)\) rounds. A round decreases the counter of an element \(x\) at most once, so if \(x\) occurs \(f_x\) times, its final counter is at least \(f_x - n/(T+1).\) Thus, every element with \(f_x &gt; n/(T+1)\) is still in \(K\) at the end. In particular, every element occurring more than \(n/T\) times is in \(K.\)</p>
+
+<p>In our example \(n/(T+1) = 3,\) and \(1,\) which occurs \(5\) times, ends with counter \(5 - 2 = 3.\)</p>
+
+<p>As for Boyer-Moore, the converse does not hold: an element of \(K\) may be rare, and the counters underestimate the frequencies. So a second pass counts the occurrences of the at most \(T\) candidates and keeps those occurring more than \(n/T\) times. Notice that the letter \(T\) plays two roles: the threshold \(n/T\) of the problem and the number of counters. They need not be equal. Since \(T\) counters find every element occurring more than \(n/(T+1)\) times, the problem with threshold \(n/T\) needs only \(T - 1\) counters; we keep \(T\) as in the lecture. For the majority element (threshold \(n/2\)) one counter suffices: Misra-Gries with one counter is a version of Boyer-Moore, which differs from ours only in this: when the counter would become \(0,\) the candidate is dropped and the next element becomes the new candidate.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">/// Misra-Gries with T counters. Every element occurring more than n/(T+1)</span>
+<span class="cd">/// times is a key of the result. Θ(n) expected time, Θ(T) space.</span>
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">misra_gries</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">u32</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">usize</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="nb">u32</span><span class="p">,</span> <span class="nb">usize</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">k</span><span class="p">:</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="nb">u32</span><span class="p">,</span> <span class="nb">usize</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nn">HashMap</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
+    <span class="k">for</span> <span class="o">&amp;</span><span class="n">e</span> <span class="k">in</span> <span class="n">a</span> <span class="p">{</span>
+        <span class="o">*</span><span class="n">k</span><span class="nf">.entry</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="nf">.or_insert</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">if</span> <span class="n">k</span><span class="nf">.len</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">t</span> <span class="p">{</span>
+            <span class="c1">// T + 1 distinct candidates: decrement all, drop the zeros.</span>
+            <span class="n">k</span><span class="nf">.retain</span><span class="p">(|</span><span class="n">_</span><span class="p">,</span> <span class="n">c</span><span class="p">|</span> <span class="p">{</span>
+                <span class="o">*</span><span class="n">c</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="o">*</span><span class="n">c</span> <span class="o">&gt;</span> <span class="mi">0</span>
+            <span class="p">});</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">k</span>
+<span class="p">}</span>
+
+<span class="cd">/// The elements occurring more than n/T times (at least ⌊n/T⌋ + 1 times),</span>
+<span class="cd">/// sorted. One more pass counts exactly the occurrences of the candidates.</span>
+<span class="k">pub</span> <span class="k">fn</span> <span class="nf">heavy_hitters</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">u32</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">usize</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">u32</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">k</span> <span class="o">=</span> <span class="nf">misra_gries</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">t</span><span class="p">);</span>
+    <span class="n">k</span><span class="nf">.values_mut</span><span class="p">()</span><span class="nf">.for_each</span><span class="p">(|</span><span class="n">c</span><span class="p">|</span> <span class="o">*</span><span class="n">c</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="k">in</span> <span class="n">a</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nf">Some</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">=</span> <span class="n">k</span><span class="nf">.get_mut</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+            <span class="o">*</span><span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">out</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">u32</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">k</span><span class="nf">.into_iter</span><span class="p">()</span><span class="nf">.filter</span><span class="p">(|</span><span class="o">&amp;</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">f</span><span class="p">)|</span> <span class="n">f</span> <span class="o">*</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="n">a</span><span class="nf">.len</span><span class="p">())</span><span class="nf">.map</span><span class="p">(|(</span><span class="n">x</span><span class="p">,</span> <span class="n">_</span><span class="p">)|</span> <span class="n">x</span><span class="p">)</span><span class="nf">.collect</span><span class="p">();</span>
+    <span class="n">out</span><span class="nf">.sort_unstable</span><span class="p">();</span>
+    <span class="n">out</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Running time.</strong> A naive analysis gives \(O(T \cdot n)\) time: we process \(n\) elements, and a round scans the \(T+1\) counters. But the time is actually \(\Theta(n)\) (expected, because of the hash map). A round costs \(\Theta(T+1)\) and removes \(T+1\) units from the counters; since only \(n\) units are ever added, the total cost of all the rounds is \(O(n):\) it cannot exceed the number of elements of the array. The space is \(\Theta(T).\)</p>
+
+<h4 id="a-last-pearl-dominoes-on-a-chessboard">A Last Pearl: Dominoes on a Chessboard</h4>
+
+<div class="problem">
+
+  <p><strong>Dominoes on a Chessboard</strong></p>
+
+  <p><em>We remove two opposite corners from a chessboard. Is it possible to cover the remaining \(62\) squares with \(31\) dominoes, each covering two adjacent squares?</em></p>
+
+</div>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/pearls/chessboard.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>Think about it before reading on. Trying to place the dominoes leads nowhere: there are too many ways.</p>
+
+<p>The answer is no, and the argument is about colours, not about dominoes. Two opposite corners have the same colour, light in the figure. So the mutilated board has \(32\) dark squares and only \(30\) light squares. Every domino, horizontal or vertical, covers one dark and one light square. Thus \(31\) dominoes would cover \(31\) dark and \(31\) light squares, but there are only \(30\) light ones.</p>
+
+<h5 id="removing-two-squares-of-different-colours">Removing Two Squares of Different Colours</h5>
+
+<div class="problem">
+
+  <p><strong>Removing Two Squares of Different Colours</strong></p>
+
+  <p><em>Now we remove two squares of different colours, anywhere on the board. Can we always cover the remaining \(62\) squares with \(31\) dominoes?</em></p>
+
+</div>
+
+<p>Counting colours is of no help now: \(31\) dark and \(31\) light squares remain. The answer is yes, for every choice of the two squares, and the proof is again a picture.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/pearls/chess_necklace.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>Thread a <em>necklace</em> through the board: a closed path that visits each of the \(64\) squares exactly once, always moving to an adjacent square. The left figure above shows one: the top row from left to right, then a snake down through the other columns, and back up along the first column. Adjacent squares have different colours, so the colours alternate along the necklace.</p>
+
+<p>Now remove two squares of different colours. The necklace is cut in two points and falls into two pieces. Number the squares along the necklace from \(0\) to \(63.\) Since the colours alternate, the two removed squares are at positions \(p &lt; q\) with \(q - p\) odd. One piece holds the \(q - p - 1\) squares between them, the other the remaining \(64 - (q - p) - 1\) squares, and both numbers are even. (A piece is empty when the two squares are consecutive on the necklace.) Each piece is a path of adjacent squares of even length, so we cut it into dominoes, taking its squares two at a time from one end.</p>
+
+<p>In the right figure above we remove the squares \((1, 5)\) and \((5, 2)\) (row and column, counting from \(0\) at the top left). The two pieces have \(30\) and \(32\) squares, and become \(15\) and \(16\) dominoes.</p>
+
+<h4 id="further-readings">Further Readings</h4>
+<ul>
+  <li>
+<a href="https://drops.dagstuhl.de/opus/volltexte/2006/606" rel="external nofollow noopener" target="_blank"><em>The Cell Probe Complexity of Succinct Data Structures</em></a>, A. Gál and P. B. Miltersen, Dagstuhl Seminar Proceedings, 2006 (first at ICALP 2003). The 100 prisoners problem comes from here: a game with boxes and slips of paper, whose winning protocol is credited to Sven Skyum and “left as an exercise to the reader”</li>
+  <li>
+<a href="https://doi.org/10.1007/BF01933190" rel="external nofollow noopener" target="_blank"><em>An Improved Monte Carlo Factorization Algorithm</em></a>, R. P. Brent, BIT, 1980. Floyd’s cycle finding, which Knuth attributes to Floyd in <em>The Art of Computer Programming</em>, Vol. 2, and a variant about 36% faster on average</li>
+  <li>
+<a href="https://www.cs.utexas.edu/~moore/best-ideas/mjrty/" rel="external nofollow noopener" target="_blank"><em>MJRTY: A Fast Majority Vote Algorithm</em></a>, R. S. Boyer and J S. Moore, in <em>Automated Reasoning: Essays in Honor of Woody Bledsoe</em>, Kluwer, 1991 (the algorithm dates from 1980)</li>
+  <li>
+<a href="https://doi.org/10.1016/0167-6423(82)90012-0" rel="external nofollow noopener" target="_blank"><em>Finding Repeated Elements</em></a>, J. Misra and D. Gries, Science of Computer Programming, 1982</li>
+  <li>
+<a href="http://www-formal.stanford.edu/jmc/toughnut.html" rel="external nofollow noopener" target="_blank"><em>A Tough Nut for Proof Procedures</em></a>, J. McCarthy, Stanford AI Memo, 1964. The mutilated chessboard as a challenge for automatic theorem provers</li>
+</ul>
+
+    </div>
+  </article>
+
+  
+
+  
+
+  
+    
+      
+
+  
+    <br>
+    <hr>
+    <br>
+  
+
+  <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2>
+  <p class="mb-2">Here are some more articles you might like to read next:</p>
+
+  <ul class="list-disc pl-7 my-3 space-y-2 marker:text-[var(--global-theme-color)]">
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2026/segmenttree/">Segment Tree</a>
+        
+      </li>
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2024/handson3/">HandsOn 3</a>
+        
+      </li>
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2024/handson2/">HandsOn 2</a>
+        
+      </li>
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2024/handson12425/">HandsOn 1</a>
+        
+      </li>
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2023/mosalgorithm/">Mo's Algorithm</a>
+        
+      </li>
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2023/fenwick/">Dynamic Prefix Sums with Fenwick Tree</a>
+        
+      </li>
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2023/prefixsums/">The Power of Prefix Sums</a>
+        
+      </li>
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2023/sweepline/">Sweep Line Algorithm</a>
+        
+      </li>
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2023/binarysearch/">Applications of Binary Search</a>
+        
+      </li>
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2023/swm/">Sliding Window Maximum</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+    
+  
+
+  
+    
+<div id="giscus_thread" style="max-width: 1200px; margin: 0 auto;">
+  <br>
+  <script>
+    (function setupGiscus() {
+      function determineGiscusTheme() {
+        var theme = localStorage.getItem("theme") || document.documentElement.getAttribute("data-theme") || "system";
+if (theme === "dark") return "dark";
+if (theme === "light") return "light";
+var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+return prefersDark ? "dark" : "light";
+
+      }
+
+      var giscusTheme = determineGiscusTheme();
+      var attrs = {
+        src: "https://giscus.app/client.js",
+        "data-repo": "rossanoventurini/webpage",
+        "data-repo-id": "R_kgDOKRTPSw",
+        "data-category": "General",
+        "data-category-id": "DIC_kwDOKRTPS84CZ7tz",
+        "data-mapping": "title",
+        "data-strict": "1",
+        "data-reactions-enabled": "1",
+        "data-emit-metadata": "0",
+        "data-input-position": "bottom",
+        "data-theme": giscusTheme,
+        "data-lang": "en",
+        crossorigin: "anonymous",
+        async: true
+      };
+
+      var giscusScript = document.createElement("script");
+      Object.entries(attrs).forEach(function(entry) { giscusScript.setAttribute(entry[0], entry[1]); });
+      var host = document.getElementById("giscus_thread");
+      if (host) host.appendChild(giscusScript);
+    })();
+  </script>
+  <noscript>
+    Please enable JavaScript to view the
+    <a href="http://giscus.app/?ref_noscript" rel="external nofollow noopener" target="_blank">comments powered by giscus.</a>
+  </noscript>
+</div>
+
+
+  
+</div>
+
+      
+    </div>
+
+    <!-- Footer -->
+    
+
+
+  <footer class="sticky-bottom mt-5" role="contentinfo">
+    
+
+    <div class="container">
+      
+  © Copyright 2026
+  Rossano
+  
+  Venturini. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme.
+
+  
+  
+
+    </div>
+  </footer>
+
+
+
+    <!-- JavaScripts -->
+    <script>
+  window.alFolio = {
+    compatBootstrap: true
+  };
+</script>
+
+<!-- Core navigation/runtime scripts -->
+<script src="/rossano/assets/js/nav-toggle.js?141bd79a73ebc0f0b6ea58e440ae79fc"></script>
+
+  <script src="/rossano/assets/js/bootstrap-compat.js?b5579a3408e7c44d505c6a9755578409"></script>
+
+
+
+  <!-- Masonry & imagesLoaded -->
+  <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script>
+  <script defer src="/rossano/assets/js/masonry.js?e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script>
+
+
+
+  <!-- Charts and Diagrams -->
+  
+
+
+
+
+
+
+
+  <!-- Math and Tikzjax -->
+  
+<script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script>
+<script src="/rossano/assets/al_math/js/mathjax-setup.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script>
+
+
+
+
+
+<!-- Tooltips & popovers runtime -->
+<script src="/rossano/assets/js/tooltips-setup.js?fe487e99db6c43751e6e7bdb2d6a0611"></script>
+
+
+
+
+
+
+<!-- Load Common JS -->
+<script src="/rossano/assets/js/no_defer.js?53b1b1a645525975c963ce8bf8bfefcf"></script>
+<script defer src="/rossano/assets/js/common.js?87baac90f765f2f3362dcf6aaf312a8a"></script>
+<script defer src="/rossano/assets/js/copy_code.js?c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script>
+
+<!-- Jupyter Open External Links New Tab -->
+<script defer src="/rossano/assets/js/jupyter_new_tab.js?896d254890d9b47f0281f63bfccf0dee"></script>
+
+<!-- Badges -->
+
+  <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
+
+
+  <script async src="https://badge.dimensions.ai/badge.js"></script>
+
+
+
+
+  <!-- Analytics -->
+  
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LRWXE6TB2L"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    window.dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+  gtag("config", "G-LRWXE6TB2L");
+</script>
+
+<!-- Cronitor RUM -->
+<script async src="https://rum.cronitor.io/script.js"></script>
+<script>
+  window.cronitor =
+    window.cronitor ||
+    function () {
+      (window.cronitor.q = window.cronitor.q || []).push(arguments);
+    };
+  cronitor("config", { clientKey: "e35e6134ceef91b419bad00adc81df84" });
+</script>
+
+
+
+
+
+  <!-- Image Features -->
+  
+<!-- Medium Zoom JS -->
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+<script defer src="/rossano/assets/al_img_tools/js/zoom.js"></script>
+
+
+
+
+
+  <!-- Scrolling Progress Bar -->
+  <script defer src="/rossano/assets/js/progress-bar.js?499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script>
+
+
+
+
+
+  <!-- Back to Top -->
+  
+  
+  
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script>
+  
+  <script>
+    addBackToTop();
+  </script>
+
+
+
+  <!-- Search -->
+  
+    
+<script type="module" src="/rossano/assets/al_search/js/search/ninja-keys.min.js"></script>
+<ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys>
+<script src="/rossano/assets/al_search/js/search-setup.js"></script>
+<script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "About",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/rossano/";
+    },
+  },{id: "nav-blog",
+          title: "Blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/rossano/blog/";
+          },
+        },{id: "nav-publications",
+          title: "Publications",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/rossano/publications/";
+          },
+        },{id: "dropdown-competitive-programming-and-contests",
+              title: "Competitive Programming and Contests",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/rossano/competitive/";
+              },
+            },{id: "dropdown-teaching-activity",
+              title: "Teaching activity",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/rossano/courses/";
+              },
+            },{id: "post-segment-tree",
+        
+          title: "Segment Tree",
+        
+        description: "The Segment Tree is the Swiss army knife of range queries. It answers range sums, range minimums and many other range queries on a dynamic array in logarithmic time. In these notes we build it on a running example, analyze it, and extend it with lazy propagation and persistence, with a Rust implementation.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2026/segmenttree/";
+          
+        },
+      },{id: "post-tiny-but-mighty-super-short-super-clever-algorithms",
+        
+          title: "Tiny but Mighty: Super-Short, Super-Clever Algorithms",
+        
+        description: "Six small problems with surprising solutions. The riddle of the 100 prisoners, a duplicate found in constant space, Floyd&#39;s cycle finding, the majority element, the Misra-Gries heavy hitters, and dominoes on a chessboard. Each one is followed on a running example, with proofs, complexities and Rust code.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2026/pearls/";
+          
+        },
+      },{id: "post-handson-3",
+        
+          title: "HandsOn 3",
+        
+        description: "Third hands-on for the course Competitive Programming and Contests at University of Pisa",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2024/handson3/";
+          
+        },
+      },{id: "post-handson-2",
+        
+          title: "HandsOn 2",
+        
+        description: "Second hands-on for the course Competitive Programming and Contests at University of Pisa",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2024/handson2/";
+          
+        },
+      },{id: "post-handson-1",
+        
+          title: "HandsOn 1",
+        
+        description: "First hands-on for the course Competitive Programming and Contests at University of Pisa",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2024/handson12425/";
+          
+        },
+      },{id: "post-mo-39-s-algorithm",
+        
+          title: "Mo&#39;s Algorithm",
+        
+        description: "The Mo&#39;s Algorithm is a powerful and efficient technique for solving a wide variety of range query problems. It becomes particularly useful for kinds of queries where the use of a Segment Tree or similar data structures is not feasible.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2023/mosalgorithm/";
+          
+        },
+      },{id: "post-dynamic-prefix-sums-with-fenwick-tree",
+        
+          title: "Dynamic Prefix Sums with Fenwick Tree",
+        
+        description: "The Fenwick Tree, also known as the Binary Indexed Tree (BIT), efficiently manages the prefix sum of an array, even as it undergoes updates. In these notes, we introduce this elegant data structure and describe a basic Rust implementation.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2023/fenwick/";
+          
+        },
+      },{id: "post-the-power-of-prefix-sums",
+        
+          title: "The Power of Prefix Sums",
+        
+        description: "Prefix sums offer an elegant and efficient solution to a variety of problems. In these notes, we showcase several such problems and provide their solutions with Rust implementations.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2023/prefixsums/";
+          
+        },
+      },{id: "post-sweep-line-algorithm",
+        
+          title: "Sweep Line Algorithm",
+        
+        description: "The Sweep Line Algorithm is a powerful paradigm for solving a variety of problems in computational geometry. In these notes, we employ it to address problems both on a line and in a plane, providing Rust implementations for their solutions.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2023/sweepline/";
+          
+        },
+      },{id: "post-applications-of-binary-search",
+        
+          title: "Applications of Binary Search",
+        
+        description: "Binary search is undeniably one of the most renowned and fundamental algorithms in computer science. In these notes, we delve into problems that can be solved using the idea of &#39;Binary Searching for the Answer&#39;.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2023/binarysearch/";
+          
+        },
+      },{id: "post-sliding-window-maximum",
+        
+          title: "Sliding Window Maximum",
+        
+        description: "The Sliding Window Maximum problem is a classic algorithmic challenge that involves processing an array in a sliding window fashion. The goal is to find the maximum element within a fixed-size window as it moves through the array. In these notes, we describe several possible solutions to this problem and their implementations in Rust.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2023/swm/";
+          
+        },
+      },{
+        id: 'social-email',
+        title: 'email',
+        section: 'Socials',
+        handler: () => {
+          window.open("mailto:%72%6F%73%73%61%6E%6F.%76%65%6E%74%75%72%69%6E%69@%67%6D%61%69%6C.%63%6F%6D", "_blank");
+        },
+      },{
+        id: 'social-rss',
+        title: 'RSS Feed',
+        section: 'Socials',
+        handler: () => {
+          window.open("/rossano/feed.xml", "_blank");
+        },
+      },{
+        id: 'social-github',
+        title: 'GitHub',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://github.com/rossanoventurini", "_blank");
+        },
+      },{
+        id: 'social-x',
+        title: 'X',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://twitter.com/rventurini_", "_blank");
+        },
+      },{
+        id: 'social-linkedin',
+        title: 'LinkedIn',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://www.linkedin.com/in/rossano-venturini-ab043089", "_blank");
+        },
+      },{
+        id: 'social-telegram',
+        title: 'telegram',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://telegram.me/rossanoventurini", "_blank");
+        },
+      },{
+        id: 'social-scholar',
+        title: 'Google Scholar',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://scholar.google.com/citations?user=FhcyCswAAAAJ", "_blank");
+        },
+      },{
+        id: 'social-orcid',
+        title: 'ORCID',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://orcid.org/0000-0002-9830-3936", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script>
+<script src="/rossano/assets/al_search/js/shortcut-key.js"></script>
+
+
+  
+
+
+
+
+  </body>
+</html>

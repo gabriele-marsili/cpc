@@ -44,6 +44,8 @@
   {\footnotesize\textcolor{gray}{Prof.'s notes of \textbf{last year} (2025), \texttt{Segment\_tree\_2025.pdf} p.\,#1 and p.\,#2}}\end{center}}
 \newcommand{\yn}{\textsuperscript{\textcolor{accent}{[your notes]}}}
 \newcommand{\notyn}{\textsuperscript{\textcolor{warn}{[not in your notes]}}}
+\newcommand{\pfig}[3]{\begin{center}\begin{minipage}{\linewidth}\centering\includegraphics[width=#1]{figs_prof/#2.pdf}\\[-1pt]
+  {\footnotesize\textcolor{gray}{Prof.'s 2026 notes (\emph{Segment Tree}, blog): #3}}\end{minipage}\end{center}}
 \newcommand{\board}[3]{\img{#1}{#2}{Board, #3 (recording \texttt{L\_14.MP4})}}
 \title{\textbf{CPC --- Lecture 14}\\[2pt]\large Segment tree: cost of \textsf{RangeSum} $\cdot$ dynamic RMQ $\cdot$ RMQ with occurrences $\cdot$ \textsf{Search} $\cdot$ \#occs (statement)}
 \author{Competitive Programming and Contests --- Monday 02/11/2026}
@@ -55,11 +57,11 @@
 \begin{keybox}
 \textbf{Sources.} Recording \texttt{Lessons/L14/L\_14.MP4} (90 min) and its automatic transcript \texttt{L14\_transcript.txt} (not revised);
 the prof's handwritten board (frames of the recording, \texttt{board/l14\_*.jpg}); your notes taken in class (\texttt{Lessons/L14/notes.md}, marked \yn{} where quoted);
-the prof's 2025 notes \texttt{Lessons/L13/Segment\_tree\_2025.pdf} p.\,3--9 (always marked \emph{last year}); course page (checked 11/11/2026).
+the prof's 2025 notes \texttt{Lessons/L13/Segment\_tree\_2025.pdf} p.\,3--9 (always marked \emph{last year}); course page (checked 11/11/2026); \textbf{the prof's 2026 notes} \emph{Segment Tree} (blog, published 14/11/2026, \S\ref{sec:blog}).
 The prof has no blog post on segment trees. Everything marked \extra{} was \emph{not} said or written in the lecture.
 
 \smallskip
-\noindent Code: \texttt{Lessons/L14/src} (\texttt{cargo test -p l14}), all \extra{} (no code from the prof). Exercises: \texttt{Lessons/L14/practice}, E56--E58 (\texttt{cargo test -p practice\_l14}).
+\noindent Code: \texttt{Lessons/L14/src} (\texttt{cargo test -p l14}): \texttt{prof\_blog} = the prof's code from the 2026 notes (verbatim); the rest is mine \extra. Exercises: \texttt{Lessons/L14/practice}, E56--E58 (\texttt{cargo test -p practice\_l14}).
 
 \smallskip
 \noindent\textbf{Highlights:} \hly{general / to remember} \quad \hlg{good: works, efficient, correct} \quad \hlp{bad: pitfalls, wrong ideas, costs} \quad \hlb{definitions and key results}
@@ -204,9 +206,32 @@ Reporting the occurrences of the \emph{minimum} is what we already saw; \hly{wha
 \begin{warnbox}
 \textbf{Homework (spoken).} ``You may try to find the solution if you have time.'' Next lecture: \hly{we conclude the segment tree presenting many other problems}, starting from this one,
 where \hlp{storing a number in each node is no longer enough: you need to store more}.
-The solution is in last year's notes (p.\,9) and in the provisional \texttt{Lessons/L15/L15.pdf}: try before looking.
+The solution is in \texttt{Lessons/L15/L15.pdf} (from the prof's 2026 notes) and in last year's notes (p.\,9): try before looking.
 \end{warnbox}
 \noindent\extra{} \texttt{l14::occs::OccsTree} implements last year's solution (hash map per node).
+
+%==========================================================
+\section{The prof's 2026 notes on this lecture}\label{sec:blog}
+%==========================================================
+On 14/11 the prof published \emph{Segment Tree} (\url{https://pages.di.unipi.it/rossano/blog/2026/segmenttree/}), written ``with the help of a trusted friend'' (an AI):
+it covers L13--L15 in one text, with a different running example, $A=[5,1,3,1,4,7,2,1]$. The parts of this lecture are:
+\emph{How many nodes do we visit?} (the analysis of \S2), \emph{Segment Tree in Rust}, \emph{Beyond Sums}, \emph{Dynamic Range Minimum Queries},
+\emph{Minimum with Number of Occurrences}, \emph{Searching on a Segment Tree}. Same content as the lecture; the useful differences:
+\begin{itemize}[nosep]
+\item The cost analysis names the three kinds of partial overlap: the query part inside one half; a \hlb{suffix or prefix crossing the middle} (one child total overlap);
+      the \hlb{general partial overlap} $l<i\le m<j<r$. Its children get \hlb{anchored} query parts (a suffix of the left child, a prefix of the right child),
+      and \hlg{an anchored part can never produce a general partial overlap}: so \hlb{at most one general partial overlap}, then two paths, at most 4 nodes per level.
+      (This is the ``special po'' of the board.)
+\item Code: root = node 0, children $2u+1$, $2u+2$ (heap layout), vector of $4n$ nodes. \hly{Why $4n$}: indexes are not contiguous when $n$ is not a power of 2
+      (for $n=6$ the leaf 4 is node 12); height $h=\lceil\log n\rceil$, indexes $<2^{h+1}$ and $2^h<2n$.
+\item \textsf{Search} returns \texttt{None} if the root does not reach $s$: \hlp{without this check the descent ends in the last leaf} and returns a wrong answer.
+\item The checklist remark of the lecture is not in the notes; \emph{Beyond Sums} (associativity, neutral element, Fenwick vs segment tree) is summarized at the beginning of L15.pdf.
+\end{itemize}
+\pfig{0.62\textwidth}{st_po_anchor}{the children of a general partial overlap get anchored query parts}
+\pfig{0.62\textwidth}{st_complexity}{query $[3,12]$ with $n=16$: one general partial overlap (the root), then two paths}
+\pfig{0.5\textwidth}{st_search}{$\textsf{search}(20)$ on the running example: answer 5}
+\noindent\extra{} \texttt{l14::prof\_blog::SegmentTree} (the prof's code, verbatim), tested on every number of the notes, on the board examples of L13/L14 and against a naive array;
+\texttt{l14::rmq}, \texttt{rmq\_occ}, \texttt{search} also tested on the notes' examples ($\textsf{rmq}(2,7)=3$; root $(1,3)$, after $\textsf{add}(1,-1)$: $(0,1)$; $\textsf{search}(20)=5$). All the numbers of the notes check out.
 
 %==========================================================
 \section{Exercises and deadlines (course page)}\label{sec:ex}
@@ -233,7 +258,6 @@ The solution is in last year's notes (p.\,9) and in the provisional \texttt{Less
 %==========================================================
 ``See you on Wednesday'' (04/11 = L15): end of the segment tree, ``many other problems'' starting from \#occs. \hlp{No lecture in the week of 09/11.}
 The prof also said he would give the hands-on by the end of that week, to work on it while he is away (Hands-On 2 is on the course page, row of 04/11).
-\extra{} L15 has no recording yet: \texttt{Lessons/L15/L15.pdf} is a \textbf{provisional reconstruction} from last year's notes (p.\,9--19: \#occs, Successor, fractional cascading,
-triplets, lazy propagation, persistent segment tree).
+\extra{} L15 has no recording: \texttt{Lessons/L15/L15.pdf} is written from the prof's 2026 notes (\#occs, successor, increasing triplets, lazy propagation, persistent segment tree).
 
 \end{document}

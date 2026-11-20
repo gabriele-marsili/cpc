@@ -270,3 +270,38 @@ stesse box. È lo standard da mantenere.
   lavorare sull'HO2. Versione 6/11 spostata in _GENERATO_DA_CLAUDE/versione_6nov/. src/lib.rs del 14/11 = versione 6/11 rinominata:
   P1 3/11, unit test non compilano. Bug segnalati, non corretti. Report da scrivere (report/ vuota).
 - (14/11) HO2 CONSEGNATO (email inviata da Octech). Codice corretto e report scritti da Claude su richiesta, dichiarato in Use of AI. Chiuso.
+- (15/11) NOTE NUOVE DEL PROF (blog, 14/11/2026, scritte "con l'aiuto di un amico", cioè un'AI; il prof chiede di segnalargli errori):
+  * Segment Tree: https://pages.di.unipi.it/rossano/blog/2026/segmenttree/ — copre L13-L15 in un testo unico (esempio A=[5,1,3,1,4,7,2,1]).
+    La pagina del corso ora collega: 26/10 -> note, 28/10 -> #beyond-sums, 02/11 -> #range-updates-with-lazy-propagation, 04/11 -> #persistent-segment-tree.
+  * Tiny but Mighty (pearls): https://pages.di.unipi.it/rossano/blog/2026/pearls/ — 100 prigionieri, duplicato, Floyd, Boyer-Moore,
+    maggioranza dinamica (bit), Misra-Gries, scacchiera (anche "due caselle di colore diverso": collana/ciclo hamiltoniano) = L3-L8.
+  Copie HTML in _routine/fonti/ (curl ORA funziona sia nel cloud sia sul Mac per pages.di.unipi.it). Figure: SVG in
+  https://pages.di.unipi.it/rossano/assets/img/segmenttree/<nome>.svg -> rsvg-convert in figs_prof/ (pdf per il tex, png per claude_notes.md).
+  Verificati codice (compila, test) e TUTTI i numeri degli esempi di entrambe le pagine: nessun errore trovato.
+- (15/11) L15 RISCRITTA dalle note 2026 del prof (non più dalle note 2025): niente registrazione (Octech pensa che non uscirà), niente note sue.
+  Contenuto = la parte delle note dopo l'enunciato di #occs: Beyond Sums (riassunto), #occs, successor (+merge sort tree, fractional cascading),
+  triplette crescenti (due ST indicizzati per valore P/S), lazy propagation (codice del prof), persistente (3 tentativi, codice del prof),
+  "why query the past" (count, k-esimo). Crate l15: prof_blog (codice del prof verbatim + test su tutti i suoi numeri), past, triplets::count_triplets_st.
+  practice L15 = E59-E62 = gli esercizi in fondo alle note del prof (generic ST, search(p,s), lazy add+min, persistente "<= x" online).
+  L14: aggiunta sezione "The prof's 2026 notes on this lecture" + l14::prof_blog (SegmentTree + search del prof, verbatim).
+  PEARLS (L3-L8) NON ancora integrate nei PDF: da fare se Octech lo chiede (codice del prof verificato in cloud, non ancora copiato nei crate).
+- (17/11) Registrazione L_15.MP4 (93 min) spostata da Download in Lessons/L15 (sha1 ok, originale cancellato). ATTENZIONE: i metadati
+  (creation_time) dicono REGISTRATA LUNEDÌ 16/11/2026, non 04/11. Contiene SOLO: segment tree persistente (tentativi 1-3 sull'esempio
+  della lavagna [3,1,-2,4,6,13,2,0], Add(3,10), Add(7,20); radice finale 57, alla lavagna prima 47) e Mo's algorithm (Powerful Array,
+  Three or More, "do not start from scratch", ordinamento (i/√n, j), Θ((n+q)√n); pagine fatte "da Claude dai suoi appunti").
+  #occs, successor, triplette e lazy NON sono in nessuna registrazione (probabilmente 04/11, non registrata).
+  Su scelta di Octech tutto resta in L15: Part I (dalle note 2026, [not in the recording]) + Part II (dalla registrazione).
+  Crate l15 + mo (codice del prof dal blog 2023/mosalgorithm, verbatim); practice L15 = E59-E64 (E63 = Powerful Array, compito a voce).
+  Upload: lo staging di file > ~16 MB può fallire ("upload failed"/timeout): dividere con split (4-8 MB) e ricomporre con cat nel cloud.
+  Prossima lezione: la registrazione successiva sarà L16 (lezioni dal 18/11 in poi).
+- (19/11) L16 (mercoledì 18/11/2026, metadati: 18/11) fatta dalla registrazione (Lessons/L16/L_16.MP4, 58 min, tagliata all'inizio e alla fine;
+  trascrizione L16_transcript.txt). Nuovo argomento: RMQ STATICO (obiettivo O(1) a query, Θ(n) spazio). Contenuto: Solution #1 tabella n² (build
+  row-wise Θ(n²), proprietà min su intervalli sovrapposti), #2 SPARSE TABLE (codice Python del prof dalla lavagna, verbatim in Lessons/L16/prof/sparse_table.py;
+  esempio A=[5,2,7,3,8,1,6,4], RMQ(0,6)=1 con k=2, T[0][2], T[3][2]; la tabella dice "posizione" ma il prof scrive i valori; msb in O(1): CPU, tabella 256, Knuth/de Bruijn;
+  niente update), #3 blocchi di log n + sparse table su A' (Θ(log n), Θ(n), "inutile" rispetto al segment tree), #4 solo l'inizio: titolo "Cartesian tree",
+  digressione sulla forma di un albero in 2n bit (puntatori n log n, layout a heap solo se completo, parentesi bilanciate, perdita sinistra/destra,
+  lower bound ~2n, navigazione con rank/select, rappresentazione per livelli con gradi in unario). DOMANDA DEL PROF a fine registrazione: quanti bit nella
+  rappresentazione per livelli? (E68; risposta solo in soluzioni). Nessuna nota del prof sul blog per RMQ; pagina del corso: nessuna riga per 16/11 e 18/11.
+  Crate l16 (full_table, sparse, blocks, msb, bp, cartesian [extra preview]) + practice E65-E68, workspace aggiornato.
+  Download: L_16.MP4 copiata (sha1 identico) ma NON cancellata (cancellazione negata in automatico): chiedere a Octech.
+  Prossima lezione: fine di Solution #4 (Cartesian tree, RMQ = LCA, blocchi piccoli); in L17 non rifare sparse table/blocchi.

@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Head -->
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <!-- Metadata, OpenGraph and Schema.org -->
+
+  <!-- Website verification -->
+  
+    <meta name="google-site-verification" content="E0vDQCYLRDz-hSNBg2blH7KJpNUSxElnYzNlfGC_xjo">
+  
+  
+    <meta name="msvalidate.01" content="AB84189524C3D3ACAE3EA77DC5F97F11">
+  
+  <!--
+    Avoid warning on Google Chrome Error with Permissions-Policy header:
+    Origin trial controlled feature not enabled: 'interest-cohort'.
+    see https://stackoverflow.com/a/75119417
+  -->
+  <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
+
+
+
+
+<!-- Standard metadata -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>
+  
+  
+    
+      Segment Tree | Rossano Venturini
+    
+  
+</title>
+<meta name="author" content="Rossano Venturini">
+<meta name="description" content="The Segment Tree is the Swiss army knife of range queries. It answers range sums, range minimums and many other range queries on a dynamic array in logarithmic time. In these notes we build it on a running example, analyze it, and extend it with lazy propagation and persistence, with a Rust implementation.">
+
+  <meta name="keywords" content="algorithm, data-structures, rust, efficiency">
+
+
+
+
+
+
+
+
+
+
+<!-- Security: Content Security Policy -->
+<!-- Permissive CSP suitable for academic websites. Allows external images, videos, and common embed services. -->
+<!-- To customize for your needs, see: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;">
+<style>
+  :root {
+    --max-content-width: 1200px;
+  }
+</style>
+
+<!-- Tailwind-first core styles -->
+<link rel="stylesheet" href="/rossano/assets/css/tailwind.css?50c64c15cbb9fd1ce6056fdb8bcb4b62">
+
+
+  <!-- Optional Bootstrap compatibility layer -->
+  <link rel="stylesheet" href="/rossano/assets/css/bootstrap-compat.css?aa8aa1241f76708eaa8c8fad88fe7955">
+
+
+
+
+
+
+<!-- Icons -->
+
+  
+<!-- Font Awesome -->
+<link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous">
+
+<!-- Academicons -->
+<link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous">
+
+<!-- Scholar Icons -->
+<link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous">
+
+
+
+<link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,500,600|IBM+Plex+Mono:400,500,600|Material+Icons&amp;display=swap">
+
+<!-- Code Syntax Highlighting -->
+<link defer rel="stylesheet" href="/rossano/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light">
+
+<!-- Styles -->
+
+
+
+
+  <link rel="shortcut icon" href="/rossano/assets/img/favicon.png?b452557977d37aff0c6ba8be4df8c272">
+
+<link rel="stylesheet" href="/rossano/assets/css/main.css?f0b101217084a90093badfe99ff9a7d1">
+
+<link rel="canonical" href="https://pages.di.unipi.it/rossano/blog/2026/segmenttree/">
+
+
+  <!-- Dark Mode -->
+  <script src="/rossano/assets/js/theme.js?7af685e2ba20b37fef545c97b8064050"></script>
+  <link defer rel="stylesheet" href="/rossano/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark">
+  <script>
+    initTheme();
+  </script>
+
+
+
+
+
+
+
+  <!-- Image Features -->
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  </head>
+
+  <!-- Body -->
+  <body class="fixed-top-nav sticky-bottom-footer">
+    <!-- Header -->
+    <header>
+  <!-- Nav Bar -->
+  <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation">
+    <div class="container">
+      
+        <a class="navbar-brand title font-weight-lighter" href="/rossano/">
+          Rossano Venturini
+        </a>
+      
+      <!-- Navbar Toggle -->
+      <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar top-bar"></span>
+        <span class="icon-bar middle-bar"></span>
+        <span class="icon-bar bottom-bar"></span>
+      </button>
+
+      <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav">
+        <ul class="navbar-nav navbar-menu-list flex-nowrap">
+          
+
+          <!-- About -->
+          <li class="nav-item ">
+            <a class="nav-link" href="/rossano/">About
+              
+            </a>
+          </li>
+
+          <!-- Other pages -->
+          
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+              
+                
+                <li class="nav-item active">
+                  <a class="nav-link" href="/rossano/blog/">Blog
+                    
+                      <span class="sr-only">(current)</span>
+                    
+                  </a>
+                </li>
+              
+            
+          
+            
+              
+                
+                <li class="nav-item ">
+                  <a class="nav-link" href="/rossano/publications/">Publications
+                    
+                  </a>
+                </li>
+              
+            
+          
+            
+              
+                
+                
+                <li class="nav-item dropdown ">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-nav-dropdown-toggle="true" aria-haspopup="true" aria-expanded="false">Teaching
+                    
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    
+                      
+                        <a class="dropdown-item " href="/rossano/competitive/">Competitive Programming and Contests</a>
+                      
+                    
+                      
+                        <div class="dropdown-divider"></div>
+                      
+                    
+                      
+                        <a class="dropdown-item " href="/rossano/courses/">Teaching activity</a>
+                      
+                    
+                  </div>
+                </li>
+              
+            
+          
+          
+            <!-- Search -->
+            <li class="nav-item">
+              <button id="search-toggle" type="button" title="Search" aria-label="Open search">
+                <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span>
+              </button>
+            </li>
+          
+          
+            <!-- Toogle theme mode -->
+            <li class="toggle-container">
+              <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme">
+                <i class="fa-half-sun-moon" id="light-toggle-system"></i>
+                <i class="fa-solid fa-moon" id="light-toggle-dark"></i>
+                <i class="fa-solid fa-sun" id="light-toggle-light"></i>
+              </button>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+    <!-- Scrolling Progress Bar -->
+    <progress id="progress" value="0">
+      <div class="progress-container">
+        <span class="progress-bar"></span>
+      </div>
+    </progress>
+  
+</header>
+
+
+    <!-- Content -->
+    <div class="container mt-5" role="main">
+      
+        
+
+
+
+
+
+
+<div class="post">
+  <header class="post-header">
+    <h1 class="post-title">Segment Tree</h1>
+    <p class="post-meta">
+      Created on November 14, 2026
+      
+      
+      
+      
+    </p>
+    <p class="post-tags">
+      
+        <a href="/rossano/blog/2026"> <i class="fa-solid fa-calendar fa-sm"></i> 2026 </a>
+      
+      
+          ·  
+        
+          
+            <a href="/rossano/blog/tag/rust"> <i class="fa-solid fa-hashtag fa-sm"></i> rust</a>
+          
+          
+             
+          
+        
+          
+            <a href="/rossano/blog/tag/algorithms"> <i class="fa-solid fa-hashtag fa-sm"></i> algorithms</a>
+          
+          
+             
+          
+        
+          
+            <a href="/rossano/blog/tag/data-structures"> <i class="fa-solid fa-hashtag fa-sm"></i> data-structures</a>
+          
+          
+        
+      
+
+      
+          ·  
+        
+          
+            <a href="/rossano/blog/category/notes"> <i class="fa-solid fa-tag fa-sm"></i> notes</a>
+          
+          
+        
+      
+    </p>
+  </header>
+
+  <article class="post-content">
+    
+    <div id="markdown-content">
+      <p>The <em>Segment Tree</em> is a binary tree built on top of an array, where every node stores the answer for a contiguous range of positions. It is the Swiss army knife of range queries: the same skeleton answers range sums, range minimums, counts, and many more queries, while the array changes. Its operations usually take logarithmic time.</p>
+
+<p>We start from the problem already solved by the <a href="/rossano/blog/2023/fenwick">Fenwick tree</a>, so we can compare the two, and then we move to problems that the Fenwick tree cannot handle.</p>
+
+<div class="problem">
+
+  <p><strong>Dynamic Prefix Sums</strong></p>
+
+  <p><em>We have an array \(A[0,n-1]\) of integers, and we would like to support the following operations:</em></p>
+
+  <ul>
+    <li><em><code class="language-plaintext highlighter-rouge">add(i, v)</code> adds the value \(v\) to the entry \(A[i];\)</em></li>
+    <li><em><code class="language-plaintext highlighter-rouge">range_sum(i, j)</code> returns \(\sum_{k=i}^{j} A[k].\)</em></li>
+  </ul>
+
+</div>
+
+<p>Notice that, differently from the Fenwick tree notes, here we use a zero-based indexing.</p>
+
+<p>Throughout these notes we use the following array as a running example, for every problem we discuss.</p>
+
+\[A = [5, 1, 3, 1, 4, 7, 2, 1]\]
+
+<p>Its values are non-negative and some of them repeat: we will need both properties later.</p>
+
+<h4 id="the-segment-tree">The Segment Tree</h4>
+<p>The Segment Tree is a balanced binary tree whose leaves are the entries of \(A,\) from left to right. Each node <em>covers</em> the range of positions of the leaves below it, and it stores the answer of the query on that range. For our problem, a node covering the range \([l, r]\) stores the sum \(A[l] + A[l+1] + \cdots + A[r].\)</p>
+
+<p>The root covers the whole array \([0, n-1].\) A node covering \([l, r],\) with \(l &lt; r,\) has two children. If \(m = \lfloor (l+r)/2 \rfloor,\) the left child covers \([l, m]\) and the right child covers \([m+1, r].\) A node covering a single position \([i, i]\) is a leaf, and it stores \(A[i].\)</p>
+
+<p>The figure below shows the Segment Tree of our running example. Next to every node we report its range.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/segmenttree/st_structure.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>Since the range of a node is split in two halves, the height of the tree is \(\lceil \log n \rceil.\) The tree has \(n\) leaves and \(n-1\) internal nodes, so \(2n-1\) nodes in total, and it uses linear space. When \(n\) is not a power of \(2,\) the two halves of a node may differ by one, and some leaves are one level higher than others.</p>
+
+<p>Observe that the value of an internal node is the sum of the values of its two children. For example, the node \([4,7]\) stores \(14 = 11 + 3.\) This gives us the construction: we build the two children recursively, and then we set the node to the sum of their values. A leaf \([i, i]\) is set to \(A[i].\) We do a constant amount of work per node, so the construction takes \(\Theta(n)\) time. This is better than starting from an array of zeros and performing \(n\) <code class="language-plaintext highlighter-rouge">add</code> operations, which takes \(\Theta(n \log n)\) time.</p>
+
+<h4 id="performing-an-add-operation">Performing an <code class="language-plaintext highlighter-rouge">add</code> operation</h4>
+<p>Consider the operation <code class="language-plaintext highlighter-rouge">add(i, v)</code>. Which nodes must change? Exactly the nodes whose range contains position \(i.\) These are the leaf \(i\) and all its ancestors, which are the nodes on the path from the root to the leaf \(i.\)</p>
+
+<p>We go down from the root to the leaf \(i,\) choosing at every node the child whose range contains \(i.\) We add \(v\) to the leaf. Then, on the way back up, we recompute every node on the path from the values of its two children, exactly as in the construction. Only one child has changed, but the other child already stores the correct value.</p>
+
+<p>The figure below shows <code class="language-plaintext highlighter-rouge">add(4, 3)</code> on our running example. The four nodes on the path from the root to the leaf \(4\) increase by \(3.\) All the other nodes do not change, because their ranges do not contain position \(4.\)</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/segmenttree/st_add.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>For sums we could simply add \(v\) to every node on the path. Recomputing every node from its children is the general way, and it works for every operation we will see in these notes.</p>
+
+<p>The path has one node per level, so <code class="language-plaintext highlighter-rouge">add</code> modifies \(\Theta(\log n)\) nodes and takes \(\Theta(\log n)\) time.</p>
+
+<h4 id="answering-a-range_sum-query">Answering a <code class="language-plaintext highlighter-rouge">range_sum</code> query</h4>
+<p>Let’s go back to the original array (without the <code class="language-plaintext highlighter-rouge">add</code> above) and consider the query <code class="language-plaintext highlighter-rouge">range_sum(2, 6)</code>, whose answer is \(3+1+4+7+2 = 17.\)</p>
+
+<p>The query is answered with a recursive visit that starts from the root. When the visit reaches a node covering \([l, r],\) there are three possible cases, depending on how the range of the node overlaps the query range \([i, j].\)</p>
+
+<ol>
+  <li>
+    <p><strong>Total overlap</strong> (<em>to</em>): the query range contains the range of the node, i.e., \(i \leq l\) and \(r \leq j.\) The value of the node is exactly the contribution of this part of the array. We stop the recursion and return the value of the node.</p>
+
+    <p><img src="/rossano/assets/img/segmenttree/st_case_to.svg" alt="Total overlap: the query range contains the range of the node; stop and return the value of the node" class="note-fig" style="width: min(100%, 299px)"></p>
+  </li>
+  <li>
+    <p><strong>No overlap</strong> (<em>no</em>): the two ranges are disjoint, i.e., \(r &lt; i\) or \(j &lt; l.\) This part of the array does not contribute. We stop the recursion and return \(0.\)</p>
+
+    <p><img src="/rossano/assets/img/segmenttree/st_case_no.svg" alt="No overlap: the query range is disjoint from the range of the node; stop and return 0" class="note-fig" style="width: min(100%, 382px)"></p>
+  </li>
+  <li>
+    <p><strong>Partial overlap</strong> (<em>po</em>): any other case. Part of the range of the node is in the query and part is not. We recurse on both children and return the sum of their results.</p>
+
+    <p><img src="/rossano/assets/img/segmenttree/st_case_po.svg" alt="Partial overlap: the query range covers only part of the range of the node; recurse on both children" class="note-fig" style="width: min(100%, 269px)"></p>
+  </li>
+</ol>
+
+<p>The figure below shows the visit for <code class="language-plaintext highlighter-rouge">range_sum(2, 6)</code>. The answer is the sum of the values of the nodes with a total overlap: \([2,3],\) \([4,5]\) and \([6,6],\) that is, \(4 + 11 + 2 = 17.\) Notice that these three nodes partition the query range.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/segmenttree/st_rangesum.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<h5 id="how-many-nodes-do-we-visit">How many nodes do we visit?</h5>
+<p>Nodes with a total overlap or no overlap are cheap: they stop the recursion. The cost comes from the nodes with a partial overlap, because each of them generates two recursive calls. So, the question is: how many partial overlaps can there be?</p>
+
+<p>Consider a node \([l, r]\) with a partial overlap, and let \(m\) be its middle point. What matters is the <em>part of the query inside the node</em>, that is, \([\max(i, l), \min(j, r)].\) There are three possibilities.</p>
+
+<ol>
+  <li>
+    <p><em>It is inside one half of the node.</em> One child has no overlap, and the visit continues on the other child only.</p>
+
+    <p><img src="/rossano/assets/img/segmenttree/st_po_half.svg" alt="The part of the query inside the node lies in one half: one child continues, the other has no overlap and stops" class="note-fig" style="width: min(100%, 413px)"></p>
+  </li>
+  <li>
+    <p><em>It touches an extreme of the node</em>, i.e., it is a suffix \([i, r]\) or a prefix \([l, j]\) of the range of the node, and it crosses the middle point. Consider a suffix \([i, r]\) with \(i \leq m.\) The right child has a total overlap and stops immediately. The left child gets again a suffix of its range. Prefixes are symmetric.</p>
+
+    <p><img src="/rossano/assets/img/segmenttree/st_po_suffix.svg" alt="The part of the query inside the node is a suffix crossing the middle point: the left child continues, the right child has a total overlap and stops" class="note-fig" style="width: min(100%, 406px)"></p>
+  </li>
+  <li>
+    <p><em>It crosses the middle point and touches no extreme</em>: \(l &lt; i \leq m &lt; j &lt; r.\) We call it a <em>general</em> partial overlap. The query is split into two pieces: the left child gets the suffix \([i, m]\) of its range and the right child gets the prefix \([m+1, j]\) of its range.</p>
+
+    <p><img src="/rossano/assets/img/segmenttree/st_po_general.svg" alt="A general partial overlap, l &lt; i &lt;= m &lt; j &lt; r: both children continue" class="note-fig" style="width: min(100%, 405px)"></p>
+  </li>
+</ol>
+
+<p>The first two possibilities are harmless: one child stops immediately, and the visit continues on the other child only. The general partial overlap is the potential source of inefficiency, because both children continue. If both children had a general partial overlap too, and their children too, and so on, the visit could reach every node of the tree. A query would then cost \(\Theta(n),\) no better than scanning the array.</p>
+
+<p>Luckily, this does not happen. The children of a general partial overlap get very special query parts. Look at the node \([l, r]\) in the figure below. Its left child \([l, m]\) gets the suffix \([i, m]:\) the right extreme of its query part is <em>anchored</em> to the end of its range (the dot in the figure). Symmetrically, the right child \([m+1, r]\) gets the prefix \([m+1, j],\) whose left extreme is anchored to the beginning of its range.</p>
+
+<p><img src="/rossano/assets/img/segmenttree/st_po_anchor.svg" alt="The children of a general partial overlap: the left child gets a suffix of its range, anchored at its end; the right child gets a prefix of its range, anchored at its beginning" class="note-fig" style="width: min(100%, 409px)"></p>
+
+<p>An anchored query part can never produce a general partial overlap, because a general partial overlap touches no extreme of the node. So, even if a descendant has a partial overlap, it is one of the easy ones. Consider a node \([l, r]\) that gets a suffix \([i, r],\) i.e., a query part anchored to the end of its range. Where can its middle point \(m\) cut the query part? There are only two possibilities.</p>
+
+<ul>
+  <li>
+    <p><em>The middle point is before the query part</em>, i.e., \(m &lt; i.\) The left child has no overlap and stops. The right child gets the suffix \([i, r],\) again anchored to the end of its range, and the visit continues there (with a total overlap, if \(i = m+1\)).</p>
+
+    <p><img src="/rossano/assets/img/segmenttree/st_anchor_before.svg" alt="A suffix query part with the middle point before it: the left child has no overlap and stops, the right child continues with a suffix" class="note-fig" style="width: min(100%, 404px)"></p>
+  </li>
+  <li>
+    <p><em>The middle point cuts the query part</em>, i.e., \(i \leq m.\) The right child \([m+1, r]\) is entirely inside the query, so it has a total overlap and stops. The left child gets the suffix \([i, m],\) again anchored to the end of its range, and the visit continues there.</p>
+
+    <p><img src="/rossano/assets/img/segmenttree/st_anchor_cut.svg" alt="A suffix query part cut by the middle point: the left child continues with a suffix, the right child has a total overlap and stops" class="note-fig" style="width: min(100%, 406px)"></p>
+  </li>
+</ul>
+
+<p>The cases of a query part anchored to the beginning of the range, i.e., a prefix \([l, j],\) are symmetric. If \(j \leq m,\) the right child has no overlap and stops, and the left child continues with the prefix \([l, j].\) If \(m &lt; j,\) the left child has a total overlap and stops, and the right child continues with the prefix \([m+1, j].\)</p>
+
+<p>In both cases, one child stops and the other one gets again an anchored query part, so the same argument applies to it, all the way down. Thus, there is at most <strong>one</strong> general partial overlap. Above it, the query part is inside one half of each node, so there is a single path. Below it, there are two paths, one towards each extreme of the query, and every node on them has a partial overlap of the easy kind.</p>
+
+<p>Let’s read the figure of <code class="language-plaintext highlighter-rouge">range_sum(2, 6)</code> in this way. The root \([0,7]\) is the general partial overlap, since \(0 &lt; 2 \leq 3 &lt; 6 &lt; 7.\) The node \([0,3]\) gets the suffix \([2,3]\) of its range: its left child \([0,1]\) has no overlap, and its right child \([2,3]\) has a total overlap. The node \([4,7]\) gets the prefix \([4,6]:\) its left child \([4,5]\) has a total overlap, and the visit continues on \([6,7].\)</p>
+
+<p>The figure below shows the same shape on a larger example, the query \([3, 12]\) on an array of \(n = 16\) entries. The root is the only general partial overlap. From there, two paths go down to the extremes of the query, and the total overlaps hang off these paths.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/segmenttree/st_complexity.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>Summing up, we visit at most \(4\) nodes per level: the nodes on the (at most) two paths and at most one sibling of each of them, which has a total overlap or no overlap. Therefore, <code class="language-plaintext highlighter-rouge">range_sum</code> takes \(O(\log n)\) time. This is a worst-case bound: some queries are cheaper, e.g., <code class="language-plaintext highlighter-rouge">range_sum(0, n-1)</code> stops at the root.</p>
+
+<h4 id="segment-tree-in-rust">Segment Tree in Rust</h4>
+<p>Here, we present a minimal Rust implementation of the Segment Tree. As in the Fenwick tree notes, we choose <code class="language-plaintext highlighter-rouge">i64</code> as the type of the values. We use the same names as the text: a node covers \([l, r],\) and the query is \([i, j].\)</p>
+
+<p>We store the tree in a vector, as we do for binary heaps. The root is node \(0\) and the children of node \(u\) are nodes \(2u+1\) and \(2u+2.\) The nodes do not store their ranges: the recursive functions compute them on the way down, starting from the range \([0, n-1]\) of the root.</p>
+
+<p>How large must the vector be? The tree has \(2n-1\) nodes, but with this layout their indexes are not contiguous when \(n\) is not a power of \(2,\) and they may exceed \(2n-2.\) For example, for \(n = 6\) the leaf \(4\) is node \(12.\) A safe bound is \(4n.\) The tree has height \(h = \lceil \log n \rceil,\) and a heap layout of height \(h\) uses indexes smaller than \(2^{h+1}.\) Since \(2^{h} &lt; 2n,\) the indexes are smaller than \(4n.\) There are more compact layouts, but this one is simple and good enough for us.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#[derive(Debug)]</span>
+<span class="k">pub</span> <span class="k">struct</span> <span class="n">SegmentTree</span> <span class="p">{</span>
+    <span class="n">n</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span>
+    <span class="n">tree</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i64</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">SegmentTree</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">from_slice</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">i64</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="k">Self</span> <span class="p">{</span>
+        <span class="nd">assert!</span><span class="p">(</span><span class="o">!</span><span class="n">a</span><span class="nf">.is_empty</span><span class="p">());</span>
+        <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="n">a</span><span class="nf">.len</span><span class="p">();</span>
+        <span class="k">let</span> <span class="k">mut</span> <span class="n">st</span> <span class="o">=</span> <span class="k">Self</span> <span class="p">{</span> <span class="n">n</span><span class="p">,</span> <span class="n">tree</span><span class="p">:</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">0</span><span class="p">;</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">n</span><span class="p">]</span> <span class="p">};</span>
+        <span class="n">st</span><span class="nf">.build</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="n">st</span>
+    <span class="p">}</span>
+
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">len</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">usize</span> <span class="p">{</span>
+        <span class="k">self</span><span class="py">.n</span>
+    <span class="p">}</span>
+
+    <span class="cd">/// A[i] += v</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">add</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">i64</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nd">assert!</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="k">self</span><span class="py">.n</span><span class="p">);</span>
+        <span class="k">self</span><span class="nf">.add_rec</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">self</span><span class="py">.n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cd">/// A[i] + A[i+1] + ... + A[j]</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">range_sum</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="nb">usize</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i64</span> <span class="p">{</span>
+        <span class="nd">assert!</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">j</span> <span class="o">&amp;&amp;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="k">self</span><span class="py">.n</span><span class="p">);</span>
+        <span class="k">self</span><span class="nf">.range_sum_rec</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">self</span><span class="py">.n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Node u covers [l, r]; its children are 2u + 1 and 2u + 2.</span>
+    <span class="k">fn</span> <span class="nf">build</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">i64</span><span class="p">],</span> <span class="n">u</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">usize</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">l</span> <span class="o">==</span> <span class="n">r</span> <span class="p">{</span>
+            <span class="k">self</span><span class="py">.tree</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">l</span><span class="p">];</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="k">self</span><span class="nf">.build</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">);</span>
+        <span class="k">self</span><span class="nf">.build</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
+        <span class="k">self</span><span class="py">.tree</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="k">self</span><span class="py">.tree</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="k">self</span><span class="py">.tree</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">2</span><span class="p">];</span> <span class="c1">// combine</span>
+    <span class="p">}</span>
+
+    <span class="k">fn</span> <span class="nf">add_rec</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">i64</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">l</span> <span class="o">==</span> <span class="n">r</span> <span class="p">{</span>
+            <span class="k">self</span><span class="py">.tree</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v</span><span class="p">;</span> <span class="c1">// the leaf of position i</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">m</span> <span class="p">{</span>
+            <span class="k">self</span><span class="nf">.add_rec</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">self</span><span class="nf">.add_rec</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">self</span><span class="py">.tree</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="k">self</span><span class="py">.tree</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="k">self</span><span class="py">.tree</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">2</span><span class="p">];</span> <span class="c1">// combine</span>
+    <span class="p">}</span>
+
+    <span class="k">fn</span> <span class="nf">range_sum_rec</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="nb">usize</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i64</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">l</span> <span class="o">&amp;&amp;</span> <span class="n">r</span> <span class="o">&lt;=</span> <span class="n">j</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">self</span><span class="py">.tree</span><span class="p">[</span><span class="n">u</span><span class="p">];</span> <span class="c1">// total overlap</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="n">i</span> <span class="p">||</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">l</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// no overlap</span>
+        <span class="p">}</span>
+        <span class="c1">// partial overlap</span>
+        <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="k">self</span><span class="nf">.range_sum_rec</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="k">self</span><span class="nf">.range_sum_rec</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="beyond-sums">Beyond Sums</h4>
+<p>What did we really use of the sum? Two properties:</p>
+
+<ol>
+  <li>the answer on a range can be computed by <em>combining</em> the answers on two subranges that partition it;</li>
+  <li>there is a <em>neutral element</em>, which we return on no overlaps.</li>
+</ol>
+
+<p>The combine must be <em>associative</em>. Indeed, a query combines the answers of its total overlaps grouped as the visit goes, which is not the grouping used to build the nodes. Associativity guarantees that the grouping does not matter. Commutativity is not needed, but then the order matters: we always combine the left child first and the right child second.</p>
+
+<p>In other words, the Segment Tree works for any associative operation with a neutral element: sum, product, minimum, maximum, gcd, bitwise and/or/xor, matrix multiplication, and many more. To use it with a new operation, we only need to decide what a node stores and how to combine the values of two children. The construction, <code class="language-plaintext highlighter-rouge">add</code> and the query stay the same, with the combine in place of the sum.</p>
+
+<p>This is the key difference with the Fenwick tree, which needs to <em>subtract</em> the prefix \([0, i-1]\) from the prefix \([0, j]\) to answer <code class="language-plaintext highlighter-rouge">range_sum(i, j)</code>. The minimum, for example, cannot be undone this way. When the answer cannot be obtained by combining the answers on subranges at all, a different tool is <a href="/rossano/blog/2023/mosalgorithm">Mo’s algorithm</a>, which however works offline and on a static array.</p>
+
+<p>So, which one should we use? When both work, the Fenwick tree is shorter to write, uses \(n\) integers instead of \(4n,\) and is faster in practice. The Segment Tree is the right choice for operations that cannot be undone (minimum, maximum, gcd), for <code class="language-plaintext highlighter-rouge">search</code> on the tree, for range updates on operations other than the sum, and for persistence. We will see all of them below.</p>
+
+<p>Let’s see some examples.</p>
+
+<h5 id="dynamic-range-minimum-queries">Dynamic Range Minimum Queries</h5>
+<div class="problem">
+
+  <p><strong>Dynamic Range Minimum Queries</strong></p>
+
+  <p><em>We have an array \(A[0,n-1]\) of integers, and we would like to support the following operations:</em></p>
+
+  <ul>
+    <li><em><code class="language-plaintext highlighter-rouge">add(i, v)</code> adds the value \(v\) to the entry \(A[i];\)</em></li>
+    <li><em><code class="language-plaintext highlighter-rouge">rmq(i, j)</code> returns the position of the minimum in \(A[i..j]\) (the leftmost one, in case of ties).</em></li>
+  </ul>
+
+</div>
+
+<p>Every node stores the value and the position of the minimum in its range. To combine two children, we take the one with the smaller value, and the left one in case of ties, so that we always report the leftmost minimum. The neutral element is a value of \(+\infty.\) A query <code class="language-plaintext highlighter-rouge">rmq(i, j)</code> visits the tree as <code class="language-plaintext highlighter-rouge">range_sum</code> does and combines the values of the nodes with a total overlap.</p>
+
+<p>In our running example, the minimum \(1\) occurs at positions \(1,\) \(3\) and \(7,\) so the root stores the value \(1\) and the position \(1.\) For example, <code class="language-plaintext highlighter-rouge">rmq(2, 7)</code> combines the nodes \([2,3],\) with minimum \(1\) at position \(3,\) and \([4,7],\) with minimum \(1\) at position \(7:\) the tie is broken in favour of the left one, and the answer is \(3.\)</p>
+
+<p>Now we perform <code class="language-plaintext highlighter-rouge">add(1, 4)</code>. As for sums, only the nodes on the path from the root to the leaf \(1\) change: the leaf becomes \(5,\) and each node on the path is recomputed from its children. The figure below shows the tree after the update. The minimum of the whole array is now at position \(3.\)</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/segmenttree/st_rmq.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<h5 id="minimum-with-number-of-occurrences">Minimum with Number of Occurrences</h5>
+<div class="problem">
+
+  <p><strong>Range Minimum with Number of Occurrences</strong></p>
+
+  <p><em>We have an array \(A[0,n-1]\) of integers, and we would like to support the following operations:</em></p>
+
+  <ul>
+    <li><em><code class="language-plaintext highlighter-rouge">add(i, v)</code> adds the value \(v\) to the entry \(A[i];\)</em></li>
+    <li><em><code class="language-plaintext highlighter-rouge">query(i, j)</code> returns the minimum value in \(A[i..j]\) together with its number of occurrences in \(A[i..j].\)</em></li>
+  </ul>
+
+</div>
+
+<p>Every node stores a pair \((m, c):\) the minimum \(m\) in its range and its number of occurrences \(c.\) Two pairs \((m, c)\) and \((m', c')\) are combined as follows. If \(m = m',\) the result is \((m, c + c').\) Otherwise, the result is the pair with the smaller minimum. The neutral element is \((+\infty, 0).\)</p>
+
+<p>In our running example, the minimum \(1\) occurs \(3\) times, so the root stores \((1, 3).\) The figure below shows the tree after <code class="language-plaintext highlighter-rouge">add(1, -1)</code>. Now the minimum is \(0\) and it occurs only once.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/segmenttree/st_rmq_occ.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<h4 id="searching-on-a-segment-tree">Searching on a Segment Tree</h4>
+<div class="problem">
+
+  <p><strong>Dynamic Prefix Sums with Search</strong></p>
+
+  <p><em>We have an array \(A[0,n-1]\) of <strong>non-negative</strong> integers, and we would like to support the following operations:</em></p>
+
+  <ul>
+    <li><em><code class="language-plaintext highlighter-rouge">add(i, v)</code> adds the value \(v\) to the entry \(A[i],\) provided that \(A[i] + v \geq 0;\)</em></li>
+    <li><em><code class="language-plaintext highlighter-rouge">range_sum(i, j)</code> returns \(\sum_{k=i}^{j} A[k];\)</em></li>
+    <li><em><code class="language-plaintext highlighter-rouge">search(s)</code> returns the smallest position \(i\) such that \(\sum_{k=0}^{i} A[k] \geq s,\) if any.</em></li>
+  </ul>
+
+</div>
+
+<p>For example, on our running example <code class="language-plaintext highlighter-rouge">search(20)</code> returns \(5,\) since the prefix sums are \(5, 6, 9, 10, 14, 21, 23, 24.\) If \(s\) is larger than the sum of the whole array, which is stored in the root, there is no answer. An <code class="language-plaintext highlighter-rouge">add(i, v)</code> with \(v &lt; 0\) is allowed, as long as \(A[i]\) stays non-negative.</p>
+
+<p>Since the values are non-negative, the prefix sums are non-decreasing. Thus, a naive solution is a binary search on the position, which computes a <code class="language-plaintext highlighter-rouge">range_sum(0, i)</code> at every step. This takes \(\Theta(\log^2 n)\) time.</p>
+
+<p>We can do better by descending the tree from the root, as in a binary search tree. At a node, let \(s\) be the amount still to reach and let \(x\) be the value of its left child. If \(x \geq s,\) the answer is in the range of the left child, and we move there. Otherwise, the whole left child is in the prefix: we subtract \(x\) from \(s\) and move to the right child. When we reach a leaf, its position is the answer. This descent is correct only with non-negative values: the sum of a range is then at least the sum of any prefix of it, so if the left child does not reach \(s,\) no position inside it can.</p>
+
+<p>The figure below shows <code class="language-plaintext highlighter-rouge">search(20)</code>. At the root, the left child has sum \(10 &lt; 20,\) so we move right looking for \(20 - 10 = 10.\) At the node \([4,7],\) the left child has sum \(11 \geq 10,\) so we move left. At the node \([4,5],\) the left child has \(4 &lt; 10,\) so we move right looking for \(10-4 = 6.\) We reach the leaf \(5,\) whose value \(7\) covers the remaining \(6,\) and the answer is \(5.\)</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/segmenttree/st_search.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>We visit one node per level, so <code class="language-plaintext highlighter-rouge">search</code> takes \(\Theta(\log n)\) time. The code checks first that the root reaches \(s:\) without this check, the descent would end in the last leaf and return a wrong answer.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">impl</span> <span class="n">SegmentTree</span> <span class="p">{</span>
+    <span class="cd">/// Requires non-negative values. Returns the smallest i such that</span>
+    <span class="cd">/// A[0] + ... + A[i] &gt;= s, or None if the total sum is smaller than s.</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">search</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">i64</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="nb">usize</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="k">self</span><span class="py">.tree</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">s</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nb">None</span><span class="p">;</span> <span class="c1">// without this check, the descent would end in the last leaf</span>
+        <span class="p">}</span>
+        <span class="k">let</span> <span class="p">(</span><span class="k">mut</span> <span class="n">u</span><span class="p">,</span> <span class="k">mut</span> <span class="n">l</span><span class="p">,</span> <span class="k">mut</span> <span class="n">r</span><span class="p">,</span> <span class="k">mut</span> <span class="n">s</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">self</span><span class="py">.n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+        <span class="k">while</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span> <span class="p">{</span>
+            <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+            <span class="k">let</span> <span class="n">left</span> <span class="o">=</span> <span class="k">self</span><span class="py">.tree</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+            <span class="k">if</span> <span class="n">left</span> <span class="o">&gt;=</span> <span class="n">s</span> <span class="p">{</span>
+                <span class="n">u</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="n">m</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">s</span> <span class="o">-=</span> <span class="n">left</span><span class="p">;</span>
+                <span class="n">u</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+                <span class="n">l</span> <span class="o">=</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="nf">Some</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="nodes-storing-data-structures">Nodes Storing Data Structures</h4>
+<p>So far, every node stores a constant number of values. Nothing prevents us from storing a whole data structure in every node. The total space grows, but we can now answer more complex queries.</p>
+
+<h5 id="counting-occurrences-in-a-range">Counting Occurrences in a Range</h5>
+<div class="problem">
+
+  <p><strong>Range Occurrence Counting</strong></p>
+
+  <p><em>We have an array \(A[0,n-1]\) of integers, and we would like to support the following operations:</em></p>
+
+  <ul>
+    <li><em><code class="language-plaintext highlighter-rouge">add(i, v)</code> adds the value \(v\) to the entry \(A[i];\)</em></li>
+    <li><em><code class="language-plaintext highlighter-rouge">occs(i, j, x)</code> returns the number of occurrences of the value \(x\) in \(A[i..j].\)</em></li>
+  </ul>
+
+</div>
+
+<p>Every node stores a hash map that maps each value in its range to its number of occurrences in the range. A query <code class="language-plaintext highlighter-rouge">occs(i, j, x)</code> visits the tree as <code class="language-plaintext highlighter-rouge">range_sum</code> does. In every node with a total overlap, it looks up \(x\) in the hash map, and the counts are summed. For example, on our running example <code class="language-plaintext highlighter-rouge">occs(1, 7, 1)</code> visits the total overlaps \([1,1],\) \([2,3]\) and \([4,7],\) whose counts of the value \(1\) are \(1,\) \(1\) and \(1,\) so the answer is \(3.\)</p>
+
+<p>An <code class="language-plaintext highlighter-rouge">add(i, v)</code> changes the value of \(A[i].\) So, in the \(\Theta(\log n)\) hash maps on the path to the leaf \(i,\) we decrement the count of the old value and increment the count of the new one. When a count drops to zero we remove the key, otherwise the hash maps would keep growing with the updates.</p>
+
+<p>Every position of \(A\) appears in the hash maps of the \(\Theta(\log n)\) nodes on its path. So, the space usage is \(\Theta(n \log n).\) Both operations take \(O(\log n)\) time, in expectation, due to the hash maps. For the static version of the problem (no <code class="language-plaintext highlighter-rouge">add</code>), a more space-efficient solution is the <a href="https://en.wikipedia.org/wiki/Wavelet_Tree" rel="external nofollow noopener" target="_blank"><em>Wavelet tree</em></a>.</p>
+
+<h5 id="successor-queries-in-a-range">Successor Queries in a Range</h5>
+<div class="problem">
+
+  <p><strong>Range Successor Queries</strong></p>
+
+  <p><em>We have an array \(A[0,n-1]\) of integers, and we would like to support the following operations:</em></p>
+
+  <ul>
+    <li><em><code class="language-plaintext highlighter-rouge">add(i, v)</code> adds the value \(v\) to the entry \(A[i];\)</em></li>
+    <li><em><code class="language-plaintext highlighter-rouge">successor(i, j, x)</code> returns the smallest value in \(A[i..j]\) that is at least \(x,\) if any.</em></li>
+  </ul>
+
+</div>
+
+<p>Every node stores the values in its range in a balanced binary search tree. Values may repeat (our running example has three \(1\)s), so the tree must be a <em>multiset</em>: in Rust, a <code class="language-plaintext highlighter-rouge">BTreeMap</code> from each value to its number of occurrences. A query <code class="language-plaintext highlighter-rouge">successor(i, j, x)</code> visits the tree as <code class="language-plaintext highlighter-rouge">range_sum</code> does. In every node with a total overlap, it computes the successor of \(x\) in the binary search tree of the node. The answer is the minimum of these successors, so the neutral element is \(+\infty.\)</p>
+
+<p>The figure below shows the values stored in every node, in sorted order, for our running example, and the query <code class="language-plaintext highlighter-rouge">successor(1, 5, 2)</code>. It has three total overlaps: \([1,1],\) \([2,3]\) and \([4,5].\) Their successors of \(2\) are \(+\infty,\) \(3\) and \(4,\) so the answer is \(3.\)</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/segmenttree/st_merge.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>We search \(O(\log n)\) binary search trees, and each search takes \(O(\log n)\) time. So, a query takes \(O(\log^2 n)\) time. An <code class="language-plaintext highlighter-rouge">add</code> removes one occurrence of the old value and inserts the new one in \(\Theta(\log n)\) binary search trees, in \(O(\log^2 n)\) time. The space usage is \(\Theta(n \log n).\)</p>
+
+<p>If there are no updates, we do not need binary search trees: every node stores its values in a sorted array, which is built in linear time by merging the arrays of its two children, as in merge sort. This structure is often called a <em>merge sort tree</em>, and it is built in \(\Theta(n \log n)\) time. The query time can be further improved to \(O(\log n)\) with a technique called <em>fractional cascading</em>. The idea is that all the searches look for the same \(x,\) so the result of the search in a node can guide the search in its children.</p>
+
+<h4 id="an-application-counting-increasing-triplets">An Application: Counting Increasing Triplets</h4>
+<div class="problem">
+
+  <p><strong>Counting Increasing Triplets</strong></p>
+
+  <p><em>We are given an array \(A[0,n-1]\) of integers. We want to count the number of triplets \((i, j, k),\) with \(0 \leq i &lt; j &lt; k &lt; n,\) such that \(A[i] &lt; A[j] &lt; A[k].\)</em></p>
+
+</div>
+
+<p>For example, our running example \(A = [5, 1, 3, 1, 4, 7, 2, 1]\) has \(5\) such triplets of positions: \((1,2,4),\) \((1,2,5),\) \((1,4,5),\) \((2,4,5)\) and \((3,4,5).\) Notice that \((1,3,4)\) is not a triplet, because \(A[1] = A[3]\) and the inequalities are strict.</p>
+
+<p>This application uses only the two basic operations, <code class="language-plaintext highlighter-rouge">add</code> and <code class="language-plaintext highlighter-rouge">range_sum</code>, so it could be solved with a Fenwick tree as well. Indeed, it uses the same idea as <a href="/rossano/blog/2023/fenwick/#counting-inversions-in-an-array">counting inversions</a> with the Fenwick tree: a tree indexed by <em>value</em>, filled during a scan of the array.</p>
+
+<h5 id="what-we-need-to-know-at-each-position">What we need to know at each position</h5>
+<p>Checking all the triplets takes \(\Theta(n^3)\) time. A better idea is to look at the triplets from their middle element. Fix a position \(j,\) and count the triplets whose middle element is \(A[j].\) To build one, we need:</p>
+
+<ul>
+  <li>a position \(i\) to the left of \(j\) with a smaller value, i.e., \(i &lt; j\) and \(A[i] &lt; A[j];\)</li>
+  <li>a position \(k\) to the right of \(j\) with a larger value, i.e., \(k &gt; j\) and \(A[k] &gt; A[j].\)</li>
+</ul>
+
+<p>The two choices are independent: any such \(i\) can be combined with any such \(k.\) So, let</p>
+
+<ul>
+  <li>\(L_j\) be the number of positions \(i &lt; j\) with \(A[i] &lt; A[j];\)</li>
+  <li>\(R_j\) be the number of positions \(k &gt; j\) with \(A[k] &gt; A[j].\)</li>
+</ul>
+
+<p>Then, exactly \(L_j \cdot R_j\) triplets have \(j\) as their middle position, and we add \(L_j \cdot R_j\) to the result. Every triplet has exactly one middle position, so, summing over all the positions \(j,\) we count every triplet exactly once. The table below shows these numbers for our running example. For instance, for \(j = 4\) we have \(A[4] = 4:\) on its left, the values \(1, 3, 1\) are smaller (\(L_4 = 3\)), and on its right, only the value \(7\) is larger (\(R_4 = 1\)).</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/segmenttree/st_triplets_lr.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>The result is \(2 + 3 = 5,\) as expected. Computing \(L_j\) and \(R_j\) with a scan of the array takes \(\Theta(n)\) time for each \(j,\) so \(\Theta(n^2)\) time overall. Let’s see how two Segment Trees compute each of them in \(O(\log n)\) time.</p>
+
+<h5 id="two-segment-trees-one-for-the-prefix-one-for-the-suffix">Two Segment Trees: one for the prefix, one for the suffix</h5>
+<p>\(L_j\) is a question about the prefix \(A[0..j-1]:\) how many of its values are smaller than \(A[j]\)? Similarly, \(R_j\) is a question about the suffix \(A[j+1..n-1]:\) how many of its values are larger than \(A[j]\)?</p>
+
+<p>To answer such questions, we index a Segment Tree by <em>value</em>, not by position. For now, assume that the values are in \([0, V-1],\) for a small \(V,\) say \(V = O(n)\) (we remove this assumption at the end). In our example, \(V = 8.\) We keep two Segment Trees, each one on an array of \(V\) counters:</p>
+
+<ul>
+  <li>\(P[x]\) is the number of occurrences of the value \(x\) in the prefix \(A[0..j-1];\)</li>
+  <li>\(S[x]\) is the number of occurrences of the value \(x\) in the suffix \(A[j+1..n-1].\)</li>
+</ul>
+
+<p>Then, the number of values smaller than \(A[j]\) in the prefix is the sum of the counters \(P[0..A[j]-1],\) and the number of values larger than \(A[j]\) in the suffix is the sum of the counters \(S[A[j]+1..V-1]:\)</p>
+
+<ul>
+  <li>\(L_j\) = <code class="language-plaintext highlighter-rouge">range_sum(0, A[j]-1)</code> on \(P;\)</li>
+  <li>\(R_j\) = <code class="language-plaintext highlighter-rouge">range_sum(A[j]+1, V-1)</code> on \(S.\)</li>
+</ul>
+
+<p>If \(A[j] = 0,\) the first range is empty, and if \(A[j] = V-1,\) the second one is empty. In these cases, we do not call <code class="language-plaintext highlighter-rouge">range_sum</code>, which requires a non-empty range, and we take \(0.\)</p>
+
+<p>For example, for \(j = 4\) the prefix is \(5, 1, 3, 1\) and the suffix is \(7, 2, 1.\) The counters are as follows. Since \(A[4] = 4,\) the two queries read \(P[0..3]\) and \(S[5..7],\) whose non-zero counters are in bold.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/segmenttree/st_triplets_ps.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>So, \(L_4 = P[0] + P[1] + P[2] + P[3] = 3\) and \(R_4 = S[5] + S[6] + S[7] = 1.\)</p>
+
+<p>It remains to keep \(P\) and \(S\) up to date while \(j\) moves, so that, when we compute \(L_j\) and \(R_j,\) \(P\) describes \(A[0..j-1]\) and \(S\) describes \(A[j+1..n-1].\) We scan \(A\) from left to right. Initially, \(P\) is all zeros, and \(S\) is built from the number of occurrences of every value in the whole array. Then, at every position \(j:\)</p>
+
+<ol>
+  <li>
+<code class="language-plaintext highlighter-rouge">add(A[j], -1)</code> on \(S:\) the element \(A[j]\) leaves the suffix, which now is \(A[j+1..n-1];\)</li>
+  <li>compute \(L_j\) and \(R_j\) with the two <code class="language-plaintext highlighter-rouge">range_sum</code> above, and add \(L_j \cdot R_j\) to the result;</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">add(A[j], 1)</code> on \(P:\) the element \(A[j]\) enters the prefix, which now is \(A[0..j],\) ready for position \(j+1.\)</li>
+</ol>
+
+<p>The \(n\) steps perform two <code class="language-plaintext highlighter-rouge">add</code> and two <code class="language-plaintext highlighter-rouge">range_sum</code> each, so the scan takes \(\Theta(n \log V)\) time, and the two trees use \(\Theta(V)\) space. Beware that the result can be as large as \(\Theta(n^3),\) e.g., for a sorted array: use a 64-bit integer for it and for the products \(L_j \cdot R_j.\)</p>
+
+<p>What if the values are large, or negative? Only the relative order of the values matters, so we can replace every value with its <em>rank</em>, i.e., its position in the sorted list of the distinct values of \(A.\) Equal values get the same rank, and the order is preserved, so the triplets do not change. To compute the ranks, we sort a copy of \(A,\) remove the duplicates, and find every \(A[j]\) in it with a binary search. In our example, the distinct values are \(1, 2, 3, 4, 5, 7,\) and \(A\) becomes \([4, 0, 2, 0, 3, 5, 1, 0],\) with \(V = 6.\) The ranks are in \([0, n-1],\) so \(V \leq n.\) Computing them takes \(\Theta(n \log n)\) time, and so does the whole algorithm.</p>
+
+<h4 id="range-updates-with-lazy-propagation">Range Updates with Lazy Propagation</h4>
+<div class="problem">
+
+  <p><strong>Dynamic Prefix Sums with Range Updates</strong></p>
+
+  <p><em>We have an array \(A[0,n-1]\) of integers, and we would like to support the following operations:</em></p>
+
+  <ul>
+    <li><em><code class="language-plaintext highlighter-rouge">range_update(i, j, v)</code> adds the value \(v\) to every entry in \(A[i..j];\)</em></li>
+    <li><em><code class="language-plaintext highlighter-rouge">range_sum(i, j)</code> returns \(\sum_{k=i}^{j} A[k].\)</em></li>
+  </ul>
+
+</div>
+
+<p>The Fenwick tree solves this problem with two Fenwick trees and a clever algebraic trick. The Segment Tree could use exactly the same trick, with two Segment Trees in place of the two Fenwick trees. However, the trick is specific to additions and sums. The Segment Tree has a more general technique, called <em>lazy propagation</em>, which works for many other combinations of range updates and queries, e.g., assigning a value to a range, or adding to a range and asking for the minimum. We will see below what it needs from the operations.</p>
+
+<p>Performing an <code class="language-plaintext highlighter-rouge">add</code> for each position in \([i, j]\) takes \(\Theta((j-i+1) \log n)\) time, which is too much for large ranges. The idea of lazy propagation is to be lazy: when a whole node is updated, we update the node and leave a note for its descendants, and we do their work only when a later operation has to go below that node.</p>
+
+<p>So, every node keeps two values: its sum, as before, and a <em>lazy</em> value. The lazy value of a node is an addition that still has to be applied to all the elements below it. We maintain the invariant that the sum stored in a node is always correct; only the nodes below a nonzero lazy value may be out of date.</p>
+
+<p>A <code class="language-plaintext highlighter-rouge">range_update(i, j, v)</code> visits the tree as a <code class="language-plaintext highlighter-rouge">range_sum(i, j)</code> does.</p>
+
+<ul>
+  <li>
+<strong>Total overlap</strong>: all the \(r - l + 1\) elements below the node increase by \(v.\) We add \(v \cdot (r-l+1)\) to its sum and \(v\) to its lazy value, and we stop. Its children are now out of date, but nobody looked at them yet. A leaf has no children, so it does not need a lazy value.</li>
+  <li>
+<strong>No overlap</strong>: we do nothing.</li>
+  <li>
+<strong>Partial overlap</strong>: before going down, we <em>push</em> the lazy value of the node to its two children: we apply it to each child as in a total overlap, and we reset it to zero. Then, we recurse on both children, and we recompute the sum of the node from the sums of its children.</li>
+</ul>
+
+<p>The figure below shows <code class="language-plaintext highlighter-rouge">range_update(0, 4, 20)</code> on our running example. The node \([0,3]\) has a total overlap: its sum becomes \(10 + 4 \cdot 20 = 90,\) and the update stops there with a lazy value of \(+20.\) The nodes below \([0,3],\) drawn dotted, still store the old values. The leaf \(4\) has a total overlap too, and the sums on its path are recomputed. Below the tree we report the array as it is now.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/segmenttree/st_lazy_update.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>A <code class="language-plaintext highlighter-rouge">range_sum(i, j)</code> works as before, except that it pushes the lazy value of every node with a partial overlap before going down. So, unlike before, a query modifies the tree. The figure below shows <code class="language-plaintext highlighter-rouge">range_sum(0, 2)</code> after the update. The node \([0,3]\) has a partial overlap, so it pushes \(+20\) to its children: \([0,1]\) becomes \(6 + 2 \cdot 20 = 46\) and \([2,3]\) becomes \(4 + 2 \cdot 20 = 44,\) and both get a lazy value of \(+20.\) The node \([0,1]\) has a total overlap and returns \(46,\) keeping its lazy value. The node \([2,3]\) has a partial overlap, so it pushes the update to its leaves, which become \(23\) and \(21.\) The answer is \(46 + 23 = 69.\) The subtree of \([4,7]\) is not touched at all.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/segmenttree/st_lazy_query.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>An update pushes too. For example, a later <code class="language-plaintext highlighter-rouge">range_update(1, 2, 1)</code> has a partial overlap with \([0,1],\) which still holds the pending \(+20.\) So, it first pushes it, and the leaves \(0\) and \(1\) become \(25\) and \(21.\) Only then the leaf \(1,\) which has a total overlap, becomes \(22.\)</p>
+
+<p>Both operations visit the same nodes as a <code class="language-plaintext highlighter-rouge">range_sum</code> and do a constant amount of work in each of them. So, they take \(O(\log n)\) time.</p>
+
+<p><strong>What lazy propagation needs.</strong> Lazy propagation is not specific to add and sum. It works whenever (1) we can apply a pending update to the value of a node without looking at its children, and (2) two pending updates can be composed into a single one. For range add and range sum, (1) is “add \(v \cdot (r-l+1)\)” and (2) is “add the two values”. For range add and range <em>minimum</em>, (1) is simply “add \(v\) to the minimum”, because adding \(v\) to every element adds \(v\) to the minimum: in our example, after <code class="language-plaintext highlighter-rouge">range_update(0, 4, 20)</code> the minimum of \([0,3]\) goes from \(1\) to \(21\) without touching the children. For a range <em>assignment</em> (“set every entry to \(v\)”), the composition of two pending updates is the later one, and an assignment pushed onto a pending addition replaces it: the order of the updates matters.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">/// range_update (add v to every entry in [i, j]) and range_sum.</span>
+<span class="cd">/// Invariant: tree[u] is always the correct sum of the range of u;</span>
+<span class="cd">/// lazy[u] is an addition still to be applied to every entry below u.</span>
+<span class="nd">#[derive(Debug)]</span>
+<span class="k">pub</span> <span class="k">struct</span> <span class="n">LazySegmentTree</span> <span class="p">{</span>
+    <span class="n">n</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span>
+    <span class="n">tree</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i64</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">lazy</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i64</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">LazySegmentTree</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">from_slice</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">i64</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="k">Self</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="n">st</span> <span class="o">=</span> <span class="nn">SegmentTree</span><span class="p">::</span><span class="nf">from_slice</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+        <span class="k">Self</span> <span class="p">{</span> <span class="n">n</span><span class="p">:</span> <span class="n">st</span><span class="py">.n</span><span class="p">,</span> <span class="n">lazy</span><span class="p">:</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">0</span><span class="p">;</span> <span class="n">st</span><span class="py">.tree</span><span class="nf">.len</span><span class="p">()],</span> <span class="n">tree</span><span class="p">:</span> <span class="n">st</span><span class="py">.tree</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">range_update</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">i64</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nd">assert!</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">j</span> <span class="o">&amp;&amp;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="k">self</span><span class="py">.n</span><span class="p">);</span>
+        <span class="k">self</span><span class="nf">.range_update_rec</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">self</span><span class="py">.n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// &amp;mut self: a query may push lazy values down, so it changes the tree.</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">range_sum</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="nb">usize</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i64</span> <span class="p">{</span>
+        <span class="nd">assert!</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">j</span> <span class="o">&amp;&amp;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="k">self</span><span class="py">.n</span><span class="p">);</span>
+        <span class="k">self</span><span class="nf">.range_sum_rec</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">self</span><span class="py">.n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Add v to every entry below u, which covers [l, r].</span>
+    <span class="k">fn</span> <span class="nf">apply</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">i64</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="py">.tree</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i64</span><span class="p">;</span>
+        <span class="k">if</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span> <span class="p">{</span>
+            <span class="k">self</span><span class="py">.lazy</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v</span><span class="p">;</span> <span class="c1">// a leaf has nothing below it</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Move the pending addition of u to its children.</span>
+    <span class="k">fn</span> <span class="nf">push</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">usize</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="k">self</span><span class="py">.lazy</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+            <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+            <span class="k">let</span> <span class="n">v</span> <span class="o">=</span> <span class="nn">std</span><span class="p">::</span><span class="nn">mem</span><span class="p">::</span><span class="nf">take</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="py">.lazy</span><span class="p">[</span><span class="n">u</span><span class="p">]);</span>
+            <span class="k">self</span><span class="nf">.apply</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+            <span class="k">self</span><span class="nf">.apply</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">fn</span> <span class="nf">range_update_rec</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">i64</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">l</span> <span class="o">&amp;&amp;</span> <span class="n">r</span> <span class="o">&lt;=</span> <span class="n">j</span> <span class="p">{</span>
+            <span class="k">self</span><span class="nf">.apply</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span> <span class="c1">// total overlap</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="n">i</span> <span class="p">||</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">l</span> <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span> <span class="c1">// no overlap</span>
+        <span class="p">}</span>
+        <span class="k">self</span><span class="nf">.push</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span> <span class="c1">// partial overlap</span>
+        <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="k">self</span><span class="nf">.range_update_rec</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+        <span class="k">self</span><span class="nf">.range_update_rec</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+        <span class="k">self</span><span class="py">.tree</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="k">self</span><span class="py">.tree</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="k">self</span><span class="py">.tree</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">2</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="k">fn</span> <span class="nf">range_sum_rec</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="nb">usize</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i64</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">l</span> <span class="o">&amp;&amp;</span> <span class="n">r</span> <span class="o">&lt;=</span> <span class="n">j</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">self</span><span class="py">.tree</span><span class="p">[</span><span class="n">u</span><span class="p">];</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="n">i</span> <span class="p">||</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">l</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">self</span><span class="nf">.push</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
+        <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="k">self</span><span class="nf">.range_sum_rec</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="k">self</span><span class="nf">.range_sum_rec</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="persistent-segment-tree">Persistent Segment Tree</h4>
+<p>A data structure is <em>persistent</em> if it keeps all its past versions. Think of time as a counter that starts at \(0.\) Every operation that changes the data structure moves time forward by one. Every query can specify a valid time \(t\) and is answered on the version at time \(t.\) Here, we only update the latest version, while queries can go to any version (<em>partial</em> persistence). With <em>full</em> persistence, we could also update a past version, creating a branch.</p>
+
+<div class="problem">
+
+  <p><strong>Persistent Prefix Sums</strong></p>
+
+  <p><em>We have an array \(A[0,n-1]\) of integers. Time starts at \(0,\) and every update moves it forward by one. We would like to support the following operations:</em></p>
+
+  <ul>
+    <li><em><code class="language-plaintext highlighter-rouge">add(i, v)</code> adds the value \(v\) to the entry \(A[i]\) of the latest version;</em></li>
+    <li><em><code class="language-plaintext highlighter-rouge">range_sum(i, j, t)</code> returns \(\sum_{k=i}^{j} A[k]\) as it was at time \(t,\) i.e., after the first \(t\) updates.</em></li>
+  </ul>
+
+</div>
+
+<p>In our running example \(A = [5, 1, 3, 1, 4, 7, 2, 1],\) we perform <code class="language-plaintext highlighter-rouge">add(3, 10)</code> at time \(1\) and <code class="language-plaintext highlighter-rouge">add(7, 2)</code> at time \(2.\) Then, <code class="language-plaintext highlighter-rouge">range_sum(0, 7, t)</code> is \(24,\) \(34\) and \(36\) for \(t = 0, 1, 2.\) The ranges matter too: <code class="language-plaintext highlighter-rouge">range_sum(2, 3, t)</code> is \(4,\) \(14,\) \(14,\) while <code class="language-plaintext highlighter-rouge">range_sum(4, 7, t)</code> is \(14,\) \(14,\) \(16.\)</p>
+
+<h5 id="attempt-1-copy-everything">Attempt #1: Copy Everything</h5>
+<p>We make a copy of the Segment Tree after every update. A query at time \(t\) is answered on the \(t\)-th copy in \(O(\log n)\) time. However, every <code class="language-plaintext highlighter-rouge">add</code> takes \(\Theta(n)\) time to make the copy, and after \(t\) updates the space usage is \(\Theta(n \cdot t).\)</p>
+
+<h5 id="attempt-2-keep-the-history-of-every-node">Attempt #2: Keep the History of Every Node</h5>
+<p>We exploit the fact that an update changes only \(\Theta(\log n)\) nodes. Every node keeps the list of its values, each with the time at which it was set. An <code class="language-plaintext highlighter-rouge">add</code> appends a new pair to the list of each of the \(\Theta(\log n)\) nodes on its path. The figure below shows the lists after our two updates, with the pairs coloured by the update that created them. Only the nodes on the two paths have more than one value.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/segmenttree/st_persistent_lists.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>An <code class="language-plaintext highlighter-rouge">add</code> takes \(\Theta(\log n)\) time and the space usage is \(\Theta(n + t \log n)\) after \(t\) updates. A query <code class="language-plaintext highlighter-rouge">range_sum(i, j, t)</code> visits the tree as before. In every node with a total overlap, it needs the value of the node at time \(t,\) which is the pair with the largest time that is at most \(t.\) This is a predecessor search, which we solve with a binary search on the list. For example, <code class="language-plaintext highlighter-rouge">range_sum(2, 3, 1)</code> stops at the node \([2,3],\) whose list is \(4@0 \mid 14@1,\) and returns \(14.\) A query takes \(O(\log n \cdot \log t)\) time.</p>
+
+<h5 id="attempt-3-path-copying">Attempt #3: Path Copying</h5>
+<p>We exploit a stronger fact: the \(\Theta(\log n)\) nodes changed by an update lie on a single root-to-leaf path. Instead of modifying these nodes, an <code class="language-plaintext highlighter-rouge">add</code> creates a new copy of each of them. The new copy of a node has one child on the path, which is again a new copy, and one child off the path, which is <em>shared</em> with the previous version. We store the root of each version in an array <code class="language-plaintext highlighter-rouge">roots</code>, indexed by time.</p>
+
+<p>The figure below shows the two updates of our example, with the range of every internal node. The black nodes are the initial version, the red nodes are created by <code class="language-plaintext highlighter-rouge">add(3, 10)</code> and the green ones by <code class="language-plaintext highlighter-rouge">add(7, 2)</code>. Notice that the green root \([0,7]\) has as its left child the red node \([0,3],\) created by the previous version, and the red root has as its right child the black node \([4,7].\)</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/segmenttree/st_persistent_paths.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>Starting from <code class="language-plaintext highlighter-rouge">roots[t]</code>, we see exactly the Segment Tree of the version at time \(t.\) So, a query <code class="language-plaintext highlighter-rouge">range_sum(i, j, t)</code> is a standard <code class="language-plaintext highlighter-rouge">range_sum</code> from <code class="language-plaintext highlighter-rouge">roots[t]</code>, and it takes \(O(\log n)\) time. An <code class="language-plaintext highlighter-rouge">add</code> creates \(\Theta(\log n)\) nodes in \(\Theta(\log n)\) time. After \(t\) updates, the space usage is \(\Theta(n + t \log n).\)</p>
+
+<p>In the implementation, the nodes cannot use the implicit layout anymore, because a node may have several parents. Every node stores the indexes of its children in a vector of nodes.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">#[derive(Debug,</span> <span class="nd">Clone,</span> <span class="nd">Copy)]</span>
+<span class="k">struct</span> <span class="n">Node</span> <span class="p">{</span>
+    <span class="n">sum</span><span class="p">:</span> <span class="nb">i64</span><span class="p">,</span>
+    <span class="n">left</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="c1">// index in `nodes`; unused for leaves</span>
+    <span class="n">right</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="cd">/// Every `add` creates a new version; version 0 is the initial array.</span>
+<span class="nd">#[derive(Debug)]</span>
+<span class="k">pub</span> <span class="k">struct</span> <span class="n">PersistentSegmentTree</span> <span class="p">{</span>
+    <span class="n">n</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span>
+    <span class="n">nodes</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">roots</span><span class="p">:</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">usize</span><span class="o">&gt;</span><span class="p">,</span> <span class="c1">// roots[t] is the root of version t</span>
+<span class="p">}</span>
+
+<span class="k">impl</span> <span class="n">PersistentSegmentTree</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">from_slice</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">i64</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="k">Self</span> <span class="p">{</span>
+        <span class="nd">assert!</span><span class="p">(</span><span class="o">!</span><span class="n">a</span><span class="nf">.is_empty</span><span class="p">());</span>
+        <span class="k">let</span> <span class="k">mut</span> <span class="n">pst</span> <span class="o">=</span> <span class="k">Self</span> <span class="p">{</span> <span class="n">n</span><span class="p">:</span> <span class="n">a</span><span class="nf">.len</span><span class="p">(),</span> <span class="n">nodes</span><span class="p">:</span> <span class="nn">Vec</span><span class="p">::</span><span class="nf">with_capacity</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="nf">.len</span><span class="p">()),</span> <span class="n">roots</span><span class="p">:</span> <span class="nd">vec!</span><span class="p">[]</span> <span class="p">};</span>
+        <span class="k">let</span> <span class="n">root</span> <span class="o">=</span> <span class="n">pst</span><span class="nf">.build</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="nf">.len</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="n">pst</span><span class="py">.roots</span><span class="nf">.push</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+        <span class="n">pst</span>
+    <span class="p">}</span>
+
+    <span class="cd">/// Number of versions (updates performed + 1).</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">versions</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">usize</span> <span class="p">{</span>
+        <span class="k">self</span><span class="py">.roots</span><span class="nf">.len</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="cd">/// A[i] += v on the latest version; returns the new timestamp.</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">add</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">i64</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">usize</span> <span class="p">{</span>
+        <span class="nd">assert!</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="k">self</span><span class="py">.n</span><span class="p">);</span>
+        <span class="k">let</span> <span class="n">last</span> <span class="o">=</span> <span class="o">*</span><span class="k">self</span><span class="py">.roots</span><span class="nf">.last</span><span class="p">()</span><span class="nf">.unwrap</span><span class="p">();</span>
+        <span class="k">let</span> <span class="n">root</span> <span class="o">=</span> <span class="k">self</span><span class="nf">.add_rec</span><span class="p">(</span><span class="n">last</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">self</span><span class="py">.n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+        <span class="k">self</span><span class="py">.roots</span><span class="nf">.push</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+        <span class="k">self</span><span class="py">.roots</span><span class="nf">.len</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="p">}</span>
+
+    <span class="cd">/// A[i] + ... + A[j] as it was at time t.</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">range_sum</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">usize</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i64</span> <span class="p">{</span>
+        <span class="nd">assert!</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">j</span> <span class="o">&amp;&amp;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="k">self</span><span class="py">.n</span> <span class="o">&amp;&amp;</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="k">self</span><span class="py">.roots</span><span class="nf">.len</span><span class="p">());</span>
+        <span class="k">self</span><span class="nf">.range_sum_rec</span><span class="p">(</span><span class="k">self</span><span class="py">.roots</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="k">self</span><span class="py">.n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">fn</span> <span class="nf">new_node</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">sum</span><span class="p">:</span> <span class="nb">i64</span><span class="p">,</span> <span class="n">left</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">right</span><span class="p">:</span> <span class="nb">usize</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">usize</span> <span class="p">{</span>
+        <span class="k">self</span><span class="py">.nodes</span><span class="nf">.push</span><span class="p">(</span><span class="n">Node</span> <span class="p">{</span> <span class="n">sum</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="p">});</span>
+        <span class="k">self</span><span class="py">.nodes</span><span class="nf">.len</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="p">}</span>
+
+    <span class="k">fn</span> <span class="nf">build</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">i64</span><span class="p">],</span> <span class="n">l</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">usize</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">usize</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">l</span> <span class="o">==</span> <span class="n">r</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">self</span><span class="nf">.new_node</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="k">let</span> <span class="n">left</span> <span class="o">=</span> <span class="k">self</span><span class="nf">.build</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">);</span>
+        <span class="k">let</span> <span class="n">right</span> <span class="o">=</span> <span class="k">self</span><span class="nf">.build</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
+        <span class="k">let</span> <span class="n">sum</span> <span class="o">=</span> <span class="k">self</span><span class="py">.nodes</span><span class="p">[</span><span class="n">left</span><span class="p">]</span><span class="py">.sum</span> <span class="o">+</span> <span class="k">self</span><span class="py">.nodes</span><span class="p">[</span><span class="n">right</span><span class="p">]</span><span class="py">.sum</span><span class="p">;</span>
+        <span class="k">self</span><span class="nf">.new_node</span><span class="p">(</span><span class="n">sum</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Path copying: a new copy of every node on the root-to-leaf path of i;</span>
+    <span class="c1">// the child off the path is shared with the previous version.</span>
+    <span class="k">fn</span> <span class="nf">add_rec</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">i64</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">usize</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="n">Node</span> <span class="p">{</span> <span class="n">sum</span><span class="p">,</span> <span class="k">mut</span> <span class="n">left</span><span class="p">,</span> <span class="k">mut</span> <span class="n">right</span> <span class="p">}</span> <span class="o">=</span> <span class="k">self</span><span class="py">.nodes</span><span class="p">[</span><span class="n">u</span><span class="p">];</span>
+        <span class="k">if</span> <span class="n">l</span> <span class="o">==</span> <span class="n">r</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">self</span><span class="nf">.new_node</span><span class="p">(</span><span class="n">sum</span> <span class="o">+</span> <span class="n">v</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">m</span> <span class="p">{</span>
+            <span class="n">left</span> <span class="o">=</span> <span class="k">self</span><span class="nf">.add_rec</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">right</span> <span class="o">=</span> <span class="k">self</span><span class="nf">.add_rec</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">let</span> <span class="n">sum</span> <span class="o">=</span> <span class="k">self</span><span class="py">.nodes</span><span class="p">[</span><span class="n">left</span><span class="p">]</span><span class="py">.sum</span> <span class="o">+</span> <span class="k">self</span><span class="py">.nodes</span><span class="p">[</span><span class="n">right</span><span class="p">]</span><span class="py">.sum</span><span class="p">;</span> <span class="c1">// combine</span>
+        <span class="k">self</span><span class="nf">.new_node</span><span class="p">(</span><span class="n">sum</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">fn</span> <span class="nf">range_sum_rec</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">usize</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="nb">usize</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">i64</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">l</span> <span class="o">&amp;&amp;</span> <span class="n">r</span> <span class="o">&lt;=</span> <span class="n">j</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">self</span><span class="py">.nodes</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="py">.sum</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="n">i</span> <span class="p">||</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">l</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="k">let</span> <span class="n">node</span> <span class="o">=</span> <span class="k">self</span><span class="py">.nodes</span><span class="p">[</span><span class="n">u</span><span class="p">];</span>
+        <span class="k">self</span><span class="nf">.range_sum_rec</span><span class="p">(</span><span class="n">node</span><span class="py">.left</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="k">self</span><span class="nf">.range_sum_rec</span><span class="p">(</span><span class="n">node</span><span class="py">.right</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h5 id="why-should-we-query-the-past">Why Should We Query the Past?</h5>
+<p>A typical use of persistence is to turn a sweep into a data structure. If version \(t\) stores the first \(t\) elements of a sequence, a query on version \(t\) is a query on a prefix of the sequence, and the difference between two versions answers a query on a range of the sequence.</p>
+
+<p>Let’s see an example. We want to answer many queries <code class="language-plaintext highlighter-rouge">count(i, j, x)</code>, each asking for the number of values smaller than \(x\) in \(A[i..j].\) As in the <a href="#an-application-counting-increasing-triplets">triplets</a> application, we use a Segment Tree indexed by value, on an array \(C\) of \(V\) counters, and we scan \(A\) from left to right with an <code class="language-plaintext highlighter-rouge">add(A[t], 1)</code> at every position \(t.\) Version \(t\) is the tree after the first \(t\) additions, so \(C_t[x]\) is the number of occurrences of the value \(x\) in the prefix \(A[0..t-1].\) The occurrences of \(x\) in \(A[i..j]\) are those in the prefix \(A[0..j]\) minus those in the prefix \(A[0..i-1],\) that is, \(C_{j+1}[x] - C_i[x].\) Thus, <code class="language-plaintext highlighter-rouge">count(i, j, x)</code> is <code class="language-plaintext highlighter-rouge">range_sum(0, x-1, j+1)</code> minus <code class="language-plaintext highlighter-rouge">range_sum(0, x-1, i)</code>, two queries on two past versions.</p>
+
+<p>In our running example \(A = [5, 1, 3, 1, 4, 7, 2, 1],\) with \(V = 8,\) consider <code class="language-plaintext highlighter-rouge">count(2, 6, 4)</code>. The range \(A[2..6]\) holds \(3, 1, 4, 7, 2,\) and three of them are smaller than \(4.\) The two versions involved are version \(2,\) after \(5, 1,\) and version \(7,\) after \(5, 1, 3, 1, 4, 7, 2.\)</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        
+
+
+
+<figure>
+  <picture>
+    <!-- Auto scaling with imagemagick -->
+    <!--
+      See https://www.debugbear.com/blog/responsive-images#w-descriptors-and-the-sizes-attribute and
+      https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images for info on defining 'sizes' for responsive images
+    -->
+    
+    <img src="/rossano/assets/img/segmenttree/st_persistent_counts.svg" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });">
+  </picture>
+
+  
+</figure>
+
+
+    </div>
+</div>
+
+<p>The last row counts the values of \(A[2..6].\) Then, <code class="language-plaintext highlighter-rouge">count(2, 6, 4)</code> is</p>
+
+\[(0+2+1+1) - (0+1+0+0) = 4 - 1 = 3,\]
+
+<p>as expected.</p>
+
+<p>Every query costs two <code class="language-plaintext highlighter-rouge">range_sum</code> on past versions, so \(O(\log V)\) time. Without persistence, we would have to keep all the \(n+1\) versions of the counters, i.e., \(\Theta(nV)\) space, or to answer the queries offline, sorted by position, during a single scan. With path copying, all the versions take only \(O(V + n \log V)\) space.</p>
+
+<p>The same idea answers harder queries. For example, the \(k\)-th smallest value in \(A[i..j]\) is found by descending the versions \(j+1\) and \(i\) at the same time, as in <a href="#searching-on-a-segment-tree">searching on a Segment Tree</a>. At every node, the difference of the counters of the two left children tells how many values of \(A[i..j]\) fall in the left half. If they are at least \(k,\) we go left; otherwise we go right, after subtracting them from \(k.\) In our example, the \(2\)nd smallest value in \(A[2..6]\) is \(2:\) the left half \([0,3]\) of the root holds three values of the range (\(1, 2, 3\)), so we go left; there, \([0,1]\) holds one value (\(1\)), so we go right, looking for the \(1\)st smallest value in \([2,3],\) which is \(2.\)</p>
+
+<h4 id="further-readings">Further Readings</h4>
+<ul>
+  <li><a href="https://cp-algorithms.com/data_structures/segment_tree.html" rel="external nofollow noopener" target="_blank">Segment Tree at cp-algorithms</a></li>
+  <li><a href="https://codeforces.com/blog/entry/15890" rel="external nofollow noopener" target="_blank">A Segment Tree tutorial on Codeforces</a></li>
+  <li><a href="https://visualgo.net/en/segmenttree?slide=1" rel="external nofollow noopener" target="_blank">Segment Tree at Visualgo</a></li>
+  <li><a href="https://www.geeksforgeeks.org/lazy-propagation-in-segment-tree/" rel="external nofollow noopener" target="_blank">Lazy propagation in Segment Tree</a></li>
+  <li>
+<a href="https://en.wikipedia.org/wiki/Segment_tree" rel="external nofollow noopener" target="_blank">Segment tree at Wikipedia</a>. Pay attention: the page also describes a different data structure with the same name, used in computational geometry to store intervals.</li>
+</ul>
+
+<h4 id="exercises">Exercises</h4>
+<ul>
+  <li>Solve <a href="https://codeforces.com/problemset/problem/652/D?locale=en" rel="external nofollow noopener" target="_blank">Nested Segments</a> with a Segment Tree.</li>
+  <li>
+<a href="https://codeforces.com/problemset/problem/52/C" rel="external nofollow noopener" target="_blank">Circular RMQ</a>: range add and range minimum, with lazy propagation.</li>
+  <li>Implement a generic Segment Tree, parametrized by the type of the values, the combine function and the neutral element. Use it for range sums, range minimums and minimum with occurrences. On our running example, you should get <code class="language-plaintext highlighter-rouge">range_sum(2, 6)</code> \(= 17,\) <code class="language-plaintext highlighter-rouge">rmq(2, 7)</code> \(= 3,\) and a minimum \(1\) with \(3\) occurrences on the whole array.</li>
+  <li>Extend <code class="language-plaintext highlighter-rouge">search</code> to <code class="language-plaintext highlighter-rouge">search(p, s)</code>, which returns the smallest position \(i \geq p\) such that \(\sum_{k=p}^{i} A[k] \geq s.\) On our running example, <code class="language-plaintext highlighter-rouge">search(2, 8)</code> is \(4.\)</li>
+  <li>Implement range add and range minimum with lazy propagation. On our running example, after <code class="language-plaintext highlighter-rouge">range_update(0, 4, 20)</code>, the minimum of \([0,7]\) is \(1\) and the minimum of \([0,3]\) is \(21.\)</li>
+  <li>With a persistent Segment Tree, answer online the queries “how many values of \(A[i..j]\) are at most \(x\)?”. Hint: insert the positions of \(A\) in increasing order of value. On our running example, there are \(3\) values at most \(2\) in \(A[1..6].\)</li>
+</ul>
+
+<p>These notes are for the <a href="/rossano/competitive/"><em>“Competitive Programming and Contests”</em></a> course at Università di Pisa.</p>
+
+    </div>
+  </article>
+
+  
+
+  
+
+  
+    
+      
+
+  
+    <br>
+    <hr>
+    <br>
+  
+
+  <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2>
+  <p class="mb-2">Here are some more articles you might like to read next:</p>
+
+  <ul class="list-disc pl-7 my-3 space-y-2 marker:text-[var(--global-theme-color)]">
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2026/pearls/">Tiny but Mighty: Super-Short, Super-Clever Algorithms</a>
+        
+      </li>
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2024/handson3/">HandsOn 3</a>
+        
+      </li>
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2024/handson2/">HandsOn 2</a>
+        
+      </li>
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2024/handson12425/">HandsOn 1</a>
+        
+      </li>
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2023/mosalgorithm/">Mo's Algorithm</a>
+        
+      </li>
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2023/fenwick/">Dynamic Prefix Sums with Fenwick Tree</a>
+        
+      </li>
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2023/prefixsums/">The Power of Prefix Sums</a>
+        
+      </li>
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2023/sweepline/">Sweep Line Algorithm</a>
+        
+      </li>
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2023/binarysearch/">Applications of Binary Search</a>
+        
+      </li>
+    
+      <li class="leading-relaxed">
+        
+          <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/rossano/blog/2023/swm/">Sliding Window Maximum</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+    
+  
+
+  
+    
+<div id="giscus_thread" style="max-width: 1200px; margin: 0 auto;">
+  <br>
+  <script>
+    (function setupGiscus() {
+      function determineGiscusTheme() {
+        var theme = localStorage.getItem("theme") || document.documentElement.getAttribute("data-theme") || "system";
+if (theme === "dark") return "dark";
+if (theme === "light") return "light";
+var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+return prefersDark ? "dark" : "light";
+
+      }
+
+      var giscusTheme = determineGiscusTheme();
+      var attrs = {
+        src: "https://giscus.app/client.js",
+        "data-repo": "rossanoventurini/webpage",
+        "data-repo-id": "R_kgDOKRTPSw",
+        "data-category": "General",
+        "data-category-id": "DIC_kwDOKRTPS84CZ7tz",
+        "data-mapping": "title",
+        "data-strict": "1",
+        "data-reactions-enabled": "1",
+        "data-emit-metadata": "0",
+        "data-input-position": "bottom",
+        "data-theme": giscusTheme,
+        "data-lang": "en",
+        crossorigin: "anonymous",
+        async: true
+      };
+
+      var giscusScript = document.createElement("script");
+      Object.entries(attrs).forEach(function(entry) { giscusScript.setAttribute(entry[0], entry[1]); });
+      var host = document.getElementById("giscus_thread");
+      if (host) host.appendChild(giscusScript);
+    })();
+  </script>
+  <noscript>
+    Please enable JavaScript to view the
+    <a href="http://giscus.app/?ref_noscript" rel="external nofollow noopener" target="_blank">comments powered by giscus.</a>
+  </noscript>
+</div>
+
+
+  
+</div>
+
+      
+    </div>
+
+    <!-- Footer -->
+    
+
+
+  <footer class="sticky-bottom mt-5" role="contentinfo">
+    
+
+    <div class="container">
+      
+  © Copyright 2026
+  Rossano
+  
+  Venturini. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme.
+
+  
+  
+
+    </div>
+  </footer>
+
+
+
+    <!-- JavaScripts -->
+    <script>
+  window.alFolio = {
+    compatBootstrap: true
+  };
+</script>
+
+<!-- Core navigation/runtime scripts -->
+<script src="/rossano/assets/js/nav-toggle.js?141bd79a73ebc0f0b6ea58e440ae79fc"></script>
+
+  <script src="/rossano/assets/js/bootstrap-compat.js?b5579a3408e7c44d505c6a9755578409"></script>
+
+
+
+  <!-- Masonry & imagesLoaded -->
+  <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script>
+  <script defer src="/rossano/assets/js/masonry.js?e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script>
+
+
+
+  <!-- Charts and Diagrams -->
+  
+
+
+
+
+
+
+
+  <!-- Math and Tikzjax -->
+  
+<script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script>
+<script src="/rossano/assets/al_math/js/mathjax-setup.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script>
+
+
+
+
+
+<!-- Tooltips & popovers runtime -->
+<script src="/rossano/assets/js/tooltips-setup.js?fe487e99db6c43751e6e7bdb2d6a0611"></script>
+
+
+
+
+
+
+<!-- Load Common JS -->
+<script src="/rossano/assets/js/no_defer.js?53b1b1a645525975c963ce8bf8bfefcf"></script>
+<script defer src="/rossano/assets/js/common.js?87baac90f765f2f3362dcf6aaf312a8a"></script>
+<script defer src="/rossano/assets/js/copy_code.js?c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script>
+
+<!-- Jupyter Open External Links New Tab -->
+<script defer src="/rossano/assets/js/jupyter_new_tab.js?896d254890d9b47f0281f63bfccf0dee"></script>
+
+<!-- Badges -->
+
+  <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
+
+
+  <script async src="https://badge.dimensions.ai/badge.js"></script>
+
+
+
+
+  <!-- Analytics -->
+  
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LRWXE6TB2L"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    window.dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+  gtag("config", "G-LRWXE6TB2L");
+</script>
+
+<!-- Cronitor RUM -->
+<script async src="https://rum.cronitor.io/script.js"></script>
+<script>
+  window.cronitor =
+    window.cronitor ||
+    function () {
+      (window.cronitor.q = window.cronitor.q || []).push(arguments);
+    };
+  cronitor("config", { clientKey: "e35e6134ceef91b419bad00adc81df84" });
+</script>
+
+
+
+
+
+  <!-- Image Features -->
+  
+<!-- Medium Zoom JS -->
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+<script defer src="/rossano/assets/al_img_tools/js/zoom.js"></script>
+
+
+
+
+
+  <!-- Scrolling Progress Bar -->
+  <script defer src="/rossano/assets/js/progress-bar.js?499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script>
+
+
+
+
+
+  <!-- Back to Top -->
+  
+  
+  
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script>
+  
+  <script>
+    addBackToTop();
+  </script>
+
+
+
+  <!-- Search -->
+  
+    
+<script type="module" src="/rossano/assets/al_search/js/search/ninja-keys.min.js"></script>
+<ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys>
+<script src="/rossano/assets/al_search/js/search-setup.js"></script>
+<script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "About",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/rossano/";
+    },
+  },{id: "nav-blog",
+          title: "Blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/rossano/blog/";
+          },
+        },{id: "nav-publications",
+          title: "Publications",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/rossano/publications/";
+          },
+        },{id: "dropdown-competitive-programming-and-contests",
+              title: "Competitive Programming and Contests",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/rossano/competitive/";
+              },
+            },{id: "dropdown-teaching-activity",
+              title: "Teaching activity",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/rossano/courses/";
+              },
+            },{id: "post-segment-tree",
+        
+          title: "Segment Tree",
+        
+        description: "The Segment Tree is the Swiss army knife of range queries. It answers range sums, range minimums and many other range queries on a dynamic array in logarithmic time. In these notes we build it on a running example, analyze it, and extend it with lazy propagation and persistence, with a Rust implementation.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2026/segmenttree/";
+          
+        },
+      },{id: "post-tiny-but-mighty-super-short-super-clever-algorithms",
+        
+          title: "Tiny but Mighty: Super-Short, Super-Clever Algorithms",
+        
+        description: "Six small problems with surprising solutions. The riddle of the 100 prisoners, a duplicate found in constant space, Floyd&#39;s cycle finding, the majority element, the Misra-Gries heavy hitters, and dominoes on a chessboard. Each one is followed on a running example, with proofs, complexities and Rust code.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2026/pearls/";
+          
+        },
+      },{id: "post-handson-3",
+        
+          title: "HandsOn 3",
+        
+        description: "Third hands-on for the course Competitive Programming and Contests at University of Pisa",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2024/handson3/";
+          
+        },
+      },{id: "post-handson-2",
+        
+          title: "HandsOn 2",
+        
+        description: "Second hands-on for the course Competitive Programming and Contests at University of Pisa",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2024/handson2/";
+          
+        },
+      },{id: "post-handson-1",
+        
+          title: "HandsOn 1",
+        
+        description: "First hands-on for the course Competitive Programming and Contests at University of Pisa",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2024/handson12425/";
+          
+        },
+      },{id: "post-mo-39-s-algorithm",
+        
+          title: "Mo&#39;s Algorithm",
+        
+        description: "The Mo&#39;s Algorithm is a powerful and efficient technique for solving a wide variety of range query problems. It becomes particularly useful for kinds of queries where the use of a Segment Tree or similar data structures is not feasible.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2023/mosalgorithm/";
+          
+        },
+      },{id: "post-dynamic-prefix-sums-with-fenwick-tree",
+        
+          title: "Dynamic Prefix Sums with Fenwick Tree",
+        
+        description: "The Fenwick Tree, also known as the Binary Indexed Tree (BIT), efficiently manages the prefix sum of an array, even as it undergoes updates. In these notes, we introduce this elegant data structure and describe a basic Rust implementation.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2023/fenwick/";
+          
+        },
+      },{id: "post-the-power-of-prefix-sums",
+        
+          title: "The Power of Prefix Sums",
+        
+        description: "Prefix sums offer an elegant and efficient solution to a variety of problems. In these notes, we showcase several such problems and provide their solutions with Rust implementations.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2023/prefixsums/";
+          
+        },
+      },{id: "post-sweep-line-algorithm",
+        
+          title: "Sweep Line Algorithm",
+        
+        description: "The Sweep Line Algorithm is a powerful paradigm for solving a variety of problems in computational geometry. In these notes, we employ it to address problems both on a line and in a plane, providing Rust implementations for their solutions.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2023/sweepline/";
+          
+        },
+      },{id: "post-applications-of-binary-search",
+        
+          title: "Applications of Binary Search",
+        
+        description: "Binary search is undeniably one of the most renowned and fundamental algorithms in computer science. In these notes, we delve into problems that can be solved using the idea of &#39;Binary Searching for the Answer&#39;.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2023/binarysearch/";
+          
+        },
+      },{id: "post-sliding-window-maximum",
+        
+          title: "Sliding Window Maximum",
+        
+        description: "The Sliding Window Maximum problem is a classic algorithmic challenge that involves processing an array in a sliding window fashion. The goal is to find the maximum element within a fixed-size window as it moves through the array. In these notes, we describe several possible solutions to this problem and their implementations in Rust.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/rossano/blog/2023/swm/";
+          
+        },
+      },{
+        id: 'social-email',
+        title: 'email',
+        section: 'Socials',
+        handler: () => {
+          window.open("mailto:%72%6F%73%73%61%6E%6F.%76%65%6E%74%75%72%69%6E%69@%67%6D%61%69%6C.%63%6F%6D", "_blank");
+        },
+      },{
+        id: 'social-rss',
+        title: 'RSS Feed',
+        section: 'Socials',
+        handler: () => {
+          window.open("/rossano/feed.xml", "_blank");
+        },
+      },{
+        id: 'social-github',
+        title: 'GitHub',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://github.com/rossanoventurini", "_blank");
+        },
+      },{
+        id: 'social-x',
+        title: 'X',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://twitter.com/rventurini_", "_blank");
+        },
+      },{
+        id: 'social-linkedin',
+        title: 'LinkedIn',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://www.linkedin.com/in/rossano-venturini-ab043089", "_blank");
+        },
+      },{
+        id: 'social-telegram',
+        title: 'telegram',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://telegram.me/rossanoventurini", "_blank");
+        },
+      },{
+        id: 'social-scholar',
+        title: 'Google Scholar',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://scholar.google.com/citations?user=FhcyCswAAAAJ", "_blank");
+        },
+      },{
+        id: 'social-orcid',
+        title: 'ORCID',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://orcid.org/0000-0002-9830-3936", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script>
+<script src="/rossano/assets/al_search/js/shortcut-key.js"></script>
+
+
+  
+
+
+
+
+  </body>
+</html>

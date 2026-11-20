@@ -115,6 +115,15 @@ mod tests {
     }
 
     #[test]
+    fn notes_2026_example() {
+        // same example as l15::prof_blog: range_update(0, 4, 20), then range_sum(0, 2) = 69
+        let mut t = LazyTree::new(&[5, 1, 3, 1, 4, 7, 2, 1]);
+        t.range_update(0, 4, 20);
+        assert_eq!(t.pending(2), 20); // node [0,3] (root = 1 here)
+        assert_eq!(t.range_sum(0, 2), 69);
+    }
+
+    #[test]
     fn random_vs_naive() {
         let mut rng = Rng(0x1A2_7E5);
         for _ in 0..300 {

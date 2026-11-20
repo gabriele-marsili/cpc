@@ -1,19 +1,26 @@
-//! L15 (Wednesday 04/11/2026) — PROVISIONAL RECONSTRUCTION: no recording, no notes of Octech yet.
-//! Contents guessed from where L14 stopped ("next lecture we conclude the segment tree presenting many
-//! other problems, starting from #occs") and from the prof's 2025 notes `Lessons/L13/Segment_tree_2025.pdf`
-//! p.9-19, in their order. Notes in L15.pdf. To be redone on the recording when it comes out.
+//! L15 — segment tree (end) and Mo's algorithm. Notes in L15.pdf.
+//! Part I (#occs, successor, triplets, lazy): from the prof's 2026 notes "Segment Tree" (not in the recording;
+//! probably the unrecorded lecture of 04/11). Part II (persistent segment tree, Mo's algorithm): from the
+//! recording L_15.MP4 (recorded on 16/11/2026, file metadata) and the prof's notes.
 //!
 //! - `occs`: #occs(i, j, x) with a hash map in every node (2025 p.9)
 //! - `successor`: Successor(i, j, x) with a sorted multiset (BST) in every node (2025 p.10-11)
 //! - `triplets`: count i < j < k with A[i] < A[j] < A[k], Θ(n log n) with Fenwick trees (2025 p.12-13)
 //! - `lazy`: RangeUpdate(i, j, v) + RangeSum with lazy propagation (2025 p.14-15)
-//! - `persistent`: Add + RangeSum(i, j, t) on every past version, path copying (2025 p.16-19)
+//! - `persistent`: Add + RangeSum(i, j, t) on every past version, path copying (lecture + notes)
+//! - `mo`: Mo's algorithm, the PROF's code from the blog "Mo's Algorithm" (2023), verbatim, with tests on the lecture
+//! - `past`: "why query the past" — count(i, j, x) and k-th smallest with versions indexed by value (2026)
+//! - `prof_blog`: the PROF's code from the 2026 notes, verbatim (SegmentTree, LazySegmentTree,
+//!   PersistentSegmentTree), with tests on all the numbers of his examples
 //!
-//! [extra] All the code is mine (the prof has no code for these); 0-based positions as on the board.
+//! [extra] Everything except `prof_blog` is mine; 0-based positions.
 
 pub mod lazy;
+pub mod mo;
 pub mod occs;
+pub mod past;
 pub mod persistent;
+pub mod prof_blog;
 pub mod successor;
 pub mod triplets;
 

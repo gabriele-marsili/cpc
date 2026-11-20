@@ -1,0 +1,890 @@
+# Automatic transcript (sherpa-onnx, parakeet-tdt-0.6b) of L_15.MP4 (file metadata: recorded on 16/11/2026), the lecture filed as L15. NOT revised: terms are often garbled (e.g. "signatory/segmentary" = segment tree, "Moore/Moh/Bull's algorithm" = Mo's algorithm, "bias(ed) tree/biosearch" = binary search (tree), "Logan/login" = log n).
+[000:00] Yeah.
+[000:02] Okay, so we can we we can uh change the the structure and move the time stamps the time stamp on
+[000:09] uh or the time, so adding uh and adding one for each for each update, or we can query the data structure in the past.
+[000:21] Get exactly the same answer as you get in the past. So, for example,
+[000:28] Uh you can have uh a range sum.
+[000:32] Which as as the original one asked for
+[000:37] Arranger.
+[000:39] plus the timestamp
+[000:42] Which which uh is
+[000:46] Uh so you ask for the sum
+[000:51] From up to J
+[000:56] At time.
+[000:58] Uh t. So as it was a tiny.
+[001:04] Is this uh this is this convincing?
+[001:07] Okay? So having having this notion of time allows us to solve problems with the uh data structure that we already know.
+[001:19] Because the time may act like a extra half dimension.
+[001:26] So you can uh use time as an extra dimension and you can uh query uh uh use t uh for this. So let's uh for example consider
+[001:42] The purchase per chip stands of
+[001:47] Uh rainy summer.
+[001:52] Here you are given the array.
+[001:59] from zero to m minus one.
+[002:02] And you want to add the
+[002:05] Uh
+[002:07] Evaluate any position. This is the update that changes also the time.
+[002:12] But you also have the range sum
+[002:17] in which you have the interval and the time.
+[002:21] So your query is
+[002:25] as it was at time t.
+[002:29] Okay.
+[002:31] Let's start uh
+[002:34] presenting possible solutions.
+[002:38] What's the easiest solution you may think of?
+[002:53] Any idea?
+[003:03] Okay, let's uh
+[003:04] This is too too sophisticated. Uh no, no, no, for the moment.
+[003:10] Uh let's uh uh consider a trivial solution now.
+[003:16] And the trivial solution make a copy
+[003:21] of
+[003:23] The uh signatory
+[003:27] After
+[003:30] each update.
+[003:34] Okay. What's uh what's the pro of this solution?
+[003:40] Well the problem of this solution is that uh
+[003:42] Uh the cost of range sum.
+[003:47] i j t is exactly
+[003:52] Logan.
+[003:54] as it was before.
+[003:56] Okay. What's the con?
+[004:00] All these.
+[004:03] There are two.
+[004:05] Odd.
+[004:07] Takes how much time does it take adding an element now?
+[004:18] Linear time.
+[004:21] Space. What's the space we are using?
+[004:28] What's the space we are using?
+[004:31] Well, every time we make an update we have to uh spend a linear linear space.
+[004:40] So
+[004:43] So we have space TN.
+[004:49] After
+[004:55] Yeah?
+[005:01] Okay, so these are the two main problems of these solutions. Too much space, too much time for the art.
+[005:09] Now we can think about uh a clever solution.
+[005:17] Number two. What you were suggesting to use
+[005:36] Mm-hmm.
+[005:39] Makes sense. Let me copy the segment trick.
+[006:17] Okay, what we want to exploit uh
+[006:39] This is what you would like to exploit.
+[006:42] So you are suggesting to add a map that for each add
+[006:48] uh maps uh the timestamp to its original value.
+[006:58] What do you think?
+[007:06] Okay, let's say we are performing two ALT operations.
+[007:10] The first one
+[007:12] Add the
+[007:27] Then
+[007:29] Okay. What we are changing uh is the part from uh that leaf uh to the root, right?
+[007:38] In the normal segmentary we
+[007:42] we update all the notes.
+[007:44] Okay? Now we want instead to remember the timestamp.
+[007:51] So we have T.
+[007:53] That grows to one now because we have an add. I want to remember that one
+[008:00] The value changed to position fourteen.
+[008:05] Okay. Then uh here I want to remember that uh the value changed uh to okay, this is not uh correct uh segment tree.
+[008:17] Don't know why.
+[008:20] No, no, it's correct. So this is a minus two. Okay, okay.
+[008:25] Okay. So one change to
+[008:29] Twelve?
+[008:32] Uh at time stamp one this changes to sixteen. Time stamp one this changes to thirty seven.
+[008:46] Is this correct? Okay, now
+[008:50] In other ada.
+[008:53] I don't know. Seven
+[008:56] Twenty.
+[008:57] These changes to twenty.
+[009:01] This changes to
+[009:04] uh twenty two. This changes to
+[009:08] forty forty one and this changes to
+[009:16] Forty one.
+[009:18] No, forty-seven.
+[009:21] Are you with me?
+[009:23] Yes or no?
+[009:26] You are not.
+[009:27] Okay, we are trying to support these two operations. Add
+[009:33] And uh uh rangers.
+[009:37] which takes now al j and a time step.
+[009:42] Every time you modify the metrics, you are increasing by one at a time step.
+[009:48] Okay. And then we want to ask the query as it was a tennis time step you want.
+[009:57] You keep changing the segment tree and for each possible segmentary you want to query in the past.
+[010:05] Okay?
+[010:07] It's called persistent because uh because it uh preserves the changes over the time.
+[010:15] Okay.
+[010:17] The first attempt consists in every after every operation you uh make a copy of the segment tree. So you have uh many copies of the original segment tree after each uh change. It's uh too expensive in terms of uh both time and space because the other takes linear time and
+[010:43] and the space is TN after the updates.
+[010:50] Okay, attempt number two tries to improve uh this situation.
+[010:56] So he suggests to remember
+[010:59] After in every number, remember what are the changes we have made and the time stamp at which that that change has been made.
+[011:12] Okay. So initially the numbers will present zero.
+[011:18] And after
+[011:20] After we go over the faster and
+[011:24] Together, we will use a new value we also stole, the new value, and the performing test.
+[011:32] Fourteen is the minute. The timestamp of course goes one by one. Okay? What we are exploring here, rather than copying entirely seventy-three, which is uh essentially almost uh equal to the original one because we have only log n changes, here we want to set things and remember only log n uh changes.
+[011:59] Is this convincing?
+[012:02] He suggested to store these hand stamps into a hash path. Okay?
+[012:10] Is it uh correct?
+[012:14] Not using.
+[012:17] Well let's start with a wheel.
+[012:19] So let's say I want some in a range. And let's say the age is different.
+[012:29] And the timestamp is one. So I want a period in this region for timestamp one.
+[012:38] Well, I start here, I ask for one instance.
+[012:44] Extra don't need his back.
+[012:47] Okay? It's a partial level.
+[012:52] Find boy here.
+[012:55] I don't need this because it's partial result. I'm going here, total result.
+[013:02] What's today?
+[013:04] Well I have an hash mark, let's ask for one. Thanks then one is not there.
+[013:12] So
+[013:20] Yeah.
+[013:23] I love you.
+[013:25] The the key that is equal or smaller than the timestamp. Yes. Okay, yeah. So essentially we want to store not a an hash map, but we want to store a list of fails.
+[013:43] Sorted.
+[013:45] which is zero twenty one
+[013:49] Two
+[013:51] 41, so a list of pairs sorted by timestamp.
+[013:57] Right?
+[014:00] the same year. So zero, twenty one, two
+[014:04] Twenty-two and so on.
+[014:07] Okay.
+[014:09] Keeping these updated in sorted order is pretty easy because the time temp time step grows. So every time I just need to update to to append the new value at the end.
+[014:23] Right?
+[014:24] If I want to know what's the value that we can which corresponds to the timestamp I'm looking for,
+[014:32] If I'm looking for one, I'm just searching for the predecessor of one in the text.
+[014:39] The decision of one here is zero to the value of one at times time one is the one at zero, which is twenty one.
+[014:50] Okay? So what's the sun? In this rain, a quick position uh
+[014:58] Five cents worth of one is not worth one. But one is five.
+[015:03] Right.
+[015:05] Of course, 21 was in the previous note, it's two years.
+[015:13] We have no bug chatter today, so
+[015:18] Uh so yeah.
+[015:21] Thanks Shankar. Uh one more conversation with Ziggler Crew is yet.
+[015:26] Yeah, good.
+[015:30] What's the rally time at this point? So what's the space? Let's start with space.
+[015:42] Well speaker
+[015:44] Inch.
+[015:48] n because of the initial segment tree.
+[015:52] plus t
+[015:56] Because we are paying something for each update. And for each update, how much ti uh how much space do we do we pay? Well we are we are modifying log n nodes and for each of these log n nodes we are appending a value at the end. Okay? So we have T log n space.
+[016:22] Yeah?
+[016:25] What about time?
+[016:28] Well, what's the running time of uh add?
+[016:39] So again, because we start uh we start from the leaf, we go up and we append at every step the new pair at the end of the list of the notes we are touching.
+[016:52] So so this is log n
+[017:00] So so far?
+[017:01] We are very happy for this and we are also very happy for this. What about range?
+[017:16] What do you think?
+[017:29] I
+[017:31] J
+[017:33] Okay.
+[017:38] Okay, what we have to do? We have uh to run uh the same algorithm uh as any any segment tree, reach a
+[017:50] Uh the frontier of total overlaps, overlapping nodes.
+[017:57] Once we have these nodes, for each of them we have to ask what was the value valid at that node at timestamp T.
+[018:07] And this can be done by doing a predecessor search. Since we have log n of these total overlapping nodes, for each of them the cost is what? Is actually log T.
+[018:22] Okay, which is uh
+[018:28] part of so log log n times log t.
+[018:37] Okay? I was also convinced that to log square n before doing the the literally.
+[018:46] We should call it a thinking now.
+[018:49] chain of thoughts.
+[018:58] Uh okay. Let's say I'm asking you f what the range sum of this is at ti a certain time p.
+[019:11] Okay? So this is covered by this node, this note and this if.
+[019:18] For each of them you have a list of
+[019:22] Change.
+[019:24] And how many changes do we have for each note?
+[019:28] At mostly. For each of them I'm looking for the predecessor of the cellular time tractor.
+[019:36] But the sense here costs not T because we have a T T changes.
+[019:45] And n and log n is log n because we have log n instance.
+[019:50] So no matter these ones, we each know the plugin.
+[020:00] Okay, A because of the original symmetry. T is because uh P is the number of uh uh updates we have done.
+[020:12] And for each update common node to retouch, you are getting.
+[020:18] And for each of these login nodes, let's say this one, we are appending a value, a pile of values actually, at the end of the list.
+[020:29] Yeah.
+[020:31] Instead of the list, it should be the arm.
+[020:40] Minus three is the C.
+[020:43] Okay.
+[020:49] PSH3 is the same because by research
+[020:58] is a dynamic version of the binary side.
+[021:04] So you have to use bio-research trees only when you need updates.
+[021:12] January pits.
+[021:14] If you have updates, but these are very particular updates and you can uh just append at the end then there is no need of all the machinery introduced by biocepstreets.
+[021:29] Okay.
+[021:30] So biased is a weapon and biased tree is like a cannon.
+[021:40] Easy sorted sortable list in which you have to modify it but just append because you know that appending is enough to preserve the order. If appending is not enough to preserve the order, then you have to use bias of strings in which you append at any position you want. Append insert.
+[022:05] Use case and just an egg.
+[022:08] Exactly. Exactly. Biosearch trees are the complicated stuff you have to do in order to make biosearch dynamic.
+[022:24] If you don't need to to make it dynamic, just use uh bias touch.
+[022:30] Okay.
+[022:39] This convincing? Okay. So we are very happy because of the f the other two, but this makes us a little bit sad. Okay? Why? Well, because of the log t factor in the period. Can we do better?
+[023:01] Yes, we can do
+[023:14] Okay, what uh let's uh re revisit our solutions once again. What we were exploiting in attempt number one.
+[023:24] Essentially nothing.
+[023:26] You can implement any data structure and make it persistent just by having many copies of that data structure. So what we were using? Nothing.
+[023:38] What we were using in uh obtained number two.
+[023:43] Well, in attempt number two we were exploiting the fact that after every single ad, we were modifying only log n.
+[023:56] Log n notes.
+[023:59] Okay.
+[024:01] Notice.
+[024:02] that these infrastructure
+[024:05] approach in the interstructure.
+[024:08] Walks even if they look in not swamp of pen.
+[024:12] Ah, one idea.
+[024:15] One ear and one ear.
+[024:21] Does it
+[024:24] possible that the Nando Pellecio changes logena random nodes in the s in the second.
+[024:32] Bark.
+[024:33] F number two.
+[024:36] Works are even in faith.
+[024:39] It would chalk date.
+[024:46] So this essential says that this attempt is more powerful than what we need.
+[024:54] Okay? We don't need to update log n random selected nodes. We just need uh to update uh log n nodes which are
+[025:05] one after the other, from the root to a leaf.
+[025:10] Okay. So often, most of the time
+[025:16] If you have a solution and you want to improve it,
+[025:20] What you have to consider is
+[025:23] Is this solution powerful than what I need? So is there anything this data structure is able to do, but I don't need this?
+[025:34] Because if it is the case, then you have to try to break it.
+[025:40] remove so design a different data structure which is not able to be so powerful. Okay? Because being powerful has a cost. Okay? In this case,
+[025:54] The
+[025:56] Power! Extra power of the little scientific meantime somebody's looking doctor.
+[026:04] Two, you can change any node, any login nodes uh in our field.
+[026:11] Don't need it, okay?
+[026:18] So the point is, do we need this power? No. Let's try
+[026:24] Destroy the mean the properties that we have in order to remove this notify.
+[026:30] I'm not sure if I can do it.
+[026:32] Good.
+[026:35] Okay, let's see what we can do.
+[026:39] Let me copy the three and the two operations we are performing.
+[026:46] Yeah.
+[026:50] So what we are exploiting here
+[027:00] Logan.
+[027:03] Nodes huh?
+[027:07] are in a part.
+[027:11] Okay, that's what uh we know.
+[027:15] Okay. Uh so let me remove this.
+[027:25] I think it's a very good thing.
+[027:33] Okay.
+[027:35] Let's first uh support uh this ad. Okay?
+[027:41] What we do?
+[027:43] Is to
+[027:46] So we know we are in a segment tree, so the segment tree always starts
+[027:51] Starts from the root.
+[027:54] Okay.
+[027:56] Ian
+[027:58] We remember
+[028:01] The roots.
+[028:04] of our segment trees. So a pointer to the root
+[028:09] Initially we only have uh one root. So let's point let's this point to this uh so this is the time t, okay? So this is time t z zero. Then we have time t one and then two
+[028:24] Three and so on.
+[028:27] We have one root for each time stamp.
+[028:30] If you want to query the segment tree at a certain time t, you have to uh start from the the root timestamp.
+[028:40] Tree, for example. Okay?
+[028:43] Are you with me?
+[028:46] Okay, now let me uh add three
+[028:52] Imposition ten. No. Ten imposition three.
+[028:57] Okay. What I'm doing is to duplicate.
+[029:03] Then older.
+[029:05] Every node I'm modifying, well, I make it a ma I make a copy of it.
+[029:11] So we are modifying the leaf here, Lavelet with four.
+[029:18] Uh and we are changing it uh
+[029:21] Two, sorry, plus ten, so forty.
+[029:25] Okay.
+[029:28] Good. Let's reserve the children.
+[029:33] Do we have the children here? No, so do nothing.
+[029:38] What's the pattern?
+[029:40] Well the parent is node two.
+[029:45] Are we changing it? Yes, we are changing it. So let's.
+[029:51] Put another node with the new value for the node, which is twelve.
+[029:58] Okay.
+[030:00] These twelve points uh to the new node that we just created.
+[030:06] Okay, on the right. What about the left?
+[030:11] Well, the left is not changed, so let's let this point uh to the original
+[030:19] Uh
+[030:20] Length the child.
+[030:22] Okay. So essentially the idea is every normal changing uh let's add the news.
+[030:30] We'll be fine.
+[030:32] Then go to the pile. If I'm changing the pipe, let's have the new number and let's connect the the new number
+[030:40] The new child.
+[030:43] on the correct side, in this case right
+[030:46] Of the left, nothing changed for a sixth point.
+[030:51] This is no longer a tree, right?
+[030:55] Because you are making copies of the notes.
+[031:01] Okay, so next six six is going to be changed. So let's uh
+[031:10] Let me create a new node sixteen
+[031:16] which is connected to twelve volts.
+[031:19] What about left?
+[031:22] Nothing's changed, so we let this point to this.
+[031:27] Move to the parent, twenty seven becomes uh thir
+[031:33] comes thirty seven pointing left
+[031:38] and pointing right.
+[031:42] And we have a new root now. Let's
+[031:48] Use a new pointer here.
+[031:51] Okay. So if you ask me range sun.
+[031:57] Phone.
+[031:59] For time step zero, I start from here, reach this if and uh re reach this root. Starting from this root, I can use the original segment. Red nodes are not there.
+[032:16] Do you agree on this?
+[032:19] Yes or no?
+[032:22] For time center one, I start from this view.
+[032:28] This route excludes the node on this part.
+[032:35] That's how I change.
+[032:37] Because they knew.
+[032:39] Part is represented here.
+[032:43] All the other parts are correctly reachable.
+[032:52] So, depending on which known
+[032:57] from which cell you start from for from you see one tree or the other.
+[033:04] Is this convincing?
+[033:06] Good. Okay, so now.
+[033:11] What if I do add?
+[033:15] from this cell here.
+[033:19] Well
+[033:21] I'm creating new nodes.
+[033:24] For example, this one with twenty.
+[033:28] connected to its parent, which is twenty two now.
+[033:33] Same left child as before. This one becomes forty-one and it's connected like this.
+[033:44] Finally, I have the new root, which is what?
+[033:49] Forty, seven,
+[033:53] Connected to this one, huh?
+[033:58] and connected to this one.
+[034:00] Notice that when when I'm updating uh
+[034:04] Tagging three.
+[034:06] I'm starting from
+[034:08] The last route I have.
+[034:13] Okay.
+[034:16] Can you see the green part?
+[034:22] This convincing?
+[034:24] Okay, so pretty elegant solution for the problem.
+[034:28] Which at the beginning seems to be very hard. At the beginning seems to that
+[034:35] uh that uh doing the the attempt number one, which copies everything, seems to be the only approach.
+[034:49] Fifty-seven, yeah, yeah, yeah.
+[034:57] I'm using these tricks uh to
+[035:00] Check.
+[035:03] Fifty-seven bytes.
+[035:06] Yeah.
+[035:11] Uh you had the question?
+[035:14] Okay, the same. Okay, yeah, thank you.
+[035:19] This convincing?
+[035:21] Okay, what's the running time of the add?
+[035:25] Logan.
+[035:27] What's the running time of rain sum?
+[035:30] Logan.
+[035:32] What's this piece?
+[036:00] Tilogan.
+[036:04] n plus
+[036:07] T
+[036:08] Login.
+[036:11] As before.
+[036:15] Exactly as before, because for every for every node in the path,
+[036:22] a new no which takes custom as a
+[036:27] Yeah.
+[036:28] Great.
+[036:36] Uh you don't understand the result often.
+[036:42] What do you mean?
+[036:48] Okay. We are
+[036:51] Maybe. Let's
+[036:54] Okay. Uh we have to ask.
+[037:00] Which means the copy
+[037:03] The need for plus twenty but
+[037:07] Go to the current the current of the Asia Leaf, which is two.
+[037:12] Uh actually this algorithm we run uh starting from the root, because we want to start from the red one. Anyway, two, make a cop of twenty two, connected twenty and two, that's
+[037:30] Uh twenty-one.
+[037:32] Plus twenty
+[037:36] Forty one, twenty two.
+[037:39] I am
+[037:44] You are
+[037:46] Don't be sad enough.
+[037:49] That's 1957 and 1941 at that moment.
+[038:00] Seeing?
+[038:01] The three rooms
+[038:08] After bed, you like to ingredient.
+[038:12] Uh the dream is not connected between that pipeline.
+[038:17] I'm taking this note and connecting this and creating the output in which the the water, yeah. Connected here.
+[038:30] To bug your chattel.
+[038:36] Yes, not twelve.
+[038:42] Okay.
+[038:43] Yes.
+[038:45] So the rule is I copy in the node, keep the other child as it is, add the new node as the correct other child.
+[039:01] Questions? Other issues? No.
+[039:11] Okay.
+[039:13] So
+[039:15] Uh
+[039:20] Yeah, so let's move on. So so far we have seen uh range queries with fang width tree, which is able to solve uh queries
+[039:34] Related to some
+[039:37] uh in uh in an array. Then we move to segment tree in which you can solve queries
+[039:49] Range queries in an array
+[039:52] similarly to FengWitree in the same space, but the great advantage of segment tree is that you can easily modify it so that it solves many other many other problems. Like
+[040:10] Mean max uh
+[040:14] according to range uh and so on.
+[040:17] All the queries that can be solved by splitting the range into subranges
+[040:25] And such that the result that you get for the whole range can be computed by taking the pieces
+[040:34] of the answer in the subranges and combine them together.
+[040:39] Okay? This is particularly easy, for example, for sum, mean, max, and so on. Okay? In all these cases uh you can combine the answer coming from
+[040:52] the uh subranges to get the answer for the original range.
+[040:58] Okay, however, there are problems which cannot be solved in this way.
+[041:05] Okay.
+[041:07] And for these problems for some of these problems, a possible solution still exists and it's based on
+[041:16] Another algorithm which is called Moore's algorithm. This algorithm solves other
+[041:26] Are there?
+[041:27] Queries related to ranges.
+[041:30] In the case of which these queries are given beforehand, so offline queries.
+[041:39] You give me
+[041:41] Data. You give me
+[041:44] All the queries, and I can solve these queries on your data.
+[041:50] Usually you have only queries that ask questions about data.
+[041:57] and not queries that are changing the data.
+[042:00] Okay?
+[042:02] So you are giving queries that ask something about data and are able to
+[042:09] Answer these queries so you can do everything offline, in particular you can reorder the queries if you wish.
+[042:17] Okay.
+[042:19] Well, so uh this is called the Mo's algorithm and I don't know why Mo's. Probably it's the one that invented the algorithm, but nobody knows precisely who Mo is.
+[042:33] Uh okay.
+[042:36] I want to do a change uh in the for this lecture and try to modify my style by starting from okay, that's that's uh just a try, okay. If something goes wrong, we come back to the original meeting. What I want to change
+[042:55] West.
+[042:57] I know that I'm not very good at writing. Can you confirm?
+[043:03] No?
+[043:05] Okay.
+[043:07] I don't know, but uh but I I I asked Claude to make notes starting from my notes.
+[043:17] Okay, and he was perfectly able to do it.
+[043:21] If you don't like my handwriting, uh it's uh your problem because Claude is able to read it.
+[043:30] Okay? No, I I mean uh I I'm you know, I'm writing like a do medical doctor, okay? So I decided to start from a template
+[043:43] previously made by my colleague
+[043:47] Whose name starts with C as well. And I want to feel
+[043:54] the uh places. So for the I don't know statement of the problem.
+[044:00] Uh running example, I'm using something already made and I'm going to describe uh so it's not these are not slides, okay? Something in between. So let's see how it works.
+[044:14] For the moment, let's start from she's a little bit better than mine, right?
+[044:18] Can you
+[044:20] You say, okay.
+[044:22] This is made by
+[044:25] Claude, starting from my handwritten
+[044:29] Notes
+[044:32] It will say one foot in everything.
+[044:38] So I will use my hands more than my pen. Okay, that's the property.
+[044:50] Okay, and then uh there are uh stuff that I can fill out and we can reason about uh what I'm doing together. Particularly you can find bugs in what I'm saying. Okay? Do you like it? Let's let's try.
+[045:05] If does it work we will come back to original stuff.
+[045:10] Okay, so what I'm uh uh what we what we are doing, okay, let's start uh presenting Mo's algorithm.
+[045:20] Mozague is a tech technique that allows us to solve problems on
+[045:26] an array, for example, or a tree, let's let's start with an array, and you have queries that ask something about ranges in this array.
+[045:38] Like something we have already done, you know.
+[045:40] before, but there are problems in which the query is particularly difficult, or apparently very difficult.
+[045:48] some quill some kind of pill that cannot be solved with segment effort.
+[045:54] Okay.
+[045:56] You are allowed to solve
+[045:59] such query offline. Okay, what does it mean of being offline? Means that you are giving all the query beforehand, you can reorder the query as you wish and then provide all the results in the original order.
+[046:18] This query is as this result, this query as this result, and so on.
+[046:23] Okay? This is offline.
+[046:28] You can?
+[046:32] Okay, let me start by presenting a very difficult problem.
+[046:38] This one, no? And then
+[046:41] we will present the Mohs algorithm with a different problem. Why I'm doing this? Because I want to prove you that this problem, which seems to be impossible now,
+[046:57] We read together the problem and you we declare this problem can can't be done efficiently, can't be solved efficiently. Actually, after you know Moh's algorithm, this problem becomes trivial. Ah.
+[047:12] Just do this, okay?
+[047:16] This is to show you how powerful is the knowledge of the technique. Once you know a technique, problems that seem to be harder uh becomes uh super easy. This is a property of any knowledge, by the way. But uh in particular in Bull's algorithm, this uh par the the power of the knowledge becomes uh
+[047:43] uh very explicit in a short period of time.
+[047:48] Okay? We start now, problem impossible. In a in half an hour, problem super easy.
+[047:56] What's the problem ask for? We are given an array of n positive integers and we want to solve queries. The query is called power.
+[048:09] Takes uh the range L and R.
+[048:14] And let's compute these values.
+[048:18] What this value is.
+[048:21] For every distance the in the region
+[048:26] You want to compute the del times k squared, where k e is some value that depends on e. What's e? e k e is the number occurrences of that value in the region. So, for every distinct value in the region,
+[048:49] You want to add.
+[048:52] The value times the square of its number of occurrences in the range.
+[048:59] and add all of them for every single distinct value in there.
+[049:06] Yeah?
+[049:09] Do you see what I mean?
+[049:11] For example,
+[049:14] Power from one to six has to identify the distant element in the range, which are one
+[049:24] Three and two.
+[049:27] Okay, these are the distinct elements.
+[049:31] And for these d these dint elements so the distinct elements are.
+[049:35] One.
+[049:38] Three and two.
+[049:40] We want to compute the frequency of that number.
+[049:44] So one occurs twice, three occurs just one.
+[049:52] And two occurs three.
+[049:57] Are you with me?
+[050:00] So the the term for each of these tinting numbers is the value times the square of its frequency.
+[050:09] which is in case of two is one times four.
+[050:14] four.
+[050:15] In case of three is one square times t times three is three. In case of two is three square nine
+[050:26] times two, eighteen.
+[050:29] The power is four plus three plus eight.
+[050:35] Okay, which is uh twenty five.
+[050:40] Okay.
+[050:42] How do we solve this problem?
+[050:44] Well, doing this with uh segment three is uh impossible because for every node we have to remember
+[050:54] Could remember the frequency of the value within the sub-tree.
+[051:00] We could also remember uh how many distinct elements do we have.
+[051:06] which is something that we have done
+[051:09] Already, do you remember? The the BST storing uh the BST or the hash map storing the frequency of each value.
+[051:20] So on. The problem of computing is
+[051:25] Yeah, so the single cases can be computed. We can compute the distinct values and the frequencies. Okay?
+[051:34] The problem is that we have different subranges
+[051:41] And for each of these subranges we have different uh distinct values. And to compute the overall result uh we have to merge pieces coming from different subranges.
+[051:55] So the type of left in the second tree would depend on the number of distinct elements in the range. Do you agree?
+[052:06] I val I have value coming from this. From this, for example just two. The only possibilities of computing the that formula it consists in merging the results that coming from this and this to get the frequency of each value.
+[052:24] and then multiply by the value and so on.
+[052:28] Okay? So the only solution is to run this sum term by term.
+[052:36] So the running time with seven tree will be proportional to the size of the number of this these sets of the number of distinct elements. Do you agree on this?
+[052:50] Okay.
+[052:53] The the size of the set is proportional to n. So this will give a time which is n times q.
+[053:06] where q is the number of queries that we have.
+[053:09] Okay.
+[053:17] Hmm.
+[053:18] Time complexity is
+[053:22] n times q.
+[053:25] Okay.
+[053:29] Do you agree?
+[053:31] At least, okay, because then we have other things to deal with.
+[053:35] While the target time complexity we have in mind uh is actually n plus q, not n times q.
+[053:44] times square root of n. Square root of n usually is very small.
+[053:50] Okay.
+[053:52] For millions of elements, a square root is just a few thousandths. Okay?
+[054:00] So these problems seem to be very hard to be solved with the techniques we have so far for two reasons. The first reason is that it seems that it is impossible to do everything without touching every single distinct elements in the range.
+[054:21] And the second is because we don't know how
+[054:25] this strange time complexity could come from.
+[054:30] We have no technique.
+[054:33] which involves square root of n sub r.
+[054:37] Okay.
+[054:39] This is the impossible problem.
+[054:41] Let's uh
+[054:44] Do you argue against the impossibility of this problem?
+[054:48] You know?
+[054:50] Okay.
+[054:52] Seems to be possible, right? Let's see.
+[054:56] Let's discuss an easier problem.
+[054:59] It's easier just because the query is a little bit more uh apparently a little bit more easy to be solved.
+[055:10] Okay, again we were given an array of an elements. These elements are called the colors. Colors is a special uh
+[055:21] It's a word which is used in a special case where the values are in the range of zero to n minus one. So when the possible values are in this range, these values are also called colours. For some reason that's a term used in algorithmic formula.
+[055:43] Okay? Collapse nothing more than
+[055:47] Numbers. Numbers in a very uh
+[055:54] But it's highlighted.
+[055:56] Are you with me?
+[056:00] Yes, so
+[056:02] We have a set of queries, set queue of queries offline, like before. Okay? You are given all the queries at once and you have to solve all of them. And then you return the solutions.
+[056:17] Okay, the query I code are called three or more. The query takes the range and and has to record the number of distinct colours or the number of distinct elements uh which occurs at least three times in the range.
+[056:38] Okay.
+[056:41] Are you with me?
+[056:43] For example.
+[056:45] The if the grid is this one, from zero to five, then I'll make these simple elements that occur at least three times where.
+[057:00] Well, three occurs three times, one occurs two times, zero just once, so three is the only number that occurs at least three times. So the answer here is three.
+[057:18] What about the next one?
+[057:22] Uh one occurs one, two, three, four, one occurs at least three times, zero occurs to only two times, three occurs three times, so the answer is uh two, and the previous answer was wrong. Exactly.
+[057:44] one and two. Number of, you know, not the values that are.
+[057:51] Three bug finders so far.
+[057:54] Thank you.
+[057:55] Come on guys, come on.
+[057:57] Who is missing you and you?
+[058:00] Okay.
+[058:02] Ah, okay, okay. Half and half, okay?
+[058:08] Okay, one of all this one.
+[058:12] Uh one quotes only two, zero quotes only two, three quotes just once. So the answer is uh
+[058:23] Zero.
+[058:25] Great.
+[058:28] Okay.
+[058:30] So that's the problem. The difficulty of the problem are
+[058:35] simple si similar to the previous one, even if this one seems to be simple, okay? No cur no occurrences to c to to take care.
+[058:46] Okay. How to solve with this segment tree?
+[058:50] once again, because if you have uh two uh two sub
+[058:57] Ranges, you don't know how to combine them quickly without touching all the numbers you have. Do you agree on this?
+[059:07] Yeah? So if uh within the subarray
+[059:11] sorry, the within the range. You have these uh two sub ranges, for example, and here you have the answer is uh
+[059:22] And here the answer is two.
+[059:25] Well, the answer of the union is not four plus two.
+[059:31] Because there may be the same value which occurs at least three times in both that in this case you are counting twice.
+[059:40] Do you agree?
+[059:42] So it's not easy to combine the things. That's why the segmentry cannot be used.
+[059:49] Okay. And the only way to merge is to go over distinct ele over all the distinct elements in both ranges and combine them.
+[060:01] Try to avoid double counting.
+[060:05] Do you agree?
+[060:06] Okay.
+[060:08] So let's start with the trivial solution.
+[060:13] The triggered solution is actually very trivial. What we do? Well, for every pair in Q, so for every query, and the query is Rj,
+[060:29] Mike here.
+[060:30] We pre-compute so we start computing the initial answer which is zero.
+[060:36] We keep an array of counters.
+[060:42] All of them initialized to zero.
+[060:47] We go over the positions within the range.
+[060:56] Uh for every value that we find AK
+[061:02] Count that leaky.
+[061:04] we increase the corresponding counter by one.
+[061:10] Yeah.
+[061:13] Uh then is the counter.
+[061:18] Can you come easy?
+[061:21] equal to three.
+[061:24] Then we increase the answer by water also.
+[061:28] Once the first available.
+[061:31] reaches three, once a value reaches three we know that we have to increase the answer. If if from from three moves to four there is nothing to do. If the the character is moving from one to two there is nothing to do.
+[061:46] Do you agree? This solution works.
+[061:50] Exactly.
+[061:52] So
+[061:54] Yeah, I'll give you that except for the hunt.
+[061:57] What's the time complexity of this?
+[062:13] Two times ten, you know?
+[062:17] Ah, Q times uh N. Yeah.
+[062:26] Yeah. Why?
+[062:30] For every query you are scanning the array.
+[062:33] and uh potentially all the elements in the array. So the the time complexity of each query is potentially n because uh we are scanning the wool uh interval. What's the what's the possible uh what's a possible worst case uh for this for this argument?
+[063:08] The query that starts at the beginning ends at the end. The query that starts at the beginning ends in position n minus one, n minus two, n minus three, n minus four, and so on. We have n queries, each of them
+[063:24] as uh a length which so start from the beginning and and as an increasing length. This is a potential worst case for this. There are many other, okay? But uh this one
+[063:38] is uh a bad uh very bad input.
+[063:42] Okay. In this case the running time uh is uh quadratic.
+[063:49] because we have n equal to q for q equal to n.
+[063:56] Okay, is this convincing?
+[064:02] Boom.
+[064:05] Okay. Um
+[064:13] Let's move on with uh uh another version of this problem, uh the solution.
+[064:20] which is exactly inefficient as this one now.
+[064:26] but is doing its things in a slightly different way. Apparently equivalent.
+[064:34] Okay.
+[064:37] The idea is the following.
+[064:40] Okay, if uh
+[064:43] It would be
+[064:45] Uh you you have got this field already so.
+[064:50] But this theory has been already solved.
+[064:54] From the solution of this query I want to move to the solution of the other query.
+[065:01] Next one.
+[065:03] What's an F2?
+[065:06] What I have to do is to remove the elements from the solution
+[065:13] the elements which are at the end of this which are not in the second one.
+[065:19] I remove these elements.
+[065:22] Yeah? One by one.
+[065:25] They can do this, okay? Because uh once they design five, let's decrease the counter of five.
+[065:33] If they can't profile.
+[065:35] was three and now becomes two.
+[065:39] I have to remove one from the answer.
+[065:43] The rib. So I'm doing the opposite of what I'm doing while I stand.
+[065:51] Then, once I remove this, I have the answer for this subrange.
+[065:57] Do you agree?
+[066:00] And then I have the element by element.
+[066:04] backwards, doesn't matter, or forward, so I can do this or this, doesn't matter. And you re-ad the you add these new elements.
+[066:17] Okay? Do you agree that this can be done? I can remove ends and add ends. What I need to do is just modify the counters and uh once I'm removing if the answer becomes uh sorry, if the counter becomes uh from three two, I decrement to the answer, if the counter is
+[066:39] Coming three from two, I increment that.
+[066:45] That's what I okay. This can be done uh with these uh two
+[066:50] Functions.
+[066:52] Very easy functions.
+[066:55] I can add a certain position just by adding one and checking the counter and potentially incremental answer, or I can remove a certain position just by decrementing the counter and checking if the counter number comes to the increment.
+[067:15] Okay.
+[067:19] Okay, can you follow me me for the speed that I'm using? Okay. Because the only problem having slides is that you are too fast. You I'm too fast.
+[067:32] So that's why I move to handwriting. But if in this uh hybrid approach uh I'm the speed is okay, right? Okay. And you can read also, which is not uh not bad.
+[067:47] Okay.
+[067:48] So that's what we have uh to do. This is a just a running example. Do we want to do this? Yes, why not? Let's say we have this query and this query. Okay?
+[068:02] First I can add all these elements from initial uh counter uh with only only uh zeros and then I can remove this piece and get the answer for uh
+[068:22] Add on this piece as well and get the answer for the other one after removing this one.
+[068:30] He said these in a terrible way.
+[068:32] I start from scratch.
+[068:35] Leave at all these errors and get the answer for this one.
+[068:39] Then transform this engine to this one by removing the graphics and adding the suffix.
+[068:49] No, it's okay.
+[068:51] Italian English way, correct way to say it. Okay, so let's start. Ad one.
+[069:03] Okay.
+[069:04] And the counter for one becomes one.
+[069:08] Then add the three and the counter of three becomes one. Add another one so the counter becomes two.
+[069:18] Then a two.
+[069:20] The counter become one.
+[069:23] Now one and the counter becomes three.
+[069:30] And the answer is one.
+[069:33] Then three, I'm here, the counter becomes two, then another three and the counter becomes three. Once the counter becomes three, the answer becomes two.
+[069:46] Okay.
+[069:48] Is this convincing? Okay, now I need to remove these guys. So removing this means that the counter that initial is three
+[070:00] and here is three, and here is one, now are decremented by one, two.
+[070:08] And the answer that initial is two becomes one.
+[070:13] Because from three I moved to
+[070:16] Then I remove three.
+[070:19] And the answer becomes zero. Indeed, in the range we have so far there are no values occurring at least three times.
+[070:32] Okay, now I add uh zero and becomes one, I add uh two and becomes two, I add one and becomes uh three.
+[070:43] And the answer becomes one. I add another two and the answer becomes uh two.
+[070:52] Yeah.
+[070:55] Okay.
+[070:57] So this is uh the final
+[071:01] solution for the conquerors.
+[071:03] Okay.
+[071:06] Good. So this algorithm uh works
+[071:13] properly, okay? We have the for loop that iterates over the queries.
+[071:18] Then uh if the previous query is this one, I need to remove a prefix and add a suffix. If instead I'm processing this one and then this one, I add to add the prefix and I have a suffix. So depending on the order for the for the two queries and they overlap, I need either to remove or add
+[071:43] or remove or add a suffix.
+[071:48] Depends on the author. If first I'm doing this, I
+[071:53] I add this and remove this if otherwise I do it off of it. Do you agree?
+[072:02] Okay. So the the pseudo code of the algorithm
+[072:07] is just
+[072:09] something like this.
+[072:13] Okay. So I have current high and current j initially everything is zero. I have the counter which initially contains only zeros and the answer which is zero. Okay? Then I integrate all the queries and depending on the relationship between the current query and the previous the next one
+[072:38] I either have to remove some prefix or remove some suffix or add some prefix and uh or add some suffix. Depends on how the two queries are one with respect to the other. So the possible cases are add the prefix, add the suffix, remove the prefix or remove the suffix.
+[073:04] Which one? Well, the parents on the two videos. The previous one and the new one.
+[073:11] Actually I'm just uh preserving current I and current J, which is the two current pointers, and both the answers and the counters reflect this current I and current J. So are the counters and the answers for the sub-boundary in between current I and current J.
+[073:32] Okay.
+[073:33] Then you move, you want to move current i to be equal to the i of the current query.
+[073:41] This one, which may be bigger and then I have to remove the prefix, or can be smaller and then I have to add.
+[073:50] The same for j. So starting from the current i and current j, I want to move the two pointers to be equal to i and j, doing some operation. Okay? The two operations are let's move current i minus one or current i plus one, and so on.
+[074:11] Is this uh convincing?
+[074:14] So the previous cycle now becomes this one.
+[074:21] Okay.
+[074:23] More complex
+[074:26] From the item point of view and also
+[074:32] And don't. So what's the time complexity of this one?
+[074:57] It is better than before
+[075:02] or the same or
+[075:05] Warsa.
+[075:07] Better. Same words.
+[075:12] Let's see the previous uh
+[075:15] Uh worse case uh for the other algorithm.
+[075:19] How much time does it take in our current algorithm?
+[075:37] Okay, initial let's stand for that.
+[075:41] We initially had current i and current j pointing to position zero.
+[075:46] No.
+[075:50] Then I let J increase to include L D and I have the answer for the first. Then add any other loop ask me to remove one element at the end.
+[076:04] in uh backward.
+[076:07] And button.
+[076:09] This takes n plus n.
+[076:15] Two n, so it's much better than quadrature.
+[076:22] CCAN.
+[076:29] Yes, I am possible.
+[076:32] But in this particular case,
+[076:35] Okay.
+[076:37] and much better than quadratic. But in the worst case
+[076:43] The same n or the same product?
+[076:47] Q per M gel a product if you have uh Q equal to N.
+[076:58] Yes. Can you can you design a worse case?
+[077:09] of the video to
+[077:14] No overlap, but the size of the interval depends on, I mean, must be large, okay? So the size must be.
+[077:24] In the order of n.
+[077:27] And uh the and there it must be
+[077:32] No, so so so the the the difference
+[077:37] in between the two must be n.
+[077:42] Right?
+[077:43] Pordraven.
+[077:47] Because the difference between the two is the number of elements you have touched.
+[077:57] Maybe one more supposed case.
+[078:09] Of largest, second largest, we alternate first, last, second first. Okay, yeah. Yeah, before the
+[078:18] Talk about this. Let me just conclude what I was saying.
+[078:23] The the difference between uh the two must be n so one possible way is to have n the the a range of sides n divided by two.
+[078:36] Then a completely different range of n divided by two. And then
+[078:41] Another range of n divided by two and so on.
+[078:45] And this case is the worst case. Is a worst case. Because another worst case.
+[078:54] is the one you were mentioning.
+[078:58] To add your a very bad case, you can consider these theories once again.
+[079:06] And I'll turn it down by taking the first one and the last one.
+[079:12] which is empty or one element.
+[079:16] All the elements, one element you have to remove n minus one element.
+[079:22] Then this one
+[079:24] And uh
+[079:26] The one with two elements. You have to remove n minus two elements.
+[079:31] Okay, and so on. So you have to remove m minus one, m minus two, m minus three, m minus four, and so on, and the cost is quadratic as well.
+[079:42] Okay.
+[079:44] So what we learned uh from uh these examples is that
+[079:51] Uh sometimes the argument may be better than the original one.
+[079:58] And the worst case is quadratic as well.
+[080:04] No improve the improvement in worst case.
+[080:08] But we observed that the running time
+[080:13] depends on the ordering of the quiz, while the other one doesn't.
+[080:20] The other one was independent on the order of the periods.
+[080:24] Always terrible.
+[080:26] This one may be habitable or good depending on the order of the case.
+[080:33] Okay, so that's the conclusion that we have so far.
+[080:38] So the question is.
+[080:41] The question is, is there any ordering which guarantees us in the worst case to be not so bad?
+[080:50] Can we reorder the query so that
+[080:55] No matter what the queries are.
+[080:58] Then
+[081:00] Uh the algorithm is good.
+[081:05] Well, if you we look at the the previous uh the previous uh bag input uh
+[081:14] If the beginning of the query is the same?
+[081:20] Then you know
+[081:22] It's uh pretty easy to find in order.
+[081:26] which is very good for the other.
+[081:31] If the beginning of all the fields is the same,
+[081:36] Then it's uh the best uh ordering is the one that sorts uh either increasing or decreasing order.
+[081:46] Do we agree on this? Why? Because the number of steps needed to transfer one into the other, going down, is at most linear
+[081:58] So if you have many pins, all of them with the same beginning, then you go back and you spend linear time
+[082:10] You agree with this?
+[082:13] Okay. What's the problem? And the problem is that
+[082:18] It's not true that the queries m for all the same in my beginning.
+[082:24] Right?
+[082:26] Because this is super special theory is.
+[082:30] Okay.
+[082:31] What if we group the theories?
+[082:36] In two groups.
+[082:38] adding more or less the same beginning.
+[082:44] And use the sorting by the second end point in decreasing or increasing or that doesn't matter.
+[082:53] Can we group the queries so?
+[082:57] If all the queries are at the same beginning, problem solved, neither time.
+[083:03] Sorved by decreasing effort.
+[083:08] Probably practices, not all the queries at the same beginning.
+[083:13] What if my question? We we group uh the queries into queries that having more or less the same beginning?
+[083:23] Then for each group you sort in the grazing order.
+[083:29] and you spend a lot linear time for each group.
+[083:33] If we have few groups, then the overall running time would be number of groups times n.
+[083:43] Do you agree?
+[083:46] Okay. So the problem now is how sort it looks.
+[083:57] Okay, this was something that we already done and Claude predicted that this was useful here. Indeed it was, but I didn't remember that it was here. Okay, so we want to match this running time
+[084:17] And we said, Okay, if we group the queries into groups having more or less the same beginning, then we sort them by ending point and we get a near time for each of them.
+[084:35] Times number groups.
+[084:38] linear time times the number of rows.
+[084:42] How many groups do we have?
+[084:45] Frail collection.
+[084:47] How can you obtain square root of n groups? Well, you take all the possible starting points and you divide them uh into groups. How many groups? Square root of n groups.
+[085:04] A group of E consists in square root of n conservative conservative starting points.
+[085:12] This is the first starting point, this is the second group of starting points and so on. All the queries within the same group are then sorted by endpoints and sort the end points by going increasing order or decreasing order, it doesn't matter, in linear time.
+[085:35] Okay?
+[085:36] How much size do we pay within the group?
+[085:43] Well, the query
+[085:45] Within the group are
+[085:49] Some so let's say this is the group, okay?
+[085:56] This is the group of sites
+[086:01] We are all there.
+[086:02] Okay? These are the the the the queries that we declare to be similar enough with respect to the starting point.
+[086:11] What does it mean? It means that the first may start here, the second starts here, the other one starts here, one starts here and so on.
+[086:21] The ending points instead are sorted in increasing order.
+[086:28] What does it mean? It means that this is the first one, the second one.
+[086:33] Third one.
+[086:36] Fourth one.
+[086:38] Okay?
+[086:41] And we process the queries in this order.
+[086:44] When we solve uh we want to solve this one, starting from the previous one.
+[086:52] Are you with me?
+[086:53] What we want to do is to ask the designers.
+[086:58] For the next one we want to put out these elements.
+[087:02] But the next one we have are designed.
+[087:06] Adding an element defect costs overall linear. Do we agree?
+[087:14] Because these are living crazy and so you go down.
+[087:19] Let me increase, but you cannot increase more than nine times.
+[087:24] Okay? Are you with me? Say yes or no?
+[087:32] Okay, what about nearly?
+[087:35] Well, here you have to make this one this one uh equal to this one you have to add the elements.
+[087:42] Make this one equal to this one, you have to remove the elements. To make this one uh equal to this one, you have to add elements. Sometimes sometimes you have to add, sometimes you have to remove. But how many elements do we add in remove in each step?
+[088:00] Most.
+[088:03] At the most
+[088:05] Square or collaborate.
+[088:08] Why? Well, because uh the ranges here are bounded in the group. Okay. So for each group you pay n.
+[088:24] Right? For each which it depends only on the group. For each group, n. How many groups do we have? Square root of n. So square root of n times n. This is for the right part.
+[088:41] What about the beginning? Well, the beginning is for every query we pay square root of n. Because it may happen that this query is here and the next one is here, you pay n. Square root of n. Fair root of n?
+[088:57] square root of m, square root of n, and so on, square root of n for each query. Do you agree? Do you agree that this is not per group? It's not a cost for the group, it's cost for each query of the group.
+[089:10] Okay, so overall, how many queries do we have?
+[089:14] Yeah.
+[089:15] How many times we have to move back and forth within the group for the query?
+[089:21] Square root of n times Q is the cost of Boolean's pore group.
+[089:28] In total, square root of n q
+[089:32] And for a look with the
+[089:35] with A N. So the cost is
+[089:39] Few times square root of n.
+[089:43] Plus?
+[089:47] Uh square root of n times n, which is equal to q plus n
+[089:58] Uh q plus n times square root of n time. Okay, this is the running time of the algorithm. So the beauty of this algorithm is the following. Take a absolutely inefficient algorithm.
+[090:15] Just sort the query.
+[090:18] in some way and the algorithm becomes more much more efficient.
+[090:23] And the sorting is done by so if you have let let me write it this uh in Python. If you have sorted
+[090:34] of a list of elements.
+[090:38] Uh L the list of elements, what you have to do is to sort accordingly to uh
+[090:49] I J
+[090:53] You sort by i divided by square root of n.
+[090:59] Which is the ID of the blocker.
+[091:04] J and that's this optic.
+[091:07] You sort the elements by first by the group ID, which is i divided by square root of n, starting point.
+[091:18] And then in the same group we start in increasing order. Or decreasing doesn't matter. Okay?
+[091:26] Ready?
+[091:28] Okay, so think the magic of this technique is the following. First, we don't know the author, only know the name. Don't know if never existed, actually.
+[091:40] Apart from this part of the magic, the other magic parties take a super efficient algorithm.
+[091:48] Which takes platy time, prefix it with design.
+[091:54] and the argument becomes efficient.
+[091:57] Okay.
+[092:01] So this is the Spanish Woodin' group that we already did.
+[092:05] Uh
+[092:08] The running time uh is what I told you. This is a running example that we have no time to
+[092:25] Maybe there is a bomb that we have.
+[092:32] Okay, we finish we we got uh and uh okay. What I want to invite you to do before running outside this building is to try to solve this problem with the new technique. Okay? Once you understand the technique, this becomes uh super easy.
+[092:55] Thanks a lot. It was a pleasure to

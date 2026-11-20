@@ -121,6 +121,15 @@ mod tests {
     }
 
     #[test]
+    fn notes_2026_example() {
+        // prof's 2026 notes: A = [5, 1, 3, 1, 4, 7, 2, 1], root (1, 3); after add(1, -1): (0, 1)
+        let mut st = MinCountTree::new(&[5, 1, 3, 1, 4, 7, 2, 1]);
+        assert_eq!(st.node(1), (1, 3));
+        st.add(1, -1);
+        assert_eq!(st.node(1), (0, 1));
+    }
+
+    #[test]
     fn random_vs_naive() {
         let mut rng = Rng(0xE703_7ED1_A0B4_28DB);
         for _ in 0..300 {

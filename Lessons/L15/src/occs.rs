@@ -1,4 +1,5 @@
-//! #occs(i, j, x): number of occurrences of x in A[i..=j], with Add(i, v) (2025 notes p.9).
+//! #occs(i, j, x): number of occurrences of x in A[i..=j], with Add(i, v) (2025 notes p.9; 2026 notes
+//! "Counting Occurrences in a Range": when a count drops to 0 remove the key, or the maps keep growing).
 //! Every node stores a hash map value -> number of occurrences in its range. Query: the usual visit,
 //! summing the counter of x in the O(log n) total-overlap nodes: Θ(log n) w.h.p. (hashing).
 //! Space: every position is in the map of its O(log n) ancestors -> O(n log n)
@@ -78,6 +79,8 @@ mod tests {
     #[test]
     fn example_2025_notes() {
         // p.9: A = [3, 1, 0, 4, 6, 13, 2, 0], #occs(1, 7, 0) = 2; node [4,7] = {6:1, 13:1, 2:1, 0:1}
+        // prof's 2026 notes: occs(1, 7, 1) = 3 on [5, 1, 3, 1, 4, 7, 2, 1] (nodes [1,1], [2,3], [4,7])
+        assert_eq!(OccsTree::new(&[5, 1, 3, 1, 4, 7, 2, 1]).occs(1, 7, 1), 3);
         let mut t = OccsTree::new(&[3, 1, 0, 4, 6, 13, 2, 0]);
         assert_eq!(t.occs(1, 7, 0), 2);
         assert_eq!(t.t[3].len(), 4);

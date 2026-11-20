@@ -3,8 +3,9 @@
 //! in every total-overlap node and combine by taking the min: O(log n) nodes × Θ(log n) = Θ(log² n);
 //! space Θ(n log n). 2025: "query time can be improved to Θ(log n) with fractional cascading" (not
 //! implemented here).
-//! [extra] successor = smallest value >= x (2025 p.10, Successor(1, 5, 5) on [3,1,0,4,6,13,2,0] is circled
-//! at 6, consistent with both >= and >); BTreeMap value -> count as a multiset; `None` if there is none.
+//! 2026 notes: successor = "the smallest value in A[i..j] that is at least x"; the BST must be a multiset
+//! (BTreeMap value -> count); without updates a sorted array per node (merge sort tree, built in Θ(n log n)).
+//! [extra] code mine; `None` if there is none.
 
 use std::collections::BTreeMap;
 
@@ -78,6 +79,8 @@ mod tests {
 
     #[test]
     fn example_2025_notes() {
+        // prof's 2026 notes: successor(1, 5, 2) on [5, 1, 3, 1, 4, 7, 2, 1]: +inf, 3, 4 -> 3
+        assert_eq!(SuccTree::new(&[5, 1, 3, 1, 4, 7, 2, 1]).successor(1, 5, 2), Some(3));
         let mut t = SuccTree::new(&[3, 1, 0, 4, 6, 13, 2, 0]);
         assert_eq!(t.successor(1, 5, 5), Some(6));
         assert_eq!(t.successor(1, 5, 7), Some(13));

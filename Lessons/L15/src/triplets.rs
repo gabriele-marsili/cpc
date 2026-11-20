@@ -4,6 +4,8 @@
 //! the triplets with that middle are l_j · r_j (2025 example: A = [1,2,3,4,1], j = 2 -> 2 · 1 = 2).
 //! Θ(n log n): l_j with a Fenwick tree of frequencies scanning left to right (after remapping the values
 //! to ranks, as for the inversions in L12), r_j the same scanning right to left.
+//! 2026 notes: the same idea with two SEGMENT trees indexed by value (`count_triplets_st`); "it could be
+//! solved with a Fenwick tree as well" (`count_triplets`, as in the 2025 notes).
 //! [extra] code mine; Θ(n²) version too, for the tests.
 
 struct Fenwick(Vec<u64>);
@@ -55,6 +57,38 @@ pub fn count_triplets(a: &[i64]) -> u64 {
     total
 }
 
+/// The prof's 2026 notes version: two segment trees INDEXED BY VALUE (prof's `SegmentTree`, l15::prof_blog),
+/// P = counters of the prefix A[0..j-1], S = counters of the suffix A[j+1..n-1]; at every j:
+/// S.add(A[j], -1); L_j = P.range_sum(0, A[j]-1), R_j = S.range_sum(A[j]+1, V-1) (skipped if empty);
+/// result += L_j · R_j; P.add(A[j], 1). Values replaced by their ranks, so V <= n. Θ(n log n).
+/// [extra] code mine, following the notes step by step.
+pub fn count_triplets_st(a: &[i64]) -> u64 {
+    use crate::prof_blog::SegmentTree;
+    if a.is_empty() {
+        return 0;
+    }
+    let mut sorted = a.to_vec();
+    sorted.sort_unstable();
+    sorted.dedup();
+    let rank: Vec<usize> = a.iter().map(|x| sorted.binary_search(x).unwrap()).collect();
+    let v = sorted.len();
+    let mut occ = vec![0i64; v];
+    for &x in &rank {
+        occ[x] += 1;
+    }
+    let mut p = SegmentTree::from_slice(&vec![0; v]);
+    let mut s = SegmentTree::from_slice(&occ);
+    let mut total = 0u64;
+    for &x in &rank {
+        s.add(x, -1);
+        let l = if x > 0 { p.range_sum(0, x - 1) } else { 0 };
+        let r = if x + 1 < v { s.range_sum(x + 1, v - 1) } else { 0 };
+        total += (l * r) as u64;
+        p.add(x, 1);
+    }
+    total
+}
+
 /// Θ(n²): the same counting with a scan for every middle j
 pub fn count_triplets_quadratic(a: &[i64]) -> u64 {
     (0..a.len())
@@ -92,6 +126,11 @@ mod tests {
         assert_eq!(count_triplets(&[1, 2, 3, 4, 1]), 4);
         assert_eq!(count_triplets(&[]), 0);
         assert_eq!(count_triplets(&[5, 5, 5]), 0);
+        // prof's 2026 notes: A = [5, 1, 3, 1, 4, 7, 2, 1] has 5 triplets (L_2·R_2 = 1·2, L_4·R_4 = 3·1);
+        // ranks [4, 0, 2, 0, 3, 5, 1, 0], V = 6
+        assert_eq!(count_triplets(&[5, 1, 3, 1, 4, 7, 2, 1]), 5);
+        assert_eq!(count_triplets_st(&[5, 1, 3, 1, 4, 7, 2, 1]), 5);
+        assert_eq!(count_triplets_st(&[]), 0);
     }
 
     #[test]
@@ -103,6 +142,7 @@ mod tests {
             let c = cubic(&a);
             assert_eq!(count_triplets(&a), c, "{a:?}");
             assert_eq!(count_triplets_quadratic(&a), c);
+            assert_eq!(count_triplets_st(&a), c);
         }
     }
 }

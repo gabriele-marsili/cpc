@@ -125,6 +125,8 @@ mod tests {
         assert_eq!(st.search(29), Some(6)); // total = 29
         assert_eq!(st.search(30), None);
         assert_eq!(st.search(0), Some(0));
+        // prof's 2026 notes: search(20) = 5 on A = [5, 1, 3, 1, 4, 7, 2, 1]
+        assert_eq!(SearchTree::new(&[5, 1, 3, 1, 4, 7, 2, 1]).search(20), Some(5));
         let sum = SumTree::new(&a.map(|x| x as i64));
         assert_eq!(search_binary(&sum, 22), Some(5));
     }
